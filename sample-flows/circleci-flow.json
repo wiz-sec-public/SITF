@@ -1,0 +1,757 @@
+{
+  "metadata": {
+    "name": "Attack Flow",
+    "created": "2025-12-14T08:55:13.436Z",
+    "version": "1.0",
+    "framework": "SITF"
+  },
+  "nodes": [
+    {
+      "id": "entryPoint-1765385442362",
+      "type": "entryPoint",
+      "position": {
+        "x": -489.6136160308853,
+        "y": 52.56707753948615
+      },
+      "data": {
+        "label": "Entry Point"
+      },
+      "zIndex": 0,
+      "width": 121,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -489.6136160308853,
+        "y": 52.56707753948615
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-1765385445616",
+      "type": "component",
+      "position": {
+        "x": -510.34383365100416,
+        "y": 174.012789755502
+      },
+      "data": {
+        "label": "Endpoint/IDE",
+        "componentId": "endpoint",
+        "techniques": [],
+        "customLabel": "CircleCI employee"
+      },
+      "zIndex": -1,
+      "width": 215,
+      "height": 481,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -510.34383365100416,
+        "y": 174.012789755502
+      },
+      "dragging": false,
+      "style": {
+        "width": 215,
+        "height": 481
+      },
+      "resizing": false
+    },
+    {
+      "id": "technique-1765385483884",
+      "type": "technique",
+      "position": {
+        "x": -478.2675410072869,
+        "y": 370.3768510219695
+      },
+      "data": {
+        "id": "T-E001",
+        "name": "Malicious Execution on Endpoint",
+        "component": "endpoint",
+        "stage": "Initial Access",
+        "description": "Attacker executes malicious code on developer workstation",
+        "risks": [
+          "Using untrusted IDE extensions",
+          "Using untrusted software packages on endpoints",
+          "Insufficient endpoint protection / AV bypass",
+          "Insufficient endpoint detection / EDR bypass",
+          "Lack of application sandboxing",
+          "Inadequate security awareness training"
+        ],
+        "controls": [
+          "Deploying EDR/XDR on endpoint",
+          "IDE sandboxing",
+          "Mandating signed extensions",
+          "Package version pinning",
+          "Application whitelisting",
+          "Using hardened workstations for production access",
+          "Security awareness training"
+        ],
+        "customLabel": "Malware"
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -478.2675410072869,
+        "y": 370.3768510219695
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765385540181",
+      "type": "technique",
+      "position": {
+        "x": -478.2675410072869,
+        "y": 505.13068199719214
+      },
+      "data": {
+        "id": "T-E003",
+        "name": "Harvest Local Secrets / Credentials from Endpoint",
+        "component": "endpoint",
+        "stage": "Post-Compromise",
+        "description": "Attacker extracts credentials stored on developer machine",
+        "risks": [
+          "Credentials stored in plaintext on endpoints",
+          "Production credentials on developer machines",
+          "No local DLP",
+          "SSH keys without passwords",
+          "Cloud credentials in environment variables",
+          "Session cookies not bound to device/location",
+          "Long-lived session tokens without re-authentication"
+        ],
+        "controls": [
+          "Deploying DLP on endpoint",
+          "Deploying EDR/XDR on endpoint",
+          "Credential manager enforcement",
+          "No production credentials on endpoints",
+          "Encrypted credential storage",
+          "Implement hardware-based authentication (FIDO2/WebAuthn)",
+          "Enforce short session timeouts with re-authentication"
+        ],
+        "customLabel": "Stealing SSO session cookies"
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 106,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -478.2675410072869,
+        "y": 505.13068199719214
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-1765386027328",
+      "type": "component",
+      "position": {
+        "x": -147.84491438177872,
+        "y": 169.74752048953155
+      },
+      "data": {
+        "label": "Production/Cloud",
+        "componentId": "production",
+        "techniques": [],
+        "customLabel": "CircleCI"
+      },
+      "zIndex": -1,
+      "width": 218,
+      "height": 508,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -147.84491438177872,
+        "y": 169.74752048953155
+      },
+      "dragging": false,
+      "style": {
+        "width": 218,
+        "height": 508
+      },
+      "resizing": false
+    },
+    {
+      "id": "technique-1765469305118",
+      "type": "technique",
+      "position": {
+        "x": -478.6658473761986,
+        "y": 258.47056184867995
+      },
+      "data": {
+        "id": "T-E002",
+        "name": "Endpoint Phishing",
+        "component": "endpoint",
+        "stage": "Initial Access",
+        "description": "Attacker phishes developer to steal credentials or install malware",
+        "risks": [
+          "Lack of MFA or phishing-resistant authentication",
+          "Inadequate security awareness training",
+          "Credentials stored in plaintext",
+          "No email security controls"
+        ],
+        "controls": [
+          "Mandatory MFA (endpoint authentication)",
+          "Phishing-resistant authentication",
+          "Security awareness training",
+          "Email security (SPF, DMARC, DKIM)",
+          "Endpoint EDR/XDR"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 74,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -478.6658473761986,
+        "y": 258.47056184867995
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765469459827",
+      "type": "technique",
+      "position": {
+        "x": -119.61603053580001,
+        "y": 263.16949995702527
+      },
+      "data": {
+        "id": "T-P001",
+        "name": "Abuse Production Credentials from CI/CD",
+        "component": "production",
+        "stage": "Initial Access",
+        "description": "Attacker extracts production credentials from CI/CD and uses them to access production",
+        "risks": [
+          "Production credentials in CI/CD workflows",
+          "Long-lived production credentials",
+          "Overprivileged cloud service accounts",
+          "No credential rotation"
+        ],
+        "controls": [
+          "OIDC for deployment (no long-lived credentials)",
+          "Minimal IAM permissions",
+          "Credential rotation",
+          "Secret scanning",
+          "Network segmentation (production from SDLC)"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -119.61603053580001,
+        "y": 263.16949995702527
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-1765701465985",
+      "type": "component",
+      "position": {
+        "x": 182.1394749080667,
+        "y": 174.79514159665973
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "Customer envs"
+      },
+      "zIndex": -1,
+      "width": 216,
+      "height": 419,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 182.1394749080667,
+        "y": 174.79514159665973
+      },
+      "dragging": false,
+      "style": {
+        "width": 216,
+        "height": 419
+      },
+      "resizing": false
+    },
+    {
+      "id": "technique-1765701488884",
+      "type": "technique",
+      "position": {
+        "x": -119.31561809817288,
+        "y": 405.7952128658087
+      },
+      "data": {
+        "id": "T-P012",
+        "name": "Production Infrastructure Reconnaissance",
+        "component": "production",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker enumerates production infrastructure, services, and resources to identify targets and plan attacks",
+        "risks": [
+          "Overprivileged IAM roles allowing enumeration",
+          "No detection of reconnaissance activities",
+          "Publicly exposed cloud metadata",
+          "Insufficient network segmentation allowing scanning",
+          "Verbose error messages revealing infrastructure details",
+          "Lack of honeypots or deception technology",
+          "No rate limiting on API calls"
+        ],
+        "controls": [
+          "Minimal IAM permissions",
+          "Detection infra on audit logs (production)",
+          "API rate limiting and throttling",
+          "Network segmentation (production internal)",
+          "Honeypots and deception technology",
+          "Metadata service restrictions",
+          "Generic error messages (no infrastructure details)",
+          "Anomaly detection for enumeration patterns"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -119.31561809817288,
+        "y": 405.7952128658087
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765701505769",
+      "type": "technique",
+      "position": {
+        "x": -119.31561809817288,
+        "y": 540.9302545582607
+      },
+      "data": {
+        "id": "T-P011",
+        "name": "Steal Secrets from Production Environment",
+        "component": "production",
+        "stage": "Post-Compromise",
+        "description": "Attacker accesses production secrets store and exfiltrates customer secrets, tokens, and credentials",
+        "risks": [
+          "Encryption keys accessible in process memory",
+          "Lack of hardware security module (HSM) for key storage",
+          "No secrets rotation policies",
+          "Centralized storage of all customer secrets",
+          "No data loss prevention (DLP) on production systems",
+          "Lack of egress traffic monitoring"
+        ],
+        "controls": [
+          "Store encryption keys in HSM (Hardware Security Module)",
+          "Envelope encryption with key hierarchy",
+          "Customer-managed encryption keys (CMEK)",
+          "Automatic secrets rotation (30-90 days)",
+          "Secrets segmentation (per-customer isolation)",
+          "Memory protection and anti-dumping controls",
+          "DLP on production systems",
+          "Egress traffic monitoring and filtering",
+          "Detection infra on audit logs (production)",
+          "Large data transfer detection"
+        ],
+        "customLabel": "Generating access tokens to customer envs"
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 122,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -119.31561809817288,
+        "y": 540.9302545582607
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765701524907",
+      "type": "technique",
+      "position": {
+        "x": 212.16948417305582,
+        "y": 269.5051708170109
+      },
+      "data": {
+        "id": "T-C001",
+        "name": "Abuse Credentials for CI/CD Access",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access CI/CD system",
+        "risks": [
+          "Lack of MFA or phishing-resistant authentication",
+          "Default credentials or bad out-of-the-box config",
+          "Credentials in org public repositories",
+          "Previous breaches",
+          "Overly broad employee privileges (standing access)"
+        ],
+        "controls": [
+          "Mandatory MFA (CI/CD)",
+          "IDP / SSO setup (CI/CD)",
+          "Enforcing fine-grained PATs (VCS)",
+          "Enforcing PAT expiration (VCS)",
+          "Secret scanning",
+          "Monitor for session usage from anomalous locations"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 212.16948417305582,
+        "y": 269.5051708170109
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765701537309",
+      "type": "technique",
+      "position": {
+        "x": 213.3244845294018,
+        "y": 455.4602281886757
+      },
+      "data": {
+        "id": "T-C018",
+        "name": "Data Exfiltration from CI/CD",
+        "component": "cicd",
+        "stage": "Post-Compromise",
+        "description": "Attacker exfiltrates build artifacts, logs, secrets, and sensitive data from CI/CD system over network",
+        "risks": [
+          "No network egress monitoring",
+          "Unrestricted outbound network access from runners",
+          "Build artifacts contain sensitive data",
+          "Logs contain secrets or sensitive information",
+          "No DLP on CI/CD network",
+          "Large artifact downloads not monitored"
+        ],
+        "controls": [
+          "Network DLP",
+          "Egress traffic monitoring and filtering",
+          "Runtime agent on runner",
+          "Large data transfer detection",
+          "Log sanitization",
+          "Artifact encryption",
+          "Detection infra on audit logs (CI/CD)",
+          "Network segmentation (CI/CD from internet)"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 213.3244845294018,
+        "y": 455.4602281886757
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-1765701563803",
+      "type": "exitPoint",
+      "position": {
+        "x": 221.13682000428048,
+        "y": 655.678701654518
+      },
+      "data": {
+        "label": "Future Breach"
+      },
+      "zIndex": 0,
+      "width": 144,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 221.13682000428048,
+        "y": 655.678701654518
+      },
+      "dragging": false
+    },
+    {
+      "id": "entryPoint-1765701595401",
+      "type": "entryPoint",
+      "position": {
+        "x": 197.2474458247359,
+        "y": 57.089244056036804
+      },
+      "data": {
+        "label": "Consumer entry point"
+      },
+      "zIndex": 0,
+      "width": 190,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 197.2474458247359,
+        "y": 57.089244056036804
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "zIndex": 1000,
+      "source": "technique-1765385483884",
+      "sourceHandle": "bottom",
+      "target": "technique-1765385540181",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765385483884bottom-technique-1765385540181top"
+    },
+    {
+      "zIndex": 1000,
+      "source": "entryPoint-1765385442362",
+      "sourceHandle": "bottom",
+      "target": "technique-1765469305118",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-1765385442362bottom-technique-1765469305118top"
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765469305118",
+      "sourceHandle": "bottom",
+      "target": "technique-1765385483884",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765469305118bottom-technique-1765385483884top"
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765385540181",
+      "sourceHandle": "bottom",
+      "target": "technique-1765469459827",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765385540181bottom-technique-1765469459827top"
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765469459827",
+      "sourceHandle": "bottom",
+      "target": "technique-1765701488884",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765469459827bottom-technique-1765701488884top"
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765701488884",
+      "sourceHandle": "bottom",
+      "target": "technique-1765701505769",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765701488884bottom-technique-1765701505769top"
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765701505769",
+      "sourceHandle": "bottom",
+      "target": "technique-1765701524907",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Supply Chain",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765701505769bottom-technique-1765701524907top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765701524907",
+      "sourceHandle": "bottom",
+      "target": "technique-1765701537309",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Data Exfiltration",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765701524907bottom-technique-1765701537309top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765701537309",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-1765701563803",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765701537309bottom-exitPoint-1765701563803top"
+    },
+    {
+      "zIndex": 1000,
+      "source": "entryPoint-1765701595401",
+      "sourceHandle": "bottom",
+      "target": "technique-1765701524907",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-1765701595401bottom-technique-1765701524907top",
+      "selected": false
+    }
+  ]
+}

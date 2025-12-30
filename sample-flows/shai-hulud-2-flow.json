@@ -1,0 +1,873 @@
+{
+  "metadata": {
+    "name": "Attack Flow",
+    "created": "2025-12-14T09:44:46.448Z",
+    "version": "1.0",
+    "framework": "SITF"
+  },
+  "nodes": [
+    {
+      "id": "entryPoint-1765192751091",
+      "type": "entryPoint",
+      "position": {
+        "x": -229.30374529352736,
+        "y": 13.946130329704317
+      },
+      "data": {
+        "label": "Producer entry point (PostHog, AsyncAPI)"
+      },
+      "zIndex": 0,
+      "width": 309,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -229.30374529352736,
+        "y": 13.946130329704317
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-1765192754716",
+      "type": "component",
+      "position": {
+        "x": 459.9382399236488,
+        "y": 101.57011058610169
+      },
+      "data": {
+        "label": "Endpoint/IDE",
+        "componentId": "endpoint",
+        "techniques": []
+      },
+      "zIndex": -1,
+      "width": 226,
+      "height": 626,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 459.9382399236488,
+        "y": 101.57011058610169
+      },
+      "dragging": false,
+      "style": {
+        "width": 226,
+        "height": 626
+      },
+      "resizing": false
+    },
+    {
+      "id": "component-1765192761789",
+      "type": "component",
+      "position": {
+        "x": -184.95150703712466,
+        "y": 109.0947121618816
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": []
+      },
+      "zIndex": -1,
+      "width": 221,
+      "height": 513,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -184.95150703712466,
+        "y": 109.0947121618816
+      },
+      "dragging": false,
+      "style": {
+        "width": 221,
+        "height": 513
+      },
+      "resizing": false
+    },
+    {
+      "id": "component-1765192768857",
+      "type": "component",
+      "position": {
+        "x": 758.974815764098,
+        "y": 107.15935217348834
+      },
+      "data": {
+        "label": "VCS",
+        "componentId": "vcs",
+        "techniques": []
+      },
+      "zIndex": -1,
+      "width": 220,
+      "height": 235,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 758.974815764098,
+        "y": 107.15935217348834
+      },
+      "dragging": false,
+      "style": {
+        "width": 220,
+        "height": 235
+      },
+      "resizing": false
+    },
+    {
+      "id": "component-1765192777220",
+      "type": "component",
+      "position": {
+        "x": 152.0349517800563,
+        "y": 108.4653241449428
+      },
+      "data": {
+        "label": "Registry",
+        "componentId": "registry",
+        "techniques": []
+      },
+      "zIndex": -1,
+      "width": 205,
+      "height": 278,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 152.0349517800563,
+        "y": 108.4653241449428
+      },
+      "dragging": false,
+      "resizing": false,
+      "style": {
+        "width": 205,
+        "height": 278
+      }
+    },
+    {
+      "id": "technique-1765192795298",
+      "type": "technique",
+      "position": {
+        "x": -155.22101102466354,
+        "y": 200.33845128204314
+      },
+      "data": {
+        "id": "T-C003",
+        "name": "PWN Request / Poisoned Pipeline Execution",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker submits malicious PR that triggers workflow with elevated privileges",
+        "risks": [
+          "Misconfigured repo - visibility",
+          "Misconfigured VCS access - external contributors",
+          "Allowing PRs from forks",
+          "Usage of pull_request_target/workflow_run",
+          "Default workflow permissions set to WRITE",
+          "Default workflow permissions set to approve PR",
+          "Workflows with access to secrets"
+        ],
+        "controls": [
+          "Branch protection rules (VCS)",
+          "Private repo (VCS)",
+          "CICD scanning tools",
+          "Require explicit approval for workflows from forks (VCS)",
+          "Minimal workflow permissions",
+          "Default workflow permissions not set to approve PRs"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -155.22101102466354,
+        "y": 200.33845128204314
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765192833166",
+      "type": "technique",
+      "position": {
+        "x": -155.58687992711697,
+        "y": 327.13584164407274
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": [
+          "OIDC setup in workflows",
+          "Runtime agent on runner",
+          "Secret scanning",
+          "Minimal workflow permissions",
+          "Log sanitization"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -155.58687992711697,
+        "y": 327.13584164407274
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765192851809",
+      "type": "technique",
+      "position": {
+        "x": 171.4478014276823,
+        "y": 217.82379640293107
+      },
+      "data": {
+        "id": "T-R004",
+        "name": "Publishing Malicious Package",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious package to registry",
+        "risks": [
+          "Overprivileged NPM token",
+          "Lack of provenance",
+          "Lack of trusted publishing",
+          "No package signing"
+        ],
+        "controls": [
+          "Trusted publishing",
+          "Provenance attestation",
+          "MFA for registry account",
+          "Package signing and verification",
+          "OIDC for publishing"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 171.4478014276823,
+        "y": 217.82379640293107
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765192894154",
+      "type": "technique",
+      "position": {
+        "x": 494.8516337512186,
+        "y": 203.34227760216152
+      },
+      "data": {
+        "id": "T-E001",
+        "name": "Malicious Execution on Endpoint",
+        "component": "endpoint",
+        "stage": "Initial Access",
+        "description": "Attacker executes malicious code on developer workstation",
+        "risks": [
+          "Using untrusted IDE extensions",
+          "Using untrusted software packages on endpoints",
+          "No EDR/antivirus installed",
+          "Lack of application sandboxing"
+        ],
+        "controls": [
+          "EDR on endpoint",
+          "IDE sandboxing",
+          "Mandating signed extensions",
+          "Package version pinning",
+          "Application whitelisting"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 494.8516337512186,
+        "y": 203.34227760216152
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765192928174",
+      "type": "technique",
+      "position": {
+        "x": 495.03829104089755,
+        "y": 335.87063517604776
+      },
+      "data": {
+        "id": "T-E003",
+        "name": "Harvest Local Secrets / Credentials from Endpoint",
+        "component": "endpoint",
+        "stage": "Post-Compromise",
+        "description": "Attacker extracts credentials stored on developer machine",
+        "risks": [
+          "Credentials stored in plaintext on endpoints",
+          "Production credentials on developer machines",
+          "No local DLP",
+          "SSH keys without passwords",
+          "Cloud credentials in environment variables"
+        ],
+        "controls": [
+          "Local DLP",
+          "EDR on endpoint",
+          "Credential manager enforcement",
+          "No production credentials on endpoints",
+          "Encrypted credential storage"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 495.03829104089755,
+        "y": 335.87063517604776
+      },
+      "dragging": false
+    },
+    {
+      "id": "entryPoint-1765192940291",
+      "type": "entryPoint",
+      "position": {
+        "x": 479.8711651962851,
+        "y": 0.4640370756697081
+      },
+      "data": {
+        "label": "Consumer entry point"
+      },
+      "zIndex": 0,
+      "width": 190,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 479.8711651962851,
+        "y": 0.4640370756697081
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765193033758",
+      "type": "technique",
+      "position": {
+        "x": 797.0705833197418,
+        "y": 209.00614488495623
+      },
+      "data": {
+        "id": "T-V004",
+        "name": "Secret Exfiltration from Personal Repo",
+        "component": "vcs",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker finds secrets in personal repos of org members",
+        "risks": [
+          "Misconfigured repo - visibility",
+          "Using personal repos for work",
+          "Org members with public repos containing work content"
+        ],
+        "controls": [
+          "Secret scanning on personal repos",
+          "Policy against using personal repos for work",
+          "Detection infra on audit logs",
+          "Security awareness training"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 797.0705833197418,
+        "y": 209.00614488495623
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-1765193081459",
+      "type": "exitPoint",
+      "position": {
+        "x": 804.6286460830191,
+        "y": 376.389742854306
+      },
+      "data": {
+        "label": "Future Breach"
+      },
+      "zIndex": 0,
+      "width": 144,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 804.6286460830191,
+        "y": 376.389742854306
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765193129128",
+      "type": "technique",
+      "position": {
+        "x": 495.03829104089743,
+        "y": 611.8705908144301
+      },
+      "data": {
+        "id": "T-E006",
+        "name": "Register Local Machine as CI Runner",
+        "component": "endpoint",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker registers compromised endpoint as self-hosted CI/CD runner",
+        "risks": [
+          "Ability to register arbitrary machines as runners",
+          "No runner registration approval process",
+          "Runner registration tokens not protected"
+        ],
+        "controls": [
+          "Using managed runners only",
+          "Runner registration approval workflow",
+          "Runner registration token protection",
+          "Network segmentation (runners isolated from endpoints)"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 495.03829104089743,
+        "y": 611.8705908144301
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-1765193150677",
+      "type": "exitPoint",
+      "position": {
+        "x": 495.41087596609214,
+        "y": 762.3717892560098
+      },
+      "data": {
+        "label": "Ongoing Access"
+      },
+      "zIndex": 0,
+      "width": 158,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 495.41087596609214,
+        "y": 762.3717892560098
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-1765193177090",
+      "type": "exitPoint",
+      "position": {
+        "x": 125.73812428494875,
+        "y": 506.765168577188
+      },
+      "data": {
+        "label": "Secondary Supply Chain Attack"
+      },
+      "zIndex": 0,
+      "width": 252,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 125.73812428494875,
+        "y": 506.765168577188
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765193232563",
+      "type": "technique",
+      "position": {
+        "x": -155.19054368548768,
+        "y": 501.9346247709658
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": [
+          "OIDC setup in workflows",
+          "Runtime agent on runner",
+          "Secret scanning",
+          "Minimal workflow permissions",
+          "Log sanitization"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -155.19054368548768,
+        "y": 501.9346247709658
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1765705449405",
+      "type": "technique",
+      "position": {
+        "x": 494.1494302254897,
+        "y": 473.4223823703654
+      },
+      "data": {
+        "id": "T-E010",
+        "name": "Endpoint Infrastructure Destruction",
+        "component": "endpoint",
+        "stage": "Post-Compromise",
+        "description": "Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption",
+        "risks": [
+          "No endpoint backup and recovery",
+          "Overprivileged local user accounts",
+          "No endpoint EDR",
+          "Lack of system integrity monitoring",
+          "No offline backups",
+          "Insufficient access controls on critical system files"
+        ],
+        "controls": [
+          "Endpoint EDR/XDR",
+          "Regular endpoint backups",
+          "System integrity monitoring",
+          "Minimal local user privileges",
+          "Offline backup storage",
+          "File system access controls",
+          "Endpoint recovery procedures"
+        ]
+      },
+      "zIndex": 0,
+      "width": 160,
+      "height": 90,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 494.1494302254897,
+        "y": 473.4223823703654
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "zIndex": 1000,
+      "source": "entryPoint-1765192751091",
+      "sourceHandle": "bottom",
+      "target": "technique-1765192795298",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-1765192751091bottom-technique-1765192795298top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765192795298",
+      "sourceHandle": "bottom",
+      "target": "technique-1765192833166",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765192795298bottom-technique-1765192833166top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765192833166",
+      "sourceHandle": "bottom",
+      "target": "technique-1765192851809",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765192833166bottom-technique-1765192851809top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765192851809",
+      "sourceHandle": "bottom",
+      "target": "technique-1765192894154",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "Supply Chain",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765192851809bottom-technique-1765192894154top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765192894154",
+      "sourceHandle": "bottom",
+      "target": "technique-1765192928174",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765192894154bottom-technique-1765192928174top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "entryPoint-1765192940291",
+      "sourceHandle": "bottom",
+      "target": "technique-1765192894154",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-1765192940291bottom-technique-1765192894154top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765193033758",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-1765193081459",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765193033758bottom-exitPoint-1765193081459top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765192928174",
+      "sourceHandle": "bottom",
+      "target": "technique-1765193033758",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "Data Exfiltration",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765192928174bottom-technique-1765193033758top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765193129128",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-1765193150677",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765193129128bottom-exitPoint-1765193150677top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765192851809",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-1765193177090",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765192851809bottom-exitPoint-1765193177090top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765192928174",
+      "sourceHandle": "bottom",
+      "target": "technique-1765193232563",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765192928174bottom-technique-1765193232563top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765193232563",
+      "sourceHandle": "bottom",
+      "target": "technique-1765192851809",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765193232563bottom-technique-1765192851809top",
+      "selected": false
+    },
+    {
+      "zIndex": 1000,
+      "source": "technique-1765705449405",
+      "sourceHandle": "bottom",
+      "target": "technique-1765193129128",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765705449405bottom-technique-1765193129128top"
+    }
+  ]
+}

@@ -1,0 +1,2289 @@
+
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SITF Attack Flow Visualizer</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23FC80FF'/><stop offset='100%25' style='stop-color:%239D4EDD'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='%230A0E27'/><path d='M 30 50 L 45 50 L 50 35 L 55 65 L 60 45 L 70 45' stroke='url(%23g)' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/><circle cx='30' cy='50' r='4' fill='%2310B981'/><circle cx='70' cy='45' r='4' fill='%23EF4444'/><path d='M 50 20 L 50 30 M 42 24 L 50 20 L 58 24' stroke='%23FC80FF' stroke-width='2' fill='none' stroke-linecap='round'/></svg>">
+    
+    <!-- Poppins Font (Wiz Style) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React and React DOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- React Flow -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reactflow@11/dist/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/reactflow@11/dist/umd/index.min.js"></script>
+    
+    <!-- html2canvas for PNG export -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- Babel Standalone for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        :root {
+            /* Dark mode colors (default) */
+            --wiz-dark-bg: #0f0f0f;
+            --wiz-dark-surface: #1a1a1a;
+            --wiz-dark-border: #333333;
+            --wiz-dark-hover: #252525;
+            --wiz-text-primary: #e5e5e5;
+            --wiz-text-secondary: #a0a0a0;
+            --wiz-accent-purple: #FC80FF;
+            --wiz-accent-blue: #4A90E2;
+            --wiz-success: #10B981;
+            --wiz-danger: #EF4444;
+            --wiz-warning: #F59E0B;
+            --wiz-edge-color: #666666;
+            --wiz-scrollbar-track: #0f0f0f;
+            --wiz-scrollbar-thumb: #333333;
+            --wiz-scrollbar-thumb-hover: #444444;
+        }
+        
+        /* Light mode colors */
+        .theme-light {
+            --wiz-dark-bg: #ffffff;
+            --wiz-dark-surface: #f9fafb;
+            --wiz-dark-border: #e5e7eb;
+            --wiz-dark-hover: #f3f4f6;
+            --wiz-text-primary: #1f2937;
+            --wiz-text-secondary: #6b7280;
+            --wiz-accent-purple: #a855f7;
+            --wiz-accent-blue: #3b82f6;
+            --wiz-success: #10B981;
+            --wiz-danger: #EF4444;
+            --wiz-warning: #F59E0B;
+            --wiz-edge-color: #9ca3af;
+            --wiz-scrollbar-track: #f9fafb;
+            --wiz-scrollbar-thumb: #d1d5db;
+            --wiz-scrollbar-thumb-hover: #9ca3af;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: var(--wiz-dark-bg);
+            color: var(--wiz-text-primary);
+        }
+        
+        .palette-container {
+            min-width: 200px;
+            max-width: 600px;
+            background: var(--wiz-dark-surface);
+            border-right: 1px solid var(--wiz-dark-border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .resize-handle {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            cursor: col-resize;
+            background: transparent;
+            z-index: 1000;
+            transition: all 0.2s;
+        }
+        
+        .resize-handle:hover,
+        .resize-handle.resizing {
+            background: var(--wiz-accent-purple);
+            box-shadow: 0 0 10px rgba(252, 128, 255, 0.5);
+        }
+        
+        /* React Flow Dark Theme Overrides */
+        .react-flow {
+            background: var(--wiz-dark-bg);
+        }
+        
+        .react-flow__node {
+            font-size: 12px;
+        }
+        
+        .react-flow__edge-path {
+            stroke-width: 2;
+            stroke: var(--wiz-edge-color);
+        }
+        
+        .react-flow__edge-text {
+            font-size: 11px;
+        }
+        
+        .react-flow__controls {
+            background: var(--wiz-dark-surface);
+            border: 1px solid var(--wiz-dark-border);
+            border-radius: 8px;
+        }
+        
+        .react-flow__controls button {
+            background: var(--wiz-dark-surface);
+            border-bottom: 1px solid var(--wiz-dark-border);
+            color: var(--wiz-text-primary);
+        }
+        
+        .react-flow__controls button:hover {
+            background: var(--wiz-dark-hover);
+        }
+        
+        .react-flow__minimap {
+            background: var(--wiz-dark-surface);
+            border: 1px solid var(--wiz-dark-border);
+            border-radius: 8px;
+        }
+        
+        .react-flow__background {
+            background: var(--wiz-dark-bg);
+        }
+        
+        .palette-item {
+            cursor: grab;
+            transition: all 0.2s ease;
+            background: var(--wiz-dark-surface);
+            border: 1px solid var(--wiz-dark-border);
+        }
+        
+        .palette-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(252, 128, 255, 0.2);
+            border-color: var(--wiz-accent-purple);
+        }
+        
+        .palette-item:active {
+            cursor: grabbing;
+            transform: translateX(2px);
+        }
+        
+        /* Multi-selection box styling */
+        .react-flow__selectionpane {
+            background: rgba(252, 128, 255, 0.1);
+            border: 2px dashed var(--wiz-accent-purple);
+        }
+        
+        .react-flow__node.selected {
+            box-shadow: 0 0 0 2px var(--wiz-accent-purple);
+        }
+        
+        .component-node {
+            min-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            background-color: var(--wiz-dark-surface);
+            border: 1px solid var(--wiz-dark-border);
+        }
+        
+        /* Force component nodes to always be in background */
+        .react-flow__node[data-type="component"] {
+            z-index: -1 !important;
+        }
+        
+        /* Keep components in background even when selected */
+        .react-flow__node[data-type="component"].selected {
+            z-index: -1 !important;
+        }
+        
+        /* Technique nodes and other nodes on top */
+        .react-flow__node[data-type="technique"],
+        .react-flow__node[data-type="entryPoint"],
+        .react-flow__node[data-type="exitPoint"] {
+            z-index: 10 !important;
+        }
+        
+        /* Keep technique nodes on top even when not selected */
+        .react-flow__node[data-type="technique"]:not(.selected),
+        .react-flow__node[data-type="entryPoint"]:not(.selected),
+        .react-flow__node[data-type="exitPoint"]:not(.selected) {
+            z-index: 10 !important;
+        }
+        
+        /* Edges should be above component nodes but below technique nodes and popups */
+        .react-flow__edge {
+            z-index: 5 !important;
+        }
+        
+        /* Ensure edge labels are also at same level as edges */
+        .react-flow__edge-text {
+            z-index: 5 !important;
+        }
+        
+        /* Force popups to be above everything including edges */
+        .technique-popup {
+            z-index: 1000 !important;
+            position: absolute !important;
+        }
+        
+        .technique-node {
+            font-size: 11px;
+            padding: 8px;
+            margin: 4px;
+            background: var(--wiz-dark-surface);
+            border-radius: 6px;
+            border: 1px solid var(--wiz-dark-border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .entry-exit-node {
+            border-radius: 20px;
+            padding: 12px 20px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: var(--wiz-scrollbar-track);
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: var(--wiz-scrollbar-thumb);
+            border-radius: 4px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+            background: var(--wiz-scrollbar-thumb-hover);
+        }
+        
+        .matrix-resize-handle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            cursor: row-resize;
+            background: transparent;
+            z-index: 1000;
+            transition: all 0.2s;
+        }
+        
+        .matrix-resize-handle:hover,
+        .matrix-resize-handle.resizing {
+            background: var(--wiz-accent-purple);
+            box-shadow: 0 0 10px rgba(252, 128, 255, 0.5);
+        }
+        
+        /* Wiz-style buttons */
+        .wiz-button {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .wiz-button-primary {
+            background: var(--wiz-accent-purple);
+            color: var(--wiz-dark-bg);
+        }
+        
+        .wiz-button-primary:hover {
+            background: #FF99FF;
+            box-shadow: 0 4px 12px rgba(252, 128, 255, 0.3);
+        }
+        
+        .wiz-button-secondary {
+            background: var(--wiz-dark-surface);
+            color: var(--wiz-text-primary);
+            border: 1px solid var(--wiz-dark-border);
+        }
+        
+        .wiz-button-secondary:hover {
+            background: var(--wiz-dark-hover);
+            border-color: var(--wiz-accent-purple);
+        }
+        
+        .wiz-button-success {
+            background: var(--wiz-success);
+            color: white;
+        }
+        
+        .wiz-button-success:hover {
+            background: #059669;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .wiz-button-danger {
+            background: var(--wiz-danger);
+            color: white;
+        }
+        
+        .wiz-button-danger:hover {
+            background: #DC2626;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel" data-type="module">
+        const { useState, useCallback, useRef, useEffect } = React;
+        const {
+            ReactFlow,
+            Background,
+            Controls,
+            MiniMap,
+            useNodesState,
+            useEdgesState,
+            addEdge,
+            MarkerType,
+            Handle,
+            Position,
+            NodeResizer
+        } = window.ReactFlow;
+        
+        // Embedded techniques data - generated by build.py from TECHNIQUE_LIBRARY.md
+        {{EMBEDDED_DATA}}
+        
+        // Custom Node Components
+        const EntryPointNode = ({ data, id }) => {
+            const [isEditing, setIsEditing] = useState(false);
+            const [label, setLabel] = useState(data.label);
+            const inputRef = useRef(null);
+            
+            useEffect(() => {
+                if (isEditing && inputRef.current) {
+                    inputRef.current.focus();
+                    inputRef.current.select();
+                }
+            }, [isEditing]);
+            
+            const handleDoubleClick = () => {
+                setIsEditing(true);
+            };
+            
+            const handleBlur = () => {
+                setIsEditing(false);
+                if (label.trim()) {
+                    data.label = label.trim();
+                } else {
+                    setLabel(data.label);
+                }
+            };
+            
+            const handleKeyDown = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleBlur();
+                } else if (e.key === 'Escape') {
+                    setLabel(data.label);
+                    setIsEditing(false);
+                }
+            };
+            
+            return (
+                <div className="entry-exit-node border-2 border-dashed" style={{
+                    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+                    borderColor: 'var(--wiz-success)',
+                    color: 'var(--wiz-success)'
+                }}>
+                    {isEditing ? (
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={label}
+                            onChange={(e) => setLabel(e.target.value)}
+                            onBlur={handleBlur}
+                            onKeyDown={handleKeyDown}
+                            className="font-semibold bg-transparent border-none outline-none w-full text-center"
+                            style={{ minWidth: '100px', color: 'var(--wiz-success)' }}
+                        />
+                    ) : (
+                        <div
+                            className="font-semibold cursor-pointer"
+                            onDoubleClick={handleDoubleClick}
+                            title="Double-click to edit"
+                        >
+                            ▶ {label}
+                        </div>
+                    )}
+                    <Handle type="source" position={Position.Right} id="right" style={{ top: '50%' }} />
+                    <Handle type="source" position={Position.Bottom} id="bottom" style={{ left: '50%' }} />
+                </div>
+            );
+        };
+        
+        const ExitPointNode = ({ data, id }) => {
+            const [isEditing, setIsEditing] = useState(false);
+            const [label, setLabel] = useState(data.label);
+            const inputRef = useRef(null);
+            
+            useEffect(() => {
+                if (isEditing && inputRef.current) {
+                    inputRef.current.focus();
+                    inputRef.current.select();
+                }
+            }, [isEditing]);
+            
+            const handleDoubleClick = () => {
+                setIsEditing(true);
+            };
+            
+            const handleBlur = () => {
+                setIsEditing(false);
+                if (label.trim()) {
+                    data.label = label.trim();
+                } else {
+                    setLabel(data.label);
+                }
+            };
+            
+            const handleKeyDown = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleBlur();
+                } else if (e.key === 'Escape') {
+                    setLabel(data.label);
+                    setIsEditing(false);
+                }
+            };
+            
+            return (
+                <div className="entry-exit-node border-2 border-solid" style={{
+                    backgroundColor: 'rgba(239, 68, 68, 0.15)',
+                    borderColor: 'var(--wiz-danger)',
+                    color: 'var(--wiz-danger)'
+                }}>
+                    <Handle type="target" position={Position.Left} id="left" style={{ top: '50%' }} />
+                    <Handle type="target" position={Position.Top} id="top" style={{ left: '50%' }} />
+                    {isEditing ? (
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            value={label}
+                            onChange={(e) => setLabel(e.target.value)}
+                            onBlur={handleBlur}
+                            onKeyDown={handleKeyDown}
+                            className="font-semibold bg-transparent border-none outline-none w-full text-center"
+                            style={{ minWidth: '100px', color: 'var(--wiz-danger)' }}
+                        />
+                    ) : (
+                        <div
+                            className="font-semibold cursor-pointer"
+                            onDoubleClick={handleDoubleClick}
+                            title="Double-click to edit"
+                        >
+                            ◉ {label}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+        
+        const ComponentNode = ({ data, selected, id }) => {
+            const component = techniquesData?.components.find(c => c.id === data.componentId);
+            const bgColor = component?.color || '#gray';
+            const [isEditing, setIsEditing] = useState(false);
+            const [customLabel, setCustomLabel] = useState(data.customLabel || '');
+            const inputRef = useRef(null);
+            
+            useEffect(() => {
+                if (isEditing && inputRef.current) {
+                    inputRef.current.focus();
+                    inputRef.current.select();
+                }
+            }, [isEditing]);
+            
+            const handleDoubleClick = (e) => {
+                e.stopPropagation();
+                setIsEditing(true);
+            };
+            
+            const handleBlur = () => {
+                setIsEditing(false);
+                data.customLabel = customLabel.trim();
+            };
+            
+            const handleKeyDown = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleBlur();
+                } else if (e.key === 'Escape') {
+                    setCustomLabel(data.customLabel || '');
+                    setIsEditing(false);
+                }
+            };
+            
+            const displayName = component?.name || data.label;
+            const displayLabel = customLabel || data.customLabel;
+            
+            return (
+                <>
+                    <NodeResizer
+                        isVisible={selected}
+                        minWidth={200}
+                        minHeight={150}
+                    />
+                    <div className="component-node" style={{
+                        borderLeft: `4px solid ${bgColor}`,
+                        backgroundColor: 'var(--wiz-dark-surface)',
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column'
+                    }}>
+                        {/* No connection handles for architectural components */}
+                        
+                        <div className="p-3 border-b" style={{
+                            flexShrink: 0,
+                            background: 'rgba(74, 144, 226, 0.1)',
+                            borderColor: 'var(--wiz-dark-border)'
+                        }}>
+                            <div className="font-bold text-sm" style={{ color: bgColor }}>
+                                {displayName}
+                            </div>
+                            {isEditing ? (
+                                <input
+                                    ref={inputRef}
+                                    type="text"
+                                    value={customLabel}
+                                    onChange={(e) => setCustomLabel(e.target.value)}
+                                    onBlur={handleBlur}
+                                    onKeyDown={handleKeyDown}
+                                    placeholder="e.g., Producer, Consumer"
+                                    className="mt-1 text-xs bg-transparent border-none outline-none w-full"
+                                    style={{
+                                        minWidth: '100px',
+                                        color: 'var(--wiz-text-secondary)',
+                                        borderBottom: '1px solid var(--wiz-accent-purple)'
+                                    }}
+                                />
+                            ) : (
+                                <div
+                                    className="mt-1 text-xs cursor-pointer"
+                                    onDoubleClick={handleDoubleClick}
+                                    title="Double-click to add label (e.g., Producer/Consumer)"
+                                    style={{
+                                        color: displayLabel ? 'var(--wiz-text-secondary)' : 'var(--wiz-text-secondary)',
+                                        fontStyle: displayLabel ? 'normal' : 'italic',
+                                        opacity: displayLabel ? 1 : 0.5
+                                    }}
+                                >
+                                    {displayLabel || 'Double-click to add label'}
+                                </div>
+                            )}
+                        </div>
+                        <div className="p-2 overflow-auto" style={{ flex: 1, backgroundColor: 'var(--wiz-dark-bg)' }}>
+                            {/* Component container - techniques are placed as independent nodes on canvas */}
+                        </div>
+                    </div>
+                </>
+            );
+        };
+        
+        const TechniqueNode = ({ data, id }) => {
+            const component = techniquesData?.components.find(c => c.id === data.component);
+            const bgColor = component?.color || '#6B7280';
+            const [showControls, setShowControls] = useState(false);
+            const [showRisks, setShowRisks] = useState(false);
+            const [isEditing, setIsEditing] = useState(false);
+            const [customLabel, setCustomLabel] = useState(data.customLabel || '');
+            const inputRef = useRef(null);
+            
+            // Find full technique data
+            const fullTechnique = techniquesData?.techniques.find(t => t.id === data.id);
+            
+            useEffect(() => {
+                if (isEditing && inputRef.current) {
+                    inputRef.current.focus();
+                    inputRef.current.select();
+                }
+            }, [isEditing]);
+            
+            const handleDoubleClick = (e) => {
+                e.stopPropagation();
+                setIsEditing(true);
+            };
+            
+            const handleBlur = () => {
+                setIsEditing(false);
+                data.customLabel = customLabel.trim();
+            };
+            
+            const handleKeyDown = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleBlur();
+                } else if (e.key === 'Escape') {
+                    setCustomLabel(data.customLabel || '');
+                    setIsEditing(false);
+                }
+            };
+            
+            const displayLabel = customLabel || data.customLabel;
+            
+            return (
+                <div style={{ position: 'relative', width: '160px' }}>
+                    {/* Vertical connection handles only */}
+                    <Handle type="target" position={Position.Top} id="top" style={{ left: '50%' }} />
+                    <Handle type="source" position={Position.Bottom} id="bottom" style={{ left: '50%' }} />
+                    
+                    {/* Risks expansion button (LEFT - swapped) */}
+                    <button
+                        onClick={() => setShowRisks(!showRisks)}
+                        style={{
+                            position: 'absolute',
+                            left: '-12px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            width: '24px',
+                            height: '24px',
+                            borderRadius: '50%',
+                            border: '2px solid var(--wiz-danger)',
+                            backgroundColor: 'var(--wiz-dark-surface)',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            lineHeight: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: 0,
+                            zIndex: 10,
+                            color: 'var(--wiz-danger)',
+                            fontWeight: 'bold'
+                        }}
+                        title="Show Risks"
+                    >
+                        {showRisks ? '−' : '⋯'}
+                    </button>
+                    
+                    {/* Controls expansion button (RIGHT - swapped) */}
+                    <button
+                        onClick={() => setShowControls(!showControls)}
+                        style={{
+                            position: 'absolute',
+                            right: '-12px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            width: '24px',
+                            height: '24px',
+                            borderRadius: '50%',
+                            border: '2px solid var(--wiz-success)',
+                            backgroundColor: 'var(--wiz-dark-surface)',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            lineHeight: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: 0,
+                            zIndex: 10,
+                            color: 'var(--wiz-success)',
+                            fontWeight: 'bold'
+                        }}
+                        title="Show Controls"
+                    >
+                        {showControls ? '−' : '⋯'}
+                    </button>
+                    
+                    {/* Main technique card */}
+                    <div className="p-2 border-2 rounded shadow-sm" style={{
+                        borderColor: bgColor,
+                        background: 'rgba(252, 128, 255, 0.08)'
+                    }}>
+                        <div className="text-xs font-bold mb-0.5" style={{ color: bgColor }}>
+                            {data.id}
+                        </div>
+                        <div className="text-xs font-medium mb-2 line-clamp-2" style={{ color: 'var(--wiz-text-primary)' }}>
+                            {data.name}
+                        </div>
+                        {isEditing ? (
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={customLabel}
+                                onChange={(e) => setCustomLabel(e.target.value)}
+                                onBlur={handleBlur}
+                                onKeyDown={handleKeyDown}
+                                placeholder="e.g., Initial Access, Collection"
+                                className="text-xs bg-transparent border-none outline-none w-full mt-1"
+                                style={{
+                                    minWidth: '100px',
+                                    color: 'var(--wiz-text-secondary)',
+                                    borderBottom: '1px solid var(--wiz-accent-purple)',
+                                    paddingTop: '2px'
+                                }}
+                            />
+                        ) : (
+                            <div
+                                className="text-xs cursor-pointer mt-1"
+                                onDoubleClick={handleDoubleClick}
+                                title="Double-click to add stage/context label"
+                                style={{
+                                    color: displayLabel ? 'var(--wiz-text-secondary)' : 'var(--wiz-text-secondary)',
+                                    fontStyle: displayLabel ? 'normal' : 'italic',
+                                    opacity: displayLabel ? 1 : 0.5,
+                                    paddingTop: '2px',
+                                    borderTop: displayLabel ? '1px solid var(--wiz-dark-border)' : 'none'
+                                }}
+                            >
+                                {displayLabel || 'Double-click to label'}
+                            </div>
+                        )}
+                    </div>
+                    
+                    {/* Risks popup (LEFT - swapped) */}
+                    {showRisks && fullTechnique && (
+                        <div className="technique-popup" style={{
+                            right: '100%',
+                            top: 0,
+                            marginRight: '20px',
+                            width: '200px',
+                            backgroundColor: 'var(--wiz-dark-surface)',
+                            border: '2px solid var(--wiz-danger)',
+                            borderRadius: '4px',
+                            padding: '8px',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                            pointerEvents: 'auto'
+                        }}>
+                            <div style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--wiz-danger)', marginBottom: '4px' }}>
+                                Risks
+                            </div>
+                            <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)' }}>
+                                {fullTechnique.risks.map((risk, idx) => (
+                                    <li key={idx} style={{ marginBottom: '2px' }}>{risk}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                    
+                    {/* Controls popup (RIGHT - swapped) */}
+                    {showControls && fullTechnique && (
+                        <div className="technique-popup" style={{
+                            left: '100%',
+                            top: 0,
+                            marginLeft: '20px',
+                            width: '200px',
+                            backgroundColor: 'var(--wiz-dark-surface)',
+                            border: '2px solid var(--wiz-success)',
+                            borderRadius: '4px',
+                            padding: '8px',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                            pointerEvents: 'auto'
+                        }}>
+                            <div style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--wiz-success)', marginBottom: '4px' }}>
+                                Controls
+                            </div>
+                            <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)' }}>
+                                {fullTechnique.controls.map((control, idx) => (
+                                    <li key={idx} style={{ marginBottom: '2px' }}>{control}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+        
+        const nodeTypes = {
+            entryPoint: EntryPointNode,
+            exitPoint: ExitPointNode,
+            component: ComponentNode,
+            technique: TechniqueNode,
+        };
+        
+        // Palette Component
+        const Palette = ({ onDragStart, selectedComponent, setSelectedComponent }) => {
+            const [expandedSections, setExpandedSections] = useState({
+                entry: true,
+                components: true,
+                techniques: false,
+                exit: true
+            });
+            
+            const [searchTerm, setSearchTerm] = useState('');
+            
+            const toggleSection = (section) => {
+                setExpandedSections(prev => ({
+                    ...prev,
+                    [section]: !prev[section]
+                }));
+            };
+            
+            // Auto-expand techniques section when a component is selected
+            useEffect(() => {
+                if (selectedComponent !== 'all') {
+                    setExpandedSections(prev => ({
+                        ...prev,
+                        techniques: true
+                    }));
+                }
+            }, [selectedComponent]);
+            
+            // Return null if data not loaded yet
+            if (!techniquesData) return null;
+            
+            const filteredTechniques = techniquesData.techniques.filter(tech => {
+                const matchesSearch = tech.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                     tech.id.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesComponent = selectedComponent === 'all' || tech.component === selectedComponent;
+                return matchesSearch && matchesComponent;
+            });
+            
+            return (
+                <div className="flex flex-col h-full" style={{ width: '100%', background: 'var(--wiz-dark-surface)' }}>
+                    <div className="p-4 border-b" style={{ borderColor: 'var(--wiz-dark-border)', background: 'var(--wiz-dark-bg)' }}>
+                        <h2 className="text-lg font-bold" style={{ color: 'var(--wiz-text-primary)' }}>SITF Component Palette</h2>
+                        <p className="text-xs mt-1" style={{ color: 'var(--wiz-text-secondary)' }}>Drag components to canvas</p>
+                    </div>
+                    
+                    <div className="flex-1 overflow-y-auto scrollbar-thin">
+                        {/* Entry Point */}
+                        <div className="border-b" style={{ borderColor: 'var(--wiz-dark-border)' }}>
+                            <div className="p-2">
+                                <div
+                                    draggable
+                                    onDragStart={(e) => onDragStart(e, 'entryPoint', { label: 'Entry Point' })}
+                                    className="palette-item p-3 mb-2 rounded cursor-grab"
+                                    style={{
+                                        background: 'rgba(16, 185, 129, 0.1)',
+                                        border: '2px solid var(--wiz-success)',
+                                        color: 'var(--wiz-text-primary)'
+                                    }}
+                                >
+                                    <div className="text-sm font-bold" style={{ color: 'var(--wiz-success)' }}>▶ Entry Point</div>
+                                    <div className="text-xs mt-1" style={{ color: 'var(--wiz-text-secondary)' }}>Attack chain initiation</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Components */}
+                        <div className="border-b" style={{ borderColor: 'var(--wiz-dark-border)' }}>
+                            <button
+                                onClick={() => toggleSection('components')}
+                                className="w-full p-3 text-left font-semibold text-sm flex justify-between items-center"
+                                style={{
+                                    background: 'var(--wiz-dark-bg)',
+                                    color: 'var(--wiz-text-primary)',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    transition: 'background 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--wiz-dark-hover)'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = 'var(--wiz-dark-bg)'}
+                            >
+                                <span>■ Infrastructure Components</span>
+                                <span>{expandedSections.components ? '▼' : '▶'}</span>
+                            </button>
+                            {expandedSections.components && (
+                                <div className="p-2">
+                                    {techniquesData.components.map((comp) => (
+                                        <div
+                                            key={comp.id}
+                                            draggable
+                                            onDragStart={(e) => onDragStart(e, 'component', {
+                                                label: comp.name,
+                                                componentId: comp.id,
+                                                techniques: []
+                                            })}
+                                            className="palette-item p-2 mb-2 rounded cursor-grab"
+                                            style={{
+                                                background: 'var(--wiz-dark-surface)',
+                                                border: '2px solid var(--wiz-dark-border)',
+                                                borderLeftColor: comp.color,
+                                                borderLeftWidth: '4px'
+                                            }}
+                                        >
+                                            <div className="text-sm font-medium" style={{ color: comp.color }}>
+                                                {comp.name}
+                                            </div>
+                                            <div className="text-xs mt-1" style={{ color: 'var(--wiz-text-secondary)' }}>{comp.description}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        
+                        {/* Techniques */}
+                        <div className="border-b" style={{ borderColor: 'var(--wiz-dark-border)' }}>
+                            <button
+                                onClick={() => toggleSection('techniques')}
+                                className="w-full p-3 text-left font-semibold text-sm flex justify-between items-center"
+                                style={{
+                                    background: 'var(--wiz-dark-bg)',
+                                    color: 'var(--wiz-text-primary)',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    transition: 'background 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--wiz-dark-hover)'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = 'var(--wiz-dark-bg)'}
+                            >
+                                <span>▸ Attack Techniques ({filteredTechniques.length})</span>
+                                <span>{expandedSections.techniques ? '▼' : '▶'}</span>
+                            </button>
+                            {expandedSections.techniques && (
+                                <div className="p-2">
+                                    <input
+                                        type="text"
+                                        placeholder="Search techniques..."
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        className="w-full p-2 mb-2 text-sm rounded"
+                                        style={{
+                                            background: 'var(--wiz-dark-bg)',
+                                            border: '1px solid var(--wiz-dark-border)',
+                                            color: 'var(--wiz-text-primary)'
+                                        }}
+                                    />
+                                    <div className="mb-2">
+                                        <select
+                                            value={selectedComponent}
+                                            onChange={(e) => setSelectedComponent(e.target.value)}
+                                            className="w-full p-2 text-sm rounded"
+                                            style={{
+                                                background: 'var(--wiz-dark-bg)',
+                                                borderWidth: '2px',
+                                                borderStyle: 'solid',
+                                                borderColor: selectedComponent !== 'all'
+                                                    ? techniquesData.components.find(c => c.id === selectedComponent)?.color
+                                                    : 'var(--wiz-dark-border)',
+                                                color: 'var(--wiz-text-primary)'
+                                            }}
+                                        >
+                                            <option value="all">All Components</option>
+                                            {techniquesData.components.map(comp => (
+                                                <option key={comp.id} value={comp.id}>{comp.name}</option>
+                                            ))}
+                                        </select>
+                                        {selectedComponent !== 'all' && (
+                                            <div className="mt-1 text-xs flex items-center justify-between" style={{ color: 'var(--wiz-text-secondary)' }}>
+                                                <span>Filtered by component selection</span>
+                                                <button
+                                                    onClick={() => setSelectedComponent('all')}
+                                                    className="underline"
+                                                    style={{
+                                                        color: 'var(--wiz-accent-purple)',
+                                                        background: 'none',
+                                                        border: 'none',
+                                                        cursor: 'pointer'
+                                                    }}
+                                                >
+                                                    Clear
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="max-h-96 overflow-y-auto">
+                                        {filteredTechniques.map((tech) => {
+                                            const comp = techniquesData.components.find(c => c.id === tech.component);
+                                            return (
+                                                <div
+                                                    key={tech.id}
+                                                    draggable
+                                                    onDragStart={(e) => onDragStart(e, 'technique', tech)}
+                                                    className="palette-item p-2 mb-2 rounded cursor-grab"
+                                                    style={{
+                                                        background: 'var(--wiz-dark-surface)',
+                                                        border: '1px solid var(--wiz-dark-border)',
+                                                        borderLeftColor: comp?.color,
+                                                        borderLeftWidth: '3px'
+                                                    }}
+                                                >
+                                                    <div className="text-xs font-bold" style={{ color: comp?.color }}>
+                                                        {tech.id}
+                                                    </div>
+                                                    <div className="text-xs font-medium mt-1" style={{ color: 'var(--wiz-text-primary)' }}>
+                                                        {tech.name}
+                                                    </div>
+                                                    <div className="text-xs mt-1" style={{ color: 'var(--wiz-text-secondary)' }}>
+                                                        {Array.isArray(tech.stage) ? tech.stage.join(' / ') : tech.stage}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        
+                        {/* Exit Points */}
+                        <div>
+                            <button
+                                onClick={() => toggleSection('exit')}
+                                className="w-full p-3 text-left font-semibold text-sm flex justify-between items-center"
+                                style={{
+                                    background: 'var(--wiz-dark-bg)',
+                                    color: 'var(--wiz-text-primary)',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    transition: 'background 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--wiz-dark-hover)'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = 'var(--wiz-dark-bg)'}
+                            >
+                                <span>◉ Exit Points</span>
+                                <span>{expandedSections.exit ? '▼' : '▶'}</span>
+                            </button>
+                            {expandedSections.exit && (
+                                <div className="p-2">
+                                    {techniquesData.exitPoints.map((exit, idx) => (
+                                        <div
+                                            key={idx}
+                                            draggable
+                                            onDragStart={(e) => onDragStart(e, 'exitPoint', { label: exit })}
+                                            className="palette-item p-2 mb-2 rounded cursor-grab"
+                                            style={{
+                                                background: 'rgba(239, 68, 68, 0.1)',
+                                                border: '1px solid var(--wiz-danger)',
+                                                color: 'var(--wiz-text-primary)'
+                                            }}
+                                        >
+                                            <div className="text-sm font-medium" style={{ color: 'var(--wiz-danger)' }}>{exit}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        
+        // Controls Matrix Component
+        const ControlsMatrix = ({ nodes, matrixHeight, setMatrixHeight, isResizingMatrix, setIsResizingMatrix }) => {
+            const [isCollapsed, setIsCollapsed] = useState(false);
+            const [controlsData, setControlsData] = useState({ totalControls: 0, matrix: {} });
+            
+            // Export to CSV function
+            const exportToCSV = useCallback(() => {
+                if (!techniquesData) return;
+                
+                const mainStages = ['Initial Access', 'Discovery and Lateral Movement', 'Post-Compromise'];
+                const components = techniquesData.components;
+                
+                // Build CSV content with one row per control
+                let csv = 'Component,Category,Control,Status\n';
+                
+                components.forEach(comp => {
+                    mainStages.forEach(stage => {
+                        const controls = controlsData.matrix[comp.id]?.[stage] || [];
+                        controls.forEach(control => {
+                            // Escape quotes in control text and wrap in quotes
+                            const escapedControl = control.replace(/"/g, '""');
+                            csv += `"${comp.name}","${stage}","${escapedControl}",""\n`;
+                        });
+                    });
+                });
+                
+                // Create and download file
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `controls-matrix-${Date.now()}.csv`;
+                link.click();
+                URL.revokeObjectURL(url);
+            }, [controlsData]);
+            
+            // Stage mapping: map all technique stages to 3 main columns
+            const stageMapping = {
+                'Initial Access': 'Initial Access',
+                'Execution': 'Initial Access',
+                'Persistence': 'Discovery and Lateral Movement',
+                'Privilege Escalation': 'Discovery and Lateral Movement',
+                'Defense Evasion': 'Discovery and Lateral Movement',
+                'Credential Access': 'Discovery and Lateral Movement',
+                'Discovery and Lateral Movement': 'Discovery and Lateral Movement',
+                'Collection': 'Post-Compromise',
+                'Command and Control': 'Post-Compromise',
+                'Exfiltration': 'Post-Compromise',
+                'Impact': 'Post-Compromise',
+                'Post-Compromise': 'Post-Compromise'
+            };
+            
+            const mainStages = ['Initial Access', 'Discovery and Lateral Movement', 'Post-Compromise'];
+            const components = techniquesData?.components || [];
+            
+            // Rebuild matrix whenever nodes change
+            useEffect(() => {
+                if (!techniquesData) return;
+                
+                // Get all technique nodes on canvas
+                const techniqueNodes = nodes.filter(n => n.type === 'technique');
+                
+                if (techniqueNodes.length === 0) {
+                    setControlsData({ totalControls: 0, matrix: {} });
+                    return;
+                }
+                
+                // Build matrix: component × stage -> Set of controls
+                const matrix = {};
+                let totalControlsSet = new Set();
+                
+                components.forEach(comp => {
+                    matrix[comp.id] = {};
+                    mainStages.forEach(stage => {
+                        matrix[comp.id][stage] = new Set();
+                    });
+                });
+                
+                // Populate matrix from technique nodes
+                techniqueNodes.forEach(node => {
+                    const techData = techniquesData.techniques.find(t => t.id === node.data.id);
+                    if (!techData) return;
+                    
+                    const component = techData.component;
+                    const originalStage = techData.stage;
+                    const mappedStage = stageMapping[originalStage] || 'Post-Compromise';
+                    
+                    // Add controls to appropriate cell
+                    if (matrix[component] && matrix[component][mappedStage]) {
+                        techData.controls.forEach(control => {
+                            matrix[component][mappedStage].add(control);
+                            totalControlsSet.add(control);
+                        });
+                    }
+                });
+                
+                // Convert Sets to Arrays for rendering
+                const matrixArrays = {};
+                components.forEach(comp => {
+                    matrixArrays[comp.id] = {};
+                    mainStages.forEach(stage => {
+                        matrixArrays[comp.id][stage] = Array.from(matrix[comp.id][stage]);
+                    });
+                });
+                
+                setControlsData({
+                    totalControls: totalControlsSet.size,
+                    matrix: matrixArrays
+                });
+            }, [nodes]);
+            
+            const techniqueCount = nodes.filter(n => n.type === 'technique').length;
+            
+            // Matrix resize handlers
+            const startMatrixResize = useCallback((e) => {
+                setIsResizingMatrix(true);
+                e.preventDefault();
+            }, [setIsResizingMatrix]);
+            
+            return (
+                <div className="border-t" style={{
+                    height: isCollapsed ? 'auto' : `${matrixHeight}px`,
+                    position: 'relative',
+                    minHeight: '60px',
+                    maxHeight: '600px',
+                    borderColor: 'var(--wiz-dark-border)',
+                    background: 'var(--wiz-dark-surface)'
+                }}>
+                    {!isCollapsed && (
+                        <div
+                            className={`matrix-resize-handle ${isResizingMatrix ? 'resizing' : ''}`}
+                            onMouseDown={startMatrixResize}
+                        />
+                    )}
+                    {/* Header */}
+                    <div className="p-3 border-b flex justify-between items-center" style={{
+                        background: 'var(--wiz-dark-surface)',
+                        borderColor: 'var(--wiz-dark-border)'
+                    }}>
+                        <div
+                            className="flex items-center gap-3 cursor-pointer flex-1"
+                            onClick={() => setIsCollapsed(!isCollapsed)}
+                            style={{ transition: 'opacity 0.2s' }}
+                            onMouseEnter={(e) => e.currentTarget.style.opacity = '0.8'}
+                            onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                        >
+                            <span className="text-lg font-bold" style={{ color: 'var(--wiz-text-primary)' }}>
+                                {isCollapsed ? '▶' : '▼'}
+                            </span>
+                            <div>
+                                <h3 className="text-sm font-bold" style={{ color: 'var(--wiz-text-primary)' }}>
+                                    Controls Matrix
+                                </h3>
+                                <p className="text-xs" style={{ color: 'var(--wiz-text-secondary)' }}>
+                                    {techniqueCount} technique{techniqueCount !== 1 ? 's' : ''} on canvas
+                                    {controlsData.totalControls > 0 && ` -> ${controlsData.totalControls} unique control${controlsData.totalControls !== 1 ? 's' : ''}`}
+                                </p>
+                            </div>
+                        </div>
+                        {techniqueCount > 0 && (
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    exportToCSV();
+                                }}
+                                className="wiz-button wiz-button-success text-xs flex items-center gap-1"
+                                title="Export controls matrix to CSV"
+                            >
+                                📊 Export CSV
+                            </button>
+                        )}
+                    </div>
+                    
+                    {/* Matrix Content */}
+                    {!isCollapsed && (
+                        <div className="p-4 overflow-auto" style={{
+                            height: `${matrixHeight - 60}px`,
+                            maxHeight: `${matrixHeight - 60}px`,
+                            background: 'var(--wiz-dark-bg)'
+                        }}>
+                            {techniqueCount === 0 ? (
+                                <div className="text-center py-8" style={{ color: 'var(--wiz-text-secondary)' }}>
+                                    <div className="text-4xl mb-2">📋</div>
+                                    <p className="text-sm">Add techniques to the canvas to see associated security controls</p>
+                                </div>
+                            ) : (
+                                <table className="w-full border-collapse text-xs">
+                                    <thead>
+                                        <tr>
+                                            <th className="p-2 text-left font-bold sticky left-0 z-10" style={{
+                                                border: '1px solid var(--wiz-dark-border)',
+                                                background: 'var(--wiz-dark-surface)',
+                                                color: 'var(--wiz-text-primary)'
+                                            }}>
+                                                Component
+                                            </th>
+                                            {mainStages.map(stage => (
+                                                <th key={stage} className="p-2 text-center font-bold min-w-[200px]" style={{
+                                                    border: '1px solid var(--wiz-dark-border)',
+                                                    background: 'rgba(74, 144, 226, 0.1)',
+                                                    color: 'var(--wiz-accent-blue)'
+                                                }}>
+                                                    {stage}
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {components.map(comp => {
+                                            const hasAnyControls = mainStages.some(stage =>
+                                                controlsData.matrix[comp.id]?.[stage]?.length > 0
+                                            );
+                                            
+                                            if (!hasAnyControls) return null;
+                                            
+                                            return (
+                                                <tr key={comp.id}>
+                                                    <td
+                                                        className="p-2 font-semibold sticky left-0 z-10"
+                                                        style={{
+                                                            border: '1px solid var(--wiz-dark-border)',
+                                                            background: 'var(--wiz-dark-surface)',
+                                                            color: comp.color
+                                                        }}
+                                                    >
+                                                        {comp.name}
+                                                    </td>
+                                                    {mainStages.map(stage => {
+                                                        const controls = controlsData.matrix[comp.id]?.[stage] || [];
+                                                        return (
+                                                            <td key={stage} className="p-2 align-top" style={{
+                                                                border: '1px solid var(--wiz-dark-border)',
+                                                                background: 'var(--wiz-dark-surface)'
+                                                            }}>
+                                                                {controls.length > 0 ? (
+                                                                    <ul className="list-disc list-inside space-y-1">
+                                                                        {controls.map((control, idx) => (
+                                                                            <li key={idx} style={{ color: 'var(--wiz-text-primary)' }}>
+                                                                                {control}
+                                                                            </li>
+                                                                        ))}
+                                                                    </ul>
+                                                                ) : (
+                                                                    <span className="italic" style={{ color: 'var(--wiz-text-secondary)' }}>—</span>
+                                                                )}
+                                                            </td>
+                                                        );
+                                                    })}
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+        
+        // Main App Component
+        const App = () => {
+            const reactFlowWrapper = useRef(null);
+            const [nodes, setNodes, onNodesChange] = useNodesState([]);
+            const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+            const [reactFlowInstance, setReactFlowInstance] = useState(null);
+            const [draggedItem, setDraggedItem] = useState(null);
+            const [showExportMenu, setShowExportMenu] = useState(false);
+            const [selectedComponent, setSelectedComponent] = useState('all');
+            const [sidebarWidth, setSidebarWidth] = useState(300);
+            const [isResizing, setIsResizing] = useState(false);
+            const [matrixHeight, setMatrixHeight] = useState(300);
+            const [isResizingMatrix, setIsResizingMatrix] = useState(false);
+            const [isDarkMode, setIsDarkMode] = useState(true);
+            
+            // History management for undo/redo
+            const [history, setHistory] = useState([]);
+            const [historyIndex, setHistoryIndex] = useState(-1);
+            const isUndoRedoAction = useRef(false);
+            const saveTimeoutRef = useRef(null);
+            
+            const onConnect = useCallback(
+                (params) => {
+                    const edgeColor = isDarkMode ? '#666666' : '#9ca3af';
+                    const newEdge = {
+                        ...params,
+                        type: 'smoothstep',
+                        animated: false,
+                        style: { stroke: edgeColor },
+                        markerEnd: {
+                            type: MarkerType.ArrowClosed,
+                            color: edgeColor
+                        },
+                        label: '',
+                        labelStyle: { fill: '#DC2626', fontWeight: 600, fontSize: 12 },
+                        labelBgStyle: { fill: '#FEE2E2', fillOpacity: 0.9 }
+                    };
+                    setEdges((eds) => addEdge(newEdge, eds));
+                },
+                [setEdges, isDarkMode]
+            );
+            
+            // Make edge labels editable with impact types - using a modal dialog
+            const onEdgeUpdate = useCallback((oldEdge, newConnection) => {
+                setEdges((els) => els.map((e) => (e.id === oldEdge.id ? { ...e, ...newConnection } : e)));
+            }, [setEdges]);
+            
+            const onEdgeDoubleClick = useCallback((event, edge) => {
+                event.stopPropagation();
+                
+                if (!techniquesData?.impactTypes) return;
+                
+                // Combine all impact types into a single flat list
+                const allImpacts = [
+                    ...techniquesData.impactTypes.primary,
+                    ...techniquesData.impactTypes.secondary
+                ];
+                
+                // Remove duplicates and create selection list
+                const uniqueImpacts = [...new Set(allImpacts)];
+                const impactOptions = [
+                    ...uniqueImpacts.map(i => ({ label: i, value: i })),
+                    { label: 'No Label', value: '' }
+                ];
+                
+                const options = impactOptions
+                    .map((item, idx) => `${idx}. ${item.label}`)
+                    .join('\n');
+                
+                const selection = prompt(
+                    'Select Impact Type:\n\n' + options + '\n\nEnter number or custom text:',
+                    edge.label || ''
+                );
+                
+                if (selection !== null) {
+                    let newLabel = selection.trim();
+                    
+                    // Check if it's a number selection
+                    const num = parseInt(selection);
+                    if (!isNaN(num) && num >= 0 && num < impactOptions.length) {
+                        newLabel = impactOptions[num].value;
+                    }
+                    
+                    setEdges((eds) => eds.map((e) =>
+                        e.id === edge.id ? {
+                            ...e,
+                            label: newLabel,
+                            labelStyle: { fill: '#DC2626', fontWeight: 600, fontSize: 12 },
+                            labelBgStyle: { fill: '#FEE2E2', fillOpacity: 0.9 }
+                        } : e
+                    ));
+                }
+            }, [setEdges]);
+            
+            const onDragStart = (event, nodeType, data) => {
+                setDraggedItem({ type: nodeType, data });
+                event.dataTransfer.effectAllowed = 'move';
+            };
+            
+            const onDragOver = useCallback((event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = 'move';
+            }, []);
+            
+            const onDrop = useCallback(
+                (event) => {
+                    event.preventDefault();
+                    
+                    if (!draggedItem || !reactFlowInstance) return;
+                    
+                    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+                    const position = reactFlowInstance.project({
+                        x: event.clientX - reactFlowBounds.left,
+                        y: event.clientY - reactFlowBounds.top,
+                    });
+                    
+                    const newNode = {
+                        id: `${draggedItem.type}-${Date.now()}`,
+                        type: draggedItem.type,
+                        position,
+                        data: draggedItem.data,
+                        // Set z-index: components always in background, other nodes on top
+                        zIndex: draggedItem.type === 'component' ? -1 : 10,
+                    };
+                    
+                    setNodes((nds) => nds.concat(newNode));
+                    setDraggedItem(null);
+                },
+                [draggedItem, reactFlowInstance, setNodes]
+            );
+            
+            const exportToPNG = useCallback(() => {
+                if (!reactFlowInstance) return;
+                
+                // Temporarily hide expansion buttons and any open popups
+                const buttons = document.querySelectorAll('button[title="Show Risks"], button[title="Show Controls"]');
+                buttons.forEach(btn => btn.style.display = 'none');
+                
+                // Use React Flow's getNodes to get viewport bounds including all child elements
+                const nodesBounds = reactFlowInstance.getNodes().reduce(
+                    (acc, node) => {
+                        const nodeElement = document.querySelector(`[data-id="${node.id}"]`);
+                        if (nodeElement) {
+                            // Get the full bounding box including all children
+                            const rect = nodeElement.getBoundingClientRect();
+                            
+                            // For technique nodes, account for potential popup panels (200px each side)
+                            let extraWidth = 0;
+                            let extraLeft = 0;
+                            if (node.type === 'technique') {
+                                extraLeft = 220; // Space for risks popup on left
+                                extraWidth = 220; // Space for controls popup on right
+                            }
+                            
+                            const nodeWidth = (rect.width || nodeElement.offsetWidth || 200) + extraWidth;
+                            const nodeHeight = rect.height || nodeElement.offsetHeight || 100;
+                            
+                            return {
+                                minX: Math.min(acc.minX, node.position.x - extraLeft),
+                                minY: Math.min(acc.minY, node.position.y),
+                                maxX: Math.max(acc.maxX, node.position.x + nodeWidth),
+                                maxY: Math.max(acc.maxY, node.position.y + nodeHeight),
+                            };
+                        }
+                        return acc;
+                    },
+                    { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
+                );
+                
+                // If no nodes, use default viewport
+                if (nodesBounds.minX === Infinity) {
+                    nodesBounds.minX = 0;
+                    nodesBounds.minY = 0;
+                    nodesBounds.maxX = 800;
+                    nodesBounds.maxY = 600;
+                }
+                
+                const padding = 50;
+                const width = nodesBounds.maxX - nodesBounds.minX + padding * 2;
+                const height = nodesBounds.maxY - nodesBounds.minY + padding * 2;
+                
+                // Get the viewport element
+                const viewport = document.querySelector('.react-flow__viewport');
+                if (!viewport) {
+                    buttons.forEach(btn => btn.style.display = '');
+                    return;
+                }
+                
+                // Create a temporary container with white background
+                const tempContainer = document.createElement('div');
+                tempContainer.style.position = 'absolute';
+                tempContainer.style.left = '-9999px';
+                tempContainer.style.top = '0';
+                tempContainer.style.width = `${width}px`;
+                tempContainer.style.height = `${height}px`;
+                tempContainer.style.backgroundColor = '#ffffff';
+                tempContainer.style.overflow = 'visible';
+                document.body.appendChild(tempContainer);
+                
+                // Clone the viewport
+                const clonedViewport = viewport.cloneNode(true);
+                clonedViewport.style.transform = `translate(${padding - nodesBounds.minX}px, ${padding - nodesBounds.minY}px)`;
+                clonedViewport.style.overflow = 'visible';
+                tempContainer.appendChild(clonedViewport);
+                
+                setTimeout(() => {
+                    html2canvas(tempContainer, {
+                        backgroundColor: '#ffffff',
+                        scale: 2,
+                        logging: false,
+                        useCORS: true,
+                        allowTaint: true,
+                        width: width,
+                        height: height,
+                    }).then(canvas => {
+                        // Cleanup
+                        document.body.removeChild(tempContainer);
+                        buttons.forEach(btn => btn.style.display = '');
+                        
+                        const link = document.createElement('a');
+                        link.download = `attack-flow-${Date.now()}.png`;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
+                    }).catch(err => {
+                        // Cleanup on error
+                        document.body.removeChild(tempContainer);
+                        buttons.forEach(btn => btn.style.display = '');
+                        console.error('Export error:', err);
+                    });
+                }, 200);
+            }, [reactFlowInstance]);
+            
+            const exportToSVG = useCallback(() => {
+                if (!reactFlowInstance) return;
+                
+                const flowElement = document.querySelector('.react-flow__viewport');
+                if (!flowElement) return;
+                
+                // Get the bounding box
+                const bbox = flowElement.getBoundingClientRect();
+                const svgWidth = bbox.width;
+                const svgHeight = bbox.height;
+                
+                // Create SVG
+                let svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">
+    <rect width="100%" height="100%" fill="#ffffff"/>
+    <g>`;
+                
+                // Add nodes
+                nodes.forEach(node => {
+                    const nodeElement = document.querySelector(`[data-id="${node.id}"]`);
+                    if (!nodeElement) return;
+                    
+                    const nodeBbox = nodeElement.getBoundingClientRect();
+                    const x = node.position.x;
+                    const y = node.position.y;
+                    
+                    let color = '#3B82F6';
+                    if (node.type === 'entryPoint') color = '#10B981';
+                    if (node.type === 'exitPoint') color = '#EF4444';
+                    if (node.type === 'component') {
+                        const comp = techniquesData.components.find(c => c.id === node.data.componentId);
+                        color = comp?.color || '#6B7280';
+                    }
+                    
+                    svgContent += `
+        <rect x="${x}" y="${y}" width="${nodeBbox.width}" height="${nodeBbox.height}"
+              fill="white" stroke="${color}" stroke-width="2" rx="8"/>
+        <text x="${x + 10}" y="${y + 25}" font-family="Arial" font-size="14" fill="${color}" font-weight="bold">
+            ${node.data.label || node.id}
+        </text>`;
+                });
+                
+                // Add edges
+                edges.forEach(edge => {
+                    const sourceNode = nodes.find(n => n.id === edge.source);
+                    const targetNode = nodes.find(n => n.id === edge.target);
+                    if (!sourceNode || !targetNode) return;
+                    
+                    const sourceElement = document.querySelector(`[data-id="${edge.source}"]`);
+                    const targetElement = document.querySelector(`[data-id="${edge.target}"]`);
+                    if (!sourceElement || !targetElement) return;
+                    
+                    const sourceBbox = sourceElement.getBoundingClientRect();
+                    const targetBbox = targetElement.getBoundingClientRect();
+                    
+                    const x1 = sourceNode.position.x + sourceBbox.width;
+                    const y1 = sourceNode.position.y + sourceBbox.height / 2;
+                    const x2 = targetNode.position.x;
+                    const y2 = targetNode.position.y + targetBbox.height / 2;
+                    
+                    svgContent += `
+        <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
+              stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>`;
+                });
+                
+                svgContent += `
+    </g>
+    <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#6B7280"/>
+        </marker>
+    </defs>
+</svg>`;
+                
+                const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `attack-flow-${Date.now()}.svg`;
+                link.click();
+                URL.revokeObjectURL(url);
+            }, [reactFlowInstance, nodes, edges]);
+            
+            const exportToPDF = useCallback(() => {
+                const flowElement = document.querySelector('.react-flow');
+                if (!flowElement) return;
+                
+                html2canvas(flowElement, {
+                    backgroundColor: '#ffffff',
+                    scale: 2,
+                    logging: false,
+                    useCORS: true,
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const { jsPDF } = window.jspdf;
+                    
+                    // Calculate PDF dimensions
+                    const imgWidth = canvas.width;
+                    const imgHeight = canvas.height;
+                    const ratio = imgWidth / imgHeight;
+                    
+                    // Use landscape A4 if wide, portrait if tall
+                    const pdfWidth = ratio > 1 ? 297 : 210;
+                    const pdfHeight = ratio > 1 ? 210 : 297;
+                    
+                    const pdf = new jsPDF({
+                        orientation: ratio > 1 ? 'landscape' : 'portrait',
+                        unit: 'mm',
+                        format: 'a4'
+                    });
+                    
+                    // Add title page
+                    pdf.setFontSize(24);
+                    pdf.text('SITF Attack Flow', pdfWidth / 2, 30, { align: 'center' });
+                    
+                    pdf.setFontSize(12);
+                    pdf.text(`Generated: ${new Date().toLocaleString()}`, pdfWidth / 2, 45, { align: 'center' });
+                    pdf.text(`Framework: SDLC Infrastructure Threat Framework`, pdfWidth / 2, 55, { align: 'center' });
+                    
+                    // Add diagram on second page
+                    pdf.addPage();
+                    
+                    // Fit image to page with margins
+                    const margin = 10;
+                    const availableWidth = pdfWidth - (2 * margin);
+                    const availableHeight = pdfHeight - (2 * margin);
+                    
+                    let finalWidth = availableWidth;
+                    let finalHeight = finalWidth / ratio;
+                    
+                    if (finalHeight > availableHeight) {
+                        finalHeight = availableHeight;
+                        finalWidth = finalHeight * ratio;
+                    }
+                    
+                    const xOffset = (pdfWidth - finalWidth) / 2;
+                    const yOffset = (pdfHeight - finalHeight) / 2;
+                    
+                    pdf.addImage(imgData, 'PNG', xOffset, yOffset, finalWidth, finalHeight);
+                    
+                    pdf.save(`attack-flow-${Date.now()}.pdf`);
+                });
+            }, []);
+            
+            const exportWithCustomDimensions = useCallback(() => {
+                const width = prompt('Enter width in pixels (default: current size):', '');
+                const height = prompt('Enter height in pixels (default: current size):', '');
+                
+                if (width || height) {
+                    const flowElement = document.querySelector('.react-flow');
+                    if (!flowElement) return;
+                    
+                    const originalWidth = flowElement.style.width;
+                    const originalHeight = flowElement.style.height;
+                    
+                    if (width) flowElement.style.width = `${width}px`;
+                    if (height) flowElement.style.height = `${height}px`;
+                    
+                    setTimeout(() => {
+                        exportToPNG(3);
+                        flowElement.style.width = originalWidth;
+                        flowElement.style.height = originalHeight;
+                    }, 100);
+                } else {
+                    exportToPNG(3);
+                }
+            }, [exportToPNG]);
+            
+            const saveToFile = useCallback(() => {
+                // Format timestamp: YYYY-MM-DD_HH-MM
+                const now = new Date();
+                const timestamp = now.getFullYear() + '-' +
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(now.getDate()).padStart(2, '0') + '_' +
+                    String(now.getHours()).padStart(2, '0') + '-' +
+                    String(now.getMinutes()).padStart(2, '0');
+                
+                const flowData = {
+                    metadata: {
+                        name: 'Attack Flow',
+                        created: new Date().toISOString(),
+                        version: '1.0',
+                        framework: 'SITF'
+                    },
+                    nodes,
+                    edges
+                };
+                
+                const dataStr = JSON.stringify(flowData, null, 2);
+                
+                // Generate filename with readable timestamp
+                const suggestedFilename = `attack-flow_${timestamp}.json`;
+                
+                // Try to use File System Access API (modern browsers)
+                if ('showSaveFilePicker' in window) {
+                    const options = {
+                        suggestedName: suggestedFilename,
+                        types: [{
+                            description: 'JSON Files',
+                            accept: { 'application/json': ['.json'] }
+                        }]
+                    };
+                    
+                    // Call showSaveFilePicker synchronously within user gesture
+                    window.showSaveFilePicker(options)
+                        .then(handle => handle.createWritable())
+                        .then(writable => {
+                            return writable.write(dataStr).then(() => writable.close());
+                        })
+                        .catch(err => {
+                            // User cancelled or error occurred
+                            if (err.name !== 'AbortError') {
+                                console.error('Error saving file:', err);
+                            }
+                        });
+                    return;
+                }
+                
+                // Fallback for browsers without File System Access API
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = suggestedFilename;
+                link.click();
+                URL.revokeObjectURL(url);
+            }, [nodes, edges]);
+            
+            const loadFromFile = useCallback(() => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                input.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        try {
+                            const flowData = JSON.parse(event.target.result);
+                            
+                            // Validate structure
+                            if (!flowData.nodes || !flowData.edges) {
+                                alert('❌ Error\n\nInvalid file format: missing nodes or edges.\n\nPlease select a valid SITF attack flow JSON file.');
+                                return;
+                            }
+                            
+                            // Confirm before loading
+                            const metadata = flowData.metadata || {};
+                            const createdDate = metadata.created ? new Date(metadata.created).toLocaleString() : 'Unknown';
+                            const nodeCount = flowData.nodes.length;
+                            const edgeCount = flowData.edges.length;
+                            
+                            const message = `📂 Load Attack Flow\n\n` +
+                                `Name: ${metadata.name || 'Unknown'}\n` +
+                                `Created: ${createdDate}\n` +
+                                `Nodes: ${nodeCount} | Edges: ${edgeCount}\n\n` +
+                                `⚠️ This will replace your current work.\n\n` +
+                                `Continue?`;
+                            
+                            if (confirm(message)) {
+                                // Ensure components have z-index -1 when loading
+                                const nodesWithZIndex = flowData.nodes.map(node => ({
+                                    ...node,
+                                    zIndex: node.type === 'component' ? -1 : (node.zIndex || 10)
+                                }));
+                                setNodes(nodesWithZIndex);
+                                setEdges(flowData.edges);
+                            }
+                        } catch (error) {
+                            alert(`❌ Error Loading File\n\n${error.message}\n\nPlease check the file format and try again.`);
+                            console.error('Load error:', error);
+                        }
+                    };
+                    reader.readAsText(file);
+                };
+                input.click();
+            }, [setNodes, setEdges]);
+            
+            const clearCanvas = useCallback(() => {
+                const nodeCount = nodes.length;
+                const edgeCount = edges.length;
+                
+                if (nodeCount === 0 && edgeCount === 0) {
+                    alert('ℹ️ Canvas is already empty.');
+                    return;
+                }
+                
+                const message = `🗑️ Clear Canvas\n\n` +
+                    `This will remove:\n` +
+                    `• ${nodeCount} node${nodeCount !== 1 ? 's' : ''}\n` +
+                    `• ${edgeCount} connection${edgeCount !== 1 ? 's' : ''}\n\n` +
+                    `⚠️ This action cannot be undone.\n\n` +
+                    `Continue?`;
+                
+                if (confirm(message)) {
+                    setNodes([]);
+                    setEdges([]);
+                    alert('✅ Canvas cleared successfully.');
+                }
+            }, [nodes, edges, setNodes, setEdges]);
+            
+            // Handle node selection - auto-filter techniques when component is selected
+            const handleNodeClick = useCallback((event, node) => {
+                if (node.type === 'component' && node.data.componentId) {
+                    setSelectedComponent(node.data.componentId);
+                }
+            }, []);
+            
+            // Save state to history (for undo/redo) with debouncing
+            const saveToHistory = useCallback((newNodes, newEdges) => {
+                if (isUndoRedoAction.current) {
+                    isUndoRedoAction.current = false;
+                    return;
+                }
+                
+                // Clear existing timeout
+                if (saveTimeoutRef.current) {
+                    clearTimeout(saveTimeoutRef.current);
+                }
+                
+                // Debounce: wait 500ms after last change before saving to history
+                saveTimeoutRef.current = setTimeout(() => {
+                    const newState = {
+                        nodes: JSON.parse(JSON.stringify(newNodes)),
+                        edges: JSON.parse(JSON.stringify(newEdges))
+                    };
+                    
+                    setHistory(prev => {
+                        const newHistory = prev.slice(0, historyIndex + 1);
+                        newHistory.push(newState);
+                        if (newHistory.length > 50) {
+                            newHistory.shift();
+                            return newHistory;
+                        }
+                        return newHistory;
+                    });
+                    
+                    setHistoryIndex(prev => Math.min(prev + 1, 49));
+                }, 500);
+            }, [historyIndex]);
+            
+            // Undo function
+            const undo = useCallback(() => {
+                if (historyIndex > 0) {
+                    isUndoRedoAction.current = true;
+                    const prevState = history[historyIndex - 1];
+                    setNodes(prevState.nodes);
+                    setEdges(prevState.edges);
+                    setHistoryIndex(prev => prev - 1);
+                }
+            }, [history, historyIndex, setNodes, setEdges]);
+            
+            // Redo function
+            const redo = useCallback(() => {
+                if (historyIndex < history.length - 1) {
+                    isUndoRedoAction.current = true;
+                    const nextState = history[historyIndex + 1];
+                    setNodes(nextState.nodes);
+                    setEdges(nextState.edges);
+                    setHistoryIndex(prev => prev + 1);
+                }
+            }, [history, historyIndex, setNodes, setEdges]);
+            
+            // Track changes to nodes/edges and save to history
+            useEffect(() => {
+                if (nodes.length > 0 || edges.length > 0) {
+                    saveToHistory(nodes, edges);
+                }
+            }, [nodes, edges]);
+            
+            // Sidebar resize handlers
+            const startResize = React.useCallback((e) => {
+                setIsResizing(true);
+                e.preventDefault();
+            }, []);
+            
+            React.useEffect(() => {
+                if (!isResizing) return;
+                
+                const handleMouseMove = (e) => {
+                    const newWidth = e.clientX;
+                    if (newWidth >= 200 && newWidth <= 600) {
+                        setSidebarWidth(newWidth);
+                    }
+                };
+                
+                const handleMouseUp = () => {
+                    setIsResizing(false);
+                };
+                
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+                
+                return () => {
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('mouseup', handleMouseUp);
+                };
+            }, [isResizing]);
+            
+            // Matrix resize effect
+            useEffect(() => {
+                if (!isResizingMatrix) return;
+                
+                const handleMouseMove = (e) => {
+                    const windowHeight = window.innerHeight;
+                    const newHeight = windowHeight - e.clientY;
+                    if (newHeight >= 100 && newHeight <= 600) {
+                        setMatrixHeight(newHeight);
+                    }
+                };
+                
+                const handleMouseUp = () => {
+                    setIsResizingMatrix(false);
+                };
+                
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+                
+                return () => {
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('mouseup', handleMouseUp);
+                };
+            }, [isResizingMatrix]);
+            
+            // Keyboard shortcuts for undo/redo
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) {
+                        e.preventDefault();
+                        undo();
+                    } else if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) {
+                        e.preventDefault();
+                        redo();
+                    }
+                };
+                
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [undo, redo]);
+            
+            // Toggle theme
+            const toggleTheme = useCallback(() => {
+                setIsDarkMode(prev => {
+                    const newMode = !prev;
+                    localStorage.setItem('sitf-theme', newMode ? 'dark' : 'light');
+                    document.documentElement.className = newMode ? 'theme-dark' : 'theme-light';
+                    return newMode;
+                });
+            }, []);
+            
+            // Load theme preference on mount
+            useEffect(() => {
+                const savedTheme = localStorage.getItem('sitf-theme');
+                if (savedTheme) {
+                    const isDark = savedTheme === 'dark';
+                    setIsDarkMode(isDark);
+                    document.documentElement.className = isDark ? 'theme-dark' : 'theme-light';
+                }
+            }, []);
+            
+            // Auto-save to localStorage
+            useEffect(() => {
+                const saveData = { nodes, edges };
+                localStorage.setItem('sitf-attack-flow', JSON.stringify(saveData));
+            }, [nodes, edges]);
+            
+            // Load from localStorage on mount
+            useEffect(() => {
+                const saved = localStorage.getItem('sitf-attack-flow');
+                if (saved) {
+                    try {
+                        const { nodes: savedNodes, edges: savedEdges } = JSON.parse(saved);
+                        if (savedNodes) {
+                            // Ensure components have z-index -1 when loading from localStorage
+                            const nodesWithZIndex = savedNodes.map(node => ({
+                                ...node,
+                                zIndex: node.type === 'component' ? -1 : (node.zIndex || 10)
+                            }));
+                            setNodes(nodesWithZIndex);
+                        }
+                        if (savedEdges) setEdges(savedEdges);
+                    } catch (e) {
+                        console.error('Failed to load saved data:', e);
+                    }
+                }
+            }, []);
+            
+            // Close export menu when clicking outside
+            useEffect(() => {
+                const handleClickOutside = (event) => {
+                    if (showExportMenu && !event.target.closest('.relative')) {
+                        setShowExportMenu(false);
+                    }
+                };
+                
+                document.addEventListener('mousedown', handleClickOutside);
+                return () => document.removeEventListener('mousedown', handleClickOutside);
+            }, [showExportMenu]);
+            
+            return (
+                <div className="flex h-screen">
+                    <div className="palette-container" style={{ width: `${sidebarWidth}px` }}>
+                        <div
+                            className={`resize-handle ${isResizing ? 'resizing' : ''}`}
+                            onMouseDown={startResize}
+                        />
+                        <Palette
+                            onDragStart={onDragStart}
+                            selectedComponent={selectedComponent}
+                            setSelectedComponent={setSelectedComponent}
+                        />
+                    </div>
+                    
+                    <div className="flex-1 flex flex-col">
+                        {/* Header */}
+                        <div className="border-b p-4 flex justify-between items-center" style={{
+                            background: 'var(--wiz-dark-surface)',
+                            borderColor: 'var(--wiz-dark-border)'
+                        }}>
+                            <div>
+                                <div className="flex items-center gap-3">
+                                    <h1 className="text-xl font-bold" style={{ color: 'var(--wiz-text-primary)' }}>
+                                        SITF Attack Flow Visualizer
+                                    </h1>
+                                    <a
+                                        href="techniques-library.html"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-sm"
+                                        style={{
+                                            color: 'var(--wiz-accent-purple)',
+                                            textDecoration: 'none',
+                                            padding: '4px 12px',
+                                            borderRadius: '6px',
+                                            border: '1px solid var(--wiz-accent-purple)',
+                                            transition: 'all 0.2s',
+                                            fontWeight: 500
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.background = 'var(--wiz-accent-purple)';
+                                            e.currentTarget.style.color = 'var(--wiz-dark-bg)';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.background = 'transparent';
+                                            e.currentTarget.style.color = 'var(--wiz-accent-purple)';
+                                        }}
+                                    >
+                                        📚 Technique Library
+                                    </a>
+                                </div>
+                                <p className="text-sm" style={{ color: 'var(--wiz-text-secondary)' }}>
+                                    Drag components from palette • Hold Shift + drag to select multiple • Shift + click to add to selection
+                                </p>
+                                <p className="text-xs mt-1" style={{ color: 'var(--wiz-text-secondary)', opacity: 0.7 }}>
+                                    Made with <span style={{ color: '#FC80FF' }}>♥</span> by <a href="https://www.wiz.io" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--wiz-accent-purple)', textDecoration: 'none', fontWeight: 500 }}>Wiz</a>
+                                </p>
+                            </div>
+                            <div className="flex gap-2 relative items-center">
+                                {/* Theme Toggle */}
+                                <button
+                                    onClick={toggleTheme}
+                                    className="wiz-button wiz-button-secondary"
+                                    title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                                    style={{ padding: '8px 12px' }}
+                                >
+                                    {isDarkMode ? '☀️' : '🌙'}
+                                </button>
+                                <button
+                                    onClick={loadFromFile}
+                                    className="wiz-button wiz-button-success"
+                                >
+                                    ↑ Load
+                                </button>
+                                <button
+                                    onClick={saveToFile}
+                                    className="wiz-button wiz-button-primary"
+                                >
+                                    ↓ Save
+                                </button>
+                                <button
+                                    onClick={clearCanvas}
+                                    className="wiz-button wiz-button-secondary"
+                                >
+                                    ✕ Clear
+                                </button>
+                                <div className="relative">
+                                    <button
+                                        onClick={() => setShowExportMenu(!showExportMenu)}
+                                        className="wiz-button wiz-button-secondary flex items-center gap-2"
+                                    >
+                                        ⇩ Export {showExportMenu ? '▲' : '▼'}
+                                    </button>
+                                    {showExportMenu && (
+                                        <div className="absolute right-0 mt-2 w-56 rounded-lg shadow-xl z-50" style={{
+                                            background: 'var(--wiz-dark-surface)',
+                                            border: '1px solid var(--wiz-dark-border)'
+                                        }}>
+                                            <div className="py-1">
+                                                <button
+                                                    onClick={() => {
+                                                        exportToPNG(3);
+                                                        setShowExportMenu(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm flex items-center gap-2"
+                                                    style={{
+                                                        color: 'var(--wiz-text-primary)',
+                                                        background: 'transparent',
+                                                        border: 'none',
+                                                        cursor: 'pointer',
+                                                        transition: 'background 0.2s'
+                                                    }}
+                                                    onMouseEnter={(e) => e.currentTarget.style.background = 'var(--wiz-dark-hover)'}
+                                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                                >
+                                                    <span style={{ color: 'var(--wiz-accent-blue)' }}>▪</span>
+                                                    <div>
+                                                        <div className="font-medium">PNG Image</div>
+                                                        <div className="text-xs" style={{ color: 'var(--wiz-text-secondary)' }}>High quality (3x)</div>
+                                                    </div>
+                                                </button>
+                                                <div className="my-1" style={{ borderTop: '1px solid var(--wiz-dark-border)' }}></div>
+                                                <button
+                                                    onClick={() => {
+                                                        exportToSVG();
+                                                        setShowExportMenu(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm flex items-center gap-2"
+                                                    style={{
+                                                        color: 'var(--wiz-text-primary)',
+                                                        background: 'transparent',
+                                                        border: 'none',
+                                                        cursor: 'pointer',
+                                                        transition: 'background 0.2s'
+                                                    }}
+                                                    onMouseEnter={(e) => e.currentTarget.style.background = 'var(--wiz-dark-hover)'}
+                                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                                >
+                                                    <span style={{ color: 'var(--wiz-accent-purple)' }}>▪</span>
+                                                    <div>
+                                                        <div className="font-medium">SVG (Vector)</div>
+                                                        <div className="text-xs" style={{ color: 'var(--wiz-text-secondary)' }}>Scalable format</div>
+                                                    </div>
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        exportToPDF();
+                                                        setShowExportMenu(false);
+                                                    }}
+                                                    className="w-full text-left px-4 py-2 text-sm flex items-center gap-2"
+                                                    style={{
+                                                        color: 'var(--wiz-text-primary)',
+                                                        background: 'transparent',
+                                                        border: 'none',
+                                                        cursor: 'pointer',
+                                                        transition: 'background 0.2s'
+                                                    }}
+                                                    onMouseEnter={(e) => e.currentTarget.style.background = 'var(--wiz-dark-hover)'}
+                                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                                >
+                                                    <span style={{ color: 'var(--wiz-danger)' }}>▪</span>
+                                                    <div>
+                                                        <div className="font-medium">PDF Document</div>
+                                                        <div className="text-xs" style={{ color: 'var(--wiz-text-secondary)' }}>With title page</div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Canvas */}
+                        <div ref={reactFlowWrapper} className="flex-1" style={{ height: 'calc(100vh - 80px - 300px)' }}>
+                            <ReactFlow
+                                nodes={nodes}
+                                edges={edges}
+                                onNodesChange={onNodesChange}
+                                onEdgesChange={onEdgesChange}
+                                onConnect={onConnect}
+                                onEdgeUpdate={onEdgeUpdate}
+                                onEdgeDoubleClick={onEdgeDoubleClick}
+                                onNodeClick={handleNodeClick}
+                                onInit={setReactFlowInstance}
+                                onDrop={onDrop}
+                                onDragOver={onDragOver}
+                                nodeTypes={nodeTypes}
+                                defaultEdgeOptions={{
+                                    zIndex: 100
+                                }}
+                                elevateNodesOnSelect={false}
+                                elevateEdgesOnSelect={true}
+                                multiSelectionKeyCode="Shift"
+                                selectionKeyCode="Shift"
+                                panOnDrag={[1, 2]}
+                                selectionOnDrag
+                                defaultViewport={{ x: 0, y: 0, zoom: 0.75 }}
+                                fitView
+                            >
+                                <Background color={isDarkMode ? "#333333" : "#e5e5e5"} gap={16} />
+                                <Controls />
+                            </ReactFlow>
+                        </div>
+                        
+                        {/* Controls Matrix */}
+                        <ControlsMatrix
+                            nodes={nodes}
+                            matrixHeight={matrixHeight}
+                            setMatrixHeight={setMatrixHeight}
+                            isResizingMatrix={isResizingMatrix}
+                            setIsResizingMatrix={setIsResizingMatrix}
+                        />
+                    </div>
+                </div>
+            );
+        };
+        
+        // Render app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

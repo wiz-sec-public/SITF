@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SITF Technique Library - Visual Explorer</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23FC80FF'/><stop offset='100%25' style='stop-color:%239D4EDD'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='%230A0E27'/><path d='M 30 50 L 45 50 L 50 35 L 55 65 L 60 45 L 70 45' stroke='url(%23g)' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/><circle cx='30' cy='50' r='4' fill='%2310B981'/><circle cx='70' cy='45' r='4' fill='%23EF4444'/><path d='M 50 20 L 50 30 M 42 24 L 50 20 L 58 24' stroke='%23FC80FF' stroke-width='2' fill='none' stroke-linecap='round'/></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0A0E27;
+            min-height: 100vh;
+            padding: 10px;
+            color: #E2E8F0;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .filters {
+            background: #151B3B;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #1E2749;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #94A3B8;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid #2D3A5F;
+            background: #1A2238;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            color: #94A3B8;
+        }
+
+        .filter-btn:hover {
+            border-color: #9D4EDD;
+            background: #1E2749;
+            color: #E2E8F0;
+        }
+
+        .filter-btn.active {
+            background: #9D4EDD;
+            color: white;
+            border-color: #9D4EDD;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            padding: 6px 12px;
+            border: 1px solid #2D3A5F;
+            background: #1A2238;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: border-color 0.2s;
+            color: #E2E8F0;
+        }
+
+        .search-box::placeholder {
+            color: #64748B;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #9D4EDD;
+            background: #1E2749;
+        }
+
+        .stats {
+            background: #151B3B;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #1E2749;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #9D4EDD;
+        }
+
+        .stat-label {
+            color: #94A3B8;
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+
+        .component-section {
+            background: #151B3B;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #1E2749;
+        }
+
+        .component-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid;
+        }
+
+        .component-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .component-info h2 {
+            font-size: 1.3rem;
+            margin-bottom: 2px;
+            color: #FFFFFF;
+        }
+
+        .component-info p {
+            color: #94A3B8;
+            font-size: 0.8rem;
+        }
+
+        .stage-group {
+            margin-bottom: 15px;
+        }
+
+        .stage-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .stage-header {
+            background: #1A2238;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #2D3A5F;
+        }
+
+        .stage-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #E2E8F0;
+        }
+
+        .stage-count {
+            background: #9D4EDD;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .techniques-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 10px;
+        }
+
+        .technique-card {
+            border: 1px solid #2D3A5F;
+            border-radius: 6px;
+            padding: 12px;
+            transition: all 0.2s;
+            background: #1A2238;
+        }
+
+        .technique-card:hover {
+            border-color: #9D4EDD;
+            box-shadow: 0 2px 8px rgba(157, 78, 221, 0.2);
+        }
+
+        .technique-id {
+            display: inline-block;
+            background: #2D3A5F;
+            color: #E2E8F0;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .technique-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .technique-description {
+            color: #94A3B8;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .technique-details {
+            border-top: 1px solid #2D3A5F;
+            padding-top: 8px;
+        }
+
+        .detail-section {
+            margin-bottom: 8px;
+        }
+
+        .detail-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-title {
+            font-weight: 600;
+            color: #E2E8F0;
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .detail-list {
+            list-style: none;
+        }
+
+        .detail-list li {
+            color: #94A3B8;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            padding-left: 14px;
+            position: relative;
+            margin-bottom: 3px;
+        }
+
+        .detail-list li::before {
+            content: "•";
+            position: absolute;
+            left: 4px;
+            color: #475569;
+        }
+
+        .risks-list li::before {
+            color: #FF006B;
+        }
+
+        .controls-list li::before {
+            color: #9D4EDD;
+        }
+
+        .no-results {
+            background: #151B3B;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            border: 1px solid #1E2749;
+        }
+
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        .no-results h3 {
+            color: #E2E8F0;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .no-results p {
+            color: #94A3B8;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .techniques-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="filters">
+            <div class="filter-group">
+                <label>Component:</label>
+                <div class="filter-buttons" id="componentFilters"></div>
+            </div>
+
+            <div class="filter-group">
+                <label>Stage:</label>
+                <div class="filter-buttons" id="stageFilters"></div>
+            </div>
+
+            <div class="filter-group" style="flex: 1;">
+                <input type="text" class="search-box" id="searchBox" placeholder="Search techniques...">
+            </div>
+        </div>
+
+        <div class="stats" id="stats"></div>
+
+        <div id="techniquesContainer"></div>
+
+        <div class="no-results hidden" id="noResults">
+            <div class="no-results-icon">🔍</div>
+            <h3>No techniques found</h3>
+            <p>Try adjusting your filters or search terms</p>
+        </div>
+    </div>
+
+    <script>
+        const techniquesData = {
+  "components": [
+    {
+      "id": "endpoint",
+      "name": "Endpoint/IDE",
+      "description": "Developer workstations and development environments"
+    },
+    {
+      "id": "vcs",
+      "name": "VCS",
+      "description": "Version Control Systems (GitHub, GitLab, Azure DevOps)"
+    },
+    {
+      "id": "cicd",
+      "name": "CI/CD",
+      "description": "Continuous Integration/Deployment systems"
+    },
+    {
+      "id": "registry",
+      "name": "Registry",
+      "description": "Container and artifact registries (NPM, Docker, PyPI)"
+    },
+    {
+      "id": "production",
+      "name": "Production/Cloud",
+      "description": "Production infrastructure of the producer organization"
+    }
+  ],
+  "entryPoints": [
+    "Phishing",
+    "Compromised Dependency",
+    "Vulnerability Exploit",
+    "Stolen Credentials",
+    "Social Engineering",
+    "Custom"
+  ],
+  "exitPoints": [
+    "Future Breach",
+    "Persistence Established",
+    "Secondary Supply Chain Attack",
+    "Ongoing Access",
+    "Detection & Containment",
+    "Custom"
+  ],
+  "impactTypes": {
+    "primary": [
+      "Data Exfiltration",
+      "Resource Hijacking",
+      "Destruction",
+      "Pivot to Other Internal Systems",
+      "Supply Chain"
+    ],
+    "secondary": [
+      "Data Exfiltration",
+      "Resource Hijacking",
+      "Destruction",
+      "Pivot to Other Internal Systems"
+    ]
+  },
+  "techniques": [
+    {
+      "id": "T-E001",
+      "name": "Malicious Execution on Endpoint",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker executes malicious code on developer workstation",
+      "risks": [
+        "Using untrusted IDE extensions",
+        "Using untrusted software packages on endpoints",
+        "No EDR",
+        "Lack of application sandboxing"
+      ],
+      "controls": [
+        "EDR on endpoint",
+        "IDE sandboxing",
+        "Mandating signed extensions",
+        "Package version pinning",
+        "Application whitelisting"
+      ]
+    },
+    {
+      "id": "T-E002",
+      "name": "Endpoint Phishing",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker phishes developer to steal credentials or install malware",
+      "risks": [
+        "Lack of 2FA / phishing protection",
+        "No security awareness training",
+        "Credentials stored in plaintext",
+        "No email security controls"
+      ],
+      "controls": [
+        "Mandatory MFA",
+        "Phishing-resistant authentication",
+        "Security awareness training",
+        "Email security (SPF, DMARC, DKIM)",
+        "EDR on endpoint"
+      ]
+    },
+    {
+      "id": "T-E003",
+      "name": "Harvest Local Secrets / Credentials from Endpoint",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts credentials stored on developer machine",
+      "risks": [
+        "Credentials stored in plaintext",
+        "Production credentials on developer machines",
+        "No local DLP",
+        "SSH keys without passwords",
+        "Cloud credentials in environment variables"
+      ],
+      "controls": [
+        "Local DLP",
+        "EDR on endpoint",
+        "Credential manager enforcement",
+        "No production credentials on endpoints",
+        "Encrypted credential storage"
+      ]
+    },
+    {
+      "id": "T-E004",
+      "name": "Harvest Local Data from Endpoint",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker exfiltrates source code, documents, or other sensitive data from endpoint",
+      "risks": [
+        "No local DLP",
+        "No EDR",
+        "Sensitive data stored locally",
+        "No encryption at rest"
+      ],
+      "controls": [
+        "Local DLP",
+        "EDR on endpoint",
+        "Data classification and handling policies",
+        "Encryption at rest",
+        "Network monitoring"
+      ]
+    },
+    {
+      "id": "T-E005",
+      "name": "Cryptomining on Endpoints",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses endpoint resources for cryptocurrency mining",
+      "risks": [
+        "No EDR",
+        "Untrusted software packages",
+        "No resource monitoring"
+      ],
+      "controls": [
+        "EDR on endpoint",
+        "Resource monitoring and alerting",
+        "Application whitelisting",
+        "Network monitoring (detect mining pool connections)"
+      ]
+    },
+    {
+      "id": "T-E006",
+      "name": "Register Local Machine as CI Runner",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker registers compromised endpoint as self-hosted CI/CD runner",
+      "risks": [
+        "Ability to register arbitrary machines as runners",
+        "No runner registration approval process",
+        "Runner registration tokens not protected"
+      ],
+      "controls": [
+        "Using managed runners only",
+        "Runner registration approval workflow",
+        "Runner registration token protection",
+        "Network segmentation (runners isolated from endpoints)"
+      ]
+    },
+    {
+      "id": "T-E007",
+      "name": "Abuse Local VCS Access from Endpoint",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses local git credentials to access VCS",
+      "risks": [
+        "VCS credentials stored on endpoint",
+        "No credential rotation",
+        "Overprivileged VCS access"
+      ],
+      "controls": [
+        "Credential manager enforcement",
+        "Fine-grained PATs with expiration",
+        "Mandatory MFA for VCS",
+        "Audit log monitoring"
+      ]
+    },
+    {
+      "id": "T-E008",
+      "name": "Abuse Local CI/CD Access from Endpoint",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses local CI/CD credentials to access CI/CD system",
+      "risks": [
+        "CI/CD credentials stored on endpoint",
+        "No credential rotation",
+        "Overprivileged CI/CD access"
+      ],
+      "controls": [
+        "Credential manager enforcement",
+        "OIDC instead of long-lived tokens",
+        "Mandatory MFA for CI/CD",
+        "Audit log monitoring"
+      ]
+    },
+    {
+      "id": "T-E009",
+      "name": "Abuse Local AI Tools",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses AI coding assistants to exfiltrate code or inject malicious suggestions",
+      "risks": [
+        "Using untrusted AI tools",
+        "No acceptable use policy",
+        "AI tools with excessive permissions",
+        "Sensitive code sent to AI services"
+      ],
+      "controls": [
+        "Acceptable use policy against unapproved AI tools",
+        "Approved AI tools with data protection",
+        "Network monitoring for AI service connections",
+        "Code review for AI-generated code"
+      ]
+    },
+    {
+      "id": "T-E010",
+      "name": "Endpoint Infrastructure Destruction",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption",
+      "risks": [
+        "No backup and recovery",
+        "Overprivileged local user accounts",
+        "No EDR",
+        "Lack of system integrity monitoring",
+        "No offline backups",
+        "Insufficient access controls on critical system files"
+      ],
+      "controls": [
+        "EDR on endpoint",
+        "Regular endpoint backups",
+        "System integrity monitoring",
+        "Minimal local user privileges",
+        "Offline backup storage",
+        "File system access controls",
+        "Endpoint recovery procedures"
+      ]
+    },
+    {
+      "id": "T-E011",
+      "name": "Unicode Stealth Code Injection",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn't render in code editors but executes normally",
+      "risks": [
+        "Using untrusted IDE extensions",
+        "No code review detection of invisible characters",
+        "Static analysis tools miss unprintable characters",
+        "Diff tools don't highlight invisible code",
+        "Developer trust in visual code inspection"
+      ],
+      "controls": [
+        "Unicode character detection in code review tools",
+        "IDE plugins to visualize invisible characters",
+        "Static analysis with Unicode normalization",
+        "Automated detection of unprintable characters in commits",
+        "Extension code signing and verification",
+        "Mandatory code review with specialized tools"
+      ]
+    },
+    {
+      "id": "T-E012",
+      "name": "SOCKS Proxy Deployment on Endpoint",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker deploys SOCKS proxy server on compromised endpoint to route malicious traffic through victim's network and IP address",
+      "risks": [
+        "No EDR",
+        "No network egress monitoring",
+        "Unrestricted outbound connections",
+        "Endpoint inside corporate network",
+        "No process monitoring"
+      ],
+      "controls": [
+        "EDR on endpoint",
+        "Network egress monitoring and filtering",
+        "Application whitelisting",
+        "Network segmentation (endpoints from production)",
+        "Outbound connection restrictions",
+        "Anomalous network behavior detection"
+      ]
+    },
+    {
+      "id": "T-E013",
+      "name": "Hidden VNC (HVNC) Deployment",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker deploys hidden Virtual Network Computing that provides invisible remote desktop access without user awareness",
+      "risks": [
+        "No EDR",
+        "No process monitoring",
+        "Lack of application sandboxing",
+        "Privileged user accounts"
+      ],
+      "controls": [
+        "EDR on endpoint",
+        "Process monitoring and whitelisting",
+        "Session activity monitoring",
+        "Behavioral analysis for hidden processes",
+        "Minimal local user privileges",
+        "Virtual desktop detection"
+      ]
+    },
+    {
+      "id": "T-E014",
+      "name": "WebRTC P2P Control Channel Establishment",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker establishes WebRTC peer-to-peer connections for direct control that bypasses traditional firewalls via NAT traversal",
+      "risks": [
+        "WebRTC enabled in browsers/applications",
+        "No network monitoring of WebRTC traffic",
+        "NAT traversal bypasses firewall rules",
+        "No EDR",
+        "P2P connections not logged"
+      ],
+      "controls": [
+        "EDR on endpoint",
+        "WebRTC traffic monitoring",
+        "Network behavior analysis",
+        "WebRTC restrictions in corporate browsers",
+        "STUN/TURN server whitelisting",
+        "Deep packet inspection"
+      ]
+    },
+    {
+      "id": "T-E015",
+      "name": "Extension Auto-Update Exploitation",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction",
+      "risks": [
+        "Auto-updates enabled for extensions",
+        "No update verification",
+        "Compromised extension publisher accounts",
+        "No extension version pinning",
+        "Silent updates without user notification"
+      ],
+      "controls": [
+        "Extension update approval workflow",
+        "Extension version pinning",
+        "Update signature verification",
+        "Extension update monitoring and alerting",
+        "Delayed update deployment (canary testing)",
+        "Extension marketplace security monitoring"
+      ]
+    },
+    {
+      "id": "T-E016",
+      "name": "Blockchain-Based C2 Infrastructure",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses blockchain transactions (e.g., Solana, Bitcoin) as immutable command and control infrastructure that cannot be taken down or censored",
+      "risks": [
+        "No blockchain traffic monitoring",
+        "Blockchain connections appear legitimate",
+        "Immutable C2 instructions on blockchain",
+        "No EDR",
+        "Cryptocurrency node connections not restricted"
+      ],
+      "controls": [
+        "EDR on endpoint",
+        "Network behavior analysis",
+        "Blockchain RPC connection monitoring",
+        "Cryptocurrency-related traffic restrictions",
+        "Anomalous blockchain query detection",
+        "Application whitelisting"
+      ]
+    },
+    {
+      "id": "T-E017",
+      "name": "Legitimate Service Abuse for C2",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection",
+      "risks": [
+        "Legitimate services not monitored for C2 abuse",
+        "No content inspection of legitimate service traffic",
+        "Services whitelisted in security controls",
+        "No EDR",
+        "Encoded payloads in legitimate service data"
+      ],
+      "controls": [
+        "EDR on endpoint",
+        "Deep content inspection of legitimate service traffic",
+        "Behavioral analysis for unusual service usage patterns",
+        "Network traffic anomaly detection",
+        "Application-level monitoring",
+        "Data exfiltration detection"
+      ]
+    },
+    {
+      "id": "T-E018",
+      "name": "BitTorrent DHT for C2",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses BitTorrent Distributed Hash Table network for decentralized command distribution that cannot be shut down",
+      "risks": [
+        "BitTorrent/P2P traffic not monitored",
+        "DHT network connections appear as normal P2P traffic",
+        "No EDR",
+        "Decentralized C2 cannot be taken down",
+        "P2P protocols not restricted"
+      ],
+      "controls": [
+        "EDR on endpoint",
+        "P2P protocol blocking",
+        "BitTorrent traffic monitoring and blocking",
+        "DHT network connection detection",
+        "Network behavior analysis",
+        "Application whitelisting"
+      ]
+    },
+    {
+      "id": "T-V001",
+      "name": "Abuse Credentials for VCS Access",
+      "component": "vcs",
+      "stage": "Initial Access",
+      "description": "Attacker uses stolen credentials to access VCS",
+      "risks": [
+        "Lack of 2FA / phishing protection",
+        "Credentials in org public repos",
+        "Credentials in public repos of org members",
+        "Credentials in workflow logs",
+        "Previous breaches",
+        "Fine-grained PATs not enforced",
+        "PATs without expiration"
+      ],
+      "controls": [
+        "Mandatory MFA",
+        "IDP / SSO setup",
+        "Enforcing fine-grained PATs",
+        "Enforcing PAT expiration",
+        "Secret scanning on org",
+        "Secret scanning on personal repos"
+      ]
+    },
+    {
+      "id": "T-V002",
+      "name": "Imposter Commits",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker commits code impersonating another developer",
+      "risks": [
+        "No commit signing required",
+        "Email verification not enforced",
+        "No code review process"
+      ],
+      "controls": [
+        "Commit signing",
+        "Requiring code owner approval",
+        "Branch protection rules",
+        "Email verification enforcement"
+      ]
+    },
+    {
+      "id": "T-V003",
+      "name": "Secret Exfiltration from Repo",
+      "component": "vcs",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts secrets from repository content or history",
+      "risks": [
+        "Misconfigured repo - visibility (public when should be private)",
+        "Misconfigured VCS access - external contributors",
+        "Using untrusted webhooks",
+        "Dangling webhooks",
+        "Secrets committed to repo"
+      ],
+      "controls": [
+        "Secret scanning on org",
+        "Secret scanning on personal repos",
+        "Detection infra on audit logs",
+        "Private repo visibility",
+        "Webhook security review",
+        "Branch protection rules"
+      ]
+    },
+    {
+      "id": "T-V004",
+      "name": "Secret Exfiltration from Personal Repo",
+      "component": "vcs",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker finds secrets in personal repos of org members",
+      "risks": [
+        "Misconfigured repo - visibility",
+        "Using personal repos for work",
+        "Org members with public repos containing work content"
+      ],
+      "controls": [
+        "Secret scanning on personal repos",
+        "Policy against using personal repos for work",
+        "Detection infra on audit logs",
+        "Security awareness training"
+      ]
+    },
+    {
+      "id": "T-V005",
+      "name": "VCS Vulnerability Exploitation",
+      "component": "vcs",
+      "stage": "Initial Access",
+      "description": "Attacker exploits vulnerability in VCS platform",
+      "risks": [
+        "Non-patched VCS instance",
+        "Known CVEs not addressed",
+        "Self-hosted VCS without security updates"
+      ],
+      "controls": [
+        "Using managed VCS instances",
+        "Patching schedule",
+        "Vulnerability scanning",
+        "Security update monitoring"
+      ]
+    },
+    {
+      "id": "T-V006",
+      "name": "Turn Private Repos Public",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker changes repository visibility to public",
+      "risks": [
+        "Overprivileged VCS access",
+        "No approval for visibility changes",
+        "No audit log monitoring"
+      ],
+      "controls": [
+        "Minimal VCS permissions",
+        "Approval workflow for visibility changes",
+        "Detection infra on audit logs",
+        "CSPM/CNAPP monitoring"
+      ]
+    },
+    {
+      "id": "T-V007",
+      "name": "Clone Sensitive Repositories",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker clones private repositories to steal IP and source code",
+      "risks": [
+        "Overprivileged VCS access",
+        "No audit log monitoring",
+        "No DLP on network"
+      ],
+      "controls": [
+        "Minimal VCS permissions",
+        "Detection infra on audit logs",
+        "Network DLP",
+        "Repository access reviews"
+      ]
+    },
+    {
+      "id": "T-V008",
+      "name": "Malicious Repo Hosting",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses compromised VCS to host malicious repositories",
+      "risks": [
+        "Overprivileged VCS access",
+        "No repository review process",
+        "Unlimited repository creation"
+      ],
+      "controls": [
+        "Repository creation approval",
+        "Repository security scanning",
+        "Detection infra on audit logs",
+        "Resource quotas"
+      ]
+    },
+    {
+      "id": "T-V009",
+      "name": "Mass Deletion of Repositories",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker deletes multiple repositories to cause data loss and operational disruption",
+      "risks": [
+        "Overprivileged VCS access",
+        "No backup and recovery",
+        "No audit log monitoring",
+        "Insufficient access controls on critical repositories",
+        "No repository deletion approval process",
+        "Lack of deletion protection"
+      ],
+      "controls": [
+        "Minimal VCS user permissions",
+        "Regular repository backups",
+        "Detection infra on audit logs (VCS)",
+        "Repository deletion approval workflow",
+        "Immutable audit logs",
+        "Repository recovery procedures",
+        "Deletion protection on critical repositories"
+      ]
+    },
+    {
+      "id": "T-C001",
+      "name": "Abuse Credentials for CI/CD Access",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker uses stolen credentials to access CI/CD system",
+      "risks": [
+        "Lack of 2FA / phishing protection",
+        "Default credentials / bad out-of-the-box config",
+        "Credentials in org public repos",
+        "Previous breaches"
+      ],
+      "controls": [
+        "Mandatory MFA",
+        "IDP / SSO setup",
+        "Enforcing fine-grained PATs (VCS)",
+        "Enforcing PAT expiration (VCS)",
+        "Secret scanning"
+      ]
+    },
+    {
+      "id": "T-C002",
+      "name": "Malicious Execution in Workflow Context",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker executes malicious code within CI/CD workflow",
+      "risks": [
+        "Using untrusted GitHub actions",
+        "Using untrusted GitHub Apps",
+        "Using untrusted reusable workflows",
+        "Using untrusted SW packages on runners",
+        "Using untrusted container / VM image for runners",
+        "Lack of GitHub action pinning"
+      ],
+      "controls": [
+        "Pinning 3rd-party actions",
+        "Action whitelisting",
+        "Requiring code owner approval (VCS)",
+        "Branch protection rules (VCS)",
+        "Runner SBOM",
+        "Image scanning"
+      ]
+    },
+    {
+      "id": "T-C003",
+      "name": "PWN Request / Poisoned Pipeline Execution",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker submits malicious PR that triggers workflow with elevated privileges",
+      "risks": [
+        "Misconfigured repo - visibility",
+        "Misconfigured VCS access - external contributors",
+        "Allowing PRs from forks",
+        "Usage of pull_request_target/workflow_run",
+        "Default workflow permissions set to WRITE",
+        "Default workflow permissions set to approve PR",
+        "Workflows with access to secrets"
+      ],
+      "controls": [
+        "Branch protection rules (VCS)",
+        "Private repo (VCS)",
+        "CICD scanning tools",
+        "Require explicit approval for workflows from forks (VCS)",
+        "Minimal workflow permissions",
+        "Default workflow permissions not set to approve PRs"
+      ]
+    },
+    {
+      "id": "T-C004",
+      "name": "Workflow Script Injection",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker injects malicious code into workflow through user-controlled input",
+      "risks": [
+        "Misconfigured repo - visibility",
+        "Misconfigured workflow - script injection",
+        "Default workflow permissions set to WRITE",
+        "Default workflow permissions set to approve PR",
+        "Workflow with excessive permissions",
+        "Workflow with access to secrets"
+      ],
+      "controls": [
+        "Branch protection rules (VCS)",
+        "Private repo (VCS)",
+        "CICD scanning tools",
+        "Minimal workflow permissions",
+        "Code review for workflows"
+      ]
+    },
+    {
+      "id": "T-C005",
+      "name": "Secret Exfiltration from Workflow",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts secrets from CI/CD workflow execution",
+      "risks": [
+        "Workflow with access to secrets",
+        "No runtime monitoring",
+        "Secrets in workflow logs",
+        "Overprivileged secrets"
+      ],
+      "controls": [
+        "OIDC setup in workflows",
+        "Runtime agent on runner",
+        "Secret scanning",
+        "Minimal workflow permissions",
+        "Log sanitization"
+      ]
+    },
+    {
+      "id": "T-C006",
+      "name": "Secret Enumeration in Workflows Using GitHub Search",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker searches public workflows for exposed secrets",
+      "risks": [
+        "Workflow with access to secrets",
+        "Public repositories",
+        "Secrets in workflow files"
+      ],
+      "controls": [
+        "OIDC setup in workflows",
+        "Secret scanning",
+        "Private repositories",
+        "Code review for workflows"
+      ]
+    },
+    {
+      "id": "T-C007",
+      "name": "Action Cache Poisoning",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker poisons shared action cache to inject malicious code",
+      "risks": [
+        "Shared actions cache",
+        "No cache isolation",
+        "No cache verification"
+      ],
+      "controls": [
+        "Don't use actions cache",
+        "Workflow ordering",
+        "Cache artifact signing / verification",
+        "Cache isolation per repository"
+      ]
+    },
+    {
+      "id": "T-C008",
+      "name": "Malicious Workflow Performing Code Modification",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses workflow to modify code or approve PRs",
+      "risks": [
+        "Default workflow permissions set to WRITE",
+        "Default workflow permissions set to approve PR",
+        "Workflow with excessive permissions"
+      ],
+      "controls": [
+        "Minimal workflow permissions",
+        "Default workflow permissions not set to approve PRs",
+        "CICD scanning tools",
+        "Code review requirements"
+      ]
+    },
+    {
+      "id": "T-C009",
+      "name": "CI/CD Vulnerability Exploitation",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker exploits vulnerability in CI/CD platform",
+      "risks": [
+        "Non-patched CI/CD instance",
+        "Known CVEs not addressed",
+        "Self-hosted CI/CD without security updates"
+      ],
+      "controls": [
+        "Using managed CI/CD instances",
+        "Patching schedule",
+        "Vulnerability scanning",
+        "Security update monitoring"
+      ]
+    },
+    {
+      "id": "T-C010",
+      "name": "Runner Executing Malicious Package",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Malicious package executes on CI/CD runner",
+      "risks": [
+        "Using untrusted SW packages on runners",
+        "No package verification",
+        "No runtime monitoring"
+      ],
+      "controls": [
+        "Runtime agent on runner",
+        "Runner SBOM",
+        "Package version pinning",
+        "Package signature verification"
+      ]
+    },
+    {
+      "id": "T-C011",
+      "name": "Stealing Registry Tokens",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts registry publishing tokens from workflow",
+      "risks": [
+        "Workflow with access to secrets",
+        "Overprivileged registry tokens",
+        "Long-lived credentials"
+      ],
+      "controls": [
+        "OIDC setup in workflows",
+        "Trusted publishing (registry)",
+        "Runtime agent on runner",
+        "Secret scanning"
+      ]
+    },
+    {
+      "id": "T-C012",
+      "name": "PR from Malicious Workflow",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Workflow creates malicious pull request",
+      "risks": [
+        "Default workflow permissions set to WRITE",
+        "Default workflow permissions set to approve PR",
+        "No PR review requirements"
+      ],
+      "controls": [
+        "CICD scanning tools",
+        "Minimal workflow permissions",
+        "Branch protection rules (VCS)",
+        "Require code owner approval (VCS)"
+      ]
+    },
+    {
+      "id": "T-C013",
+      "name": "Persistence on Self-Hosted Runners",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker establishes persistence on self-hosted runner",
+      "risks": [
+        "Misconfigured self-hosted runner",
+        "Non-ephemeral self-hosted runner",
+        "Overshared self-hosted runner",
+        "No runtime monitoring"
+      ],
+      "controls": [
+        "Using managed runners only",
+        "Ephemeral runners",
+        "Runner isolation",
+        "Runtime agent on runner"
+      ]
+    },
+    {
+      "id": "T-C014",
+      "name": "Cryptomining on Runners",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses runner resources for cryptocurrency mining",
+      "risks": [
+        "No runtime monitoring",
+        "No resource limits",
+        "Self-hosted runners"
+      ],
+      "controls": [
+        "Using managed runners only",
+        "Runtime agent on runner",
+        "Resource monitoring and limits",
+        "Network monitoring"
+      ]
+    },
+    {
+      "id": "T-C015",
+      "name": "Harvest Secrets from Workflows Using ${{toJson(secrets)}}",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses toJson() to dump all secrets from workflow",
+      "risks": [
+        "Workflow with access to secrets",
+        "No CICD scanning",
+        "No runtime monitoring"
+      ],
+      "controls": [
+        "OIDC setup in workflows",
+        "CICD scanning tools",
+        "Runtime agent on runner",
+        "Minimal workflow permissions"
+      ]
+    },
+    {
+      "id": "T-C016",
+      "name": "Pivot from Self-Hosted VM Runner into Local Network / Cloud",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses runner network access to pivot into production",
+      "risks": [
+        "Overprivileged runner pod identity",
+        "Misconfigured runner cluster",
+        "Self-hosted runner in production network",
+        "No network segmentation"
+      ],
+      "controls": [
+        "K8s sensor on runner cluster",
+        "KSPM on runner cluster",
+        "Minimal runner pod privileges",
+        "Network segmentation",
+        "Using managed runners only"
+      ]
+    },
+    {
+      "id": "T-C017",
+      "name": "Pivot from Self-Hosted Container Runner into K8s Cluster",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker escapes container runner to access Kubernetes cluster",
+      "risks": [
+        "Overprivileged runner pod identity",
+        "Misconfigured runner cluster",
+        "No pod security policies",
+        "Privileged containers allowed"
+      ],
+      "controls": [
+        "K8s sensor on runner cluster",
+        "KSPM on runner cluster",
+        "Minimal runner pod privileges",
+        "Pod security policies",
+        "Using managed runners only"
+      ]
+    },
+    {
+      "id": "T-C018",
+      "name": "Data Exfiltration from CI/CD",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker exfiltrates build artifacts, logs, secrets, and sensitive data from CI/CD system over network",
+      "risks": [
+        "No network egress monitoring",
+        "Unrestricted outbound network access from runners",
+        "Build artifacts contain sensitive data",
+        "Logs contain secrets or sensitive information",
+        "No DLP on CI/CD network",
+        "Large artifact downloads not monitored"
+      ],
+      "controls": [
+        "Network DLP",
+        "Egress traffic monitoring and filtering",
+        "Runtime agent on runner",
+        "Large data transfer detection",
+        "Log sanitization",
+        "Artifact encryption",
+        "Detection infra on audit logs (CI/CD)",
+        "Network segmentation (CI/CD from internet)"
+      ]
+    },
+    {
+      "id": "T-C019",
+      "name": "CI/CD Infrastructure Destruction",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker destroys CI/CD pipelines, workflows, runners, or build artifacts to disrupt development and deployment operations",
+      "risks": [
+        "Overprivileged workflow permissions",
+        "No backup and recovery",
+        "Lack of workflow protection",
+        "No audit log monitoring",
+        "Insufficient access controls on critical workflows",
+        "No approval process for infrastructure changes"
+      ],
+      "controls": [
+        "Minimal workflow permissions",
+        "Regular CI/CD configuration backups",
+        "Workflow protection rules",
+        "Detection infra on audit logs (CI/CD)",
+        "Infrastructure change approval workflow",
+        "Immutable audit logs",
+        "CI/CD recovery procedures",
+        "Using managed runners only"
+      ]
+    },
+    {
+      "id": "T-R001",
+      "name": "Abuse Credentials for Registry Access",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker uses stolen credentials to access registry",
+      "risks": [
+        "Lack of 2FA / phishing protection",
+        "Default credentials / bad out-of-the-box config",
+        "Credentials in public images",
+        "Credentials in workflow logs",
+        "Previous breaches"
+      ],
+      "controls": [
+        "Mandatory MFA",
+        "IDP / SSO setup",
+        "Secret scanning",
+        "CSPM monitoring"
+      ]
+    },
+    {
+      "id": "T-R002",
+      "name": "Misconfigured / Anonymous Access",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker exploits misconfigured registry permissions",
+      "risks": [
+        "Misconfigured registry access",
+        "Anonymous access enabled",
+        "Overly permissive access controls"
+      ],
+      "controls": [
+        "IDP / SSO setup",
+        "CSPM",
+        "Access control reviews",
+        "Principle of least privilege"
+      ]
+    },
+    {
+      "id": "T-R003",
+      "name": "Registry Vulnerability Exploitation",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker exploits vulnerability in registry platform",
+      "risks": [
+        "Non-patched artifact/container registry",
+        "Known CVEs not addressed",
+        "Self-hosted registry without security updates"
+      ],
+      "controls": [
+        "Using managed registry instances",
+        "Patching schedule",
+        "Vulnerability scanning",
+        "Security update monitoring"
+      ]
+    },
+    {
+      "id": "T-R004",
+      "name": "Publishing Malicious Package",
+      "component": "registry",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker publishes malicious package to registry",
+      "risks": [
+        "Overprivileged NPM token",
+        "Lack of provenance",
+        "Lack of trusted publishing",
+        "No package signing"
+      ],
+      "controls": [
+        "Trusted publishing",
+        "Provenance attestation",
+        "MFA for registry account",
+        "Package signing and verification",
+        "OIDC for publishing"
+      ]
+    },
+    {
+      "id": "T-R005",
+      "name": "Publishing Malicious Container/VM Image",
+      "component": "registry",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker publishes malicious container or VM image",
+      "risks": [
+        "Overprivileged registry credentials",
+        "No image signing",
+        "No provenance attestation",
+        "No image scanning"
+      ],
+      "controls": [
+        "Trusted publishing",
+        "Provenance attestation",
+        "Image signing and verification",
+        "Image vulnerability scanning",
+        "OIDC for publishing"
+      ]
+    },
+    {
+      "id": "T-R006",
+      "name": "Publishing Malicious IDE/Browser Extension",
+      "component": "registry",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker publishes malicious extension to extension marketplace",
+      "risks": [
+        "Overprivileged publishing credentials",
+        "No extension review process",
+        "No signing requirements"
+      ],
+      "controls": [
+        "Extension signing requirements",
+        "Extension review process",
+        "MFA for publisher account",
+        "Trusted publishing"
+      ]
+    },
+    {
+      "id": "T-R007",
+      "name": "Harvest Data from Private Artifacts",
+      "component": "registry",
+      "stage": "Post-Compromise",
+      "description": "Attacker extracts sensitive data from private artifacts",
+      "risks": [
+        "Overprivileged registry access",
+        "Secrets in artifacts",
+        "No audit logging"
+      ],
+      "controls": [
+        "Minimal registry permissions",
+        "Secret scanning",
+        "Detection infra on audit logs",
+        "Artifact encryption"
+      ]
+    },
+    {
+      "id": "T-R008",
+      "name": "Malicious Images Hosting",
+      "component": "registry",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses compromised registry to host malicious images",
+      "risks": [
+        "Overprivileged registry access",
+        "No image scanning",
+        "No resource quotas"
+      ],
+      "controls": [
+        "Image vulnerability scanning",
+        "Resource quotas",
+        "Detection infra on audit logs",
+        "Access control reviews"
+      ]
+    },
+    {
+      "id": "T-R009",
+      "name": "Registry Infrastructure Destruction",
+      "component": "registry",
+      "stage": "Post-Compromise",
+      "description": "Attacker deletes packages, images, or corrupts registry infrastructure to disrupt software distribution and deployment",
+      "risks": [
+        "Overprivileged registry access",
+        "No backup and recovery",
+        "Lack of deletion protection",
+        "No audit log monitoring",
+        "Insufficient access controls on critical artifacts",
+        "No artifact deletion approval process"
+      ],
+      "controls": [
+        "Minimal user permissions (registry)",
+        "Regular artifact backups",
+        "Artifact deletion protection",
+        "Detection infra on audit logs (registry)",
+        "Artifact deletion approval workflow",
+        "Immutable artifact storage",
+        "Registry recovery procedures",
+        "Artifact retention policies"
+      ]
+    },
+    {
+      "id": "T-P001",
+      "name": "Abuse Production Credentials from CI/CD",
+      "component": "production",
+      "stage": "Initial Access",
+      "description": "Attacker extracts production credentials from CI/CD and uses them to access production",
+      "risks": [
+        "Production credentials in CI/CD workflows",
+        "Long-lived production credentials",
+        "Overprivileged cloud service accounts",
+        "No credential rotation"
+      ],
+      "controls": [
+        "OIDC for deployment (no long-lived credentials)",
+        "Minimal IAM permissions",
+        "Credential rotation",
+        "Secret scanning",
+        "Network segmentation from SDLC"
+      ]
+    },
+    {
+      "id": "T-P002",
+      "name": "Malicious Deployment via Compromised Pipeline",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker modifies CI/CD pipeline to deploy malicious code to production",
+      "risks": [
+        "No deployment approval gates",
+        "Overprivileged deployment credentials",
+        "No code signing verification",
+        "Insufficient workflow permissions review"
+      ],
+      "controls": [
+        "Deployment approval gates",
+        "Code signing and verification",
+        "Minimal workflow permissions",
+        "Branch protection rules (VCS)",
+        "Deployment monitoring"
+      ]
+    },
+    {
+      "id": "T-P003",
+      "name": "Pivot from Self-Hosted Runner to Production Network",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses self-hosted runner network access to pivot into production",
+      "risks": [
+        "Self-hosted runner in production network",
+        "Weak network segmentation",
+        "Overprivileged runner identity",
+        "No network monitoring"
+      ],
+      "controls": [
+        "Network segmentation from SDLC",
+        "Using managed runners only",
+        "Runner isolation",
+        "Network monitoring",
+        "Minimal runner privileges"
+      ]
+    },
+    {
+      "id": "T-P004",
+      "name": "Container Image Poisoning to Production",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker publishes malicious container image that gets deployed to production",
+      "risks": [
+        "Lack of image signing/verification",
+        "No provenance attestation",
+        "Automatic deployment without review",
+        "No image scanning"
+      ],
+      "controls": [
+        "Image signing and verification",
+        "Provenance attestation",
+        "Deployment approval gates",
+        "Image vulnerability scanning",
+        "Runtime security monitoring"
+      ]
+    },
+    {
+      "id": "T-P005",
+      "name": "Infrastructure-as-Code Manipulation",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker modifies IaC to create backdoors in production infrastructure",
+      "risks": [
+        "Insufficient IaC review process",
+        "Lack of drift detection",
+        "No approval gates for infrastructure changes",
+        "Overprivileged deployment credentials"
+      ],
+      "controls": [
+        "Code review for IaC changes",
+        "Deployment approval gates",
+        "Drift detection",
+        "CSPM monitoring",
+        "Minimal deployment permissions"
+      ]
+    },
+    {
+      "id": "T-P006",
+      "name": "Kubernetes Service Account Token Theft",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts Kubernetes service account tokens from CI/CD",
+      "risks": [
+        "Overprivileged service accounts",
+        "Long-lived tokens",
+        "Lack of token rotation",
+        "Tokens in CI/CD secrets"
+      ],
+      "controls": [
+        "OIDC for K8s access",
+        "Minimal service account permissions",
+        "Token rotation",
+        "Secret scanning",
+        "Runtime security monitoring"
+      ]
+    },
+    {
+      "id": "T-P007",
+      "name": "Cloud Metadata Service Exploitation",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker accesses cloud metadata service to steal additional credentials",
+      "risks": [
+        "Metadata service not restricted",
+        "Overprivileged IAM roles",
+        "No network segmentation",
+        "Compromised workload with metadata access"
+      ],
+      "controls": [
+        "Metadata service restrictions",
+        "Minimal IAM permissions",
+        "Network segmentation",
+        "Runtime security monitoring",
+        "IMDSv2 enforcement (AWS)"
+      ]
+    },
+    {
+      "id": "T-P008",
+      "name": "Kubernetes Pod Escape",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker escapes from container to underlying node",
+      "risks": [
+        "Privileged containers allowed",
+        "No pod security policies",
+        "Overprivileged pod identity",
+        "Host filesystem mounted"
+      ],
+      "controls": [
+        "Pod security policies",
+        "Minimal pod privileges",
+        "K8s sensor on cluster",
+        "KSPM",
+        "Runtime security monitoring"
+      ]
+    },
+    {
+      "id": "T-P009",
+      "name": "Cloud Service Lateral Movement",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses compromised cloud credentials to access other cloud services",
+      "risks": [
+        "Overprivileged IAM roles",
+        "No network segmentation",
+        "Lack of service-to-service authentication",
+        "No audit logging"
+      ],
+      "controls": [
+        "Minimal IAM permissions",
+        "Network segmentation",
+        "Service mesh / zero trust",
+        "CSPM monitoring",
+        "Detection infra on audit logs"
+      ]
+    },
+    {
+      "id": "T-P010",
+      "name": "Network Lateral Movement Within Production",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker moves between production systems via network",
+      "risks": [
+        "Weak network segmentation",
+        "Overly permissive security groups",
+        "No network monitoring",
+        "Unpatched systems"
+      ],
+      "controls": [
+        "Network segmentation",
+        "Micro-segmentation",
+        "Network monitoring",
+        "Security group hardening",
+        "Vulnerability management"
+      ]
+    },
+    {
+      "id": "T-P011",
+      "name": "Steal Secrets from Production Environment",
+      "component": "production",
+      "stage": "Post-Compromise",
+      "description": "Attacker accesses production secrets store and exfiltrates customer secrets, tokens, and credentials",
+      "risks": [
+        "Encryption keys accessible in process memory",
+        "Lack of hardware security module (HSM) for key storage",
+        "No secrets rotation policies",
+        "Centralized storage of all customer secrets",
+        "No data loss prevention (DLP) on production systems",
+        "Lack of egress traffic monitoring"
+      ],
+      "controls": [
+        "Store encryption keys in HSM (Hardware Security Module)",
+        "Envelope encryption with key hierarchy",
+        "Customer-managed encryption keys (CMEK)",
+        "Automatic secrets rotation (30-90 days)",
+        "Secrets segmentation (per-customer isolation)",
+        "Memory protection and anti-dumping controls",
+        "DLP on production systems",
+        "Egress traffic monitoring and filtering",
+        "Detection infra on audit logs (production)",
+        "Large data transfer detection"
+      ]
+    },
+    {
+      "id": "T-P012",
+      "name": "Production Infrastructure Reconnaissance",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker enumerates production infrastructure, services, and resources to identify targets and plan attacks",
+      "risks": [
+        "Overprivileged IAM roles allowing enumeration",
+        "No detection of reconnaissance activities",
+        "Publicly exposed cloud metadata",
+        "Insufficient network segmentation allowing scanning",
+        "Verbose error messages revealing infrastructure details",
+        "Lack of honeypots or deception technology",
+        "No rate limiting on API calls"
+      ],
+      "controls": [
+        "Minimal IAM permissions",
+        "Detection infra on audit logs (production)",
+        "API rate limiting and throttling",
+        "Network segmentation (production internal)",
+        "Honeypots and deception technology",
+        "Metadata service restrictions",
+        "Generic error messages (no infrastructure details)",
+        "Anomaly detection for enumeration patterns"
+      ]
+    },
+    {
+      "id": "T-P013",
+      "name": "Data Exfiltration from Production",
+      "component": "production",
+      "stage": "Post-Compromise",
+      "description": "Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network",
+      "risks": [
+        "No network egress monitoring",
+        "Unrestricted outbound network access",
+        "No DLP on production systems",
+        "Large database exports not monitored",
+        "Backup data accessible and unmonitored",
+        "Use of encrypted channels to bypass DLP",
+        "Cloud storage buckets with public access"
+      ],
+      "controls": [
+        "Network DLP",
+        "Egress traffic monitoring and filtering",
+        "Large data transfer detection",
+        "Database activity monitoring",
+        "Backup encryption and access controls",
+        "SSL/TLS inspection",
+        "Detection infra on audit logs (production)",
+        "CSPM monitoring",
+        "Data classification and handling policies",
+        "Network segmentation (production from internet)"
+      ]
+    },
+    {
+      "id": "T-P014",
+      "name": "Production Infrastructure Destruction",
+      "component": "production",
+      "stage": "Post-Compromise",
+      "description": "Attacker destroys production infrastructure, databases, storage, or configurations to cause severe operational disruption and data loss",
+      "risks": [
+        "Overprivileged IAM roles allowing destructive actions",
+        "No backup and disaster recovery plan",
+        "Lack of deletion protection on critical resources",
+        "No audit log monitoring",
+        "Insufficient access controls on critical infrastructure",
+        "No approval process for destructive operations",
+        "Backup data not isolated from production"
+      ],
+      "controls": [
+        "Minimal IAM permissions",
+        "Regular backups with offsite/offline storage",
+        "Deletion protection on critical resources",
+        "Detection infra on audit logs (production)",
+        "Destructive operation approval workflow",
+        "Immutable backups",
+        "Disaster recovery procedures and testing",
+        "CSPM monitoring",
+        "Resource tagging and protection policies",
+        "Backup isolation from production network"
+      ]
+    },
+    {
+      "id": "T-P015",
+      "name": "Malicious Service Provisioning for Persistence",
+      "component": "production",
+      "stage": "Post-Compromise",
+      "description": "Attacker provisions new malicious services or backdoors existing services in orchestration platform (e.g., ArgoCD, Kubernetes) to establish persistence",
+      "risks": [
+        "No approval gates for service provisioning",
+        "Developers can create arbitrary services",
+        "Insufficient IaC review process",
+        "Service definitions not audited",
+        "No anomaly detection for new service creation",
+        "Persistent backdoor services remain undetected",
+        "Service modifications not reviewed"
+      ],
+      "controls": [
+        "Deployment approval gates for new services",
+        "Code review for all IaC changes",
+        "CSPM monitoring",
+        "Detection infra on audit logs (production)",
+        "Anomaly detection for new service creation patterns",
+        "Immutable audit logs",
+        "Regular service inventory audits",
+        "Baseline approved services list"
+      ]
+    },
+    {
+      "id": "T-P016",
+      "name": "Supply Chain Backdoor (Sensor/Agent Poisoning)",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers",
+      "risks": [
+        "No binary signing verification for distributed software",
+        "Customer updates automatically deployed without verification",
+        "No provenance attestation for sensor binaries",
+        "No multi-party approval for releases"
+      ],
+      "controls": [
+        "Code signing and verification for all distributed binaries",
+        "Provenance attestation (SLSA Level 3+)",
+        "Multi-party approval for sensor/agent releases",
+        "Customer-controlled update policies with verification",
+        "Regular security audits of build infrastructure",
+        "Separation of duties for release signing",
+        "Immutable build logs and attestations"
+      ]
+    }
+  ]
+};
+
+        // Component colors
+        const componentColors = {
+            'endpoint': '#3B82F6',
+            'vcs': '#10B981',
+            'cicd': '#F59E0B',
+            'registry': '#8B5CF6',
+            'production': '#EF4444'
+        };
+
+        // Component icons
+        const componentIcons = {
+            'endpoint': '💻',
+            'vcs': '📦',
+            'cicd': '⚙️',
+            'registry': '📚',
+            'production': '☁️'
+        };
+
+        // State
+        let filters = {
+            component: 'all',
+            stage: 'all',
+            search: ''
+        };
+
+        // Initialize
+        function init() {
+            renderFilters();
+            renderTechniques();
+            setupEventListeners();
+        }
+
+        // Render filter buttons
+        function renderFilters() {
+            const componentFilters = document.getElementById('componentFilters');
+            const stageFilters = document.getElementById('stageFilters');
+
+            // Component filters
+            let componentHTML = '<button class="filter-btn active" data-filter="all">All Components</button>';
+            techniquesData.components.forEach(comp => {
+                componentHTML += `<button class="filter-btn" data-filter="${comp.id}">${comp.name}</button>`;
+            });
+            componentFilters.innerHTML = componentHTML;
+
+            // Stage filters
+            const stages = ['Initial Access', 'Discovery and Lateral Movement', 'Post-Compromise'];
+            let stageHTML = '<button class="filter-btn active" data-filter="all">All Stages</button>';
+            stages.forEach(stage => {
+                stageHTML += `<button class="filter-btn" data-filter="${stage}">${stage}</button>`;
+            });
+            stageFilters.innerHTML = stageHTML;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Component filters
+            document.getElementById('componentFilters').addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-btn')) {
+                    document.querySelectorAll('#componentFilters .filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    e.target.classList.add('active');
+                    filters.component = e.target.dataset.filter;
+                    renderTechniques();
+                }
+            });
+
+            // Stage filters
+            document.getElementById('stageFilters').addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-btn')) {
+                    document.querySelectorAll('#stageFilters .filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    e.target.classList.add('active');
+                    filters.stage = e.target.dataset.filter;
+                    renderTechniques();
+                }
+            });
+
+            // Search
+            document.getElementById('searchBox').addEventListener('input', (e) => {
+                filters.search = e.target.value.toLowerCase();
+                renderTechniques();
+            });
+        }
+
+        // Filter techniques
+        function filterTechniques() {
+            return techniquesData.techniques.filter(tech => {
+                // Component filter
+                if (filters.component !== 'all' && tech.component !== filters.component) {
+                    return false;
+                }
+
+                // Stage filter
+                if (filters.stage !== 'all' && tech.stage !== filters.stage) {
+                    return false;
+                }
+
+                // Search filter
+                if (filters.search) {
+                    const searchText = filters.search;
+                    const searchableText = [
+                        tech.id,
+                        tech.name,
+                        tech.description,
+                        ...tech.risks,
+                        ...tech.controls
+                    ].join(' ').toLowerCase();
+
+                    if (!searchableText.includes(searchText)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+        }
+
+        // Render techniques
+        function renderTechniques() {
+            const filtered = filterTechniques();
+            const container = document.getElementById('techniquesContainer');
+            const noResults = document.getElementById('noResults');
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                noResults.classList.remove('hidden');
+                updateStats(filtered);
+                return;
+            }
+
+            noResults.classList.add('hidden');
+
+            // Group by component and stage
+            const grouped = {};
+            techniquesData.components.forEach(comp => {
+                grouped[comp.id] = {
+                    component: comp,
+                    stages: {}
+                };
+            });
+
+            filtered.forEach(tech => {
+                if (!grouped[tech.component].stages[tech.stage]) {
+                    grouped[tech.component].stages[tech.stage] = [];
+                }
+                grouped[tech.component].stages[tech.stage].push(tech);
+            });
+
+            // Render
+            let html = '';
+            techniquesData.components.forEach(comp => {
+                const compData = grouped[comp.id];
+                const stages = Object.keys(compData.stages);
+
+                if (stages.length === 0) return;
+
+                const color = componentColors[comp.id];
+                const icon = componentIcons[comp.id];
+
+                html += `
+                    <div class="component-section">
+                        <div class="component-header" style="border-color: ${color}">
+                            <div class="component-icon" style="background-color: ${color}">
+                                ${icon}
+                            </div>
+                            <div class="component-info">
+                                <h2 style="color: ${color}">${comp.name}</h2>
+                                <p>${comp.description}</p>
+                            </div>
+                        </div>
+                `;
+
+                // Sort stages
+                const stageOrder = ['Initial Access', 'Discovery and Lateral Movement', 'Post-Compromise'];
+                const sortedStages = stages.sort((a, b) => {
+                    return stageOrder.indexOf(a) - stageOrder.indexOf(b);
+                });
+
+                sortedStages.forEach(stage => {
+                    const techniques = compData.stages[stage];
+                    html += `
+                        <div class="stage-group">
+                            <div class="stage-header">
+                                <div class="stage-title">${stage}</div>
+                                <div class="stage-count">${techniques.length}</div>
+                            </div>
+                            <div class="techniques-grid">
+                    `;
+
+                    techniques.forEach(tech => {
+                        html += `
+                            <div class="technique-card">
+                                <div class="technique-id">${tech.id}</div>
+                                <div class="technique-name">${tech.name}</div>
+                                <div class="technique-description">${tech.description}</div>
+                                <div class="technique-details">
+                                    <div class="detail-section">
+                                        <div class="detail-title">⚠️ Risks</div>
+                                        <ul class="detail-list risks-list">
+                                            ${tech.risks.map(risk => `<li>${risk}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                    <div class="detail-section">
+                                        <div class="detail-title">✅ Controls</div>
+                                        <ul class="detail-list controls-list">
+                                            ${tech.controls.map(control => `<li>${control}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+            });
+
+            container.innerHTML = html;
+            updateStats(filtered);
+        }
+
+        // Update stats
+        function updateStats(filtered) {
+            const stats = document.getElementById('stats');
+            
+            const componentCount = new Set(filtered.map(t => t.component)).size;
+            const stageCount = new Set(filtered.map(t => t.stage)).size;
+            const totalRisks = filtered.reduce((sum, t) => sum + t.risks.length, 0);
+            const totalControls = filtered.reduce((sum, t) => sum + t.controls.length, 0);
+
+            stats.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-number">${filtered.length}</div>
+                    <div class="stat-label">Techniques</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${componentCount}</div>
+                    <div class="stat-label">Components</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${stageCount}</div>
+                    <div class="stat-label">Attack Stages</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${totalRisks}</div>
+                    <div class="stat-label">Risks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">${totalControls}</div>
+                    <div class="stat-label">Controls</div>
+                </div>
+            `;
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
