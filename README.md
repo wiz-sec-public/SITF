@@ -4,13 +4,11 @@ A comprehensive framework for analyzing and defending against supply chain attac
 
 ## Quick Start
 
-📖 **[Read the Implementation Guide](IMPLEMENTATION_GUIDE.md)** - Complete methodology, case studies, and usage instructions
+� **[Launch the Flow Builder](app/)** - Interactive tool for mapping attack flows
 
 🔍 **[Explore Techniques Visually](app/techniques-library.html)** - Interactive visual explorer with filtering and search
 
-� **[Launch the Flow Builder](app/)** - Interactive tool for mapping attack flows
-
-📚 **[Browse the Technique Library](TECHNIQUE_LIBRARY.md)** - 63 documented attack techniques with risks and controls
+📖 **[Read the Implementation Guide](IMPLEMENTATION_GUIDE.md)** - Complete methodology, case studies, and usage instructions
 
 ## What is SITF?
 
@@ -22,10 +20,10 @@ SITF helps security teams analyze supply chain attacks by:
 
 ## Framework Components
 
-- **5 Infrastructure Components**: Endpoint/IDE, VCS, CI/CD, Registry, Production/Cloud
-- **63 Attack Techniques**: Pre-mapped with enabling risks and preventive controls
-- **Interactive Visualizer**: Drag-and-drop interface for building attack flow diagrams
-- **Real-World Case Studies**: CircleCI breach, Shai-Hulud-2, Codecov
+- 5 Infrastructure Components: Endpoint/IDE, VCS, CI/CD, Registry, Production/Cloud
+- Over 70 Attack Techniques: Pre-mapped with enabling risks and preventive controls
+- Interactive Visualizer: Drag-and-drop interface for building attack flow diagrams
+- Real-World Case Studies: CircleCI breach, Shai-Hulud-2, Codecov
 
 ## Documentation
 
