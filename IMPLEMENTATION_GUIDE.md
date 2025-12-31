@@ -15,12 +15,12 @@
 
 ### Purpose
 
-This guide helps security teams use the SDLC Infrastructure Threat Framework (SITF) to **analyze supply chain attacks** against producer organizations. The framework enables you to:
+This guide helps security teams use the SDLC Infrastructure Threat Framework (SITF) to analyze supply chain attacks against producer organizations. The framework enables you to:
 
-1. **Visualize attack stages** across SDLC infrastructure components
-2. **Identify the risks** that enabled each attack technique
-3. **Map risks to appropriate controls** to prevent similar attacks
-4. **Understand attack paths** and lateral movement patterns
+1. Visualize attack stages across SDLC infrastructure components
+2. Identify the risks that enabled each attack technique
+3. Map risks to appropriate controls to prevent similar attacks
+4. Understand attack paths and lateral movement patterns
 
 ### Who Should Use This Guide
 
@@ -31,9 +31,9 @@ This guide helps security teams use the SDLC Infrastructure Threat Framework (SI
 
 ### Framework Philosophy
 
-**SITF is attack-centric:** Start with an attack, decompose it using the framework, understand what enabled it, and identify controls to prevent recurrence.
+SITF is attack-centric: Start with an attack, decompose it using the framework, understand what enabled it, and identify controls to prevent recurrence.
 
-**SITF focuses on producers:** This framework protects organizations that **create** supply chain components (for internal or external consumption - software vendors, OSS maintainers), not the consumers who use them in production.
+SITF focuses on producers: This framework protects organizations that create supply chain components (for internal or external consumption - software vendors, OSS maintainers), not the consumers who use them in production.
 
 ---
 
@@ -57,24 +57,24 @@ Attacks progress through a complete lifecycle with entry and exit points:
 [Entry Point] -> Initial Access -> Lateral Movement -> Post-Compromise/Impact -> [Exit Point]
 ```
 
-**Entry Point (How the attack began):**
+Entry Point (How the attack began):
 - Phishing email to developer
 - Compromised third-party dependency
 - Exploited vulnerability in public-facing system
 - Stolen credentials from previous breach
 - Social engineering
 
-**Initial Access:** Attacker gains foothold in one component
+Initial Access: Attacker gains foothold in one component
 - First successful technique execution
 - Establishes presence in SDLC infrastructure
 - Examples: Malicious execution on endpoint, PWN request in CI/CD, VCS credential abuse
 
-**Lateral Movement:** Attacker pivots between components
+Lateral Movement: Attacker pivots between components
 - Moves from initial foothold to other infrastructure components
 - Steals credentials to enable further access
 - Examples: CI/CD -> Registry, Endpoint -> Production, Registry -> Endpoint
 
-**Post-Compromise/Impact:** Attacker achieves objectives
+Post-Compromise/Impact: Attacker achieves objectives
 - Data exfiltration (secrets, source code, customer data)
 - Supply chain poisoning (publishing malicious artifacts)
 - Resource hijacking (cryptomining)
@@ -117,14 +117,14 @@ The framework's power comes from its comprehensive **[Technique Library](TECHNIQ
 - The **controls** that prevent or detect it
 
 The technique library is maintained in [`techniques.json`](techniques.json) as the single source of truth, and automatically generates:
-- **[TECHNIQUE_LIBRARY.md](TECHNIQUE_LIBRARY.md)** - Human-readable documentation
-- **[app/index.html](app/index.html)** - Interactive web application
+- [TECHNIQUE_LIBRARY.md](TECHNIQUE_LIBRARY.md) - Human-readable documentation
+- [app/index.html](app/index.html) - Interactive web application
 
 **How to Use the Framework:**
 
-1. **Start with the technique** - Identify the attack technique from the [Technique Library](TECHNIQUE_LIBRARY.md) (e.g., "T-C003: PWN request", "T-C005: Secret exfiltration from workflow")
-2. **Understand the risks** - The technique entry shows you which underlying risks made it possible
-3. **Apply the controls** - The technique entry shows you which controls would have prevented it
+1. Start with the technique - Identify the attack technique from the [Technique Library](TECHNIQUE_LIBRARY.md) (e.g., "T-C003: PWN request", "T-C005: Secret exfiltration from workflow")
+2. Understand the risks - The technique entry shows you which underlying risks made it possible
+3. Apply the controls - The technique entry shows you which controls would have prevented it
 
 **Example:**
 ```
@@ -169,16 +169,16 @@ Controls that prevent it:
 
 ### Attack Analysis in Three Steps
 
-**1. Identify the Attack Techniques**
-Look up each attack action in the **[Technique Library](TECHNIQUE_LIBRARY.md)** to find the matching technique ID (e.g., T-C003, T-E001). Each technique entry provides pre-mapped risks and controls.
+1. Identify the Attack Techniques
+Look up each attack action in the [Technique Library](TECHNIQUE_LIBRARY.md) to find the matching technique ID (e.g., T-C003, T-E001). Each technique entry provides pre-mapped risks and controls.
 
-**2. Map the Attack Flow**
-Use the **SITF Attack Flow Visualizer** to create a visual diagram showing:
+2. Map the Attack Flow
+Use the SITF Attack Flow Visualizer to create a visual diagram showing:
 - Entry points (how the attack began)
 - Technique progression across components
 - Exit points (ongoing risks after the attack)
 
-**3. Extract the Controls Matrix**
+3. Extract the Controls Matrix
 The visualizer automatically generates a Controls Matrix from your diagram, organizing all security controls by component and attack stage. Export this matrix to prioritize your defenses.
 
 ### The SITF Attack Flow Visualizer
@@ -201,15 +201,15 @@ The visualizer is an interactive web application for building and analyzing atta
 - Dark/light theme toggle
 - Save/Load flows as JSON files
 
-**Using the Visualizer:**
-1. **Map the Attack**: Drag components and techniques from the palette
-2. **Show Progression**: Connect nodes with arrows to show attack flow
-3. **Annotate Impact**: Double-click arrows to label with impact types
-4. **View Details**: Click expansion buttons to see risks and controls
-5. **Generate Matrix**: Controls Matrix auto-populates from your diagram
-6. **Export Results**: Save as JSON, export as PNG/PDF for reports
+Using the Visualizer:
+1. Map the Attack: Drag components and techniques from the palette
+2. Show Progression: Connect nodes with arrows to show attack flow
+3. Annotate Impact: Double-click arrows to label with impact types
+4. View Details: Click expansion buttons to see risks and controls
+5. Generate Matrix: Controls Matrix auto-populates from your diagram
+6. Export Results: Save as JSON, export as PNG/PDF for reports
 
-**Example:** The Shai-Hulud-2 case study below demonstrates this complete process with a real supply chain attack.
+Example: The Shai-Hulud-2 case study below demonstrates this complete process with a real supply chain attack.
 
 ---
 
@@ -226,9 +226,9 @@ The Shai-Hulud-2 attack demonstrates a sophisticated supply chain attack with **
 
 ### Understanding the Dual Attack Paths
 
-**Producer Path (Left):** Attacker compromises the producer's CI/CD to steal publishing credentials
-**Consumer Path (Right):** Malicious packages execute on consumer endpoints, enabling multiple simultaneous attack paths
-**Key Insight:** A single supply chain attack creates cascading risks across both producers and consumers
+Producer Path (Left): Attacker compromises the producer's CI/CD to steal publishing credentials
+Consumer Path (Right): Malicious packages execute on consumer endpoints, enabling multiple simultaneous attack paths
+Key Insight: A single supply chain attack creates cascading risks across both producers and consumers
 
 ---
 
@@ -433,11 +433,11 @@ Stolen credentials from consumer endpoints could be used to compromise their CI/
 
 ### Key Takeaways
 
-1. **Dual attack surface:** Supply chain attacks impact both producers (who create components) and consumers (who use them)
-2. **Multiple exit points:** The attack doesn't "end" - it creates three distinct ongoing risks (Future Breach, Ongoing Access, Secondary Supply Chain Attack)
-3. **Cascading impact:** Consumer compromises can trigger new supply chain attacks, creating a self-perpetuating cycle
-4. **Defense requires depth:** No single control stops the attack - multiple controls at each stage are needed
-5. **Credential theft is the pivot mechanism:** Stolen secrets enable lateral movement between all components
+1. Dual attack surface: Supply chain attacks impact both producers (who create components) and consumers (who use them)
+2. Multiple exit points: The attack doesn't "end" - it creates three distinct ongoing risks (Future Breach, Ongoing Access, Secondary Supply Chain Attack)
+3. Cascading impact: Consumer compromises can trigger new supply chain attacks, creating a self-perpetuating cycle
+4. Defense requires depth: No single control stops the attack - multiple controls at each stage are needed
+5. Credential theft is the pivot mechanism: Stolen secrets enable lateral movement between all components
 
 ---
 
@@ -526,14 +526,14 @@ Test 3: Can a malicious package execute on endpoints?
 
 ## Appendix: Framework Reference
 
-### **[Technique Library](TECHNIQUE_LIBRARY.md)**
+### [Technique Library](TECHNIQUE_LIBRARY.md)
 The comprehensive catalog of 60+ attack techniques with pre-mapped risks and controls. This is your primary reference for:
 - Complete technique triplets (Technique -> Risks -> Controls)
 - Techniques organized by component (Endpoint, VCS, CI/CD, Registry, Production)
 - Quick reference index by attack stage
 - Practical examples of using the library for attack analysis
 
-### **[SITF Attack Flow Visualizer](app/README.md)**
+### [SITF Attack Flow Visualizer](app/README.md)
 Interactive web application for building and analyzing attack flows:
 - Standalone HTML file - just open `app/index.html` in your browser
 - Drag-and-drop interface with 60+ techniques
@@ -541,14 +541,14 @@ Interactive web application for building and analyzing attack flows:
 - Auto-populating Controls Matrix
 - Export capabilities (PNG, SVG, PDF, CSV)
 
-**Source of Truth:** [`techniques.json`](techniques.json)
+Source of Truth: [`techniques.json`](techniques.json)
 - Machine-readable format for all technique data
 - Edit this file to add or modify techniques
 - Run `python3 app/build-techniques.py` to regenerate documentation and web app
 
 ### Real-World Attack Examples
 
-**Attacks Mapped to SITF:**
-- **Shai-Hulud-2 (2024):** Complete supply chain attack cycle (VCS -> CI/CD -> Registry -> Endpoint)
-- **CircleCI breach (2023):** CI/CD -> Production pivot via stolen credentials
-- **Codecov (2021):** CI/CD -> Registry compromise via modified build script -> Endpoint
+Attacks Mapped to SITF:
+- Shai-Hulud-2 (2024): Complete supply chain attack cycle (VCS -> CI/CD -> Registry -> Endpoint)
+- CircleCI breach (2023): CI/CD -> Production pivot via stolen credentials
+- Codecov (2021): CI/CD -> Registry compromise via modified build script -> Endpoint

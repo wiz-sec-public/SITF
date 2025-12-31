@@ -29,10 +29,10 @@ SITF helps security teams analyze supply chain attacks by:
 
 ## Documentation
 
-- **[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md)** - Start here for complete framework overview
-- **[TECHNIQUE_LIBRARY.md](TECHNIQUE_LIBRARY.md)** - Reference catalog of all techniques
-- **[techniques.json](techniques.json)** - Machine-readable source of truth for all techniques
-- **[app/README.md](app/README.md)** - Visualizer setup and usage
+- [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) - Start here for complete framework overview
+- [TECHNIQUE_LIBRARY.md](TECHNIQUE_LIBRARY.md) - Reference catalog of all techniques
+- [techniques.json](techniques.json) - Machine-readable source of truth for all techniques
+- [app/README.md](app/README.md) - Visualizer setup and usage
 
 ## Contributing
 

@@ -11,29 +11,6 @@ This library contains **technique triplets** - each entry shows:
 
 ---
 
-## Impact Types
-
-When mapping attack flows, connections between techniques can be annotated with impact types to show the consequences of successful exploitation.
-
-### PRIMARY IMPACTS
-Primary impacts occur when an attacker achieves their main objective through the SDLC infrastructure:
-
-- **Data Exfiltration** - Theft of sensitive data, source code, or intellectual property
-- **Resource Hijacking** - Unauthorized use of computational resources (cryptomining, etc.)
-- **Destruction** - Deletion or corruption of critical assets
-- **Pivot to Other Internal Systems** - Using SDLC access to reach other organizational systems
-- **Supply Chain** - Compromising downstream consumers through poisoned artifacts
-
-### SECONDARY IMPACTS
-Secondary impacts are collateral effects or intermediate objectives during an attack:
-
-- **Data Exfiltration** - Credentials, secrets, or configuration data used for further attacks
-- **Resource Hijacking** - Temporary resource abuse during attack execution
-- **Destruction** - Covering tracks or causing disruption
-- **Pivot to Other Internal Systems** - Lateral movement within SDLC infrastructure
-
----
-
 ## Technique Triplets by Component
 
 ### ENDPOINT / IDE
@@ -47,13 +24,18 @@ Secondary impacts are collateral effects or intermediate objectives during an at
 - Using untrusted software packages on endpoints
 - No EDR
 - Lack of application sandboxing
+- Package installation scripts enabled
+- Direct downloads from public registries
 
 **Controls:**
+- Local registry proxy with filtering
 - EDR on endpoint
 - IDE sandboxing
 - Mandating signed extensions
 - Package version pinning
+- Automated maintainer reputation and hygiene checks
 - Application whitelisting
+- Disable package installation scripts (--ignore-scripts)
 
 ---
 
@@ -598,6 +580,7 @@ Secondary impacts are collateral effects or intermediate objectives during an at
 **Controls:**
 - Pinning 3rd-party actions
 - Action whitelisting
+- Automated maintainer reputation and hygiene checks
 - Requiring code owner approval (VCS)
 - Branch protection rules (VCS)
 - Runner SBOM
@@ -744,12 +727,16 @@ Secondary impacts are collateral effects or intermediate objectives during an at
 - Using untrusted SW packages on runners
 - No package verification
 - No runtime monitoring
+- Package installation scripts enabled
+- Direct downloads from public registries
 
 **Controls:**
+- Local registry proxy with filtering
 - Runtime agent on runner
 - Runner SBOM
 - Package version pinning
 - Package signature verification
+- Disable package installation scripts (--ignore-scripts)
 
 ---
 
@@ -1090,6 +1077,54 @@ Secondary impacts are collateral effects or intermediate objectives during an at
 - Immutable artifact storage
 - Registry recovery procedures
 - Artifact retention policies
+
+---
+
+#### T-R010: Typosquatting
+
+**Technique:** Attacker publishes malicious packages with names similar to legitimate ones to trick developers into installing them by mistake
+
+**Risks:**
+- No package name verification
+- Lack of typosquatting detection
+- Developer mistakes during package installation
+- No package naming policies
+- Lack of security awareness training
+- Direct downloads from public registries
+
+**Controls:**
+- Local registry proxy with filtering
+- Typosquatting detection and prevention
+- Package name similarity checks
+- Automated maintainer reputation and hygiene checks
+- Security awareness training on package verification
+- Package installation verification workflows
+- Dependency review and approval process
+- Package popularity and reputation scoring
+
+---
+
+#### T-R011: Namespace/Dependency Confusion
+
+**Technique:** Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package
+
+**Risks:**
+- Lack of internal repository enforcement
+- Package managers prioritize public repositories
+- No namespace isolation between internal and public packages
+- Automatic dependency resolution without verification
+- Higher version numbers in public repositories
+- Direct downloads from public registries
+
+**Controls:**
+- Local registry proxy with filtering
+- Internal repository enforcement and prioritization
+- Namespace isolation and scoping
+- Package version pinning
+- Automated maintainer reputation and hygiene checks
+- Private package registry configuration
+- Dependency resolution policies
+- Package source verification
 
 ---
 
@@ -1451,6 +1486,8 @@ Secondary impacts are collateral effects or intermediate objectives during an at
 - T-R001: Abuse Credentials for Registry Access
 - T-R002: Misconfigured / Anonymous Access
 - T-R003: Registry Vulnerability Exploitation
+- T-R010: Typosquatting
+- T-R011: Namespace/Dependency Confusion
 - T-V001: Abuse Credentials for VCS Access
 - T-V005: VCS Vulnerability Exploitation
 

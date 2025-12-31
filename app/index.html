@@ -404,25 +404,9 @@
     "Future Breach",
     "Persistence Established",
     "Secondary Supply Chain Attack",
-    "Ongoing Access",
     "Detection & Containment",
     "Custom"
   ],
-  "impactTypes": {
-    "primary": [
-      "Data Exfiltration",
-      "Resource Hijacking",
-      "Destruction",
-      "Pivot to Other Internal Systems",
-      "Supply Chain"
-    ],
-    "secondary": [
-      "Data Exfiltration",
-      "Resource Hijacking",
-      "Destruction",
-      "Pivot to Other Internal Systems"
-    ]
-  },
   "techniques": [
     {
       "id": "T-E001",
@@ -434,14 +418,19 @@
         "Using untrusted IDE extensions",
         "Using untrusted software packages on endpoints",
         "No EDR",
-        "Lack of application sandboxing"
+        "Lack of application sandboxing",
+        "Package installation scripts enabled",
+        "Direct downloads from public registries"
       ],
       "controls": [
+        "Local registry proxy with filtering",
         "EDR on endpoint",
         "IDE sandboxing",
         "Mandating signed extensions",
         "Package version pinning",
-        "Application whitelisting"
+        "Automated maintainer reputation and hygiene checks",
+        "Application whitelisting",
+        "Disable package installation scripts (--ignore-scripts)"
       ]
     },
     {
@@ -1010,6 +999,7 @@
       "controls": [
         "Pinning 3rd-party actions",
         "Action whitelisting",
+        "Automated maintainer reputation and hygiene checks",
         "Requiring code owner approval (VCS)",
         "Branch protection rules (VCS)",
         "Runner SBOM",
@@ -1163,13 +1153,17 @@
       "risks": [
         "Using untrusted SW packages on runners",
         "No package verification",
-        "No runtime monitoring"
+        "No runtime monitoring",
+        "Package installation scripts enabled",
+        "Direct downloads from public registries"
       ],
       "controls": [
+        "Local registry proxy with filtering",
         "Runtime agent on runner",
         "Runner SBOM",
         "Package version pinning",
-        "Package signature verification"
+        "Package signature verification",
+        "Disable package installation scripts (--ignore-scripts)"
       ]
     },
     {
@@ -1526,6 +1520,56 @@
         "Immutable artifact storage",
         "Registry recovery procedures",
         "Artifact retention policies"
+      ]
+    },
+    {
+      "id": "T-R010",
+      "name": "Typosquatting",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker publishes malicious packages with names similar to legitimate ones to trick developers into installing them by mistake",
+      "risks": [
+        "No package name verification",
+        "Lack of typosquatting detection",
+        "Developer mistakes during package installation",
+        "No package naming policies",
+        "Lack of security awareness training",
+        "Direct downloads from public registries"
+      ],
+      "controls": [
+        "Local registry proxy with filtering",
+        "Typosquatting detection and prevention",
+        "Package name similarity checks",
+        "Automated maintainer reputation and hygiene checks",
+        "Security awareness training on package verification",
+        "Package installation verification workflows",
+        "Dependency review and approval process",
+        "Package popularity and reputation scoring"
+      ]
+    },
+    {
+      "id": "T-R011",
+      "name": "Namespace/Dependency Confusion",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package",
+      "risks": [
+        "Lack of internal repository enforcement",
+        "Package managers prioritize public repositories",
+        "No namespace isolation between internal and public packages",
+        "Automatic dependency resolution without verification",
+        "Higher version numbers in public repositories",
+        "Direct downloads from public registries"
+      ],
+      "controls": [
+        "Local registry proxy with filtering",
+        "Internal repository enforcement and prioritization",
+        "Namespace isolation and scoping",
+        "Package version pinning",
+        "Automated maintainer reputation and hygiene checks",
+        "Private package registry configuration",
+        "Dependency resolution policies",
+        "Package source verification"
       ]
     },
     {

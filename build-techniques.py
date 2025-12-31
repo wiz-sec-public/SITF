@@ -32,42 +32,6 @@ def generate_markdown(data, output_path):
     md_lines.append("---")
     md_lines.append("")
     
-    # Impact Types
-    md_lines.append("## Impact Types")
-    md_lines.append("")
-    md_lines.append("When mapping attack flows, connections between techniques can be annotated with impact types to show the consequences of successful exploitation.")
-    md_lines.append("")
-    md_lines.append("### PRIMARY IMPACTS")
-    md_lines.append("Primary impacts occur when an attacker achieves their main objective through the SDLC infrastructure:")
-    md_lines.append("")
-    for impact in data['impactTypes']['primary']:
-        if impact == "Data Exfiltration":
-            md_lines.append("- **Data Exfiltration** - Theft of sensitive data, source code, or intellectual property")
-        elif impact == "Resource Hijacking":
-            md_lines.append("- **Resource Hijacking** - Unauthorized use of computational resources (cryptomining, etc.)")
-        elif impact == "Destruction":
-            md_lines.append("- **Destruction** - Deletion or corruption of critical assets")
-        elif impact == "Pivot to Other Internal Systems":
-            md_lines.append("- **Pivot to Other Internal Systems** - Using SDLC access to reach other organizational systems")
-        elif impact == "Supply Chain":
-            md_lines.append("- **Supply Chain** - Compromising downstream consumers through poisoned artifacts")
-    md_lines.append("")
-    md_lines.append("### SECONDARY IMPACTS")
-    md_lines.append("Secondary impacts are collateral effects or intermediate objectives during an attack:")
-    md_lines.append("")
-    for impact in data['impactTypes']['secondary']:
-        if impact == "Data Exfiltration":
-            md_lines.append("- **Data Exfiltration** - Credentials, secrets, or configuration data used for further attacks")
-        elif impact == "Resource Hijacking":
-            md_lines.append("- **Resource Hijacking** - Temporary resource abuse during attack execution")
-        elif impact == "Destruction":
-            md_lines.append("- **Destruction** - Covering tracks or causing disruption")
-        elif impact == "Pivot to Other Internal Systems":
-            md_lines.append("- **Pivot to Other Internal Systems** - Lateral movement within SDLC infrastructure")
-    md_lines.append("")
-    md_lines.append("---")
-    md_lines.append("")
-    
     # Technique Triplets by Component
     md_lines.append("## Technique Triplets by Component")
     md_lines.append("")
