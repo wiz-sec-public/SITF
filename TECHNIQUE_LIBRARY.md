@@ -192,7 +192,6 @@ This library contains **technique triplets** - each entry shows:
 - Overprivileged local user accounts
 - No EDR
 - Lack of system integrity monitoring
-- No offline backups
 - Insufficient access controls on critical system files
 
 **Controls:**
@@ -874,7 +873,6 @@ This library contains **technique triplets** - each entry shows:
 - Build artifacts contain sensitive data
 - Logs contain secrets or sensitive information
 - No DLP on CI/CD network
-- Large artifact downloads not monitored
 
 **Controls:**
 - Network DLP
@@ -1029,7 +1027,7 @@ This library contains **technique triplets** - each entry shows:
 **Risks:**
 - Overprivileged registry access
 - Secrets in artifacts
-- No audit logging
+- No audit log monitoring
 
 **Controls:**
 - Minimal registry permissions
@@ -1213,7 +1211,6 @@ This library contains **technique triplets** - each entry shows:
 **Risks:**
 - Insufficient IaC review process
 - Lack of drift detection
-- No approval gates for infrastructure changes
 - Overprivileged deployment credentials
 
 **Controls:**
@@ -1290,7 +1287,7 @@ This library contains **technique triplets** - each entry shows:
 - Overprivileged IAM roles
 - No network segmentation
 - Lack of service-to-service authentication
-- No audit logging
+- No audit log monitoring
 
 **Controls:**
 - Minimal IAM permissions
@@ -1379,7 +1376,6 @@ This library contains **technique triplets** - each entry shows:
 - No network egress monitoring
 - Unrestricted outbound network access
 - No DLP on production systems
-- Large database exports not monitored
 - Backup data accessible and unmonitored
 - Use of encrypted channels to bypass DLP
 - Cloud storage buckets with public access
@@ -1432,11 +1428,9 @@ This library contains **technique triplets** - each entry shows:
 **Risks:**
 - No approval gates for service provisioning
 - Developers can create arbitrary services
-- Insufficient IaC review process
 - Service definitions not audited
 - No anomaly detection for new service creation
 - Persistent backdoor services remain undetected
-- Service modifications not reviewed
 
 **Controls:**
 - Deployment approval gates for new services

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "Attack Flow",
-    "created": "2025-12-14T09:44:46.448Z",
+    "created": "2026-01-05T06:43:44.829Z",
     "version": "1.0",
     "framework": "SITF"
   },
@@ -16,7 +16,7 @@
       "data": {
         "label": "Producer entry point (PostHog, AsyncAPI)"
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 309,
       "height": 46,
       "selected": false,
@@ -36,7 +36,8 @@
       "data": {
         "label": "Endpoint/IDE",
         "componentId": "endpoint",
-        "techniques": []
+        "techniques": [],
+        "customLabel": "Dev endpoint or CI/CD runner"
       },
       "zIndex": -1,
       "width": 226,
@@ -58,25 +59,26 @@
       "type": "component",
       "position": {
         "x": -184.95150703712466,
-        "y": 109.0947121618816
+        "y": 107.10211456681793
       },
       "data": {
         "label": "CI/CD",
         "componentId": "cicd",
-        "techniques": []
+        "techniques": [],
+        "customLabel": "GitHub Actions"
       },
       "zIndex": -1,
-      "width": 221,
-      "height": 513,
+      "width": 226,
+      "height": 524,
       "selected": false,
       "positionAbsolute": {
         "x": -184.95150703712466,
-        "y": 109.0947121618816
+        "y": 107.10211456681793
       },
       "dragging": false,
       "style": {
-        "width": 221,
-        "height": 513
+        "width": 226,
+        "height": 524
       },
       "resizing": false
     },
@@ -84,20 +86,21 @@
       "id": "component-1765192768857",
       "type": "component",
       "position": {
-        "x": 758.974815764098,
+        "x": 762.9600109542254,
         "y": 107.15935217348834
       },
       "data": {
         "label": "VCS",
         "componentId": "vcs",
-        "techniques": []
+        "techniques": [],
+        "customLabel": "GitHub"
       },
       "zIndex": -1,
       "width": 220,
       "height": 235,
       "selected": false,
       "positionAbsolute": {
-        "x": 758.974815764098,
+        "x": 762.9600109542254,
         "y": 107.15935217348834
       },
       "dragging": false,
@@ -117,7 +120,8 @@
       "data": {
         "label": "Registry",
         "componentId": "registry",
-        "techniques": []
+        "techniques": [],
+        "customLabel": "NPM registry"
       },
       "zIndex": -1,
       "width": 205,
@@ -165,9 +169,9 @@
           "Default workflow permissions not set to approve PRs"
         ]
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 160,
-      "height": 90,
+      "height": 96,
       "selected": false,
       "positionAbsolute": {
         "x": -155.22101102466354,
@@ -202,9 +206,9 @@
           "Log sanitization"
         ]
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 160,
-      "height": 90,
+      "height": 96,
       "selected": false,
       "positionAbsolute": {
         "x": -155.58687992711697,
@@ -217,7 +221,7 @@
       "type": "technique",
       "position": {
         "x": 171.4478014276823,
-        "y": 217.82379640293107
+        "y": 220.42648011381493
       },
       "data": {
         "id": "T-R004",
@@ -239,13 +243,13 @@
           "OIDC for publishing"
         ]
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 160,
-      "height": 90,
+      "height": 96,
       "selected": false,
       "positionAbsolute": {
         "x": 171.4478014276823,
-        "y": 217.82379640293107
+        "y": 220.42648011381493
       },
       "dragging": false
     },
@@ -276,9 +280,9 @@
           "Application whitelisting"
         ]
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 160,
-      "height": 90,
+      "height": 96,
       "selected": false,
       "positionAbsolute": {
         "x": 494.8516337512186,
@@ -314,9 +318,9 @@
           "Encrypted credential storage"
         ]
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 160,
-      "height": 90,
+      "height": 96,
       "selected": false,
       "positionAbsolute": {
         "x": 495.03829104089755,
@@ -334,7 +338,7 @@
       "data": {
         "label": "Consumer entry point"
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 190,
       "height": 46,
       "selected": false,
@@ -369,9 +373,9 @@
           "Security awareness training"
         ]
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 160,
-      "height": 90,
+      "height": 96,
       "selected": false,
       "positionAbsolute": {
         "x": 797.0705833197418,
@@ -389,7 +393,7 @@
       "data": {
         "label": "Future Breach"
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 144,
       "height": 46,
       "selected": false,
@@ -424,9 +428,9 @@
           "Network segmentation (runners isolated from endpoints)"
         ]
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 160,
-      "height": 90,
+      "height": 96,
       "selected": false,
       "positionAbsolute": {
         "x": 495.03829104089743,
@@ -444,7 +448,7 @@
       "data": {
         "label": "Ongoing Access"
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 158,
       "height": 46,
       "selected": false,
@@ -464,7 +468,7 @@
       "data": {
         "label": "Secondary Supply Chain Attack"
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 252,
       "height": 46,
       "selected": false,
@@ -501,9 +505,9 @@
           "Log sanitization"
         ]
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 160,
-      "height": 90,
+      "height": 96,
       "selected": false,
       "positionAbsolute": {
         "x": -155.19054368548768,
@@ -542,9 +546,9 @@
           "Endpoint recovery procedures"
         ]
       },
-      "zIndex": 0,
+      "zIndex": 10,
       "width": 160,
-      "height": 90,
+      "height": 96,
       "selected": false,
       "positionAbsolute": {
         "x": 494.1494302254897,
