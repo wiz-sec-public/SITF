@@ -358,8 +358,6 @@
       "stage": "Post-Compromise",
       "description": "Attacker uses blockchain transactions (e.g., Solana, Bitcoin) as immutable command and control infrastructure that cannot be taken down or censored",
       "risks": [
-        "No blockchain traffic monitoring",
-        "Blockchain connections appear legitimate",
         "Immutable C2 instructions on blockchain",
         "No EDR",
         "Cryptocurrency node connections not restricted"

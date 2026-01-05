@@ -1926,6 +1926,15 @@
   ]
 };
         
+        // Component color mapping (presentation layer)
+        const componentColors = {
+            'endpoint': '#3B82F6',
+            'vcs': '#10B981',
+            'cicd': '#F59E0B',
+            'registry': '#8B5CF6',
+            'production': '#EF4444'
+        };
+        
         // Custom Node Components
         const EntryPointNode = ({ data, id }) => {
             const [isEditing, setIsEditing] = useState(false);
@@ -2063,7 +2072,7 @@
         
         const ComponentNode = ({ data, selected, id }) => {
             const component = techniquesData?.components.find(c => c.id === data.componentId);
-            const bgColor = component?.color || '#gray';
+            const bgColor = componentColors[data.componentId] || '#6B7280';
             const [isEditing, setIsEditing] = useState(false);
             const [customLabel, setCustomLabel] = useState(data.customLabel || '');
             const inputRef = useRef(null);
@@ -2106,7 +2115,7 @@
                         minHeight={150}
                     />
                     <div className="component-node" style={{
-                        borderLeft: `4px solid ${bgColor}`,
+                        border: `2px solid ${bgColor}`,
                         backgroundColor: 'var(--wiz-dark-surface)',
                         width: '100%',
                         height: '100%',
@@ -2164,7 +2173,7 @@
         
         const TechniqueNode = ({ data, id }) => {
             const component = techniquesData?.components.find(c => c.id === data.component);
-            const bgColor = component?.color || '#6B7280';
+            const bgColor = componentColors[data.component] || '#6B7280';
             const [showControls, setShowControls] = useState(false);
             const [showRisks, setShowRisks] = useState(false);
             const [isEditing, setIsEditing] = useState(false);
@@ -2471,11 +2480,11 @@
                                             style={{
                                                 background: 'var(--wiz-dark-surface)',
                                                 border: '2px solid var(--wiz-dark-border)',
-                                                borderLeftColor: comp.color,
+                                                borderLeftColor: componentColors[comp.id],
                                                 borderLeftWidth: '4px'
                                             }}
                                         >
-                                            <div className="text-sm font-medium" style={{ color: comp.color }}>
+                                            <div className="text-sm font-medium" style={{ color: componentColors[comp.id] }}>
                                                 {comp.name}
                                             </div>
                                             <div className="text-xs mt-1" style={{ color: 'var(--wiz-text-secondary)' }}>{comp.description}</div>
@@ -2527,7 +2536,7 @@
                                                 borderWidth: '2px',
                                                 borderStyle: 'solid',
                                                 borderColor: selectedComponent !== 'all'
-                                                    ? techniquesData.components.find(c => c.id === selectedComponent)?.color
+                                                    ? componentColors[selectedComponent]
                                                     : 'var(--wiz-dark-border)',
                                                 color: 'var(--wiz-text-primary)'
                                             }}
@@ -2567,11 +2576,11 @@
                                                     style={{
                                                         background: 'var(--wiz-dark-surface)',
                                                         border: '1px solid var(--wiz-dark-border)',
-                                                        borderLeftColor: comp?.color,
+                                                        borderLeftColor: componentColors[comp?.id],
                                                         borderLeftWidth: '3px'
                                                     }}
                                                 >
-                                                    <div className="text-xs font-bold" style={{ color: comp?.color }}>
+                                                    <div className="text-xs font-bold" style={{ color: componentColors[comp?.id] }}>
                                                         {tech.id}
                                                     </div>
                                                     <div className="text-xs font-medium mt-1" style={{ color: 'var(--wiz-text-primary)' }}>
@@ -2853,7 +2862,7 @@
                                                         style={{
                                                             border: '1px solid var(--wiz-dark-border)',
                                                             background: 'var(--wiz-dark-surface)',
-                                                            color: comp.color
+                                                            color: componentColors[comp.id]
                                                         }}
                                                     >
                                                         {comp.name}
@@ -3153,8 +3162,7 @@
                     if (node.type === 'entryPoint') color = '#10B981';
                     if (node.type === 'exitPoint') color = '#EF4444';
                     if (node.type === 'component') {
-                        const comp = techniquesData.components.find(c => c.id === node.data.componentId);
-                        color = comp?.color || '#6B7280';
+                        color = componentColors[node.data.componentId] || '#6B7280';
                     }
                     
                     svgContent += `
