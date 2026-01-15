@@ -10,6 +10,8 @@ A comprehensive framework for analyzing and defending against supply chain attac
 
 📖 **[Read the Implementation Guide](IMPLEMENTATION_GUIDE.md)** - Complete methodology, case studies, and usage instructions
 
+![Project Demo](app/demo.gif)
+
 ## What is SITF?
 
 SITF helps security teams analyze supply chain attacks by:
@@ -37,7 +39,7 @@ SITF helps security teams analyze supply chain attacks by:
 To add or modify techniques:
 
 1. Edit [`techniques.json`](techniques.json) - the source of truth
-2. Run `python3 app/build-techniques.py` to regenerate documentation and web app
+2. Run `python3 build-techniques.py` to regenerate documentation and web app
 3. Commit all changes (JSON, Markdown, and HTML)
 
 The build script generates:
