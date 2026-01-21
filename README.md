@@ -45,7 +45,7 @@ To add or modify techniques:
 The build script generates:
 - `TECHNIQUE_LIBRARY.md` - Human-readable documentation
 - `app/techniques-library.html` - Visual technique explorer with filtering and search
-- `app/index.html` - Interactive attack flow builder
+- `app/visualizer.html` - Interactive attack flow builder
 
 ---
 

@@ -733,8 +733,6 @@
       "stage": "Post-Compromise",
       "description": "Attacker uses blockchain transactions (e.g., Solana, Bitcoin) as immutable command and control infrastructure that cannot be taken down or censored",
       "risks": [
-        "No blockchain traffic monitoring",
-        "Blockchain connections appear legitimate",
         "Immutable C2 instructions on blockchain",
         "No EDR",
         "Cryptocurrency node connections not restricted"
@@ -907,7 +905,7 @@
         "Minimal VCS permissions",
         "Approval workflow for visibility changes",
         "Detection infra on audit logs",
-        "CSPM/CNAPP monitoring"
+        "CSPM/CNAPP"
       ]
     },
     {
@@ -968,6 +966,33 @@
         "Immutable audit logs",
         "Repository recovery procedures",
         "Deletion protection on critical repositories"
+      ]
+    },
+    {
+      "id": "T-V010",
+      "name": "Malicious Code Modification in Repository",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase",
+      "risks": [
+        "Overprivileged VCS access",
+        "No code review requirements",
+        "Direct push to protected branches allowed",
+        "Lack of commit signing",
+        "No automated code security scanning",
+        "Insufficient branch protection rules",
+        "No detection of suspicious code patterns"
+      ],
+      "controls": [
+        "Branch protection rules (VCS)",
+        "Require code owner approval",
+        "Mandatory code review by multiple reviewers",
+        "Commit signing enforcement",
+        "Automated code security scanning (SAST)",
+        "Detection infra on audit logs (VCS)",
+        "Minimal VCS permissions (principle of least privilege)",
+        "Code change anomaly detection",
+        "Pre-commit hooks for security checks"
       ]
     },
     {
@@ -1033,7 +1058,7 @@
         "Branch protection rules (VCS)",
         "Private repo (VCS)",
         "CICD scanning tools",
-        "Require explicit approval for workflows from forks (VCS)",
+        "Require explicit approval/ disallow workflows from forks (VCS)",
         "Minimal workflow permissions",
         "Default workflow permissions not set to approve PRs"
       ]
@@ -1355,6 +1380,19 @@
       ]
     },
     {
+      "id": "T-C020",
+      "name": "CI/CD Misconfiguration Exploitation",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker exploits misconfiguration in CI/CD platform",
+      "risks": [
+        "Misconfigured CI/CD instances"
+      ],
+      "controls": [
+        "CSPM/CNAPP"
+      ]
+    },
+    {
       "id": "T-R001",
       "name": "Abuse Credentials for Registry Access",
       "component": "registry",
@@ -1371,7 +1409,7 @@
         "Mandatory MFA",
         "IDP / SSO setup",
         "Secret scanning",
-        "CSPM monitoring"
+        "CSPM/CNAPP"
       ]
     },
     {
@@ -1387,7 +1425,7 @@
       ],
       "controls": [
         "IDP / SSO setup",
-        "CSPM",
+        "CSPM/CNAPP",
         "Access control reviews",
         "Principle of least privilege"
       ]
@@ -1674,7 +1712,7 @@
         "Code review for IaC changes",
         "Deployment approval gates",
         "Drift detection",
-        "CSPM monitoring",
+        "CSPM/CNAPP",
         "Minimal deployment permissions"
       ]
     },
@@ -1754,7 +1792,7 @@
         "Minimal IAM permissions",
         "Network segmentation",
         "Service mesh / zero trust",
-        "CSPM monitoring",
+        "CSPM/CNAPP",
         "Detection infra on audit logs"
       ]
     },
@@ -1853,7 +1891,7 @@
         "Backup encryption and access controls",
         "SSL/TLS inspection",
         "Detection infra on audit logs (production)",
-        "CSPM monitoring",
+        "CSPM/CNAPP",
         "Data classification and handling policies",
         "Network segmentation (production from internet)"
       ]
@@ -1881,7 +1919,7 @@
         "Destructive operation approval workflow",
         "Immutable backups",
         "Disaster recovery procedures and testing",
-        "CSPM monitoring",
+        "CSPM/CNAPP",
         "Resource tagging and protection policies",
         "Backup isolation from production network"
       ]
@@ -1902,7 +1940,7 @@
       "controls": [
         "Deployment approval gates for new services",
         "Code review for all IaC changes",
-        "CSPM monitoring",
+        "CSPM/CNAPP",
         "Detection infra on audit logs (production)",
         "Anomaly detection for new service creation patterns",
         "Immutable audit logs",

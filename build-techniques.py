@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 SITF Build Script
-Reads techniques.json and generates TECHNIQUE_LIBRARY.md and index.html
+Reads techniques.json and generates TECHNIQUE_LIBRARY.md and visualizer.html
 """
 
 import json
@@ -196,8 +196,8 @@ def main():
     root_dir = script_dir  # Script is in root directory
     json_path = root_dir / 'techniques.json'
     md_path = root_dir / 'TECHNIQUE_LIBRARY.md'
-    template_path = root_dir / 'app' / 'index.html.template'
-    output_path = root_dir / 'app' / 'index.html'
+    template_path = root_dir / 'app' / 'visualizer.html.template'
+    output_path = root_dir / 'app' / 'visualizer.html'
     library_template_path = root_dir / 'app' / 'techniques-library.html.template'
     library_output_path = root_dir / 'app' / 'techniques-library.html'
     

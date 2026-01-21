@@ -12,24 +12,24 @@ Interactive web application for visualizing attack flows using the SDLC Infrastr
 Simply open the HTML files in your browser - no server needed! All data is embedded.
 
 - **`techniques-library.html`** - Visual explorer for browsing techniques with filtering and search
-- **`index.html`** - Attack flow builder for creating and analyzing attack diagrams
+- **`visualizer.html`** - Attack flow builder for creating and analyzing attack diagrams
 
 ### Option 2: Build from Source
 
 If you modify `techniques.json`, rebuild the files:
 
 ```bash
-python3 app/build-techniques.py
+python3 build-techniques.py
 ```
 
 This generates:
 - `TECHNIQUE_LIBRARY.md` - Human-readable technique documentation
 - `app/techniques-library.html` - Visual technique explorer (~63 KB)
-- `app/index.html` - Attack flow builder application (~149 KB)
+- `app/visualizer.html` - Attack flow builder application (~149 KB)
 
 ## Features
 
-### Attack Flow Builder (`index.html`)
+### Attack Flow Builder (`visualizer.html`)
 - **Zero Dependencies**: Standalone HTML file with embedded data
 - **Drag-and-drop interface** for building attack flows
 - **63 attack techniques** with pre-mapped risks and controls
@@ -57,7 +57,7 @@ techniques.json (Source of Truth)
          ↓
     ┌────┴────┬────────────┐
     ↓         ↓            ↓
-TECHNIQUE_LIBRARY.md   techniques-library.html   index.html
+TECHNIQUE_LIBRARY.md   techniques-library.html   visualizer.html
 (Documentation)        (Visual Explorer)         (Flow Builder)
 ```
 
@@ -70,7 +70,7 @@ TECHNIQUE_LIBRARY.md   techniques-library.html   index.html
 1. Edit techniques in `../techniques.json`
 2. Run `python3 app/build-techniques.py` to regenerate files
 3. Review generated `TECHNIQUE_LIBRARY.md` for documentation
-4. Open `index.html` in browser to test the web app
+4. Open `visualizer.html` in browser to test the web app
 5. Commit changes to version control
 
 ### JSON Structure

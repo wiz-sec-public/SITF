@@ -314,8 +314,6 @@ This library contains **technique triplets** - each entry shows:
 **Technique:** Attacker uses blockchain transactions (e.g., Solana, Bitcoin) as immutable command and control infrastructure that cannot be taken down or censored
 
 **Risks:**
-- No blockchain traffic monitoring
-- Blockchain connections appear legitimate
 - Immutable C2 instructions on blockchain
 - No EDR
 - Cryptocurrency node connections not restricted
@@ -482,7 +480,7 @@ This library contains **technique triplets** - each entry shows:
 - Minimal VCS permissions
 - Approval workflow for visibility changes
 - Detection infra on audit logs
-- CSPM/CNAPP monitoring
+- CSPM/CNAPP
 
 ---
 
@@ -540,6 +538,32 @@ This library contains **technique triplets** - each entry shows:
 - Immutable audit logs
 - Repository recovery procedures
 - Deletion protection on critical repositories
+
+---
+
+#### T-V010: Malicious Code Modification in Repository
+
+**Technique:** Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase
+
+**Risks:**
+- Overprivileged VCS access
+- No code review requirements
+- Direct push to protected branches allowed
+- Lack of commit signing
+- No automated code security scanning
+- Insufficient branch protection rules
+- No detection of suspicious code patterns
+
+**Controls:**
+- Branch protection rules (VCS)
+- Require code owner approval
+- Mandatory code review by multiple reviewers
+- Commit signing enforcement
+- Automated code security scanning (SAST)
+- Detection infra on audit logs (VCS)
+- Minimal VCS permissions (principle of least privilege)
+- Code change anomaly detection
+- Pre-commit hooks for security checks
 
 ---
 
@@ -604,7 +628,7 @@ This library contains **technique triplets** - each entry shows:
 - Branch protection rules (VCS)
 - Private repo (VCS)
 - CICD scanning tools
-- Require explicit approval for workflows from forks (VCS)
+- Require explicit approval/ disallow workflows from forks (VCS)
 - Minimal workflow permissions
 - Default workflow permissions not set to approve PRs
 
@@ -910,6 +934,18 @@ This library contains **technique triplets** - each entry shows:
 
 ---
 
+#### T-C020: CI/CD Misconfiguration Exploitation
+
+**Technique:** Attacker exploits misconfiguration in CI/CD platform
+
+**Risks:**
+- Misconfigured CI/CD instances
+
+**Controls:**
+- CSPM/CNAPP
+
+---
+
 ### REGISTRY (Container / Artifact Registry)
 
 #### T-R001: Abuse Credentials for Registry Access
@@ -927,7 +963,7 @@ This library contains **technique triplets** - each entry shows:
 - Mandatory MFA
 - IDP / SSO setup
 - Secret scanning
-- CSPM monitoring
+- CSPM/CNAPP
 
 ---
 
@@ -942,7 +978,7 @@ This library contains **technique triplets** - each entry shows:
 
 **Controls:**
 - IDP / SSO setup
-- CSPM
+- CSPM/CNAPP
 - Access control reviews
 - Principle of least privilege
 
@@ -1217,7 +1253,7 @@ This library contains **technique triplets** - each entry shows:
 - Code review for IaC changes
 - Deployment approval gates
 - Drift detection
-- CSPM monitoring
+- CSPM/CNAPP
 - Minimal deployment permissions
 
 ---
@@ -1293,7 +1329,7 @@ This library contains **technique triplets** - each entry shows:
 - Minimal IAM permissions
 - Network segmentation
 - Service mesh / zero trust
-- CSPM monitoring
+- CSPM/CNAPP
 - Detection infra on audit logs
 
 ---
@@ -1388,7 +1424,7 @@ This library contains **technique triplets** - each entry shows:
 - Backup encryption and access controls
 - SSL/TLS inspection
 - Detection infra on audit logs (production)
-- CSPM monitoring
+- CSPM/CNAPP
 - Data classification and handling policies
 - Network segmentation (production from internet)
 
@@ -1415,7 +1451,7 @@ This library contains **technique triplets** - each entry shows:
 - Destructive operation approval workflow
 - Immutable backups
 - Disaster recovery procedures and testing
-- CSPM monitoring
+- CSPM/CNAPP
 - Resource tagging and protection policies
 - Backup isolation from production network
 
@@ -1435,7 +1471,7 @@ This library contains **technique triplets** - each entry shows:
 **Controls:**
 - Deployment approval gates for new services
 - Code review for all IaC changes
-- CSPM monitoring
+- CSPM/CNAPP
 - Detection infra on audit logs (production)
 - Anomaly detection for new service creation patterns
 - Immutable audit logs
@@ -1472,6 +1508,7 @@ This library contains **technique triplets** - each entry shows:
 - T-C002: Malicious Execution in Workflow Context
 - T-C003: PWN Request / Poisoned Pipeline Execution
 - T-C009: CI/CD Vulnerability Exploitation
+- T-C020: CI/CD Misconfiguration Exploitation
 - T-E001: Malicious Execution on Endpoint
 - T-E002: Endpoint Phishing
 - T-E011: Unicode Stealth Code Injection
@@ -1514,6 +1551,7 @@ This library contains **technique triplets** - each entry shows:
 - T-V007: Clone Sensitive Repositories
 - T-V008: Malicious Repo Hosting
 - T-V009: Mass Deletion of Repositories
+- T-V010: Malicious Code Modification in Repository
 
 ---
 

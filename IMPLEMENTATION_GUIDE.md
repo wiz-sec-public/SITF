@@ -118,7 +118,7 @@ The framework's power comes from its comprehensive **[Technique Library](TECHNIQ
 
 The technique library is maintained in [`techniques.json`](techniques.json) as the single source of truth, and automatically generates:
 - [TECHNIQUE_LIBRARY.md](TECHNIQUE_LIBRARY.md) - Human-readable documentation
-- [app/index.html](app/index.html) - Interactive web application
+- [app/visualizer.html](app/visualizer.html) - Interactive web application
 
 **How to Use the Framework:**
 
@@ -189,7 +189,7 @@ The visualizer is an interactive web application for building and analyzing atta
 *Example: CircleCI breach visualized using the SITF tool*
 
 **Quick Start:**
-- Simply open `app/index.html` in your browser - no server needed!
+- Simply open `app/visualizer.html` in your browser - no server needed!
 - The file is a standalone application with all data embedded
 - See [app/README.md](app/README.md) for build instructions if modifying techniques
 
@@ -535,7 +535,7 @@ The comprehensive catalog of 60+ attack techniques with pre-mapped risks and con
 
 ### [SITF Attack Flow Visualizer](app/README.md)
 Interactive web application for building and analyzing attack flows:
-- Standalone HTML file - just open `app/index.html` in your browser
+- Standalone HTML file - just open `app/visualizer.html` in your browser
 - Drag-and-drop interface with 60+ techniques
 - Visual representation of attack paths and lateral movement
 - Auto-populating Controls Matrix
