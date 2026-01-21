@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SITF - SDLC Infrastructure Threat Framework</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23FC80FF'/><stop offset='100%25' style='stop-color:%239D4EDD'/></linearGradient></defs><circle cx='50' cy='50' r='45' fill='%230A0E27'/><path d='M 30 50 L 45 50 L 50 35 L 55 65 L 60 45 L 70 45' stroke='url(%23g)' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/><circle cx='30' cy='50' r='4' fill='%2310B981'/><circle cx='70' cy='45' r='4' fill='%23EF4444'/><path d='M 50 20 L 50 30 M 42 24 L 50 20 L 58 24' stroke='%23FC80FF' stroke-width='2' fill='none' stroke-linecap='round'/></svg>">
+    
+    <!-- Poppins Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0A0E27 0%, #1a1a2e 100%);
+            color: #e5e5e5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #FC80FF 0%, #9D4EDD 100%);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            box-shadow: 0 10px 40px rgba(252, 128, 255, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FC80FF 0%, #4A90E2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #c0c0c0;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+        
+        .btn {
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #FC80FF 0%, #9D4EDD 100%);
+            color: #0A0E27;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(252, 128, 255, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(74, 144, 226, 0.2);
+            color: #4A90E2;
+            border: 2px solid #4A90E2;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(74, 144, 226, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #FC80FF;
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #FC80FF;
+        }
+        
+        .feature-desc {
+            font-size: 0.95rem;
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .footer a {
+            color: #FC80FF;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🔒</div>
+        
+        <h1>SITF</h1>
+        <div class="subtitle">SDLC Infrastructure Threat Framework</div>
+        
+        <p class="description">
+            A comprehensive framework for understanding and mitigating supply chain security threats across the Software Development Lifecycle infrastructure.
+        </p>
+        
+        <div class="buttons">
+            <a href="visualizer.html" class="btn btn-primary">
+                🎨 Launch Visualizer
+            </a>
+            <a href="techniques-library.html" class="btn btn-secondary">
+                📚 Technique Library
+            </a>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-title">Attack Flow Visualizer</div>
+                <div class="feature-desc">
+                    Create interactive attack flow diagrams with drag-and-drop components
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">📖</div>
+                <div class="feature-title">Technique Library</div>
+                <div class="feature-desc">
+                    Browse comprehensive attack techniques with risks and controls
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-title">Security Controls</div>
+                <div class="feature-desc">
+                    Automatic control matrix generation from your attack flows
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">💾</div>
+                <div class="feature-title">Export & Share</div>
+                <div class="feature-desc">
+                    Export diagrams as PNG, SVG, PDF, or JSON for collaboration
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Made with <span style="color: #FC80FF;">♥</span> by <a href="https://www.wiz.io" target="_blank" rel="noopener noreferrer">Wiz</a>
+            <br>
+            <a href="https://github.com/wiz-sec/SITF" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+        </div>
+    </div>
+</body>
+</html>
