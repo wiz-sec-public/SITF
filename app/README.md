@@ -7,14 +7,21 @@ Interactive web application for visualizing attack flows using the SDLC Infrastr
 
 ## Quick Start
 
-### Option 1: Use Pre-built HTML (Recommended)
+### Option 1: Use Online (No Installation Required)
+
+Access the live application hosted on GitHub Pages:
+
+- **[Visualizer](https://wiz-sec-public.github.io/SITF/visualizer.html)** - Attack flow builder for creating and analyzing attack diagrams
+- **[Techniques Library](https://wiz-sec-public.github.io/SITF/techniques-library.html)** - Visual explorer for browsing techniques with filtering and search
+
+### Option 2: Use Pre-built HTML Locally
 
 Simply open the HTML files in your browser - no server needed! All data is embedded.
 
 - **`techniques-library.html`** - Visual explorer for browsing techniques with filtering and search
 - **`visualizer.html`** - Attack flow builder for creating and analyzing attack diagrams
 
-### Option 2: Build from Source
+### Option 3: Build from Source
 
 If you modify `techniques.json`, rebuild the files:
 

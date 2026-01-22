@@ -4,9 +4,19 @@ A comprehensive framework for analyzing and defending against supply chain attac
 
 ## Quick Start
 
-� **[Launch the Flow Builder](app/)** - Interactive tool for mapping attack flows
+### 🌐 Try Online (No Installation Required)
 
-🔍 **[Explore Techniques Visually](app/techniques-library.html)** - Interactive visual explorer with filtering and search
+🎨 **[Launch the Flow Builder](https://wiz-sec-public.github.io/SITF/visualizer.html)** - Interactive tool for mapping attack flows
+
+🔍 **[Explore Techniques Visually](https://wiz-sec-public.github.io/SITF/techniques-library.html)** - Interactive visual explorer with filtering and search
+
+### 📁 Use Locally
+
+🎨 **[Launch the Flow Builder](app/visualizer.html)** - Open locally from this repository
+
+🔍 **[Explore Techniques Visually](app/techniques-library.html)** - Browse techniques offline
+
+### 📖 Documentation
 
 📖 **[Read the Implementation Guide](IMPLEMENTATION_GUIDE.md)** - Complete methodology, case studies, and usage instructions
 

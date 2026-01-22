@@ -189,6 +189,13 @@ The visualizer is an interactive web application for building and analyzing atta
 *Example: CircleCI breach visualized using the SITF tool*
 
 **Quick Start:**
+
+**Option 1: Use Online (Recommended)**
+- Access the live application at: **[https://wiz-sec-public.github.io/SITF/visualizer.html](https://wiz-sec-public.github.io/SITF/visualizer.html)**
+- No installation required - works directly in your browser
+- Always up-to-date with the latest techniques
+
+**Option 2: Use Locally**
 - Simply open `app/visualizer.html` in your browser - no server needed!
 - The file is a standalone application with all data embedded
 - See [app/README.md](app/README.md) for build instructions if modifying techniques
@@ -535,7 +542,8 @@ The comprehensive catalog of 60+ attack techniques with pre-mapped risks and con
 
 ### [SITF Attack Flow Visualizer](app/README.md)
 Interactive web application for building and analyzing attack flows:
-- Standalone HTML file - just open `app/visualizer.html` in your browser
+- **Online version**: [https://wiz-sec-public.github.io/SITF/visualizer.html](https://wiz-sec-public.github.io/SITF/visualizer.html)
+- **Local version**: Standalone HTML file - just open `app/visualizer.html` in your browser
 - Drag-and-drop interface with 60+ techniques
 - Visual representation of attack paths and lateral movement
 - Auto-populating Controls Matrix
