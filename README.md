@@ -7,20 +7,20 @@ A comprehensive framework for analyzing and defending against supply chain attac
 ### 🌐 Try Online (No Installation Required)
 
 🎨 **[Launch the Flow Builder](https://wiz-sec-public.github.io/SITF/visualizer.html)** - Interactive tool for mapping attack flows
+![Project Demo](app/demo-visualizer.gif)
 
 🔍 **[Explore Techniques Visually](https://wiz-sec-public.github.io/SITF/techniques-library.html)** - Interactive visual explorer with filtering and search
+![Project Demo](app/demo-library.gif)
 
 ### 📁 Use Locally
 
-🎨 **[Launch the Flow Builder](app/visualizer.html)** - Open locally from this repository
+🎨 **Launch builder locally** - Download [visualizer.html](app/visualizer.html) locally, open and build offline
 
-🔍 **[Explore Techniques Visually](app/techniques-library.html)** - Browse techniques offline
+🔍 **Explore techniques** - Download [techniques-library.html](app/techniques-library.html) locally, open and browse techniques offline
 
 ### 📖 Documentation
 
 📖 **[Read the Implementation Guide](IMPLEMENTATION_GUIDE.md)** - Complete methodology, case studies, and usage instructions
-
-![Project Demo](app/demo.gif)
 
 ## What is SITF?
 
@@ -51,6 +51,7 @@ To add or modify techniques:
 1. Edit [`techniques.json`](techniques.json) - the source of truth
 2. Run `python3 build-techniques.py` to regenerate documentation and web app
 3. Commit all changes (JSON, Markdown, and HTML)
+4. Submit PR or use locally
 
 The build script generates:
 - `TECHNIQUE_LIBRARY.md` - Human-readable documentation
