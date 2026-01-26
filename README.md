@@ -1,22 +1,22 @@
 # SDLC Infrastructure Threat Framework (SITF)
 
-A comprehensive framework for analyzing and defending against supply chain attacks targeting Software Development Lifecycle infrastructure.
+A comprehensive framework for analyzing and defending against attacks targeting Software Development Lifecycle infrastructure.
 
 ## Quick Start
 
 ### 🌐 Try Online (No Installation Required)
 
-🎨 **[Launch the Flow Builder](https://wiz-sec-public.github.io/SITF/visualizer.html)** - Interactive tool for mapping attack flows
+**[Launch the Flow Builder](https://wiz-sec-public.github.io/SITF/visualizer.html)** - Interactive tool for mapping attack flows
 ![Project Demo](app/demo-visualizer.gif)
 
-🔍 **[Explore Techniques Visually](https://wiz-sec-public.github.io/SITF/techniques-library.html)** - Interactive visual explorer with filtering and search
+**[Explore Techniques Visually](https://wiz-sec-public.github.io/SITF/techniques-library.html)** - Interactive visual explorer with filtering and search
 ![Project Demo](app/demo-library.gif)
 
 ### 📁 Use Locally
 
-🎨 **Launch builder locally** - Download [visualizer.html](app/visualizer.html) locally, open and build offline
+**Launch builder locally** - Download [visualizer.html](app/visualizer.html) locally, open and build offline
 
-🔍 **Explore techniques** - Download [techniques-library.html](app/techniques-library.html) locally, open and browse techniques offline
+**Explore techniques** - Download [techniques-library.html](app/techniques-library.html) locally, open and browse techniques offline
 
 ### 📖 Documentation
 
