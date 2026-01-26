@@ -20,7 +20,8 @@ A comprehensive framework for analyzing and defending against attacks targeting 
 
 ### 📖 Documentation
 
-📖 **[Read the Implementation Guide](IMPLEMENTATION_GUIDE.md)** - Complete methodology, case studies, and usage instructions
+
+**[Read the Implementation Guide](IMPLEMENTATION_GUIDE.md)** - Complete methodology, case studies, and usage instructions
 
 ## What is SITF?
 
