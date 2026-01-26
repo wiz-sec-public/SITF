@@ -112,13 +112,13 @@ RISKS ──────> TECHNIQUES ──────> CONTROLS
 
 **The Technique Library is the Core of SITF**
 
-The framework's power comes from its comprehensive **[Technique Library](TECHNIQUE_LIBRARY.md)** - a catalog of 60+ known attack methods against SDLC infrastructure. Each technique in the library comes pre-mapped to:
+The framework's power comes from its comprehensive **[Technique Library](TECHNIQUE_LIBRARY.md)** - a catalog of 75+ known attack methods against SDLC infrastructure. Each technique in the library comes pre-mapped to:
 - The **risks** that enable it
 - The **controls** that prevent or detect it
 
 The technique library is maintained in [`techniques.json`](techniques.json) as the single source of truth, and automatically generates:
-- [TECHNIQUE_LIBRARY.md](TECHNIQUE_LIBRARY.md) - Human-readable documentation
-- [app/visualizer.html](app/visualizer.html) - Interactive web application
+- [app/techniques-library.html](app/techniques-library.html) - Interactive visual explorer with filtering and search
+- [app/visualizer.html](app/visualizer.html) - Interactive attack flow builder
 
 **How to Use the Framework:**
 
@@ -147,7 +147,7 @@ Controls that prevent it:
 **TECHNIQUES** (The Starting Point)
 - The "How" - specific attack methods
 - Organized by: Initial Access, Lateral Movement, Post-Compromise/Impact, Discovery
-- The library contains 60+ documented techniques
+- The library contains 75+ documented techniques
 - Each technique is mapped to specific infrastructure components
 
 **RISKS** (The Enablers)
@@ -191,22 +191,33 @@ The visualizer is an interactive web application for building and analyzing atta
 **Quick Start:**
 
 **Option 1: Use Online (Recommended)**
-- Access the live application at: **[https://wiz-sec-public.github.io/SITF/visualizer.html](https://wiz-sec-public.github.io/SITF/visualizer.html)**
+- **[Attack Flow Builder](https://wiz-sec-public.github.io/SITF/visualizer.html)** - Create and analyze attack flow diagrams
+- **[Techniques Library Explorer](https://wiz-sec-public.github.io/SITF/techniques-library.html)** - Browse all techniques with filtering and search
 - No installation required - works directly in your browser
 - Always up-to-date with the latest techniques
 
 **Option 2: Use Locally**
-- Simply open `app/visualizer.html` in your browser - no server needed!
-- The file is a standalone application with all data embedded
+- Simply open `app/visualizer.html` or `app/techniques-library.html` in your browser - no server needed!
+- The files are standalone applications with all data embedded
 - See [app/README.md](app/README.md) for build instructions if modifying techniques
 
 **Key Features:**
-- Drag-and-drop interface with 60+ attack techniques
+
+*Attack Flow Builder (visualizer.html):*
+- Drag-and-drop interface with 75+ attack techniques
 - Expandable technique nodes showing risks (left) and controls (right)
 - Auto-populating Controls Matrix organized by component and attack stage
 - Export options: PNG, SVG, PDF, and CSV
 - Dark/light theme toggle
 - Save/Load flows as JSON files
+
+*Techniques Library Explorer (techniques-library.html):*
+- Visual browsing of all 75 techniques organized by component and attack stage
+- Real-time filtering by component (Endpoint, VCS, CI/CD, Registry, Production)
+- Stage filtering (Initial Access, Lateral Movement, Post-Compromise, Discovery)
+- Search functionality across technique names, descriptions, risks, and controls
+- Interactive statistics showing technique counts, risks, and controls
+- Color-coded components for easy visual identification
 
 Using the Visualizer:
 1. Map the Attack: Drag components and techniques from the palette
@@ -534,29 +545,26 @@ Test 3: Can a malicious package execute on endpoints?
 ## Appendix: Framework Reference
 
 ### [Technique Library](TECHNIQUE_LIBRARY.md)
-The comprehensive catalog of 60+ attack techniques with pre-mapped risks and controls. This is your primary reference for:
+The comprehensive catalog of 75+ attack techniques with pre-mapped risks and controls. This is your primary reference for:
 - Complete technique triplets (Technique -> Risks -> Controls)
 - Techniques organized by component (Endpoint, VCS, CI/CD, Registry, Production)
 - Quick reference index by attack stage
 - Practical examples of using the library for attack analysis
 
-### [SITF Attack Flow Visualizer](app/README.md)
-Interactive web application for building and analyzing attack flows:
-- **Online version**: [https://wiz-sec-public.github.io/SITF/visualizer.html](https://wiz-sec-public.github.io/SITF/visualizer.html)
-- **Local version**: Standalone HTML file - just open `app/visualizer.html` in your browser
-- Drag-and-drop interface with 60+ techniques
-- Visual representation of attack paths and lateral movement
-- Auto-populating Controls Matrix
-- Export capabilities (PNG, SVG, PDF, CSV)
+### [SITF Interactive Tools](app/README.md)
+Two web applications for exploring and analyzing attacks (see "How to Use This Framework" section above for detailed features):
 
-Source of Truth: [`techniques.json`](techniques.json)
-- Machine-readable format for all technique data
+- **[Attack Flow Builder](https://wiz-sec-public.github.io/SITF/visualizer.html)** - Create visual attack flow diagrams with auto-generated Controls Matrix
+- **[Techniques Library Explorer](https://wiz-sec-public.github.io/SITF/techniques-library.html)** - Browse and search all 75 techniques with filtering
+
+**Source of Truth:** [`techniques.json`](techniques.json)
 - Edit this file to add or modify techniques
-- Run `python3 app/build-techniques.py` to regenerate documentation and web app
+- Run `python3 build-techniques.py` to regenerate all documentation and web apps
 
 ### Real-World Attack Examples
 
 Attacks Mapped to SITF:
-- Shai-Hulud-2 (2024): Complete supply chain attack cycle (VCS -> CI/CD -> Registry -> Endpoint)
+- Shai-Hulud-2 (2025): Complete supply chain attack cycle (VCS -> CI/CD -> Registry -> Endpoint chain)
+- CodeBreach (2026): Potential AWS breach due to the regex filter misconfiguration in AWS CodeBuild service (CI/CD -> VCS -> Registry -> Endpoint chain)
 - CircleCI breach (2023): CI/CD -> Production pivot via stolen credentials
-- Codecov (2021): CI/CD -> Registry compromise via modified build script -> Endpoint
+- Trustwallet (2025): Registry -> Endpoint compromise via poisoned IDE extension
