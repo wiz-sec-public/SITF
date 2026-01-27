@@ -1,0 +1,1036 @@
+{
+  "metadata": {
+    "name": "Attack Flow",
+    "created": "2026-01-27T11:21:12.877Z",
+    "version": "1.0",
+    "framework": "SITF"
+  },
+  "nodes": [
+    {
+      "id": "entryPoint-s1ng-001",
+      "type": "entryPoint",
+      "position": {
+        "x": -132.11764928276637,
+        "y": -23.85264614849268
+      },
+      "data": {
+        "label": "Vulnerability Exploit"
+      },
+      "zIndex": 10,
+      "width": 178,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -132.11764928276637,
+        "y": -23.85264614849268
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-nrwl-cicd",
+      "type": "component",
+      "position": {
+        "x": -156.13708939772084,
+        "y": 54.904093202859826
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "nrwl/nx GitHub Actions"
+      },
+      "zIndex": -1,
+      "width": 232,
+      "height": 562,
+      "style": {
+        "width": 232,
+        "height": 562
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": -157.13708939772084,
+        "y": 54.904093202859826
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-pwn-request",
+      "type": "technique",
+      "position": {
+        "x": -123.52265436387302,
+        "y": 143.3912585001138
+      },
+      "data": {
+        "id": "T-C003",
+        "name": "PWN Request / Poisoned Pipeline Execution",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker submits malicious PR that triggers workflow with elevated privileges",
+        "risks": [
+          "Misconfigured repo - visibility",
+          "Misconfigured VCS access - external contributors",
+          "Allowing PRs from forks",
+          "Usage of pull_request_target/workflow_run",
+          "Default workflow permissions set to WRITE",
+          "Default workflow permissions set to approve PR",
+          "Workflows with access to secrets"
+        ],
+        "controls": [
+          "Branch protection rules (VCS)",
+          "Private repo (VCS)",
+          "CICD scanning tools",
+          "Require explicit approval for workflows from forks (VCS)",
+          "Minimal workflow permissions",
+          "Default workflow permissions not set to approve PRs"
+        ],
+        "customLabel": "Bash injection via unsanitized PR title"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -123.52265436387302,
+        "y": 143.3912585001138
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-script-injection",
+      "type": "technique",
+      "position": {
+        "x": -123.52265436387296,
+        "y": 295.1289794719896
+      },
+      "data": {
+        "id": "T-C004",
+        "name": "Workflow Script Injection",
+        "component": "cicd",
+        "stage": "Post-Compromise",
+        "description": "Attacker injects malicious code into workflow through user-controlled input",
+        "risks": [
+          "Misconfigured repo - visibility",
+          "Misconfigured workflow - script injection",
+          "Default workflow permissions set to WRITE",
+          "Default workflow permissions set to approve PR",
+          "Workflow with excessive permissions",
+          "Workflow with access to secrets"
+        ],
+        "controls": [
+          "Branch protection rules (VCS)",
+          "Private repo (VCS)",
+          "CICD scanning tools",
+          "Minimal workflow permissions",
+          "Code review for workflows"
+        ],
+        "customLabel": "Triggering publish.yml to exfiltrate npm token"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -123.52265436387296,
+        "y": 295.1289794719896
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-npm-registry",
+      "type": "component",
+      "position": {
+        "x": 160.21184083049377,
+        "y": 58.86456897299189
+      },
+      "data": {
+        "label": "Registry",
+        "componentId": "registry",
+        "techniques": [],
+        "customLabel": "npm Registry"
+      },
+      "zIndex": -1,
+      "width": 235,
+      "height": 291,
+      "style": {
+        "width": 235,
+        "height": 291
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 160.21184083049377,
+        "y": 58.86456897299189
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-steal-npm-token",
+      "type": "technique",
+      "position": {
+        "x": -122.95997961278914,
+        "y": 454.37148761359765
+      },
+      "data": {
+        "id": "T-C011",
+        "name": "Stealing Registry Tokens",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts registry publishing tokens from workflow",
+        "risks": [
+          "Workflow with access to secrets",
+          "Overprivileged registry tokens",
+          "Long-lived credentials"
+        ],
+        "controls": [
+          "OIDC setup in workflows",
+          "Trusted publishing (registry)",
+          "Runtime agent on runner",
+          "Secret scanning"
+        ],
+        "customLabel": "npm token exfiltrated via webhook"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -122.95997961278914,
+        "y": 454.37148761359765
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-publish-malicious",
+      "type": "technique",
+      "position": {
+        "x": 199.03001228312098,
+        "y": 171.41902529126332
+      },
+      "data": {
+        "id": "T-R004",
+        "name": "Publishing Malicious Package",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious package to registry",
+        "risks": [
+          "Overprivileged NPM token",
+          "Lack of provenance",
+          "Lack of trusted publishing",
+          "No package signing"
+        ],
+        "controls": [
+          "Trusted publishing",
+          "Provenance attestation",
+          "MFA for registry account",
+          "Package signing and verification",
+          "OIDC for publishing"
+        ],
+        "customLabel": "8 malicious Nx versions (20.9.0-21.8.0)"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 199.03001228312098,
+        "y": 171.41902529126332
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-developer-endpoint",
+      "type": "component",
+      "position": {
+        "x": 494.1909751509568,
+        "y": 56.21384308438695
+      },
+      "data": {
+        "label": "Endpoint/IDE",
+        "componentId": "endpoint",
+        "techniques": [],
+        "customLabel": "Developer Workstations (macOS/Linux)"
+      },
+      "zIndex": -1,
+      "width": 252,
+      "height": 919,
+      "style": {
+        "width": 252,
+        "height": 919
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 494.1909751509568,
+        "y": 56.21384308438695
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-malicious-exec",
+      "type": "technique",
+      "position": {
+        "x": 539.5475594702876,
+        "y": 166.5041282290208
+      },
+      "data": {
+        "id": "T-E001",
+        "name": "Malicious Execution on Endpoint",
+        "component": "endpoint",
+        "stage": "Initial Access",
+        "description": "Attacker executes malicious code on developer workstation",
+        "risks": [
+          "Using untrusted IDE extensions",
+          "Using untrusted software packages on endpoints",
+          "No EDR",
+          "Lack of application sandboxing",
+          "Package installation scripts enabled",
+          "Direct downloads from public registries"
+        ],
+        "controls": [
+          "Local registry proxy with filtering",
+          "EDR on endpoint",
+          "IDE sandboxing",
+          "Mandating signed extensions",
+          "Package version pinning",
+          "Automated maintainer reputation and hygiene checks",
+          "Application whitelisting",
+          "Disable package installation scripts (--ignore-scripts)"
+        ],
+        "customLabel": "telemetry.js post-install hook executes"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 539.5475594702876,
+        "y": 166.5041282290208
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-harvest-secrets",
+      "type": "technique",
+      "position": {
+        "x": 540.1106336636707,
+        "y": 311.1373402334007
+      },
+      "data": {
+        "id": "T-E003",
+        "name": "Harvest Local Secrets / Credentials from Endpoint",
+        "component": "endpoint",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts credentials stored on developer machine",
+        "risks": [
+          "Credentials stored in plaintext",
+          "Production credentials on developer machines",
+          "No local DLP",
+          "SSH keys without passwords",
+          "Cloud credentials in environment variables"
+        ],
+        "controls": [
+          "Local DLP",
+          "EDR on endpoint",
+          "Credential manager enforcement",
+          "No production credentials on endpoints",
+          "Encrypted credential storage"
+        ],
+        "customLabel": "GitHub tokens, npm tokens, SSH keys, crypto wallets"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 540.1106336636707,
+        "y": 311.1373402334007
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-abuse-ai",
+      "type": "technique",
+      "position": {
+        "x": 540.1106336636707,
+        "y": 487.3328140923007
+      },
+      "data": {
+        "id": "T-E009",
+        "name": "Abuse Local AI Tools",
+        "component": "endpoint",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker uses AI coding assistants to exfiltrate code or inject malicious suggestions",
+        "risks": [
+          "Using untrusted AI tools",
+          "No acceptable use policy",
+          "AI tools with excessive permissions",
+          "Sensitive code sent to AI services"
+        ],
+        "controls": [
+          "Acceptable use policy against unapproved AI tools",
+          "Approved AI tools with data protection",
+          "Network monitoring for AI service connections",
+          "Code review for AI-generated code"
+        ],
+        "customLabel": "Claude, Gemini, Q prompted with --dangerously-skip-permissions"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 540.1106336636707,
+        "y": 487.3328140923007
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-harvest-data",
+      "type": "technique",
+      "position": {
+        "x": 540.1106336636707,
+        "y": 649.2217291973813
+      },
+      "data": {
+        "id": "T-E004",
+        "name": "Harvest Local Data from Endpoint",
+        "component": "endpoint",
+        "stage": "Post-Compromise",
+        "description": "Attacker exfiltrates source code, documents, or other sensitive data from endpoint",
+        "risks": [
+          "No local DLP",
+          "No EDR",
+          "Sensitive data stored locally",
+          "No encryption at rest"
+        ],
+        "controls": [
+          "Local DLP",
+          "EDR on endpoint",
+          "Data classification and handling policies",
+          "Encryption at rest",
+          "Network monitoring"
+        ],
+        "customLabel": "/tmp/inventory.txt file catalog"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 540.1106336636707,
+        "y": 649.2217291973813
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-victim-vcs",
+      "type": "component",
+      "position": {
+        "x": 887.4880431748218,
+        "y": 55.157181502601816
+      },
+      "data": {
+        "label": "VCS",
+        "componentId": "vcs",
+        "techniques": [],
+        "customLabel": "Victim GitHub Accounts"
+      },
+      "zIndex": -1,
+      "width": 244,
+      "height": 616,
+      "style": {
+        "width": 244,
+        "height": 616
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 887.4880431748218,
+        "y": 55.157181502601816
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-abuse-vcs-creds",
+      "type": "technique",
+      "position": {
+        "x": 926.6772907441136,
+        "y": 170.51099507322851
+      },
+      "data": {
+        "id": "T-V001",
+        "name": "Abuse Credentials for VCS Access",
+        "component": "vcs",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access VCS",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "Credentials in org public repos",
+          "Credentials in public repos of org members",
+          "Credentials in workflow logs",
+          "Previous breaches",
+          "Fine-grained PATs not enforced",
+          "PATs without expiration"
+        ],
+        "controls": [
+          "Mandatory MFA",
+          "IDP / SSO setup",
+          "Enforcing fine-grained PATs",
+          "Enforcing PAT expiration",
+          "Secret scanning on org",
+          "Secret scanning on personal repos"
+        ],
+        "customLabel": "Second wave - using leaked GitHub tokens"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 926.6772907441136,
+        "y": 170.51099507322851
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-destruction",
+      "type": "technique",
+      "position": {
+        "x": 540.1106336636707,
+        "y": 822.5923260432517
+      },
+      "data": {
+        "id": "T-E010",
+        "name": "Endpoint Infrastructure Destruction",
+        "component": "endpoint",
+        "stage": "Post-Compromise",
+        "description": "Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption",
+        "risks": [
+          "No backup and recovery",
+          "Overprivileged local user accounts",
+          "No EDR",
+          "Lack of system integrity monitoring",
+          "Insufficient access controls on critical system files"
+        ],
+        "controls": [
+          "EDR on endpoint",
+          "Regular endpoint backups",
+          "System integrity monitoring",
+          "Minimal local user privileges",
+          "Offline backup storage",
+          "File system access controls",
+          "Endpoint recovery procedures"
+        ],
+        "customLabel": "sudo shutdown -h 0 injected in .bashrc/.zshrc"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 540.1106336636707,
+        "y": 822.5923260432517
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-future-breach",
+      "type": "exitPoint",
+      "position": {
+        "x": 934.828936108567,
+        "y": 702.6487165264814
+      },
+      "data": {
+        "label": "Future Breach"
+      },
+      "zIndex": 10,
+      "width": 144,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 934.828936108567,
+        "y": 702.6487165264814
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-1769512323869",
+      "type": "exitPoint",
+      "position": {
+        "x": 556.1215061707213,
+        "y": 1039.9724414881002
+      },
+      "data": {
+        "label": "Destruction"
+      },
+      "zIndex": 10,
+      "width": 130,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 556.1215061707213,
+        "y": 1039.9724414881002
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1769512776027",
+      "type": "technique",
+      "position": {
+        "x": 927.3483083524629,
+        "y": 339.46244429580315
+      },
+      "data": {
+        "id": "T-V003",
+        "name": "Secret Exfiltration from Repo",
+        "component": "vcs",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from repository content or history",
+        "risks": [
+          "Misconfigured repo - visibility (public when should be private)",
+          "Misconfigured VCS access - external contributors",
+          "Using untrusted webhooks",
+          "Dangling webhooks",
+          "Secrets committed to repo"
+        ],
+        "controls": [
+          "Secret scanning on org",
+          "Secret scanning on personal repos",
+          "Detection infra on audit logs",
+          "Private repo visibility",
+          "Webhook security review",
+          "Branch protection rules"
+        ],
+        "customLabel": "s1ngularity-repository repos for stolen data (triple base64)"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 927.3483083524629,
+        "y": 339.46244429580315
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1769512822901",
+      "type": "technique",
+      "position": {
+        "x": 927.5160914900116,
+        "y": 519.9359634230107
+      },
+      "data": {
+        "id": "T-V006",
+        "name": "Turn Private Repos Public",
+        "component": "vcs",
+        "stage": "Post-Compromise",
+        "description": "Attacker changes repository visibility to public",
+        "risks": [
+          "Overprivileged VCS access",
+          "No approval for visibility changes",
+          "No audit log monitoring"
+        ],
+        "controls": [
+          "Minimal VCS permissions",
+          "Approval workflow for visibility changes",
+          "Detection infra on audit logs",
+          "CSPM/CNAPP"
+        ],
+        "customLabel": "5,500+ repos exposed across 400+ orgs"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 927.5160914900116,
+        "y": 519.9359634230107
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-entry-to-pwn",
+      "zIndex": 1000,
+      "source": "entryPoint-s1ng-001",
+      "sourceHandle": "bottom",
+      "target": "technique-pwn-request",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-pwn-to-injection",
+      "zIndex": 1000,
+      "source": "technique-pwn-request",
+      "sourceHandle": "bottom",
+      "target": "technique-script-injection",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-injection-to-steal",
+      "zIndex": 100,
+      "source": "technique-script-injection",
+      "sourceHandle": "right",
+      "target": "technique-steal-npm-token",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-steal-to-publish",
+      "zIndex": 100,
+      "source": "technique-steal-npm-token",
+      "sourceHandle": "bottom",
+      "target": "technique-publish-malicious",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-publish-to-exec",
+      "zIndex": 100,
+      "source": "technique-publish-malicious",
+      "sourceHandle": "right",
+      "target": "technique-malicious-exec",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-exec-to-harvest",
+      "zIndex": 100,
+      "source": "technique-malicious-exec",
+      "sourceHandle": "bottom",
+      "target": "technique-harvest-secrets",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-harvest-to-ai",
+      "zIndex": 100,
+      "source": "technique-harvest-secrets",
+      "sourceHandle": "bottom",
+      "target": "technique-abuse-ai",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-ai-to-data",
+      "zIndex": 100,
+      "source": "technique-abuse-ai",
+      "sourceHandle": "bottom",
+      "target": "technique-harvest-data",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-harvest-to-abuse-vcs",
+      "zIndex": 100,
+      "source": "technique-harvest-secrets",
+      "sourceHandle": "right",
+      "target": "technique-abuse-vcs-creds",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Second wave",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-data-to-destruction",
+      "zIndex": 100,
+      "source": "technique-harvest-data",
+      "sourceHandle": "bottom",
+      "target": "technique-destruction",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-destruction",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-1769512323869",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-destructionbottom-exitPoint-1769512323869top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-abuse-vcs-creds",
+      "sourceHandle": "bottom",
+      "target": "technique-1769512776027",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-abuse-vcs-credsbottom-technique-1769512776027top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-1769512776027",
+      "sourceHandle": "bottom",
+      "target": "technique-1769512822901",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1769512776027bottom-technique-1769512822901top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-1769512822901",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-future-breach",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1769512822901bottom-exitPoint-future-breachtop"
+    }
+  ]
+}
