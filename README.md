@@ -58,17 +58,13 @@ SITF helps security teams analyze supply chain attacks by:
 
 SITF includes two Claude AI skills that automate attack flow generation and technique proposal creation:
 
-### `/attack-flow` - Attack Flow Generator
+#### `/attack-flow` - Attack Flow Generator
 
 Automatically generates SITF-compliant attack flow JSON files from attack descriptions or incident reports.
 
 **Usage:**
 ```
 /attack-flow <attack-name> [websearch|url]
-```
-
-**Examples:**
-```
 /attack-flow solarwinds websearch
 /attack-flow codecov https://about.codecov.io/security-update/
 ```
@@ -82,17 +78,13 @@ Automatically generates SITF-compliant attack flow JSON files from attack descri
 
 See [.claude/skills/attack-flow/SKILL.md](.claude/skills/attack-flow/SKILL.md) for detailed documentation.
 
-### `/technique-proposal` - Technique Proposal Generator
+#### `/technique-proposal` - Technique Proposal Generator
 
 Generates PR-ready technique proposals when an attack step doesn't map to existing SITF techniques.
 
 **Usage:**
 ```
 /technique-proposal "<description>" [component]
-```
-
-**Example:**
-```
 /technique-proposal "Malware invokes AI CLI tools with permission-bypass flags" endpoint
 ```
 
@@ -103,22 +95,6 @@ Generates PR-ready technique proposals when an attack step doesn't map to existi
 4. Produces PR-ready markdown with rationale and references
 
 See [.claude/skills/technique-proposal/SKILL.md](.claude/skills/technique-proposal/SKILL.md) for detailed documentation.
-
-### Workflow Integration
-
-The skills work together in a complete workflow:
-
-```
-/attack-flow <attack-name>
-    ↓
-[Gaps identified in generated flow]
-    ↓
-/technique-proposal "<gap description>" <component>
-    ↓
-[Submit PR with proposed technique]
-    ↓
-[After merge, re-run /attack-flow]
-```
 
 ## Contributing
 
