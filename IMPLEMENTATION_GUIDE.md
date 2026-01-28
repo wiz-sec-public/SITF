@@ -169,6 +169,8 @@ Controls that prevent it:
 
 ### Attack Analysis in Three Steps
 
+#### Manual Analysis
+
 1. Identify the Attack Techniques
 Look up each attack action in the [Technique Library](TECHNIQUE_LIBRARY.md) to find the matching technique ID (e.g., T-C003, T-E001). Each technique entry provides pre-mapped risks and controls.
 
@@ -180,6 +182,28 @@ Use the SITF Attack Flow Visualizer to create a visual diagram showing:
 
 3. Extract the Controls Matrix
 The visualizer automatically generates a Controls Matrix from your diagram, organizing all security controls by component and attack stage. Export this matrix to prioritize your defenses.
+
+#### Automated Analysis with Claude AI
+
+Alternatively, use the Claude AI skills for automated attack flow generation:
+
+1. **Generate Attack Flow Automatically**
+```
+/attack-flow <attack-name> websearch
+```
+This will research the attack, map techniques, and generate a complete JSON flow file.
+
+2. **Address Technique Gaps**
+If the attack flow identifies gaps (attack steps not covered by existing techniques):
+```
+/technique-proposal "<gap description>" <component>
+```
+This generates a PR-ready technique proposal with risks and controls.
+
+3. **Visualize and Export**
+Load the generated JSON file in the [visualizer](https://wiz-sec-public.github.io/SITF/visualizer.html) to view the flow and export the Controls Matrix.
+
+See [Claude AI Skills](#claude-ai-skills-for-attack-analysis) section below for detailed workflow.
 
 ### The SITF Attack Flow Visualizer
 
@@ -560,6 +584,21 @@ Two web applications for exploring and analyzing attacks (see "How to Use This F
 **Source of Truth:** [`techniques.json`](techniques.json)
 - Edit this file to add or modify techniques
 - Run `python3 build-techniques.py` to regenerate all documentation and web apps
+
+### Claude AI Skills for Automation
+
+SITF includes Claude AI skills that automate attack flow generation and technique proposals:
+
+- **`/attack-flow`** - Automatically generate SITF-compliant attack flow JSON files from incident reports
+- **`/technique-proposal`** - Generate PR-ready technique proposals when gaps are identified
+
+These skills integrate into the workflow described in "How to Use This Framework" above, enabling rapid attack analysis and framework enhancement.
+
+**See [README.md - Claude AI Skills](README.md#claude-ai-skills) for complete usage documentation and examples.**
+
+Skill documentation:
+- [.claude/skills/attack-flow/SKILL.md](.claude/skills/attack-flow/SKILL.md) - Attack flow generator details
+- [.claude/skills/technique-proposal/SKILL.md](.claude/skills/technique-proposal/SKILL.md) - Technique proposal generator details
 
 ### Real-World Attack Examples
 
