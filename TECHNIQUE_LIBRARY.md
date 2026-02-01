@@ -1507,6 +1507,7 @@ This library contains **technique triplets** - each entry shows:
 - T-C001: Abuse Credentials for CI/CD Access
 - T-C002: Malicious Execution in Workflow Context
 - T-C003: PWN Request / Poisoned Pipeline Execution
+- T-C004: Workflow Script Injection
 - T-C009: CI/CD Vulnerability Exploitation
 - T-C020: CI/CD Misconfiguration Exploitation
 - T-E001: Malicious Execution on Endpoint
@@ -1523,7 +1524,6 @@ This library contains **technique triplets** - each entry shows:
 - T-V005: VCS Vulnerability Exploitation
 
 ### Post-Compromise Techniques
-- T-C004: Workflow Script Injection
 - T-C007: Action Cache Poisoning
 - T-C008: Malicious Workflow Performing Code Modification
 - T-C013: Persistence on Self-Hosted Runners
