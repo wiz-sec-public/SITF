@@ -692,7 +692,7 @@
       "id": "T-C004",
       "name": "Workflow Script Injection",
       "component": "cicd",
-      "stage": "Post-Compromise",
+      "stage": "Initial Access",
       "description": "Attacker injects malicious code into workflow through user-controlled input",
       "risks": [
         "Misconfigured repo - visibility",
