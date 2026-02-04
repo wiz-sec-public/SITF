@@ -422,16 +422,36 @@
         "Package installation scripts enabled",
         "Direct downloads from public registries"
       ],
-      "controls": [
-        "Local registry proxy with filtering",
-        "EDR on endpoint",
-        "IDE sandboxing",
-        "Mandating signed extensions",
-        "Package version pinning",
-        "Automated maintainer reputation and hygiene checks",
-        "Application whitelisting",
-        "Disable package installation scripts (--ignore-scripts)"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Local registry proxy with filtering"
+          },
+          {
+            "name": "IDE sandboxing"
+          },
+          {
+            "name": "Mandating signed extensions"
+          },
+          {
+            "name": "Package version pinning"
+          },
+          {
+            "name": "Automated maintainer reputation and hygiene checks"
+          },
+          {
+            "name": "Application whitelisting"
+          },
+          {
+            "name": "Disable package installation scripts (--ignore-scripts)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          }
+        ]
+      }
     },
     {
       "id": "T-E002",
@@ -445,13 +465,27 @@
         "Credentials stored in plaintext",
         "No email security controls"
       ],
-      "controls": [
-        "Mandatory MFA",
-        "Phishing-resistant authentication",
-        "Security awareness training",
-        "Email security (SPF, DMARC, DKIM)",
-        "EDR on endpoint"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Mandatory MFA"
+          },
+          {
+            "name": "Phishing-resistant authentication"
+          },
+          {
+            "name": "Security awareness training"
+          },
+          {
+            "name": "Email security (SPF, DMARC, DKIM)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          }
+        ]
+      }
     },
     {
       "id": "T-E003",
@@ -466,13 +500,27 @@
         "SSH keys without passwords",
         "Cloud credentials in environment variables"
       ],
-      "controls": [
-        "Local DLP",
-        "EDR on endpoint",
-        "Credential manager enforcement",
-        "No production credentials on endpoints",
-        "Encrypted credential storage"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Credential manager enforcement"
+          },
+          {
+            "name": "No production credentials on endpoints"
+          },
+          {
+            "name": "Encrypted credential storage"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Local DLP"
+          },
+          {
+            "name": "EDR on endpoint"
+          }
+        ]
+      }
     },
     {
       "id": "T-E004",
@@ -486,13 +534,27 @@
         "Sensitive data stored locally",
         "No encryption at rest"
       ],
-      "controls": [
-        "Local DLP",
-        "EDR on endpoint",
-        "Data classification and handling policies",
-        "Encryption at rest",
-        "Network monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Data classification and handling policies"
+          },
+          {
+            "name": "Encryption at rest"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Local DLP"
+          },
+          {
+            "name": "EDR on endpoint"
+          },
+          {
+            "name": "Network monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-E005",
@@ -505,12 +567,24 @@
         "Untrusted software packages",
         "No resource monitoring"
       ],
-      "controls": [
-        "EDR on endpoint",
-        "Resource monitoring and alerting",
-        "Application whitelisting",
-        "Network monitoring (detect mining pool connections)"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Application whitelisting"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          },
+          {
+            "name": "Resource monitoring and alerting"
+          },
+          {
+            "name": "Network monitoring (detect mining pool connections)"
+          }
+        ]
+      }
     },
     {
       "id": "T-E006",
@@ -523,12 +597,23 @@
         "No runner registration approval process",
         "Runner registration tokens not protected"
       ],
-      "controls": [
-        "Using managed runners only",
-        "Runner registration approval workflow",
-        "Runner registration token protection",
-        "Network segmentation (runners isolated from endpoints)"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed runners only"
+          },
+          {
+            "name": "Runner registration approval workflow"
+          },
+          {
+            "name": "Runner registration token protection"
+          },
+          {
+            "name": "Network segmentation (runners isolated from endpoints)"
+          }
+        ],
+        "detective": []
+      }
     },
     {
       "id": "T-E007",
@@ -541,12 +626,24 @@
         "No credential rotation",
         "Overprivileged VCS access"
       ],
-      "controls": [
-        "Credential manager enforcement",
-        "Fine-grained PATs with expiration",
-        "Mandatory MFA for VCS",
-        "Audit log monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Credential manager enforcement"
+          },
+          {
+            "name": "Fine-grained PATs with expiration"
+          },
+          {
+            "name": "Mandatory MFA for VCS"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Audit log monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-E008",
@@ -559,12 +656,24 @@
         "No credential rotation",
         "Overprivileged CI/CD access"
       ],
-      "controls": [
-        "Credential manager enforcement",
-        "OIDC instead of long-lived tokens",
-        "Mandatory MFA for CI/CD",
-        "Audit log monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Credential manager enforcement"
+          },
+          {
+            "name": "OIDC instead of long-lived tokens"
+          },
+          {
+            "name": "Mandatory MFA for CI/CD"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Audit log monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-E009",
@@ -578,12 +687,24 @@
         "AI tools with excessive permissions",
         "Sensitive code sent to AI services"
       ],
-      "controls": [
-        "Acceptable use policy against unapproved AI tools",
-        "Approved AI tools with data protection",
-        "Network monitoring for AI service connections",
-        "Code review for AI-generated code"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Acceptable use policy against unapproved AI tools"
+          },
+          {
+            "name": "Approved AI tools with data protection"
+          },
+          {
+            "name": "Code review for AI-generated code"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network monitoring for AI service connections"
+          }
+        ]
+      }
     },
     {
       "id": "T-E010",
@@ -598,15 +719,33 @@
         "Lack of system integrity monitoring",
         "Insufficient access controls on critical system files"
       ],
-      "controls": [
-        "EDR on endpoint",
-        "Regular endpoint backups",
-        "System integrity monitoring",
-        "Minimal local user privileges",
-        "Offline backup storage",
-        "File system access controls",
-        "Endpoint recovery procedures"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Regular endpoint backups"
+          },
+          {
+            "name": "Minimal local user privileges"
+          },
+          {
+            "name": "Offline backup storage"
+          },
+          {
+            "name": "File system access controls"
+          },
+          {
+            "name": "Endpoint recovery procedures"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          },
+          {
+            "name": "System integrity monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-E011",
@@ -621,14 +760,30 @@
         "Diff tools don't highlight invisible code",
         "Developer trust in visual code inspection"
       ],
-      "controls": [
-        "Unicode character detection in code review tools",
-        "IDE plugins to visualize invisible characters",
-        "Static analysis with Unicode normalization",
-        "Automated detection of unprintable characters in commits",
-        "Extension code signing and verification",
-        "Mandatory code review with specialized tools"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "IDE plugins to visualize invisible characters"
+          },
+          {
+            "name": "Static analysis with Unicode normalization"
+          },
+          {
+            "name": "Extension code signing and verification"
+          },
+          {
+            "name": "Mandatory code review with specialized tools"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Unicode character detection in code review tools"
+          },
+          {
+            "name": "Automated detection of unprintable characters in commits"
+          }
+        ]
+      }
     },
     {
       "id": "T-E012",
@@ -643,14 +798,30 @@
         "Endpoint inside corporate network",
         "No process monitoring"
       ],
-      "controls": [
-        "EDR on endpoint",
-        "Network egress monitoring and filtering",
-        "Application whitelisting",
-        "Network segmentation (endpoints from production)",
-        "Outbound connection restrictions",
-        "Anomalous network behavior detection"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Application whitelisting"
+          },
+          {
+            "name": "Network segmentation (endpoints from production)"
+          },
+          {
+            "name": "Outbound connection restrictions"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          },
+          {
+            "name": "Network egress monitoring and filtering"
+          },
+          {
+            "name": "Anomalous network behavior detection"
+          }
+        ]
+      }
     },
     {
       "id": "T-E013",
@@ -664,14 +835,30 @@
         "Lack of application sandboxing",
         "Privileged user accounts"
       ],
-      "controls": [
-        "EDR on endpoint",
-        "Process monitoring and whitelisting",
-        "Session activity monitoring",
-        "Behavioral analysis for hidden processes",
-        "Minimal local user privileges",
-        "Virtual desktop detection"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal local user privileges"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          },
+          {
+            "name": "Process monitoring and whitelisting"
+          },
+          {
+            "name": "Session activity monitoring"
+          },
+          {
+            "name": "Behavioral analysis for hidden processes"
+          },
+          {
+            "name": "Virtual desktop detection"
+          }
+        ]
+      }
     },
     {
       "id": "T-E014",
@@ -686,14 +873,30 @@
         "No EDR",
         "P2P connections not logged"
       ],
-      "controls": [
-        "EDR on endpoint",
-        "WebRTC traffic monitoring",
-        "Network behavior analysis",
-        "WebRTC restrictions in corporate browsers",
-        "STUN/TURN server whitelisting",
-        "Deep packet inspection"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Network behavior analysis"
+          },
+          {
+            "name": "WebRTC restrictions in corporate browsers"
+          },
+          {
+            "name": "STUN/TURN server whitelisting"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          },
+          {
+            "name": "WebRTC traffic monitoring"
+          },
+          {
+            "name": "Deep packet inspection"
+          }
+        ]
+      }
     },
     {
       "id": "T-E015",
@@ -708,14 +911,30 @@
         "No extension version pinning",
         "Silent updates without user notification"
       ],
-      "controls": [
-        "Extension update approval workflow",
-        "Extension version pinning",
-        "Update signature verification",
-        "Extension update monitoring and alerting",
-        "Delayed update deployment (canary testing)",
-        "Extension marketplace security monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Extension update approval workflow"
+          },
+          {
+            "name": "Extension version pinning"
+          },
+          {
+            "name": "Update signature verification"
+          },
+          {
+            "name": "Delayed update deployment (canary testing)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Extension update monitoring and alerting"
+          },
+          {
+            "name": "Extension marketplace security monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-E016",
@@ -728,14 +947,30 @@
         "No EDR",
         "Cryptocurrency node connections not restricted"
       ],
-      "controls": [
-        "EDR on endpoint",
-        "Network behavior analysis",
-        "Blockchain RPC connection monitoring",
-        "Cryptocurrency-related traffic restrictions",
-        "Anomalous blockchain query detection",
-        "Application whitelisting"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Network behavior analysis"
+          },
+          {
+            "name": "Cryptocurrency-related traffic restrictions"
+          },
+          {
+            "name": "Application whitelisting"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          },
+          {
+            "name": "Blockchain RPC connection monitoring"
+          },
+          {
+            "name": "Anomalous blockchain query detection"
+          }
+        ]
+      }
     },
     {
       "id": "T-E017",
@@ -750,14 +985,30 @@
         "No EDR",
         "Encoded payloads in legitimate service data"
       ],
-      "controls": [
-        "EDR on endpoint",
-        "Deep content inspection of legitimate service traffic",
-        "Behavioral analysis for unusual service usage patterns",
-        "Network traffic anomaly detection",
-        "Application-level monitoring",
-        "Data exfiltration detection"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Deep content inspection of legitimate service traffic"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          },
+          {
+            "name": "Behavioral analysis for unusual service usage patterns"
+          },
+          {
+            "name": "Network traffic anomaly detection"
+          },
+          {
+            "name": "Application-level monitoring"
+          },
+          {
+            "name": "Data exfiltration detection"
+          }
+        ]
+      }
     },
     {
       "id": "T-E018",
@@ -772,14 +1023,30 @@
         "Decentralized C2 cannot be taken down",
         "P2P protocols not restricted"
       ],
-      "controls": [
-        "EDR on endpoint",
-        "P2P protocol blocking",
-        "BitTorrent traffic monitoring and blocking",
-        "DHT network connection detection",
-        "Network behavior analysis",
-        "Application whitelisting"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "P2P protocol blocking"
+          },
+          {
+            "name": "Network behavior analysis"
+          },
+          {
+            "name": "Application whitelisting"
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint"
+          },
+          {
+            "name": "BitTorrent traffic monitoring and blocking"
+          },
+          {
+            "name": "DHT network connection detection"
+          }
+        ]
+      }
     },
     {
       "id": "T-V001",
@@ -796,14 +1063,30 @@
         "Fine-grained PATs not enforced",
         "PATs without expiration"
       ],
-      "controls": [
-        "Mandatory MFA",
-        "IDP / SSO setup",
-        "Enforcing fine-grained PATs",
-        "Enforcing PAT expiration",
-        "Secret scanning on org",
-        "Secret scanning on personal repos"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Mandatory MFA"
+          },
+          {
+            "name": "IDP / SSO setup"
+          },
+          {
+            "name": "Enforcing fine-grained PATs"
+          },
+          {
+            "name": "Enforcing PAT expiration"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning on org"
+          },
+          {
+            "name": "Secret scanning on personal repos"
+          }
+        ]
+      }
     },
     {
       "id": "T-V002",
@@ -816,12 +1099,23 @@
         "Email verification not enforced",
         "No code review process"
       ],
-      "controls": [
-        "Commit signing",
-        "Requiring code owner approval",
-        "Branch protection rules",
-        "Email verification enforcement"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Commit signing"
+          },
+          {
+            "name": "Requiring code owner approval"
+          },
+          {
+            "name": "Branch protection rules"
+          },
+          {
+            "name": "Email verification enforcement"
+          }
+        ],
+        "detective": []
+      }
     },
     {
       "id": "T-V003",
@@ -836,14 +1130,30 @@
         "Dangling webhooks",
         "Secrets committed to repo"
       ],
-      "controls": [
-        "Secret scanning on org",
-        "Secret scanning on personal repos",
-        "Detection infra on audit logs",
-        "Private repo visibility",
-        "Webhook security review",
-        "Branch protection rules"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Private repo visibility"
+          },
+          {
+            "name": "Webhook security review"
+          },
+          {
+            "name": "Branch protection rules"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning on org"
+          },
+          {
+            "name": "Secret scanning on personal repos"
+          },
+          {
+            "name": "Detection infra on audit logs"
+          }
+        ]
+      }
     },
     {
       "id": "T-V004",
@@ -856,12 +1166,24 @@
         "Using personal repos for work",
         "Org members with public repos containing work content"
       ],
-      "controls": [
-        "Secret scanning on personal repos",
-        "Policy against using personal repos for work",
-        "Detection infra on audit logs",
-        "Security awareness training"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Policy against using personal repos for work"
+          },
+          {
+            "name": "Security awareness training"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning on personal repos"
+          },
+          {
+            "name": "Detection infra on audit logs"
+          }
+        ]
+      }
     },
     {
       "id": "T-V005",
@@ -874,12 +1196,24 @@
         "Known CVEs not addressed",
         "Self-hosted VCS without security updates"
       ],
-      "controls": [
-        "Using managed VCS instances",
-        "Patching schedule",
-        "Vulnerability scanning",
-        "Security update monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed VCS instances"
+          },
+          {
+            "name": "Patching schedule"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Vulnerability scanning"
+          },
+          {
+            "name": "Security update monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-V006",
@@ -892,12 +1226,24 @@
         "No approval for visibility changes",
         "No audit log monitoring"
       ],
-      "controls": [
-        "Minimal VCS permissions",
-        "Approval workflow for visibility changes",
-        "Detection infra on audit logs",
-        "CSPM/CNAPP"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal VCS permissions"
+          },
+          {
+            "name": "Approval workflow for visibility changes"
+          },
+          {
+            "name": "CSPM/CNAPP"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs"
+          }
+        ]
+      }
     },
     {
       "id": "T-V007",
@@ -910,12 +1256,24 @@
         "No audit log monitoring",
         "No DLP on network"
       ],
-      "controls": [
-        "Minimal VCS permissions",
-        "Detection infra on audit logs",
-        "Network DLP",
-        "Repository access reviews"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal VCS permissions"
+          },
+          {
+            "name": "Repository access reviews"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs"
+          },
+          {
+            "name": "Network DLP"
+          }
+        ]
+      }
     },
     {
       "id": "T-V008",
@@ -928,12 +1286,24 @@
         "No repository review process",
         "Unlimited repository creation"
       ],
-      "controls": [
-        "Repository creation approval",
-        "Repository security scanning",
-        "Detection infra on audit logs",
-        "Resource quotas"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Repository creation approval"
+          },
+          {
+            "name": "Resource quotas"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Repository security scanning"
+          },
+          {
+            "name": "Detection infra on audit logs"
+          }
+        ]
+      }
     },
     {
       "id": "T-V009",
@@ -949,15 +1319,33 @@
         "No repository deletion approval process",
         "Lack of deletion protection"
       ],
-      "controls": [
-        "Minimal VCS user permissions",
-        "Regular repository backups",
-        "Detection infra on audit logs (VCS)",
-        "Repository deletion approval workflow",
-        "Immutable audit logs",
-        "Repository recovery procedures",
-        "Deletion protection on critical repositories"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal VCS user permissions"
+          },
+          {
+            "name": "Regular repository backups"
+          },
+          {
+            "name": "Repository deletion approval workflow"
+          },
+          {
+            "name": "Repository recovery procedures"
+          },
+          {
+            "name": "Deletion protection on critical repositories"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (VCS)"
+          },
+          {
+            "name": "Immutable audit logs"
+          }
+        ]
+      }
     },
     {
       "id": "T-V010",
@@ -974,17 +1362,39 @@
         "Insufficient branch protection rules",
         "No detection of suspicious code patterns"
       ],
-      "controls": [
-        "Branch protection rules (VCS)",
-        "Require code owner approval",
-        "Mandatory code review by multiple reviewers",
-        "Commit signing enforcement",
-        "Automated code security scanning (SAST)",
-        "Detection infra on audit logs (VCS)",
-        "Minimal VCS permissions (principle of least privilege)",
-        "Code change anomaly detection",
-        "Pre-commit hooks for security checks"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Branch protection rules (VCS)"
+          },
+          {
+            "name": "Require code owner approval"
+          },
+          {
+            "name": "Mandatory code review by multiple reviewers"
+          },
+          {
+            "name": "Commit signing enforcement"
+          },
+          {
+            "name": "Minimal VCS permissions (principle of least privilege)"
+          },
+          {
+            "name": "Pre-commit hooks for security checks"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Automated code security scanning (SAST)"
+          },
+          {
+            "name": "Detection infra on audit logs (VCS)"
+          },
+          {
+            "name": "Code change anomaly detection"
+          }
+        ]
+      }
     },
     {
       "id": "T-C001",
@@ -998,13 +1408,27 @@
         "Credentials in org public repos",
         "Previous breaches"
       ],
-      "controls": [
-        "Mandatory MFA",
-        "IDP / SSO setup",
-        "Enforcing fine-grained PATs (VCS)",
-        "Enforcing PAT expiration (VCS)",
-        "Secret scanning"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Mandatory MFA"
+          },
+          {
+            "name": "IDP / SSO setup"
+          },
+          {
+            "name": "Enforcing fine-grained PATs (VCS)"
+          },
+          {
+            "name": "Enforcing PAT expiration (VCS)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning"
+          }
+        ]
+      }
     },
     {
       "id": "T-C002",
@@ -1020,15 +1444,33 @@
         "Using untrusted container / VM image for runners",
         "Lack of GitHub action pinning"
       ],
-      "controls": [
-        "Pinning 3rd-party actions",
-        "Action whitelisting",
-        "Automated maintainer reputation and hygiene checks",
-        "Requiring code owner approval (VCS)",
-        "Branch protection rules (VCS)",
-        "Runner SBOM",
-        "Image scanning"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Pinning 3rd-party actions"
+          },
+          {
+            "name": "Action whitelisting"
+          },
+          {
+            "name": "Automated maintainer reputation and hygiene checks"
+          },
+          {
+            "name": "Requiring code owner approval (VCS)"
+          },
+          {
+            "name": "Branch protection rules (VCS)"
+          },
+          {
+            "name": "Runner SBOM"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Image scanning"
+          }
+        ]
+      }
     },
     {
       "id": "T-C003",
@@ -1045,14 +1487,30 @@
         "Default workflow permissions set to approve PR",
         "Workflows with access to secrets"
       ],
-      "controls": [
-        "Branch protection rules (VCS)",
-        "Private repo (VCS)",
-        "CICD scanning tools",
-        "Require explicit approval/ disallow workflows from forks (VCS)",
-        "Minimal workflow permissions",
-        "Default workflow permissions not set to approve PRs"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Branch protection rules (VCS)"
+          },
+          {
+            "name": "Private repo (VCS)"
+          },
+          {
+            "name": "Require explicit approval/ disallow workflows from forks (VCS)"
+          },
+          {
+            "name": "Minimal workflow permissions"
+          },
+          {
+            "name": "Default workflow permissions not set to approve PRs"
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools"
+          }
+        ]
+      }
     },
     {
       "id": "T-C004",
@@ -1068,13 +1526,27 @@
         "Workflow with excessive permissions",
         "Workflow with access to secrets"
       ],
-      "controls": [
-        "Branch protection rules (VCS)",
-        "Private repo (VCS)",
-        "CICD scanning tools",
-        "Minimal workflow permissions",
-        "Code review for workflows"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Branch protection rules (VCS)"
+          },
+          {
+            "name": "Private repo (VCS)"
+          },
+          {
+            "name": "Minimal workflow permissions"
+          },
+          {
+            "name": "Code review for workflows"
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools"
+          }
+        ]
+      }
     },
     {
       "id": "T-C005",
@@ -1088,13 +1560,27 @@
         "Secrets in workflow logs",
         "Overprivileged secrets"
       ],
-      "controls": [
-        "OIDC setup in workflows",
-        "Runtime agent on runner",
-        "Secret scanning",
-        "Minimal workflow permissions",
-        "Log sanitization"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC setup in workflows"
+          },
+          {
+            "name": "Minimal workflow permissions"
+          },
+          {
+            "name": "Log sanitization"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner"
+          },
+          {
+            "name": "Secret scanning"
+          }
+        ]
+      }
     },
     {
       "id": "T-C006",
@@ -1107,12 +1593,24 @@
         "Public repositories",
         "Secrets in workflow files"
       ],
-      "controls": [
-        "OIDC setup in workflows",
-        "Secret scanning",
-        "Private repositories",
-        "Code review for workflows"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC setup in workflows"
+          },
+          {
+            "name": "Private repositories"
+          },
+          {
+            "name": "Code review for workflows"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning"
+          }
+        ]
+      }
     },
     {
       "id": "T-C007",
@@ -1125,12 +1623,23 @@
         "No cache isolation",
         "No cache verification"
       ],
-      "controls": [
-        "Don't use actions cache",
-        "Workflow ordering",
-        "Cache artifact signing / verification",
-        "Cache isolation per repository"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Don't use actions cache"
+          },
+          {
+            "name": "Workflow ordering"
+          },
+          {
+            "name": "Cache artifact signing / verification"
+          },
+          {
+            "name": "Cache isolation per repository"
+          }
+        ],
+        "detective": []
+      }
     },
     {
       "id": "T-C008",
@@ -1143,12 +1652,24 @@
         "Default workflow permissions set to approve PR",
         "Workflow with excessive permissions"
       ],
-      "controls": [
-        "Minimal workflow permissions",
-        "Default workflow permissions not set to approve PRs",
-        "CICD scanning tools",
-        "Code review requirements"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal workflow permissions"
+          },
+          {
+            "name": "Default workflow permissions not set to approve PRs"
+          },
+          {
+            "name": "Code review requirements"
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools"
+          }
+        ]
+      }
     },
     {
       "id": "T-C009",
@@ -1161,12 +1682,24 @@
         "Known CVEs not addressed",
         "Self-hosted CI/CD without security updates"
       ],
-      "controls": [
-        "Using managed CI/CD instances",
-        "Patching schedule",
-        "Vulnerability scanning",
-        "Security update monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed CI/CD instances"
+          },
+          {
+            "name": "Patching schedule"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Vulnerability scanning"
+          },
+          {
+            "name": "Security update monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-C010",
@@ -1181,14 +1714,30 @@
         "Package installation scripts enabled",
         "Direct downloads from public registries"
       ],
-      "controls": [
-        "Local registry proxy with filtering",
-        "Runtime agent on runner",
-        "Runner SBOM",
-        "Package version pinning",
-        "Package signature verification",
-        "Disable package installation scripts (--ignore-scripts)"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Local registry proxy with filtering"
+          },
+          {
+            "name": "Runner SBOM"
+          },
+          {
+            "name": "Package version pinning"
+          },
+          {
+            "name": "Package signature verification"
+          },
+          {
+            "name": "Disable package installation scripts (--ignore-scripts)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner"
+          }
+        ]
+      }
     },
     {
       "id": "T-C011",
@@ -1201,12 +1750,24 @@
         "Overprivileged registry tokens",
         "Long-lived credentials"
       ],
-      "controls": [
-        "OIDC setup in workflows",
-        "Trusted publishing (registry)",
-        "Runtime agent on runner",
-        "Secret scanning"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC setup in workflows"
+          },
+          {
+            "name": "Trusted publishing (registry)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner"
+          },
+          {
+            "name": "Secret scanning"
+          }
+        ]
+      }
     },
     {
       "id": "T-C012",
@@ -1219,12 +1780,24 @@
         "Default workflow permissions set to approve PR",
         "No PR review requirements"
       ],
-      "controls": [
-        "CICD scanning tools",
-        "Minimal workflow permissions",
-        "Branch protection rules (VCS)",
-        "Require code owner approval (VCS)"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal workflow permissions"
+          },
+          {
+            "name": "Branch protection rules (VCS)"
+          },
+          {
+            "name": "Require code owner approval (VCS)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools"
+          }
+        ]
+      }
     },
     {
       "id": "T-C013",
@@ -1238,12 +1811,24 @@
         "Overshared self-hosted runner",
         "No runtime monitoring"
       ],
-      "controls": [
-        "Using managed runners only",
-        "Ephemeral runners",
-        "Runner isolation",
-        "Runtime agent on runner"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed runners only"
+          },
+          {
+            "name": "Ephemeral runners"
+          },
+          {
+            "name": "Runner isolation"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner"
+          }
+        ]
+      }
     },
     {
       "id": "T-C014",
@@ -1256,12 +1841,24 @@
         "No resource limits",
         "Self-hosted runners"
       ],
-      "controls": [
-        "Using managed runners only",
-        "Runtime agent on runner",
-        "Resource monitoring and limits",
-        "Network monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed runners only"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner"
+          },
+          {
+            "name": "Resource monitoring and limits"
+          },
+          {
+            "name": "Network monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-C015",
@@ -1274,12 +1871,24 @@
         "No CICD scanning",
         "No runtime monitoring"
       ],
-      "controls": [
-        "OIDC setup in workflows",
-        "CICD scanning tools",
-        "Runtime agent on runner",
-        "Minimal workflow permissions"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC setup in workflows"
+          },
+          {
+            "name": "Minimal workflow permissions"
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools"
+          },
+          {
+            "name": "Runtime agent on runner"
+          }
+        ]
+      }
     },
     {
       "id": "T-C016",
@@ -1293,13 +1902,27 @@
         "Self-hosted runner in production network",
         "No network segmentation"
       ],
-      "controls": [
-        "K8s sensor on runner cluster",
-        "KSPM on runner cluster",
-        "Minimal runner pod privileges",
-        "Network segmentation",
-        "Using managed runners only"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal runner pod privileges"
+          },
+          {
+            "name": "Network segmentation"
+          },
+          {
+            "name": "Using managed runners only"
+          }
+        ],
+        "detective": [
+          {
+            "name": "K8s sensor on runner cluster"
+          },
+          {
+            "name": "KSPM on runner cluster"
+          }
+        ]
+      }
     },
     {
       "id": "T-C017",
@@ -1313,13 +1936,27 @@
         "No pod security policies",
         "Privileged containers allowed"
       ],
-      "controls": [
-        "K8s sensor on runner cluster",
-        "KSPM on runner cluster",
-        "Minimal runner pod privileges",
-        "Pod security policies",
-        "Using managed runners only"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal runner pod privileges"
+          },
+          {
+            "name": "Pod security policies"
+          },
+          {
+            "name": "Using managed runners only"
+          }
+        ],
+        "detective": [
+          {
+            "name": "K8s sensor on runner cluster"
+          },
+          {
+            "name": "KSPM on runner cluster"
+          }
+        ]
+      }
     },
     {
       "id": "T-C018",
@@ -1334,16 +1971,36 @@
         "Logs contain secrets or sensitive information",
         "No DLP on CI/CD network"
       ],
-      "controls": [
-        "Network DLP",
-        "Egress traffic monitoring and filtering",
-        "Runtime agent on runner",
-        "Large data transfer detection",
-        "Log sanitization",
-        "Artifact encryption",
-        "Detection infra on audit logs (CI/CD)",
-        "Network segmentation (CI/CD from internet)"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Log sanitization"
+          },
+          {
+            "name": "Artifact encryption"
+          },
+          {
+            "name": "Network segmentation (CI/CD from internet)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network DLP"
+          },
+          {
+            "name": "Egress traffic monitoring and filtering"
+          },
+          {
+            "name": "Runtime agent on runner"
+          },
+          {
+            "name": "Large data transfer detection"
+          },
+          {
+            "name": "Detection infra on audit logs (CI/CD)"
+          }
+        ]
+      }
     },
     {
       "id": "T-C019",
@@ -1359,16 +2016,36 @@
         "Insufficient access controls on critical workflows",
         "No approval process for infrastructure changes"
       ],
-      "controls": [
-        "Minimal workflow permissions",
-        "Regular CI/CD configuration backups",
-        "Workflow protection rules",
-        "Detection infra on audit logs (CI/CD)",
-        "Infrastructure change approval workflow",
-        "Immutable audit logs",
-        "CI/CD recovery procedures",
-        "Using managed runners only"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal workflow permissions"
+          },
+          {
+            "name": "Regular CI/CD configuration backups"
+          },
+          {
+            "name": "Workflow protection rules"
+          },
+          {
+            "name": "Infrastructure change approval workflow"
+          },
+          {
+            "name": "CI/CD recovery procedures"
+          },
+          {
+            "name": "Using managed runners only"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (CI/CD)"
+          },
+          {
+            "name": "Immutable audit logs"
+          }
+        ]
+      }
     },
     {
       "id": "T-C020",
@@ -1379,9 +2056,14 @@
       "risks": [
         "Misconfigured CI/CD instances"
       ],
-      "controls": [
-        "CSPM/CNAPP"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "CSPM/CNAPP"
+          }
+        ],
+        "detective": []
+      }
     },
     {
       "id": "T-R001",
@@ -1396,12 +2078,24 @@
         "Credentials in workflow logs",
         "Previous breaches"
       ],
-      "controls": [
-        "Mandatory MFA",
-        "IDP / SSO setup",
-        "Secret scanning",
-        "CSPM/CNAPP"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Mandatory MFA"
+          },
+          {
+            "name": "IDP / SSO setup"
+          },
+          {
+            "name": "CSPM/CNAPP"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning"
+          }
+        ]
+      }
     },
     {
       "id": "T-R002",
@@ -1414,12 +2108,23 @@
         "Anonymous access enabled",
         "Overly permissive access controls"
       ],
-      "controls": [
-        "IDP / SSO setup",
-        "CSPM/CNAPP",
-        "Access control reviews",
-        "Principle of least privilege"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "IDP / SSO setup"
+          },
+          {
+            "name": "Access control reviews"
+          },
+          {
+            "name": "Principle of least privilege"
+          },
+          {
+            "name": "CSPM/CNAPP"
+          }
+        ],
+        "detective": []
+      }
     },
     {
       "id": "T-R003",
@@ -1432,12 +2137,24 @@
         "Known CVEs not addressed",
         "Self-hosted registry without security updates"
       ],
-      "controls": [
-        "Using managed registry instances",
-        "Patching schedule",
-        "Vulnerability scanning",
-        "Security update monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed registry instances"
+          },
+          {
+            "name": "Patching schedule"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Vulnerability scanning"
+          },
+          {
+            "name": "Security update monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-R004",
@@ -1451,13 +2168,26 @@
         "Lack of trusted publishing",
         "No package signing"
       ],
-      "controls": [
-        "Trusted publishing",
-        "Provenance attestation",
-        "MFA for registry account",
-        "Package signing and verification",
-        "OIDC for publishing"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Trusted publishing"
+          },
+          {
+            "name": "Provenance attestation"
+          },
+          {
+            "name": "MFA for registry account"
+          },
+          {
+            "name": "Package signing and verification"
+          },
+          {
+            "name": "OIDC for publishing"
+          }
+        ],
+        "detective": []
+      }
     },
     {
       "id": "T-R005",
@@ -1471,13 +2201,27 @@
         "No provenance attestation",
         "No image scanning"
       ],
-      "controls": [
-        "Trusted publishing",
-        "Provenance attestation",
-        "Image signing and verification",
-        "Image vulnerability scanning",
-        "OIDC for publishing"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Trusted publishing"
+          },
+          {
+            "name": "Provenance attestation"
+          },
+          {
+            "name": "Image signing and verification"
+          },
+          {
+            "name": "OIDC for publishing"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Image vulnerability scanning"
+          }
+        ]
+      }
     },
     {
       "id": "T-R006",
@@ -1490,12 +2234,23 @@
         "No extension review process",
         "No signing requirements"
       ],
-      "controls": [
-        "Extension signing requirements",
-        "Extension review process",
-        "MFA for publisher account",
-        "Trusted publishing"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Extension signing requirements"
+          },
+          {
+            "name": "Extension review process"
+          },
+          {
+            "name": "MFA for publisher account"
+          },
+          {
+            "name": "Trusted publishing"
+          }
+        ],
+        "detective": []
+      }
     },
     {
       "id": "T-R007",
@@ -1508,12 +2263,24 @@
         "Secrets in artifacts",
         "No audit log monitoring"
       ],
-      "controls": [
-        "Minimal registry permissions",
-        "Secret scanning",
-        "Detection infra on audit logs",
-        "Artifact encryption"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal registry permissions"
+          },
+          {
+            "name": "Artifact encryption"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning"
+          },
+          {
+            "name": "Detection infra on audit logs"
+          }
+        ]
+      }
     },
     {
       "id": "T-R008",
@@ -1526,12 +2293,24 @@
         "No image scanning",
         "No resource quotas"
       ],
-      "controls": [
-        "Image vulnerability scanning",
-        "Resource quotas",
-        "Detection infra on audit logs",
-        "Access control reviews"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Resource quotas"
+          },
+          {
+            "name": "Access control reviews"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Image vulnerability scanning"
+          },
+          {
+            "name": "Detection infra on audit logs"
+          }
+        ]
+      }
     },
     {
       "id": "T-R009",
@@ -1547,16 +2326,36 @@
         "Insufficient access controls on critical artifacts",
         "No artifact deletion approval process"
       ],
-      "controls": [
-        "Minimal user permissions (registry)",
-        "Regular artifact backups",
-        "Artifact deletion protection",
-        "Detection infra on audit logs (registry)",
-        "Artifact deletion approval workflow",
-        "Immutable artifact storage",
-        "Registry recovery procedures",
-        "Artifact retention policies"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal user permissions (registry)"
+          },
+          {
+            "name": "Regular artifact backups"
+          },
+          {
+            "name": "Artifact deletion protection"
+          },
+          {
+            "name": "Artifact deletion approval workflow"
+          },
+          {
+            "name": "Immutable artifact storage"
+          },
+          {
+            "name": "Registry recovery procedures"
+          },
+          {
+            "name": "Artifact retention policies"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (registry)"
+          }
+        ]
+      }
     },
     {
       "id": "T-R010",
@@ -1572,16 +2371,36 @@
         "Lack of security awareness training",
         "Direct downloads from public registries"
       ],
-      "controls": [
-        "Local registry proxy with filtering",
-        "Typosquatting detection and prevention",
-        "Package name similarity checks",
-        "Automated maintainer reputation and hygiene checks",
-        "Security awareness training on package verification",
-        "Package installation verification workflows",
-        "Dependency review and approval process",
-        "Package popularity and reputation scoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Local registry proxy with filtering"
+          },
+          {
+            "name": "Package name similarity checks"
+          },
+          {
+            "name": "Automated maintainer reputation and hygiene checks"
+          },
+          {
+            "name": "Security awareness training on package verification"
+          },
+          {
+            "name": "Package installation verification workflows"
+          },
+          {
+            "name": "Dependency review and approval process"
+          },
+          {
+            "name": "Package popularity and reputation scoring"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Typosquatting detection and prevention"
+          }
+        ]
+      }
     },
     {
       "id": "T-R011",
@@ -1597,16 +2416,35 @@
         "Higher version numbers in public repositories",
         "Direct downloads from public registries"
       ],
-      "controls": [
-        "Local registry proxy with filtering",
-        "Internal repository enforcement and prioritization",
-        "Namespace isolation and scoping",
-        "Package version pinning",
-        "Automated maintainer reputation and hygiene checks",
-        "Private package registry configuration",
-        "Dependency resolution policies",
-        "Package source verification"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Local registry proxy with filtering"
+          },
+          {
+            "name": "Internal repository enforcement and prioritization"
+          },
+          {
+            "name": "Namespace isolation and scoping"
+          },
+          {
+            "name": "Package version pinning"
+          },
+          {
+            "name": "Automated maintainer reputation and hygiene checks"
+          },
+          {
+            "name": "Private package registry configuration"
+          },
+          {
+            "name": "Dependency resolution policies"
+          },
+          {
+            "name": "Package source verification"
+          }
+        ],
+        "detective": []
+      }
     },
     {
       "id": "T-P001",
@@ -1620,13 +2458,27 @@
         "Overprivileged cloud service accounts",
         "No credential rotation"
       ],
-      "controls": [
-        "OIDC for deployment (no long-lived credentials)",
-        "Minimal IAM permissions",
-        "Credential rotation",
-        "Secret scanning",
-        "Network segmentation from SDLC"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC for deployment (no long-lived credentials)"
+          },
+          {
+            "name": "Minimal IAM permissions"
+          },
+          {
+            "name": "Credential rotation"
+          },
+          {
+            "name": "Network segmentation from SDLC"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning"
+          }
+        ]
+      }
     },
     {
       "id": "T-P002",
@@ -1640,13 +2492,27 @@
         "No code signing verification",
         "Insufficient workflow permissions review"
       ],
-      "controls": [
-        "Deployment approval gates",
-        "Code signing and verification",
-        "Minimal workflow permissions",
-        "Branch protection rules (VCS)",
-        "Deployment monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Deployment approval gates"
+          },
+          {
+            "name": "Code signing and verification"
+          },
+          {
+            "name": "Minimal workflow permissions"
+          },
+          {
+            "name": "Branch protection rules (VCS)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Deployment monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-P003",
@@ -1660,13 +2526,27 @@
         "Overprivileged runner identity",
         "No network monitoring"
       ],
-      "controls": [
-        "Network segmentation from SDLC",
-        "Using managed runners only",
-        "Runner isolation",
-        "Network monitoring",
-        "Minimal runner privileges"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Network segmentation from SDLC"
+          },
+          {
+            "name": "Using managed runners only"
+          },
+          {
+            "name": "Runner isolation"
+          },
+          {
+            "name": "Minimal runner privileges"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-P004",
@@ -1680,13 +2560,27 @@
         "Automatic deployment without review",
         "No image scanning"
       ],
-      "controls": [
-        "Image signing and verification",
-        "Provenance attestation",
-        "Deployment approval gates",
-        "Image vulnerability scanning",
-        "Runtime security monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Image signing and verification"
+          },
+          {
+            "name": "Provenance attestation"
+          },
+          {
+            "name": "Deployment approval gates"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Image vulnerability scanning"
+          },
+          {
+            "name": "Runtime security monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-P005",
@@ -1699,13 +2593,27 @@
         "Lack of drift detection",
         "Overprivileged deployment credentials"
       ],
-      "controls": [
-        "Code review for IaC changes",
-        "Deployment approval gates",
-        "Drift detection",
-        "CSPM/CNAPP",
-        "Minimal deployment permissions"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Code review for IaC changes"
+          },
+          {
+            "name": "Deployment approval gates"
+          },
+          {
+            "name": "Minimal deployment permissions"
+          },
+          {
+            "name": "CSPM/CNAPP"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Drift detection"
+          }
+        ]
+      }
     },
     {
       "id": "T-P006",
@@ -1719,13 +2627,27 @@
         "Lack of token rotation",
         "Tokens in CI/CD secrets"
       ],
-      "controls": [
-        "OIDC for K8s access",
-        "Minimal service account permissions",
-        "Token rotation",
-        "Secret scanning",
-        "Runtime security monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC for K8s access"
+          },
+          {
+            "name": "Minimal service account permissions"
+          },
+          {
+            "name": "Token rotation"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning"
+          },
+          {
+            "name": "Runtime security monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-P007",
@@ -1739,13 +2661,27 @@
         "No network segmentation",
         "Compromised workload with metadata access"
       ],
-      "controls": [
-        "Metadata service restrictions",
-        "Minimal IAM permissions",
-        "Network segmentation",
-        "Runtime security monitoring",
-        "IMDSv2 enforcement (AWS)"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Metadata service restrictions"
+          },
+          {
+            "name": "Minimal IAM permissions"
+          },
+          {
+            "name": "Network segmentation"
+          },
+          {
+            "name": "IMDSv2 enforcement (AWS)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime security monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-P008",
@@ -1759,13 +2695,27 @@
         "Overprivileged pod identity",
         "Host filesystem mounted"
       ],
-      "controls": [
-        "Pod security policies",
-        "Minimal pod privileges",
-        "K8s sensor on cluster",
-        "KSPM",
-        "Runtime security monitoring"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Pod security policies"
+          },
+          {
+            "name": "Minimal pod privileges"
+          }
+        ],
+        "detective": [
+          {
+            "name": "K8s sensor on cluster"
+          },
+          {
+            "name": "KSPM"
+          },
+          {
+            "name": "Runtime security monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-P009",
@@ -1779,13 +2729,27 @@
         "Lack of service-to-service authentication",
         "No audit log monitoring"
       ],
-      "controls": [
-        "Minimal IAM permissions",
-        "Network segmentation",
-        "Service mesh / zero trust",
-        "CSPM/CNAPP",
-        "Detection infra on audit logs"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal IAM permissions"
+          },
+          {
+            "name": "Network segmentation"
+          },
+          {
+            "name": "Service mesh / zero trust"
+          },
+          {
+            "name": "CSPM/CNAPP"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs"
+          }
+        ]
+      }
     },
     {
       "id": "T-P010",
@@ -1799,13 +2763,27 @@
         "No network monitoring",
         "Unpatched systems"
       ],
-      "controls": [
-        "Network segmentation",
-        "Micro-segmentation",
-        "Network monitoring",
-        "Security group hardening",
-        "Vulnerability management"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Network segmentation"
+          },
+          {
+            "name": "Micro-segmentation"
+          },
+          {
+            "name": "Security group hardening"
+          },
+          {
+            "name": "Vulnerability management"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network monitoring"
+          }
+        ]
+      }
     },
     {
       "id": "T-P011",
@@ -1821,18 +2799,42 @@
         "No data loss prevention (DLP) on production systems",
         "Lack of egress traffic monitoring"
       ],
-      "controls": [
-        "Store encryption keys in HSM (Hardware Security Module)",
-        "Envelope encryption with key hierarchy",
-        "Customer-managed encryption keys (CMEK)",
-        "Automatic secrets rotation (30-90 days)",
-        "Secrets segmentation (per-customer isolation)",
-        "Memory protection and anti-dumping controls",
-        "DLP on production systems",
-        "Egress traffic monitoring and filtering",
-        "Detection infra on audit logs (production)",
-        "Large data transfer detection"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Store encryption keys in HSM (Hardware Security Module)"
+          },
+          {
+            "name": "Envelope encryption with key hierarchy"
+          },
+          {
+            "name": "Customer-managed encryption keys (CMEK)"
+          },
+          {
+            "name": "Automatic secrets rotation (30-90 days)"
+          },
+          {
+            "name": "Secrets segmentation (per-customer isolation)"
+          },
+          {
+            "name": "Memory protection and anti-dumping controls"
+          }
+        ],
+        "detective": [
+          {
+            "name": "DLP on production systems"
+          },
+          {
+            "name": "Egress traffic monitoring and filtering"
+          },
+          {
+            "name": "Detection infra on audit logs (production)"
+          },
+          {
+            "name": "Large data transfer detection"
+          }
+        ]
+      }
     },
     {
       "id": "T-P012",
@@ -1849,16 +2851,36 @@
         "Lack of honeypots or deception technology",
         "No rate limiting on API calls"
       ],
-      "controls": [
-        "Minimal IAM permissions",
-        "Detection infra on audit logs (production)",
-        "API rate limiting and throttling",
-        "Network segmentation (production internal)",
-        "Honeypots and deception technology",
-        "Metadata service restrictions",
-        "Generic error messages (no infrastructure details)",
-        "Anomaly detection for enumeration patterns"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal IAM permissions"
+          },
+          {
+            "name": "API rate limiting and throttling"
+          },
+          {
+            "name": "Network segmentation (production internal)"
+          },
+          {
+            "name": "Metadata service restrictions"
+          },
+          {
+            "name": "Generic error messages (no infrastructure details)"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (production)"
+          },
+          {
+            "name": "Honeypots and deception technology"
+          },
+          {
+            "name": "Anomaly detection for enumeration patterns"
+          }
+        ]
+      }
     },
     {
       "id": "T-P013",
@@ -1874,18 +2896,42 @@
         "Use of encrypted channels to bypass DLP",
         "Cloud storage buckets with public access"
       ],
-      "controls": [
-        "Network DLP",
-        "Egress traffic monitoring and filtering",
-        "Large data transfer detection",
-        "Database activity monitoring",
-        "Backup encryption and access controls",
-        "SSL/TLS inspection",
-        "Detection infra on audit logs (production)",
-        "CSPM/CNAPP",
-        "Data classification and handling policies",
-        "Network segmentation (production from internet)"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Backup encryption and access controls"
+          },
+          {
+            "name": "SSL/TLS inspection"
+          },
+          {
+            "name": "Data classification and handling policies"
+          },
+          {
+            "name": "Network segmentation (production from internet)"
+          },
+          {
+            "name": "CSPM/CNAPP"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network DLP"
+          },
+          {
+            "name": "Egress traffic monitoring and filtering"
+          },
+          {
+            "name": "Large data transfer detection"
+          },
+          {
+            "name": "Database activity monitoring"
+          },
+          {
+            "name": "Detection infra on audit logs (production)"
+          }
+        ]
+      }
     },
     {
       "id": "T-P014",
@@ -1902,18 +2948,42 @@
         "No approval process for destructive operations",
         "Backup data not isolated from production"
       ],
-      "controls": [
-        "Minimal IAM permissions",
-        "Regular backups with offsite/offline storage",
-        "Deletion protection on critical resources",
-        "Detection infra on audit logs (production)",
-        "Destructive operation approval workflow",
-        "Immutable backups",
-        "Disaster recovery procedures and testing",
-        "CSPM/CNAPP",
-        "Resource tagging and protection policies",
-        "Backup isolation from production network"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal IAM permissions"
+          },
+          {
+            "name": "Regular backups with offsite/offline storage"
+          },
+          {
+            "name": "Deletion protection on critical resources"
+          },
+          {
+            "name": "Destructive operation approval workflow"
+          },
+          {
+            "name": "Immutable backups"
+          },
+          {
+            "name": "Disaster recovery procedures and testing"
+          },
+          {
+            "name": "Resource tagging and protection policies"
+          },
+          {
+            "name": "Backup isolation from production network"
+          },
+          {
+            "name": "CSPM/CNAPP"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (production)"
+          }
+        ]
+      }
     },
     {
       "id": "T-P015",
@@ -1928,16 +2998,36 @@
         "No anomaly detection for new service creation",
         "Persistent backdoor services remain undetected"
       ],
-      "controls": [
-        "Deployment approval gates for new services",
-        "Code review for all IaC changes",
-        "CSPM/CNAPP",
-        "Detection infra on audit logs (production)",
-        "Anomaly detection for new service creation patterns",
-        "Immutable audit logs",
-        "Regular service inventory audits",
-        "Baseline approved services list"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Deployment approval gates for new services"
+          },
+          {
+            "name": "Code review for all IaC changes"
+          },
+          {
+            "name": "Baseline approved services list"
+          },
+          {
+            "name": "CSPM/CNAPP"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (production)"
+          },
+          {
+            "name": "Anomaly detection for new service creation patterns"
+          },
+          {
+            "name": "Immutable audit logs"
+          },
+          {
+            "name": "Regular service inventory audits"
+          }
+        ]
+      }
     },
     {
       "id": "T-P016",
@@ -1951,15 +3041,33 @@
         "No provenance attestation for sensor binaries",
         "No multi-party approval for releases"
       ],
-      "controls": [
-        "Code signing and verification for all distributed binaries",
-        "Provenance attestation (SLSA Level 3+)",
-        "Multi-party approval for sensor/agent releases",
-        "Customer-controlled update policies with verification",
-        "Regular security audits of build infrastructure",
-        "Separation of duties for release signing",
-        "Immutable build logs and attestations"
-      ]
+      "controls": {
+        "protective": [
+          {
+            "name": "Code signing and verification for all distributed binaries"
+          },
+          {
+            "name": "Provenance attestation (SLSA Level 3+)"
+          },
+          {
+            "name": "Customer-controlled update policies with verification"
+          },
+          {
+            "name": "Separation of duties for release signing"
+          },
+          {
+            "name": "Immutable build logs and attestations"
+          }
+        ],
+        "detective": [
+          {
+            "name": "Multi-party approval for sensor/agent releases"
+          },
+          {
+            "name": "Regular security audits of build infrastructure"
+          }
+        ]
+      }
     }
   ]
 };
@@ -2399,14 +3507,30 @@
                             boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                             pointerEvents: 'auto'
                         }}>
-                            <div style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--wiz-success)', marginBottom: '4px' }}>
-                                Controls
-                            </div>
-                            <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)' }}>
-                                {fullTechnique.controls.map((control, idx) => (
-                                    <li key={idx} style={{ marginBottom: '2px' }}>{control}</li>
-                                ))}
-                            </ul>
+                            {(fullTechnique.controls?.protective || []).length > 0 && (
+                                <>
+                                    <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#10B981', marginBottom: '4px' }}>
+                                        🛡️ Protective
+                                    </div>
+                                    <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)', marginBottom: '8px' }}>
+                                        {(fullTechnique.controls?.protective || []).map((control, idx) => (
+                                            <li key={idx} style={{ marginBottom: '2px' }}>{control.name || control}</li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
+                            {(fullTechnique.controls?.detective || []).length > 0 && (
+                                <>
+                                    <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#F59E0B', marginBottom: '4px' }}>
+                                        🔍 Detective
+                                    </div>
+                                    <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)' }}>
+                                        {(fullTechnique.controls?.detective || []).map((control, idx) => (
+                                            <li key={idx} style={{ marginBottom: '2px' }}>{control.name || control}</li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
                         </div>
                     )}
                 </div>
@@ -2690,17 +3814,28 @@
                 const mainStages = ['Initial Access', 'Discovery and Lateral Movement', 'Post-Compromise'];
                 const components = techniquesData.components;
                 
-                // Build CSV content with one row per control
-                let csv = 'Component,Category,Control,Status\n';
+                // Build CSV content with one row per control, including control type
+                let csv = 'Component,Stage,Control Type,Control,Status\n';
                 
                 components.forEach(comp => {
                     mainStages.forEach(stage => {
-                        const controls = controlsData.matrix[comp.id]?.[stage] || [];
-                        controls.forEach(control => {
-                            // Escape quotes in control text and wrap in quotes
-                            const escapedControl = control.replace(/"/g, '""');
-                            csv += `"${comp.name}","${stage}","${escapedControl}",""\n`;
-                        });
+                        const cellData = controlsData.matrix[comp.id]?.[stage] || { protective: [], detective: [] };
+                        // Handle both old format (array) and new format (object with protective/detective)
+                        if (Array.isArray(cellData)) {
+                            cellData.forEach(control => {
+                                const escapedControl = control.replace(/"/g, '""');
+                                csv += `"${comp.name}","${stage}","","${escapedControl}",""\n`;
+                            });
+                        } else {
+                            (cellData.protective || []).forEach(control => {
+                                const escapedControl = control.replace(/"/g, '""');
+                                csv += `"${comp.name}","${stage}","Protective","${escapedControl}",""\n`;
+                            });
+                            (cellData.detective || []).forEach(control => {
+                                const escapedControl = control.replace(/"/g, '""');
+                                csv += `"${comp.name}","${stage}","Detective","${escapedControl}",""\n`;
+                            });
+                        }
                     });
                 });
                 
@@ -2745,14 +3880,14 @@
                     return;
                 }
                 
-                // Build matrix: component × stage -> Set of controls
+                // Build matrix: component × stage -> { protective: Set, detective: Set }
                 const matrix = {};
                 let totalControlsSet = new Set();
                 
                 components.forEach(comp => {
                     matrix[comp.id] = {};
                     mainStages.forEach(stage => {
-                        matrix[comp.id][stage] = new Set();
+                        matrix[comp.id][stage] = { protective: new Set(), detective: new Set() };
                     });
                 });
                 
@@ -2765,11 +3900,22 @@
                     const originalStage = techData.stage;
                     const mappedStage = stageMapping[originalStage] || 'Post-Compromise';
                     
-                    // Add controls to appropriate cell
+                    // Add controls to appropriate cell (handle new schema with protective/detective)
                     if (matrix[component] && matrix[component][mappedStage]) {
-                        techData.controls.forEach(control => {
-                            matrix[component][mappedStage].add(control);
-                            totalControlsSet.add(control);
+                        const controls = techData.controls || {};
+                        const protective = controls.protective || [];
+                        const detective = controls.detective || [];
+                        
+                        protective.forEach(control => {
+                            const controlName = control.name || control;
+                            matrix[component][mappedStage].protective.add(controlName);
+                            totalControlsSet.add(controlName);
+                        });
+                        
+                        detective.forEach(control => {
+                            const controlName = control.name || control;
+                            matrix[component][mappedStage].detective.add(controlName);
+                            totalControlsSet.add(controlName);
                         });
                     }
                 });
@@ -2779,7 +3925,10 @@
                 components.forEach(comp => {
                     matrixArrays[comp.id] = {};
                     mainStages.forEach(stage => {
-                        matrixArrays[comp.id][stage] = Array.from(matrix[comp.id][stage]);
+                        matrixArrays[comp.id][stage] = {
+                            protective: Array.from(matrix[comp.id][stage].protective),
+                            detective: Array.from(matrix[comp.id][stage].detective)
+                        };
                     });
                 });
                 
@@ -2887,9 +4036,10 @@
                                     </thead>
                                     <tbody>
                                         {components.map(comp => {
-                                            const hasAnyControls = mainStages.some(stage =>
-                                                controlsData.matrix[comp.id]?.[stage]?.length > 0
-                                            );
+                                            const hasAnyControls = mainStages.some(stage => {
+                                                const cellData = controlsData.matrix[comp.id]?.[stage] || { protective: [], detective: [] };
+                                                return (cellData.protective?.length > 0) || (cellData.detective?.length > 0);
+                                            });
                                             
                                             if (!hasAnyControls) return null;
                                             
@@ -2906,20 +4056,41 @@
                                                         {comp.name}
                                                     </td>
                                                     {mainStages.map(stage => {
-                                                        const controls = controlsData.matrix[comp.id]?.[stage] || [];
+                                                        const cellData = controlsData.matrix[comp.id]?.[stage] || { protective: [], detective: [] };
+                                                        const hasProtective = cellData.protective?.length > 0;
+                                                        const hasDetective = cellData.detective?.length > 0;
                                                         return (
                                                             <td key={stage} className="p-2 align-top" style={{
                                                                 border: '1px solid var(--wiz-dark-border)',
                                                                 background: 'var(--wiz-dark-surface)'
                                                             }}>
-                                                                {controls.length > 0 ? (
-                                                                    <ul className="list-disc list-inside space-y-1">
-                                                                        {controls.map((control, idx) => (
-                                                                            <li key={idx} style={{ color: 'var(--wiz-text-primary)' }}>
-                                                                                {control}
-                                                                            </li>
-                                                                        ))}
-                                                                    </ul>
+                                                                {(hasProtective || hasDetective) ? (
+                                                                    <div className="space-y-2">
+                                                                        {hasProtective && (
+                                                                            <div>
+                                                                                <div className="text-xs font-semibold mb-1" style={{ color: '#10B981' }}>🛡️ Protective</div>
+                                                                                <ul className="list-disc list-inside space-y-0.5" style={{ marginLeft: '4px' }}>
+                                                                                    {cellData.protective.map((control, idx) => (
+                                                                                        <li key={idx} style={{ color: 'var(--wiz-text-primary)', fontSize: '11px' }}>
+                                                                                            {control}
+                                                                                        </li>
+                                                                                    ))}
+                                                                                </ul>
+                                                                            </div>
+                                                                        )}
+                                                                        {hasDetective && (
+                                                                            <div>
+                                                                                <div className="text-xs font-semibold mb-1" style={{ color: '#F59E0B' }}>🔍 Detective</div>
+                                                                                <ul className="list-disc list-inside space-y-0.5" style={{ marginLeft: '4px' }}>
+                                                                                    {cellData.detective.map((control, idx) => (
+                                                                                        <li key={idx} style={{ color: 'var(--wiz-text-primary)', fontSize: '11px' }}>
+                                                                                            {control}
+                                                                                        </li>
+                                                                                    ))}
+                                                                                </ul>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
                                                                 ) : (
                                                                     <span className="italic" style={{ color: 'var(--wiz-text-secondary)' }}>—</span>
                                                                 )}

@@ -477,12 +477,17 @@
                 // Search filter
                 if (filters.search) {
                     const searchText = filters.search;
+                    // Extract control names from new schema
+                    const protectiveControls = (tech.controls?.protective || []).map(c => c.name || c);
+                    const detectiveControls = (tech.controls?.detective || []).map(c => c.name || c);
+                    const allControls = [...protectiveControls, ...detectiveControls];
+                    
                     const searchableText = [
                         tech.id,
                         tech.name,
                         tech.description,
                         ...tech.risks,
-                        ...tech.controls
+                        ...allControls
                     ].join(' ').toLowerCase();
 
                     if (!searchableText.includes(searchText)) {
@@ -579,12 +584,26 @@
                                             ${tech.risks.map(risk => `<li>${risk}</li>`).join('')}
                                         </ul>
                                     </div>
+                                    ${(tech.controls?.protective || []).length > 0 ? `
                                     <div class="detail-section">
-                                        <div class="detail-title">✅ Controls</div>
-                                        <ul class="detail-list controls-list">
-                                            ${tech.controls.map(control => `<li>${control}</li>`).join('')}
+                                        <div class="detail-title">🛡️ Protective Controls</div>
+                                        <ul class="detail-list controls-list" style="border-left: 3px solid #10B981;">
+                                            ${(tech.controls?.protective || []).map(c => `<li>${c.name || c}</li>`).join('')}
                                         </ul>
                                     </div>
+                                    ` : ''}
+                                    ${(tech.controls?.detective || []).length > 0 ? `
+                                    <div class="detail-section">
+                                        <div class="detail-title">🔍 Detective Controls</div>
+                                        <ul class="detail-list controls-list" style="border-left: 3px solid #F59E0B;">
+                                            ${(tech.controls?.detective || []).map(c => {
+                                                const rules = c.detectionRules || [];
+                                                const ruleCount = rules.length > 0 ? ` <span style="color: #9D4EDD; font-size: 0.8em;">(${rules.length} rule${rules.length > 1 ? 's' : ''})</span>` : '';
+                                                return `<li>${c.name || c}${ruleCount}</li>`;
+                                            }).join('')}
+                                        </ul>
+                                    </div>
+                                    ` : ''}
                                 </div>
                             </div>
                         `;
@@ -610,7 +629,9 @@
             const componentCount = new Set(filtered.map(t => t.component)).size;
             const stageCount = new Set(filtered.map(t => t.stage)).size;
             const totalRisks = filtered.reduce((sum, t) => sum + t.risks.length, 0);
-            const totalControls = filtered.reduce((sum, t) => sum + t.controls.length, 0);
+            const totalProtective = filtered.reduce((sum, t) => sum + (t.controls?.protective?.length || 0), 0);
+            const totalDetective = filtered.reduce((sum, t) => sum + (t.controls?.detective?.length || 0), 0);
+            const totalControls = totalProtective + totalDetective;
 
             stats.innerHTML = `
                 <div class="stat-item">

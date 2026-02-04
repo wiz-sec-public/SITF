@@ -801,14 +801,30 @@
                             boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                             pointerEvents: 'auto'
                         }}>
-                            <div style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--wiz-success)', marginBottom: '4px' }}>
-                                Controls
-                            </div>
-                            <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)' }}>
-                                {fullTechnique.controls.map((control, idx) => (
-                                    <li key={idx} style={{ marginBottom: '2px' }}>{control}</li>
-                                ))}
-                            </ul>
+                            {(fullTechnique.controls?.protective || []).length > 0 && (
+                                <>
+                                    <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#10B981', marginBottom: '4px' }}>
+                                        🛡️ Protective
+                                    </div>
+                                    <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)', marginBottom: '8px' }}>
+                                        {(fullTechnique.controls?.protective || []).map((control, idx) => (
+                                            <li key={idx} style={{ marginBottom: '2px' }}>{control.name || control}</li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
+                            {(fullTechnique.controls?.detective || []).length > 0 && (
+                                <>
+                                    <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#F59E0B', marginBottom: '4px' }}>
+                                        🔍 Detective
+                                    </div>
+                                    <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)' }}>
+                                        {(fullTechnique.controls?.detective || []).map((control, idx) => (
+                                            <li key={idx} style={{ marginBottom: '2px' }}>{control.name || control}</li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
                         </div>
                     )}
                 </div>
@@ -1092,17 +1108,28 @@
                 const mainStages = ['Initial Access', 'Discovery and Lateral Movement', 'Post-Compromise'];
                 const components = techniquesData.components;
                 
-                // Build CSV content with one row per control
-                let csv = 'Component,Category,Control,Status\n';
+                // Build CSV content with one row per control, including control type
+                let csv = 'Component,Stage,Control Type,Control,Status\n';
                 
                 components.forEach(comp => {
                     mainStages.forEach(stage => {
-                        const controls = controlsData.matrix[comp.id]?.[stage] || [];
-                        controls.forEach(control => {
-                            // Escape quotes in control text and wrap in quotes
-                            const escapedControl = control.replace(/"/g, '""');
-                            csv += `"${comp.name}","${stage}","${escapedControl}",""\n`;
-                        });
+                        const cellData = controlsData.matrix[comp.id]?.[stage] || { protective: [], detective: [] };
+                        // Handle both old format (array) and new format (object with protective/detective)
+                        if (Array.isArray(cellData)) {
+                            cellData.forEach(control => {
+                                const escapedControl = control.replace(/"/g, '""');
+                                csv += `"${comp.name}","${stage}","","${escapedControl}",""\n`;
+                            });
+                        } else {
+                            (cellData.protective || []).forEach(control => {
+                                const escapedControl = control.replace(/"/g, '""');
+                                csv += `"${comp.name}","${stage}","Protective","${escapedControl}",""\n`;
+                            });
+                            (cellData.detective || []).forEach(control => {
+                                const escapedControl = control.replace(/"/g, '""');
+                                csv += `"${comp.name}","${stage}","Detective","${escapedControl}",""\n`;
+                            });
+                        }
                     });
                 });
                 
@@ -1147,14 +1174,14 @@
                     return;
                 }
                 
-                // Build matrix: component × stage -> Set of controls
+                // Build matrix: component × stage -> { protective: Set, detective: Set }
                 const matrix = {};
                 let totalControlsSet = new Set();
                 
                 components.forEach(comp => {
                     matrix[comp.id] = {};
                     mainStages.forEach(stage => {
-                        matrix[comp.id][stage] = new Set();
+                        matrix[comp.id][stage] = { protective: new Set(), detective: new Set() };
                     });
                 });
                 
@@ -1167,11 +1194,22 @@
                     const originalStage = techData.stage;
                     const mappedStage = stageMapping[originalStage] || 'Post-Compromise';
                     
-                    // Add controls to appropriate cell
+                    // Add controls to appropriate cell (handle new schema with protective/detective)
                     if (matrix[component] && matrix[component][mappedStage]) {
-                        techData.controls.forEach(control => {
-                            matrix[component][mappedStage].add(control);
-                            totalControlsSet.add(control);
+                        const controls = techData.controls || {};
+                        const protective = controls.protective || [];
+                        const detective = controls.detective || [];
+                        
+                        protective.forEach(control => {
+                            const controlName = control.name || control;
+                            matrix[component][mappedStage].protective.add(controlName);
+                            totalControlsSet.add(controlName);
+                        });
+                        
+                        detective.forEach(control => {
+                            const controlName = control.name || control;
+                            matrix[component][mappedStage].detective.add(controlName);
+                            totalControlsSet.add(controlName);
                         });
                     }
                 });
@@ -1181,7 +1219,10 @@
                 components.forEach(comp => {
                     matrixArrays[comp.id] = {};
                     mainStages.forEach(stage => {
-                        matrixArrays[comp.id][stage] = Array.from(matrix[comp.id][stage]);
+                        matrixArrays[comp.id][stage] = {
+                            protective: Array.from(matrix[comp.id][stage].protective),
+                            detective: Array.from(matrix[comp.id][stage].detective)
+                        };
                     });
                 });
                 
@@ -1289,9 +1330,10 @@
                                     </thead>
                                     <tbody>
                                         {components.map(comp => {
-                                            const hasAnyControls = mainStages.some(stage =>
-                                                controlsData.matrix[comp.id]?.[stage]?.length > 0
-                                            );
+                                            const hasAnyControls = mainStages.some(stage => {
+                                                const cellData = controlsData.matrix[comp.id]?.[stage] || { protective: [], detective: [] };
+                                                return (cellData.protective?.length > 0) || (cellData.detective?.length > 0);
+                                            });
                                             
                                             if (!hasAnyControls) return null;
                                             
@@ -1308,20 +1350,41 @@
                                                         {comp.name}
                                                     </td>
                                                     {mainStages.map(stage => {
-                                                        const controls = controlsData.matrix[comp.id]?.[stage] || [];
+                                                        const cellData = controlsData.matrix[comp.id]?.[stage] || { protective: [], detective: [] };
+                                                        const hasProtective = cellData.protective?.length > 0;
+                                                        const hasDetective = cellData.detective?.length > 0;
                                                         return (
                                                             <td key={stage} className="p-2 align-top" style={{
                                                                 border: '1px solid var(--wiz-dark-border)',
                                                                 background: 'var(--wiz-dark-surface)'
                                                             }}>
-                                                                {controls.length > 0 ? (
-                                                                    <ul className="list-disc list-inside space-y-1">
-                                                                        {controls.map((control, idx) => (
-                                                                            <li key={idx} style={{ color: 'var(--wiz-text-primary)' }}>
-                                                                                {control}
-                                                                            </li>
-                                                                        ))}
-                                                                    </ul>
+                                                                {(hasProtective || hasDetective) ? (
+                                                                    <div className="space-y-2">
+                                                                        {hasProtective && (
+                                                                            <div>
+                                                                                <div className="text-xs font-semibold mb-1" style={{ color: '#10B981' }}>🛡️ Protective</div>
+                                                                                <ul className="list-disc list-inside space-y-0.5" style={{ marginLeft: '4px' }}>
+                                                                                    {cellData.protective.map((control, idx) => (
+                                                                                        <li key={idx} style={{ color: 'var(--wiz-text-primary)', fontSize: '11px' }}>
+                                                                                            {control}
+                                                                                        </li>
+                                                                                    ))}
+                                                                                </ul>
+                                                                            </div>
+                                                                        )}
+                                                                        {hasDetective && (
+                                                                            <div>
+                                                                                <div className="text-xs font-semibold mb-1" style={{ color: '#F59E0B' }}>🔍 Detective</div>
+                                                                                <ul className="list-disc list-inside space-y-0.5" style={{ marginLeft: '4px' }}>
+                                                                                    {cellData.detective.map((control, idx) => (
+                                                                                        <li key={idx} style={{ color: 'var(--wiz-text-primary)', fontSize: '11px' }}>
+                                                                                            {control}
+                                                                                        </li>
+                                                                                    ))}
+                                                                                </ul>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
                                                                 ) : (
                                                                     <span className="italic" style={{ color: 'var(--wiz-text-secondary)' }}>—</span>
                                                                 )}
