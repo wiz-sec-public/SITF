@@ -39,7 +39,7 @@ This generates:
 ### Attack Flow Builder (`visualizer.html`)
 - **Zero Dependencies**: Standalone HTML file with embedded data
 - **Drag-and-drop interface** for building attack flows
-- **63 attack techniques** with pre-mapped risks and controls
+- **75 attack techniques** with pre-mapped risks and controls (protective & detective)
 - **Auto-populating Controls Matrix** showing security controls by component and stage
 - **Export options**: PNG, SVG, PDF, and CSV
 - **Dark/light theme** toggle
@@ -47,7 +47,7 @@ This generates:
 - **Editable labels** on techniques and components
 
 ### Techniques Library Explorer (`techniques-library.html`)
-- **Visual browsing** of all 63 techniques organized by component and attack stage
+- **Visual browsing** of all 75 techniques organized by component and attack stage
 - **Real-time filtering** by component (Endpoint, VCS, CI/CD, Registry, Production)
 - **Stage filtering** (Initial Access, Lateral Movement, Post-Compromise, Discovery)
 - **Search functionality** across technique names, descriptions, risks, and controls
@@ -96,7 +96,16 @@ TECHNIQUE_LIBRARY.md   techniques-library.html   visualizer.html
       "stage": "Initial Access|Lateral Movement|Post-Compromise|Discovery",
       "description": "What the attacker does",
       "risks": ["Risk 1", "Risk 2", ...],
-      "controls": ["Control 1", "Control 2", ...]
+      "controls": {
+        "protective": [
+          { "name": "Protective Control 1" },
+          { "name": "Protective Control 2" }
+        ],
+        "detective": [
+          { "name": "Detective Control 1" },
+          { "name": "Detective Control 2", "detectionRules": [...] }
+        ]
+      }
     }
   ]
 }
