@@ -300,6 +300,28 @@
             color: #9D4EDD;
         }
 
+        .spvs-tags {
+            margin-left: 6px;
+        }
+
+        .spvs-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: #90cdf4;
+            font-size: 0.65em;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 3px;
+            font-weight: 600;
+            border: 1px solid #2b6cb0;
+            vertical-align: middle;
+        }
+
+        .spvs-tag:hover {
+            background: linear-gradient(135deg, #2c5282 0%, #3182ce 100%);
+            cursor: help;
+        }
+
         .no-results {
             background: #151B3B;
             border-radius: 8px;
@@ -434,30 +456,70 @@
       "controls": {
         "protective": [
           {
-            "name": "Local registry proxy with filtering"
+            "name": "Local registry proxy with filtering",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "IDE sandboxing"
+            "name": "IDE sandboxing",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           },
           {
-            "name": "Mandating signed extensions"
+            "name": "Mandating signed extensions",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           },
           {
-            "name": "Package version pinning"
+            "name": "Package version pinning",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Automated maintainer reputation and hygiene checks"
+            "name": "Automated maintainer reputation and hygiene checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Application whitelisting"
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           },
           {
-            "name": "Disable package installation scripts (--ignore-scripts)"
+            "name": "Disable package installation scripts (--ignore-scripts)",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -477,21 +539,46 @@
       "controls": {
         "protective": [
           {
-            "name": "Mandatory MFA"
+            "name": "Mandatory MFA",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Phishing-resistant authentication"
+            "name": "Phishing-resistant authentication",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Security awareness training"
+            "name": "Security awareness training",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
           },
           {
-            "name": "Email security (SPF, DMARC, DKIM)"
+            "name": "Email security (SPF, DMARC, DKIM)",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -512,21 +599,49 @@
       "controls": {
         "protective": [
           {
-            "name": "Credential manager enforcement"
+            "name": "Credential manager enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V2.5"
+              ]
+            }
           },
           {
-            "name": "No production credentials on endpoints"
+            "name": "No production credentials on endpoints",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V2.5"
+              ]
+            }
           },
           {
-            "name": "Encrypted credential storage"
+            "name": "Encrypted credential storage",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V2.5"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Local DLP"
+            "name": "Local DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -546,21 +661,46 @@
       "controls": {
         "protective": [
           {
-            "name": "Data classification and handling policies"
+            "name": "Data classification and handling policies",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
           },
           {
-            "name": "Encryption at rest"
+            "name": "Encryption at rest",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Local DLP"
+            "name": "Local DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Network monitoring"
+            "name": "Network monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -579,18 +719,38 @@
       "controls": {
         "protective": [
           {
-            "name": "Application whitelisting"
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Resource monitoring and alerting"
+            "name": "Resource monitoring and alerting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Network monitoring (detect mining pool connections)"
+            "name": "Network monitoring (detect mining pool connections)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -609,16 +769,36 @@
       "controls": {
         "protective": [
           {
-            "name": "Using managed runners only"
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Runner registration approval workflow"
+            "name": "Runner registration approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Runner registration token protection"
+            "name": "Runner registration token protection",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Network segmentation (runners isolated from endpoints)"
+            "name": "Network segmentation (runners isolated from endpoints)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           }
         ],
         "detective": []
@@ -638,18 +818,39 @@
       "controls": {
         "protective": [
           {
-            "name": "Credential manager enforcement"
+            "name": "Credential manager enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V2.5"
+              ]
+            }
           },
           {
-            "name": "Fine-grained PATs with expiration"
+            "name": "Fine-grained PATs with expiration",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Mandatory MFA for VCS"
+            "name": "Mandatory MFA for VCS",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Audit log monitoring"
+            "name": "Audit log monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -668,18 +869,40 @@
       "controls": {
         "protective": [
           {
-            "name": "Credential manager enforcement"
+            "name": "Credential manager enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V2.5"
+              ]
+            }
           },
           {
-            "name": "OIDC instead of long-lived tokens"
+            "name": "OIDC instead of long-lived tokens",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
           },
           {
-            "name": "Mandatory MFA for CI/CD"
+            "name": "Mandatory MFA for CI/CD",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Audit log monitoring"
+            "name": "Audit log monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -699,18 +922,39 @@
       "controls": {
         "protective": [
           {
-            "name": "Acceptable use policy against unapproved AI tools"
+            "name": "Acceptable use policy against unapproved AI tools",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
           },
           {
-            "name": "Approved AI tools with data protection"
+            "name": "Approved AI tools with data protection",
+            "frameworks": {
+              "spvs": [
+                "V1.4"
+              ]
+            }
           },
           {
-            "name": "Code review for AI-generated code"
+            "name": "Code review for AI-generated code",
+            "frameworks": {
+              "spvs": [
+                "V1.4",
+                "V2.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Network monitoring for AI service connections"
+            "name": "Network monitoring for AI service connections",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -731,27 +975,64 @@
       "controls": {
         "protective": [
           {
-            "name": "Regular endpoint backups"
+            "name": "Regular endpoint backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Minimal local user privileges"
+            "name": "Minimal local user privileges",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Offline backup storage"
+            "name": "Offline backup storage",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "File system access controls"
+            "name": "File system access controls",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           },
           {
-            "name": "Endpoint recovery procedures"
+            "name": "Endpoint recovery procedures",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "System integrity monitoring"
+            "name": "System integrity monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -772,24 +1053,57 @@
       "controls": {
         "protective": [
           {
-            "name": "IDE plugins to visualize invisible characters"
+            "name": "IDE plugins to visualize invisible characters",
+            "frameworks": {
+              "spvs": [
+                "V1.4"
+              ]
+            }
           },
           {
-            "name": "Static analysis with Unicode normalization"
+            "name": "Static analysis with Unicode normalization",
+            "frameworks": {
+              "spvs": [
+                "V2.1",
+                "V2.4"
+              ]
+            }
           },
           {
-            "name": "Extension code signing and verification"
+            "name": "Extension code signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V2.1",
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Mandatory code review with specialized tools"
+            "name": "Mandatory code review with specialized tools",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Unicode character detection in code review tools"
+            "name": "Unicode character detection in code review tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Automated detection of unprintable characters in commits"
+            "name": "Automated detection of unprintable characters in commits",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -810,24 +1124,54 @@
       "controls": {
         "protective": [
           {
-            "name": "Application whitelisting"
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           },
           {
-            "name": "Network segmentation (endpoints from production)"
+            "name": "Network segmentation (endpoints from production)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "Outbound connection restrictions"
+            "name": "Outbound connection restrictions",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Network egress monitoring and filtering"
+            "name": "Network egress monitoring and filtering",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Anomalous network behavior detection"
+            "name": "Anomalous network behavior detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -847,24 +1191,55 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal local user privileges"
+            "name": "Minimal local user privileges",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V5.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Process monitoring and whitelisting"
+            "name": "Process monitoring and whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Session activity monitoring"
+            "name": "Session activity monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Behavioral analysis for hidden processes"
+            "name": "Behavioral analysis for hidden processes",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Virtual desktop detection"
+            "name": "Virtual desktop detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -885,24 +1260,55 @@
       "controls": {
         "protective": [
           {
-            "name": "Network behavior analysis"
+            "name": "Network behavior analysis",
+            "frameworks": {
+              "spvs": [
+                "V5.2",
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "WebRTC restrictions in corporate browsers"
+            "name": "WebRTC restrictions in corporate browsers",
+            "frameworks": {
+              "spvs": [
+                "V1.4"
+              ]
+            }
           },
           {
-            "name": "STUN/TURN server whitelisting"
+            "name": "STUN/TURN server whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "WebRTC traffic monitoring"
+            "name": "WebRTC traffic monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Deep packet inspection"
+            "name": "Deep packet inspection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -923,24 +1329,55 @@
       "controls": {
         "protective": [
           {
-            "name": "Extension update approval workflow"
+            "name": "Extension update approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           },
           {
-            "name": "Extension version pinning"
+            "name": "Extension version pinning",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           },
           {
-            "name": "Update signature verification"
+            "name": "Update signature verification",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Delayed update deployment (canary testing)"
+            "name": "Delayed update deployment (canary testing)",
+            "frameworks": {
+              "spvs": [
+                "V4.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Extension update monitoring and alerting"
+            "name": "Extension update monitoring and alerting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Extension marketplace security monitoring"
+            "name": "Extension marketplace security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -959,24 +1396,55 @@
       "controls": {
         "protective": [
           {
-            "name": "Network behavior analysis"
+            "name": "Network behavior analysis",
+            "frameworks": {
+              "spvs": [
+                "V5.2",
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Cryptocurrency-related traffic restrictions"
+            "name": "Cryptocurrency-related traffic restrictions",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
           },
           {
-            "name": "Application whitelisting"
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Blockchain RPC connection monitoring"
+            "name": "Blockchain RPC connection monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Anomalous blockchain query detection"
+            "name": "Anomalous blockchain query detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -997,24 +1465,55 @@
       "controls": {
         "protective": [
           {
-            "name": "Deep content inspection of legitimate service traffic"
+            "name": "Deep content inspection of legitimate service traffic",
+            "frameworks": {
+              "spvs": [
+                "V5.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Behavioral analysis for unusual service usage patterns"
+            "name": "Behavioral analysis for unusual service usage patterns",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Network traffic anomaly detection"
+            "name": "Network traffic anomaly detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Application-level monitoring"
+            "name": "Application-level monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Data exfiltration detection"
+            "name": "Data exfiltration detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1035,24 +1534,55 @@
       "controls": {
         "protective": [
           {
-            "name": "P2P protocol blocking"
+            "name": "P2P protocol blocking",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
           },
           {
-            "name": "Network behavior analysis"
+            "name": "Network behavior analysis",
+            "frameworks": {
+              "spvs": [
+                "V5.2",
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Application whitelisting"
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "EDR on endpoint"
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "BitTorrent traffic monitoring and blocking"
+            "name": "BitTorrent traffic monitoring and blocking",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "DHT network connection detection"
+            "name": "DHT network connection detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1075,24 +1605,54 @@
       "controls": {
         "protective": [
           {
-            "name": "Mandatory MFA"
+            "name": "Mandatory MFA",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "IDP / SSO setup"
+            "name": "IDP / SSO setup",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Enforcing fine-grained PATs"
+            "name": "Enforcing fine-grained PATs",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Enforcing PAT expiration"
+            "name": "Enforcing PAT expiration",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning on org"
+            "name": "Secret scanning on org",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Secret scanning on personal repos"
+            "name": "Secret scanning on personal repos",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1111,16 +1671,38 @@
       "controls": {
         "protective": [
           {
-            "name": "Commit signing"
+            "name": "Commit signing",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Requiring code owner approval"
+            "name": "Requiring code owner approval",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
           },
           {
-            "name": "Branch protection rules"
+            "name": "Branch protection rules",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Email verification enforcement"
+            "name": "Email verification enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           }
         ],
         "detective": []
@@ -1142,24 +1724,54 @@
       "controls": {
         "protective": [
           {
-            "name": "Private repo visibility"
+            "name": "Private repo visibility",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Webhook security review"
+            "name": "Webhook security review",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Branch protection rules"
+            "name": "Branch protection rules",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning on org"
+            "name": "Secret scanning on org",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Secret scanning on personal repos"
+            "name": "Secret scanning on personal repos",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Detection infra on audit logs"
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1178,18 +1790,38 @@
       "controls": {
         "protective": [
           {
-            "name": "Policy against using personal repos for work"
+            "name": "Policy against using personal repos for work",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
           },
           {
-            "name": "Security awareness training"
+            "name": "Security awareness training",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning on personal repos"
+            "name": "Secret scanning on personal repos",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Detection infra on audit logs"
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1208,18 +1840,38 @@
       "controls": {
         "protective": [
           {
-            "name": "Using managed VCS instances"
+            "name": "Using managed VCS instances",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Patching schedule"
+            "name": "Patching schedule",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Vulnerability scanning"
+            "name": "Vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Security update monitoring"
+            "name": "Security update monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1238,18 +1890,40 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal VCS permissions"
+            "name": "Minimal VCS permissions",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Approval workflow for visibility changes"
+            "name": "Approval workflow for visibility changes",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "CSPM/CNAPP"
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Detection infra on audit logs"
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1268,18 +1942,40 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal VCS permissions"
+            "name": "Minimal VCS permissions",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Repository access reviews"
+            "name": "Repository access reviews",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Detection infra on audit logs"
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Network DLP"
+            "name": "Network DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1298,18 +1994,39 @@
       "controls": {
         "protective": [
           {
-            "name": "Repository creation approval"
+            "name": "Repository creation approval",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Resource quotas"
+            "name": "Resource quotas",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.2"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Repository security scanning"
+            "name": "Repository security scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Detection infra on audit logs"
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1331,27 +2048,65 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal VCS user permissions"
+            "name": "Minimal VCS user permissions",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Regular repository backups"
+            "name": "Regular repository backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Repository deletion approval workflow"
+            "name": "Repository deletion approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Repository recovery procedures"
+            "name": "Repository recovery procedures",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
           },
           {
-            "name": "Deletion protection on critical repositories"
+            "name": "Deletion protection on critical repositories",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Detection infra on audit logs (VCS)"
+            "name": "Detection infra on audit logs (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Immutable audit logs"
+            "name": "Immutable audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1374,33 +2129,83 @@
       "controls": {
         "protective": [
           {
-            "name": "Branch protection rules (VCS)"
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Require code owner approval"
+            "name": "Require code owner approval",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
           },
           {
-            "name": "Mandatory code review by multiple reviewers"
+            "name": "Mandatory code review by multiple reviewers",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
           },
           {
-            "name": "Commit signing enforcement"
+            "name": "Commit signing enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Minimal VCS permissions (principle of least privilege)"
+            "name": "Minimal VCS permissions (principle of least privilege)",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Pre-commit hooks for security checks"
+            "name": "Pre-commit hooks for security checks",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Automated code security scanning (SAST)"
+            "name": "Automated code security scanning (SAST)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Detection infra on audit logs (VCS)"
+            "name": "Detection infra on audit logs (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Code change anomaly detection"
+            "name": "Code change anomaly detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1420,21 +2225,46 @@
       "controls": {
         "protective": [
           {
-            "name": "Mandatory MFA"
+            "name": "Mandatory MFA",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "IDP / SSO setup"
+            "name": "IDP / SSO setup",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Enforcing fine-grained PATs (VCS)"
+            "name": "Enforcing fine-grained PATs (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Enforcing PAT expiration (VCS)"
+            "name": "Enforcing PAT expiration (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning"
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1456,27 +2286,63 @@
       "controls": {
         "protective": [
           {
-            "name": "Pinning 3rd-party actions"
+            "name": "Pinning 3rd-party actions",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Action whitelisting"
+            "name": "Action whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Automated maintainer reputation and hygiene checks"
+            "name": "Automated maintainer reputation and hygiene checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Requiring code owner approval (VCS)"
+            "name": "Requiring code owner approval (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
           },
           {
-            "name": "Branch protection rules (VCS)"
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Runner SBOM"
+            "name": "Runner SBOM",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Image scanning"
+            "name": "Image scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1499,24 +2365,55 @@
       "controls": {
         "protective": [
           {
-            "name": "Branch protection rules (VCS)"
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Private repo (VCS)"
+            "name": "Private repo (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Require explicit approval/ disallow workflows from forks (VCS)"
+            "name": "Require explicit approval/ disallow workflows from forks (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Minimal workflow permissions"
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Default workflow permissions not set to approve PRs"
+            "name": "Default workflow permissions not set to approve PRs",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "CICD scanning tools"
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1538,21 +2435,47 @@
       "controls": {
         "protective": [
           {
-            "name": "Branch protection rules (VCS)"
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Private repo (VCS)"
+            "name": "Private repo (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Minimal workflow permissions"
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Code review for workflows"
+            "name": "Code review for workflows",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "CICD scanning tools"
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1572,21 +2495,48 @@
       "controls": {
         "protective": [
           {
-            "name": "OIDC setup in workflows"
+            "name": "OIDC setup in workflows",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
           },
           {
-            "name": "Minimal workflow permissions"
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Log sanitization"
+            "name": "Log sanitization",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Runtime agent on runner"
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Secret scanning"
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1605,18 +2555,39 @@
       "controls": {
         "protective": [
           {
-            "name": "OIDC setup in workflows"
+            "name": "OIDC setup in workflows",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
           },
           {
-            "name": "Private repositories"
+            "name": "Private repositories",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Code review for workflows"
+            "name": "Code review for workflows",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning"
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1635,16 +2606,37 @@
       "controls": {
         "protective": [
           {
-            "name": "Don't use actions cache"
+            "name": "Don't use actions cache",
+            "frameworks": {
+              "spvs": [
+                "V3.3"
+              ]
+            }
           },
           {
-            "name": "Workflow ordering"
+            "name": "Workflow ordering",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Cache artifact signing / verification"
+            "name": "Cache artifact signing / verification",
+            "frameworks": {
+              "spvs": [
+                "V3.3",
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Cache isolation per repository"
+            "name": "Cache isolation per repository",
+            "frameworks": {
+              "spvs": [
+                "V3.3"
+              ]
+            }
           }
         ],
         "detective": []
@@ -1664,18 +2656,39 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal workflow permissions"
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Default workflow permissions not set to approve PRs"
+            "name": "Default workflow permissions not set to approve PRs",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Code review requirements"
+            "name": "Code review requirements",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "CICD scanning tools"
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1694,18 +2707,39 @@
       "controls": {
         "protective": [
           {
-            "name": "Using managed CI/CD instances"
+            "name": "Using managed CI/CD instances",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Patching schedule"
+            "name": "Patching schedule",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Vulnerability scanning"
+            "name": "Vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Security update monitoring"
+            "name": "Security update monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1726,24 +2760,55 @@
       "controls": {
         "protective": [
           {
-            "name": "Local registry proxy with filtering"
+            "name": "Local registry proxy with filtering",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Runner SBOM"
+            "name": "Runner SBOM",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Package version pinning"
+            "name": "Package version pinning",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Package signature verification"
+            "name": "Package signature verification",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Disable package installation scripts (--ignore-scripts)"
+            "name": "Disable package installation scripts (--ignore-scripts)",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Runtime agent on runner"
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1762,18 +2827,39 @@
       "controls": {
         "protective": [
           {
-            "name": "OIDC setup in workflows"
+            "name": "OIDC setup in workflows",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
           },
           {
-            "name": "Trusted publishing (registry)"
+            "name": "Trusted publishing (registry)",
+            "frameworks": {
+              "spvs": [
+                "V3.2"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Runtime agent on runner"
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Secret scanning"
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1792,18 +2878,40 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal workflow permissions"
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Branch protection rules (VCS)"
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           },
           {
-            "name": "Require code owner approval (VCS)"
+            "name": "Require code owner approval (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "CICD scanning tools"
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1823,18 +2931,38 @@
       "controls": {
         "protective": [
           {
-            "name": "Using managed runners only"
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Ephemeral runners"
+            "name": "Ephemeral runners",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Runner isolation"
+            "name": "Runner isolation",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Runtime agent on runner"
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1853,18 +2981,38 @@
       "controls": {
         "protective": [
           {
-            "name": "Using managed runners only"
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Runtime agent on runner"
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Resource monitoring and limits"
+            "name": "Resource monitoring and limits",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Network monitoring"
+            "name": "Network monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1883,18 +3031,40 @@
       "controls": {
         "protective": [
           {
-            "name": "OIDC setup in workflows"
+            "name": "OIDC setup in workflows",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
           },
           {
-            "name": "Minimal workflow permissions"
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "CICD scanning tools"
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Runtime agent on runner"
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1914,21 +3084,47 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal runner pod privileges"
+            "name": "Minimal runner pod privileges",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Network segmentation"
+            "name": "Network segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "Using managed runners only"
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "K8s sensor on runner cluster"
+            "name": "K8s sensor on runner cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "KSPM on runner cluster"
+            "name": "KSPM on runner cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1948,21 +3144,47 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal runner pod privileges"
+            "name": "Minimal runner pod privileges",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Pod security policies"
+            "name": "Pod security policies",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Using managed runners only"
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "K8s sensor on runner cluster"
+            "name": "K8s sensor on runner cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "KSPM on runner cluster"
+            "name": "KSPM on runner cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -1983,30 +3205,70 @@
       "controls": {
         "protective": [
           {
-            "name": "Log sanitization"
+            "name": "Log sanitization",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
           },
           {
-            "name": "Artifact encryption"
+            "name": "Artifact encryption",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Network segmentation (CI/CD from internet)"
+            "name": "Network segmentation (CI/CD from internet)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Network DLP"
+            "name": "Network DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Egress traffic monitoring and filtering"
+            "name": "Egress traffic monitoring and filtering",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Runtime agent on runner"
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Large data transfer detection"
+            "name": "Large data transfer detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Detection infra on audit logs (CI/CD)"
+            "name": "Detection infra on audit logs (CI/CD)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2028,30 +3290,72 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal workflow permissions"
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Regular CI/CD configuration backups"
+            "name": "Regular CI/CD configuration backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Workflow protection rules"
+            "name": "Workflow protection rules",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Infrastructure change approval workflow"
+            "name": "Infrastructure change approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "CI/CD recovery procedures"
+            "name": "CI/CD recovery procedures",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
           },
           {
-            "name": "Using managed runners only"
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Detection infra on audit logs (CI/CD)"
+            "name": "Detection infra on audit logs (CI/CD)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Immutable audit logs"
+            "name": "Immutable audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2068,7 +3372,13 @@
       "controls": {
         "protective": [
           {
-            "name": "CSPM/CNAPP"
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": []
@@ -2090,18 +3400,39 @@
       "controls": {
         "protective": [
           {
-            "name": "Mandatory MFA"
+            "name": "Mandatory MFA",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "IDP / SSO setup"
+            "name": "IDP / SSO setup",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "CSPM/CNAPP"
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning"
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2120,16 +3451,37 @@
       "controls": {
         "protective": [
           {
-            "name": "IDP / SSO setup"
+            "name": "IDP / SSO setup",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Access control reviews"
+            "name": "Access control reviews",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Principle of least privilege"
+            "name": "Principle of least privilege",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "CSPM/CNAPP"
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": []
@@ -2149,18 +3501,38 @@
       "controls": {
         "protective": [
           {
-            "name": "Using managed registry instances"
+            "name": "Using managed registry instances",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Patching schedule"
+            "name": "Patching schedule",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Vulnerability scanning"
+            "name": "Vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Security update monitoring"
+            "name": "Security update monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2180,19 +3552,46 @@
       "controls": {
         "protective": [
           {
-            "name": "Trusted publishing"
+            "name": "Trusted publishing",
+            "frameworks": {
+              "spvs": [
+                "V3.2"
+              ]
+            }
           },
           {
-            "name": "Provenance attestation"
+            "name": "Provenance attestation",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "MFA for registry account"
+            "name": "MFA for registry account",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Package signing and verification"
+            "name": "Package signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "OIDC for publishing"
+            "name": "OIDC for publishing",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
           }
         ],
         "detective": []
@@ -2213,21 +3612,47 @@
       "controls": {
         "protective": [
           {
-            "name": "Trusted publishing"
+            "name": "Trusted publishing",
+            "frameworks": {
+              "spvs": [
+                "V3.2"
+              ]
+            }
           },
           {
-            "name": "Provenance attestation"
+            "name": "Provenance attestation",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Image signing and verification"
+            "name": "Image signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "OIDC for publishing"
+            "name": "OIDC for publishing",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Image vulnerability scanning"
+            "name": "Image vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2246,16 +3671,36 @@
       "controls": {
         "protective": [
           {
-            "name": "Extension signing requirements"
+            "name": "Extension signing requirements",
+            "frameworks": {
+              "spvs": [
+                "V4.1"
+              ]
+            }
           },
           {
-            "name": "Extension review process"
+            "name": "Extension review process",
+            "frameworks": {
+              "spvs": [
+                "V4.1"
+              ]
+            }
           },
           {
-            "name": "MFA for publisher account"
+            "name": "MFA for publisher account",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Trusted publishing"
+            "name": "Trusted publishing",
+            "frameworks": {
+              "spvs": [
+                "V3.2"
+              ]
+            }
           }
         ],
         "detective": []
@@ -2275,18 +3720,38 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal registry permissions"
+            "name": "Minimal registry permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Artifact encryption"
+            "name": "Artifact encryption",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning"
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Detection infra on audit logs"
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2305,18 +3770,39 @@
       "controls": {
         "protective": [
           {
-            "name": "Resource quotas"
+            "name": "Resource quotas",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.2"
+              ]
+            }
           },
           {
-            "name": "Access control reviews"
+            "name": "Access control reviews",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Image vulnerability scanning"
+            "name": "Image vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Detection infra on audit logs"
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2338,30 +3824,71 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal user permissions (registry)"
+            "name": "Minimal user permissions (registry)",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Regular artifact backups"
+            "name": "Regular artifact backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Artifact deletion protection"
+            "name": "Artifact deletion protection",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Artifact deletion approval workflow"
+            "name": "Artifact deletion approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Immutable artifact storage"
+            "name": "Immutable artifact storage",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Registry recovery procedures"
+            "name": "Registry recovery procedures",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
           },
           {
-            "name": "Artifact retention policies"
+            "name": "Artifact retention policies",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Detection infra on audit logs (registry)"
+            "name": "Detection infra on audit logs (registry)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2383,30 +3910,70 @@
       "controls": {
         "protective": [
           {
-            "name": "Local registry proxy with filtering"
+            "name": "Local registry proxy with filtering",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Package name similarity checks"
+            "name": "Package name similarity checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Automated maintainer reputation and hygiene checks"
+            "name": "Automated maintainer reputation and hygiene checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Security awareness training on package verification"
+            "name": "Security awareness training on package verification",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
           },
           {
-            "name": "Package installation verification workflows"
+            "name": "Package installation verification workflows",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Dependency review and approval process"
+            "name": "Dependency review and approval process",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Package popularity and reputation scoring"
+            "name": "Package popularity and reputation scoring",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Typosquatting detection and prevention"
+            "name": "Typosquatting detection and prevention",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2428,28 +3995,68 @@
       "controls": {
         "protective": [
           {
-            "name": "Local registry proxy with filtering"
+            "name": "Local registry proxy with filtering",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Internal repository enforcement and prioritization"
+            "name": "Internal repository enforcement and prioritization",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Namespace isolation and scoping"
+            "name": "Namespace isolation and scoping",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Package version pinning"
+            "name": "Package version pinning",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Automated maintainer reputation and hygiene checks"
+            "name": "Automated maintainer reputation and hygiene checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Private package registry configuration"
+            "name": "Private package registry configuration",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Dependency resolution policies"
+            "name": "Dependency resolution policies",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           },
           {
-            "name": "Package source verification"
+            "name": "Package source verification",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
           }
         ],
         "detective": []
@@ -2470,21 +4077,47 @@
       "controls": {
         "protective": [
           {
-            "name": "OIDC for deployment (no long-lived credentials)"
+            "name": "OIDC for deployment (no long-lived credentials)",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
           },
           {
-            "name": "Minimal IAM permissions"
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Credential rotation"
+            "name": "Credential rotation",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
           },
           {
-            "name": "Network segmentation from SDLC"
+            "name": "Network segmentation from SDLC",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning"
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2504,21 +4137,47 @@
       "controls": {
         "protective": [
           {
-            "name": "Deployment approval gates"
+            "name": "Deployment approval gates",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
           },
           {
-            "name": "Code signing and verification"
+            "name": "Code signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Minimal workflow permissions"
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Branch protection rules (VCS)"
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Deployment monitoring"
+            "name": "Deployment monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2538,21 +4197,47 @@
       "controls": {
         "protective": [
           {
-            "name": "Network segmentation from SDLC"
+            "name": "Network segmentation from SDLC",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "Using managed runners only"
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Runner isolation"
+            "name": "Runner isolation",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Minimal runner privileges"
+            "name": "Minimal runner privileges",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Network monitoring"
+            "name": "Network monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2572,21 +4257,46 @@
       "controls": {
         "protective": [
           {
-            "name": "Image signing and verification"
+            "name": "Image signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Provenance attestation"
+            "name": "Provenance attestation",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Deployment approval gates"
+            "name": "Deployment approval gates",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Image vulnerability scanning"
+            "name": "Image vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Runtime security monitoring"
+            "name": "Runtime security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2605,21 +4315,48 @@
       "controls": {
         "protective": [
           {
-            "name": "Code review for IaC changes"
+            "name": "Code review for IaC changes",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
           },
           {
-            "name": "Deployment approval gates"
+            "name": "Deployment approval gates",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
           },
           {
-            "name": "Minimal deployment permissions"
+            "name": "Minimal deployment permissions",
+            "frameworks": {
+              "spvs": [
+                "V4.3",
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "CSPM/CNAPP"
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Drift detection"
+            "name": "Drift detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2639,21 +4376,46 @@
       "controls": {
         "protective": [
           {
-            "name": "OIDC for K8s access"
+            "name": "OIDC for K8s access",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           },
           {
-            "name": "Minimal service account permissions"
+            "name": "Minimal service account permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Token rotation"
+            "name": "Token rotation",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning"
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Runtime security monitoring"
+            "name": "Runtime security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2673,21 +4435,46 @@
       "controls": {
         "protective": [
           {
-            "name": "Metadata service restrictions"
+            "name": "Metadata service restrictions",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
           },
           {
-            "name": "Minimal IAM permissions"
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Network segmentation"
+            "name": "Network segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "IMDSv2 enforcement (AWS)"
+            "name": "IMDSv2 enforcement (AWS)",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Runtime security monitoring"
+            "name": "Runtime security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2707,21 +4494,47 @@
       "controls": {
         "protective": [
           {
-            "name": "Pod security policies"
+            "name": "Pod security policies",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
           },
           {
-            "name": "Minimal pod privileges"
+            "name": "Minimal pod privileges",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "K8s sensor on cluster"
+            "name": "K8s sensor on cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "KSPM"
+            "name": "KSPM",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Runtime security monitoring"
+            "name": "Runtime security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2741,21 +4554,47 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal IAM permissions"
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Network segmentation"
+            "name": "Network segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "Service mesh / zero trust"
+            "name": "Service mesh / zero trust",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "CSPM/CNAPP"
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Detection infra on audit logs"
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2775,21 +4614,46 @@
       "controls": {
         "protective": [
           {
-            "name": "Network segmentation"
+            "name": "Network segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "Micro-segmentation"
+            "name": "Micro-segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "Security group hardening"
+            "name": "Security group hardening",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "Vulnerability management"
+            "name": "Vulnerability management",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Network monitoring"
+            "name": "Network monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2811,36 +4675,86 @@
       "controls": {
         "protective": [
           {
-            "name": "Store encryption keys in HSM (Hardware Security Module)"
+            "name": "Store encryption keys in HSM (Hardware Security Module)",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
           },
           {
-            "name": "Envelope encryption with key hierarchy"
+            "name": "Envelope encryption with key hierarchy",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
           },
           {
-            "name": "Customer-managed encryption keys (CMEK)"
+            "name": "Customer-managed encryption keys (CMEK)",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
           },
           {
-            "name": "Automatic secrets rotation (30-90 days)"
+            "name": "Automatic secrets rotation (30-90 days)",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
           },
           {
-            "name": "Secrets segmentation (per-customer isolation)"
+            "name": "Secrets segmentation (per-customer isolation)",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
           },
           {
-            "name": "Memory protection and anti-dumping controls"
+            "name": "Memory protection and anti-dumping controls",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "DLP on production systems"
+            "name": "DLP on production systems",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Egress traffic monitoring and filtering"
+            "name": "Egress traffic monitoring and filtering",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Detection infra on audit logs (production)"
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Large data transfer detection"
+            "name": "Large data transfer detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2863,30 +4777,70 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal IAM permissions"
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "API rate limiting and throttling"
+            "name": "API rate limiting and throttling",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
           },
           {
-            "name": "Network segmentation (production internal)"
+            "name": "Network segmentation (production internal)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "Metadata service restrictions"
+            "name": "Metadata service restrictions",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
           },
           {
-            "name": "Generic error messages (no infrastructure details)"
+            "name": "Generic error messages (no infrastructure details)",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Detection infra on audit logs (production)"
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Honeypots and deception technology"
+            "name": "Honeypots and deception technology",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Anomaly detection for enumeration patterns"
+            "name": "Anomaly detection for enumeration patterns",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2908,36 +4862,87 @@
       "controls": {
         "protective": [
           {
-            "name": "Backup encryption and access controls"
+            "name": "Backup encryption and access controls",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "SSL/TLS inspection"
+            "name": "SSL/TLS inspection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Data classification and handling policies"
+            "name": "Data classification and handling policies",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
           },
           {
-            "name": "Network segmentation (production from internet)"
+            "name": "Network segmentation (production from internet)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
           },
           {
-            "name": "CSPM/CNAPP"
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Network DLP"
+            "name": "Network DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Egress traffic monitoring and filtering"
+            "name": "Egress traffic monitoring and filtering",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Large data transfer detection"
+            "name": "Large data transfer detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Database activity monitoring"
+            "name": "Database activity monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Detection infra on audit logs (production)"
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -2960,36 +4965,88 @@
       "controls": {
         "protective": [
           {
-            "name": "Minimal IAM permissions"
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
           },
           {
-            "name": "Regular backups with offsite/offline storage"
+            "name": "Regular backups with offsite/offline storage",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Deletion protection on critical resources"
+            "name": "Deletion protection on critical resources",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Destructive operation approval workflow"
+            "name": "Destructive operation approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
           },
           {
-            "name": "Immutable backups"
+            "name": "Immutable backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "Disaster recovery procedures and testing"
+            "name": "Disaster recovery procedures and testing",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
           },
           {
-            "name": "Resource tagging and protection policies"
+            "name": "Resource tagging and protection policies",
+            "frameworks": {
+              "spvs": [
+                "V4.2"
+              ]
+            }
           },
           {
-            "name": "Backup isolation from production network"
+            "name": "Backup isolation from production network",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
           },
           {
-            "name": "CSPM/CNAPP"
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Detection infra on audit logs (production)"
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -3010,30 +5067,71 @@
       "controls": {
         "protective": [
           {
-            "name": "Deployment approval gates for new services"
+            "name": "Deployment approval gates for new services",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
           },
           {
-            "name": "Code review for all IaC changes"
+            "name": "Code review for all IaC changes",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
           },
           {
-            "name": "Baseline approved services list"
+            "name": "Baseline approved services list",
+            "frameworks": {
+              "spvs": [
+                "V4.2"
+              ]
+            }
           },
           {
-            "name": "CSPM/CNAPP"
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Detection infra on audit logs (production)"
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Anomaly detection for new service creation patterns"
+            "name": "Anomaly detection for new service creation patterns",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Immutable audit logs"
+            "name": "Immutable audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Regular service inventory audits"
+            "name": "Regular service inventory audits",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -3053,27 +5151,62 @@
       "controls": {
         "protective": [
           {
-            "name": "Code signing and verification for all distributed binaries"
+            "name": "Code signing and verification for all distributed binaries",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Provenance attestation (SLSA Level 3+)"
+            "name": "Provenance attestation (SLSA Level 3+)",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Customer-controlled update policies with verification"
+            "name": "Customer-controlled update policies with verification",
+            "frameworks": {
+              "spvs": [
+                "V4.1"
+              ]
+            }
           },
           {
-            "name": "Separation of duties for release signing"
+            "name": "Separation of duties for release signing",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           },
           {
-            "name": "Immutable build logs and attestations"
+            "name": "Immutable build logs and attestations",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Multi-party approval for sensor/agent releases"
+            "name": "Multi-party approval for sensor/agent releases",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           },
           {
-            "name": "Regular security audits of build infrastructure"
+            "name": "Regular security audits of build infrastructure",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
           }
         ]
       }
@@ -3294,7 +5427,11 @@
                                     <div class="detail-section">
                                         <div class="detail-title">🛡️ Protective Controls</div>
                                         <ul class="detail-list controls-list" style="border-left: 3px solid #10B981;">
-                                            ${(tech.controls?.protective || []).map(c => `<li>${c.name || c}</li>`).join('')}
+                                            ${(tech.controls?.protective || []).map(c => {
+                                                const spvs = c.frameworks?.spvs || [];
+                                                const spvsTags = spvs.length > 0 ? ` <span class="spvs-tags">${spvs.map(s => `<span class="spvs-tag">${s}</span>`).join('')}</span>` : '';
+                                                return `<li>${c.name || c}${spvsTags}</li>`;
+                                            }).join('')}
                                         </ul>
                                     </div>
                                     ` : ''}
@@ -3305,7 +5442,9 @@
                                             ${(tech.controls?.detective || []).map(c => {
                                                 const rules = c.detectionRules || [];
                                                 const ruleCount = rules.length > 0 ? ` <span style="color: #9D4EDD; font-size: 0.8em;">(${rules.length} rule${rules.length > 1 ? 's' : ''})</span>` : '';
-                                                return `<li>${c.name || c}${ruleCount}</li>`;
+                                                const spvs = c.frameworks?.spvs || [];
+                                                const spvsTags = spvs.length > 0 ? ` <span class="spvs-tags">${spvs.map(s => `<span class="spvs-tag">${s}</span>`).join('')}</span>` : '';
+                                                return `<li>${c.name || c}${ruleCount}${spvsTags}</li>`;
                                             }).join('')}
                                         </ul>
                                     </div>

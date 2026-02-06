@@ -808,7 +808,26 @@
                                     </div>
                                     <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)', marginBottom: '8px' }}>
                                         {(fullTechnique.controls?.protective || []).map((control, idx) => (
-                                            <li key={idx} style={{ marginBottom: '2px' }}>{control.name || control}</li>
+                                            <li key={idx} style={{ marginBottom: '2px' }}>
+                                                {control.name || control}
+                                                {control.frameworks?.spvs && control.frameworks.spvs.length > 0 && (
+                                                    <span style={{ marginLeft: '4px' }}>
+                                                        {control.frameworks.spvs.map((s, i) => (
+                                                            <span key={i} style={{
+                                                                display: 'inline-block',
+                                                                background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)',
+                                                                color: '#90cdf4',
+                                                                fontSize: '8px',
+                                                                padding: '1px 4px',
+                                                                borderRadius: '2px',
+                                                                marginLeft: '2px',
+                                                                fontWeight: 600,
+                                                                border: '1px solid #2b6cb0'
+                                                            }}>{s}</span>
+                                                        ))}
+                                                    </span>
+                                                )}
+                                            </li>
                                         ))}
                                     </ul>
                                 </>
@@ -820,7 +839,26 @@
                                     </div>
                                     <ul style={{ fontSize: '10px', margin: 0, paddingLeft: '16px', color: 'var(--wiz-text-primary)' }}>
                                         {(fullTechnique.controls?.detective || []).map((control, idx) => (
-                                            <li key={idx} style={{ marginBottom: '2px' }}>{control.name || control}</li>
+                                            <li key={idx} style={{ marginBottom: '2px' }}>
+                                                {control.name || control}
+                                                {control.frameworks?.spvs && control.frameworks.spvs.length > 0 && (
+                                                    <span style={{ marginLeft: '4px' }}>
+                                                        {control.frameworks.spvs.map((s, i) => (
+                                                            <span key={i} style={{
+                                                                display: 'inline-block',
+                                                                background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)',
+                                                                color: '#90cdf4',
+                                                                fontSize: '8px',
+                                                                padding: '1px 4px',
+                                                                borderRadius: '2px',
+                                                                marginLeft: '2px',
+                                                                fontWeight: 600,
+                                                                border: '1px solid #2b6cb0'
+                                                            }}>{s}</span>
+                                                        ))}
+                                                    </span>
+                                                )}
+                                            </li>
                                         ))}
                                     </ul>
                                 </>

@@ -300,6 +300,28 @@
             color: #9D4EDD;
         }
 
+        .spvs-tags {
+            margin-left: 6px;
+        }
+
+        .spvs-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: #90cdf4;
+            font-size: 0.65em;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 3px;
+            font-weight: 600;
+            border: 1px solid #2b6cb0;
+            vertical-align: middle;
+        }
+
+        .spvs-tag:hover {
+            background: linear-gradient(135deg, #2c5282 0%, #3182ce 100%);
+            cursor: help;
+        }
+
         .no-results {
             background: #151B3B;
             border-radius: 8px;
@@ -588,7 +610,11 @@
                                     <div class="detail-section">
                                         <div class="detail-title">🛡️ Protective Controls</div>
                                         <ul class="detail-list controls-list" style="border-left: 3px solid #10B981;">
-                                            ${(tech.controls?.protective || []).map(c => `<li>${c.name || c}</li>`).join('')}
+                                            ${(tech.controls?.protective || []).map(c => {
+                                                const spvs = c.frameworks?.spvs || [];
+                                                const spvsTags = spvs.length > 0 ? ` <span class="spvs-tags">${spvs.map(s => `<span class="spvs-tag">${s}</span>`).join('')}</span>` : '';
+                                                return `<li>${c.name || c}${spvsTags}</li>`;
+                                            }).join('')}
                                         </ul>
                                     </div>
                                     ` : ''}
@@ -599,7 +625,9 @@
                                             ${(tech.controls?.detective || []).map(c => {
                                                 const rules = c.detectionRules || [];
                                                 const ruleCount = rules.length > 0 ? ` <span style="color: #9D4EDD; font-size: 0.8em;">(${rules.length} rule${rules.length > 1 ? 's' : ''})</span>` : '';
-                                                return `<li>${c.name || c}${ruleCount}</li>`;
+                                                const spvs = c.frameworks?.spvs || [];
+                                                const spvsTags = spvs.length > 0 ? ` <span class="spvs-tags">${spvs.map(s => `<span class="spvs-tag">${s}</span>`).join('')}</span>` : '';
+                                                return `<li>${c.name || c}${ruleCount}${spvsTags}</li>`;
                                             }).join('')}
                                         </ul>
                                     </div>
