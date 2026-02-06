@@ -41,6 +41,40 @@
     "Detection & Containment",
     "Custom"
   ],
+  "frameworkDefinitions": {
+    "spvs": {
+      "name": "OWASP SPVS",
+      "version": "1.0",
+      "url": "https://owasp.org/www-project-spvs/",
+      "categories": {
+        "V1.1": { "stage": "Plan", "name": "Identity and Access Management" },
+        "V1.2": { "stage": "Plan", "name": "Hardening User Machines" },
+        "V1.3": { "stage": "Plan", "name": "Security Requirements and Risk Assessment" },
+        "V1.4": { "stage": "Plan", "name": "Developer Tool Operation" },
+        "V1.5": { "stage": "Plan", "name": "Source Code Management Hardening" },
+        "V2.1": { "stage": "Develop", "name": "Secure Coding Practices" },
+        "V2.2": { "stage": "Develop", "name": "Software Quality" },
+        "V2.3": { "stage": "Develop", "name": "Code Review and Analysis" },
+        "V2.4": { "stage": "Develop", "name": "Perform Security Checks" },
+        "V2.5": { "stage": "Develop", "name": "Credential Hygiene" },
+        "V2.6": { "stage": "Develop", "name": "3rd Party Library Audit" },
+        "V2.7": { "stage": "Develop", "name": "Unit Testing" },
+        "V3.1": { "stage": "Integrate", "name": "Security of Pipeline Environment" },
+        "V3.2": { "stage": "Integrate", "name": "Credential Hygiene" },
+        "V3.3": { "stage": "Integrate", "name": "Continuous Security Checks" },
+        "V3.4": { "stage": "Integrate", "name": "Integrity of Artifacts" },
+        "V4.1": { "stage": "Release", "name": "Final Security Assessments" },
+        "V4.2": { "stage": "Release", "name": "Compliance Checks" },
+        "V4.3": { "stage": "Release", "name": "Secure Deployment Practices" },
+        "V4.4": { "stage": "Release", "name": "Transition Security" },
+        "V5.1": { "stage": "Operate", "name": "Access Audit" },
+        "V5.2": { "stage": "Operate", "name": "Security Standard Enforcement" },
+        "V5.3": { "stage": "Operate", "name": "Secure Maintenance Practices" },
+        "V5.4": { "stage": "Operate", "name": "Detection & Monitoring" },
+        "V5.5": { "stage": "Operate", "name": "Incident Response & Recovery" }
+      }
+    }
+  },
   "techniques": [
     {
       "id": "T-E001",

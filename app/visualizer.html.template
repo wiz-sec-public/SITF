@@ -375,6 +375,63 @@
             'production': '#EF4444'
         };
         
+        // Helper function to render framework tags - one tag per framework with tooltip showing all mappings
+        const renderFrameworkTags = (control) => {
+            if (!control.frameworks) return null;
+            
+            const frameworkDefs = techniquesData.frameworkDefinitions || {};
+            const tags = [];
+            
+            Object.entries(control.frameworks).forEach(([frameworkId, values]) => {
+                const frameworkDef = frameworkDefs[frameworkId];
+                if (!frameworkDef || !Array.isArray(values) || values.length === 0) return;
+                
+                // Group by stage for organized tooltip
+                const stageGroups = {};
+                values.forEach(v => {
+                    const catMeta = frameworkDef.categories?.[v];
+                    if (catMeta) {
+                        if (!stageGroups[catMeta.stage]) {
+                            stageGroups[catMeta.stage] = [];
+                        }
+                        stageGroups[catMeta.stage].push({ id: v, name: catMeta.name });
+                    }
+                });
+                
+                // Build tooltip with all stages and categories
+                const tooltipLines = [`${frameworkDef.name} v${frameworkDef.version}`];
+                Object.entries(stageGroups).forEach(([stage, cats]) => {
+                    tooltipLines.push(`\n${stage}:`);
+                    cats.forEach(c => tooltipLines.push(`  ${c.id}: ${c.name}`));
+                });
+                
+                // Create single tag for this framework
+                const displayName = frameworkId.toUpperCase();
+                tags.push({ displayName, tooltip: tooltipLines.join('\n'), key: frameworkId });
+            });
+            
+            if (tags.length === 0) return null;
+            
+            return (
+                <span style={{ marginLeft: '4px' }}>
+                    {tags.map(tag => (
+                        <span key={tag.key} title={tag.tooltip} style={{
+                            display: 'inline-block',
+                            background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)',
+                            color: '#90cdf4',
+                            fontSize: '8px',
+                            padding: '1px 4px',
+                            borderRadius: '2px',
+                            marginLeft: '2px',
+                            fontWeight: 600,
+                            border: '1px solid #2b6cb0',
+                            cursor: 'help'
+                        }}>{tag.displayName}</span>
+                    ))}
+                </span>
+            );
+        };
+        
         // Custom Node Components
         const EntryPointNode = ({ data, id }) => {
             const [isEditing, setIsEditing] = useState(false);
@@ -810,23 +867,7 @@
                                         {(fullTechnique.controls?.protective || []).map((control, idx) => (
                                             <li key={idx} style={{ marginBottom: '2px' }}>
                                                 {control.name || control}
-                                                {control.frameworks?.spvs && control.frameworks.spvs.length > 0 && (
-                                                    <span style={{ marginLeft: '4px' }}>
-                                                        {control.frameworks.spvs.map((s, i) => (
-                                                            <span key={i} style={{
-                                                                display: 'inline-block',
-                                                                background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)',
-                                                                color: '#90cdf4',
-                                                                fontSize: '8px',
-                                                                padding: '1px 4px',
-                                                                borderRadius: '2px',
-                                                                marginLeft: '2px',
-                                                                fontWeight: 600,
-                                                                border: '1px solid #2b6cb0'
-                                                            }}>{s}</span>
-                                                        ))}
-                                                    </span>
-                                                )}
+                                                {renderFrameworkTags(control)}
                                             </li>
                                         ))}
                                     </ul>
@@ -841,23 +882,7 @@
                                         {(fullTechnique.controls?.detective || []).map((control, idx) => (
                                             <li key={idx} style={{ marginBottom: '2px' }}>
                                                 {control.name || control}
-                                                {control.frameworks?.spvs && control.frameworks.spvs.length > 0 && (
-                                                    <span style={{ marginLeft: '4px' }}>
-                                                        {control.frameworks.spvs.map((s, i) => (
-                                                            <span key={i} style={{
-                                                                display: 'inline-block',
-                                                                background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)',
-                                                                color: '#90cdf4',
-                                                                fontSize: '8px',
-                                                                padding: '1px 4px',
-                                                                borderRadius: '2px',
-                                                                marginLeft: '2px',
-                                                                fontWeight: 600,
-                                                                border: '1px solid #2b6cb0'
-                                                            }}>{s}</span>
-                                                        ))}
-                                                    </span>
-                                                )}
+                                                {renderFrameworkTags(control)}
                                             </li>
                                         ))}
                                     </ul>

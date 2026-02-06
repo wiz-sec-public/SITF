@@ -300,11 +300,11 @@
             color: #9D4EDD;
         }
 
-        .spvs-tags {
+        .framework-tags {
             margin-left: 6px;
         }
 
-        .spvs-tag {
+        .framework-tag {
             display: inline-block;
             background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
             color: #90cdf4;
@@ -315,9 +315,10 @@
             font-weight: 600;
             border: 1px solid #2b6cb0;
             vertical-align: middle;
+            white-space: pre-line;
         }
 
-        .spvs-tag:hover {
+        .framework-tag:hover {
             background: linear-gradient(135deg, #2c5282 0%, #3182ce 100%);
             cursor: help;
         }
@@ -438,6 +439,115 @@
     "Detection & Containment",
     "Custom"
   ],
+  "frameworkDefinitions": {
+    "spvs": {
+      "name": "OWASP SPVS",
+      "version": "1.0",
+      "url": "https://owasp.org/www-project-spvs/",
+      "categories": {
+        "V1.1": {
+          "stage": "Plan",
+          "name": "Identity and Access Management"
+        },
+        "V1.2": {
+          "stage": "Plan",
+          "name": "Hardening User Machines"
+        },
+        "V1.3": {
+          "stage": "Plan",
+          "name": "Security Requirements and Risk Assessment"
+        },
+        "V1.4": {
+          "stage": "Plan",
+          "name": "Developer Tool Operation"
+        },
+        "V1.5": {
+          "stage": "Plan",
+          "name": "Source Code Management Hardening"
+        },
+        "V2.1": {
+          "stage": "Develop",
+          "name": "Secure Coding Practices"
+        },
+        "V2.2": {
+          "stage": "Develop",
+          "name": "Software Quality"
+        },
+        "V2.3": {
+          "stage": "Develop",
+          "name": "Code Review and Analysis"
+        },
+        "V2.4": {
+          "stage": "Develop",
+          "name": "Perform Security Checks"
+        },
+        "V2.5": {
+          "stage": "Develop",
+          "name": "Credential Hygiene"
+        },
+        "V2.6": {
+          "stage": "Develop",
+          "name": "3rd Party Library Audit"
+        },
+        "V2.7": {
+          "stage": "Develop",
+          "name": "Unit Testing"
+        },
+        "V3.1": {
+          "stage": "Integrate",
+          "name": "Security of Pipeline Environment"
+        },
+        "V3.2": {
+          "stage": "Integrate",
+          "name": "Credential Hygiene"
+        },
+        "V3.3": {
+          "stage": "Integrate",
+          "name": "Continuous Security Checks"
+        },
+        "V3.4": {
+          "stage": "Integrate",
+          "name": "Integrity of Artifacts"
+        },
+        "V4.1": {
+          "stage": "Release",
+          "name": "Final Security Assessments"
+        },
+        "V4.2": {
+          "stage": "Release",
+          "name": "Compliance Checks"
+        },
+        "V4.3": {
+          "stage": "Release",
+          "name": "Secure Deployment Practices"
+        },
+        "V4.4": {
+          "stage": "Release",
+          "name": "Transition Security"
+        },
+        "V5.1": {
+          "stage": "Operate",
+          "name": "Access Audit"
+        },
+        "V5.2": {
+          "stage": "Operate",
+          "name": "Security Standard Enforcement"
+        },
+        "V5.3": {
+          "stage": "Operate",
+          "name": "Secure Maintenance Practices"
+        },
+        "V5.4": {
+          "stage": "Operate",
+          "name": "Detection & Monitoring"
+        },
+        "V5.5": {
+          "stage": "Operate",
+          "name": "Incident Response & Recovery"
+        }
+      }
+    }
+  },
   "techniques": [
     {
       "id": "T-E001",
@@ -5232,6 +5342,44 @@
             'production': '☁️'
         };
 
+        // Helper function to format framework tags - one tag per framework with tooltip showing all mappings
+        function formatFrameworkTags(control) {
+            if (!control.frameworks) return '';
+            
+            const frameworkDefs = techniquesData.frameworkDefinitions || {};
+            const tags = [];
+            
+            Object.entries(control.frameworks).forEach(([frameworkId, values]) => {
+                const frameworkDef = frameworkDefs[frameworkId];
+                if (!frameworkDef || !Array.isArray(values) || values.length === 0) return;
+                
+                // Group by stage for organized tooltip
+                const stageGroups = {};
+                values.forEach(v => {
+                    const catMeta = frameworkDef.categories?.[v];
+                    if (catMeta) {
+                        if (!stageGroups[catMeta.stage]) {
+                            stageGroups[catMeta.stage] = [];
+                        }
+                        stageGroups[catMeta.stage].push({ id: v, name: catMeta.name });
+                    }
+                });
+                
+                // Build tooltip with all stages and categories
+                const tooltipLines = [`${frameworkDef.name} v${frameworkDef.version}`];
+                Object.entries(stageGroups).forEach(([stage, cats]) => {
+                    tooltipLines.push(`\n${stage}:`);
+                    cats.forEach(c => tooltipLines.push(`  ${c.id}: ${c.name}`));
+                });
+                
+                // Create single tag for this framework
+                const displayName = frameworkId.toUpperCase();
+                tags.push(`<span class="framework-tag" title="${tooltipLines.join('\n')}">${displayName}</span>`);
+            });
+            
+            return tags.length > 0 ? ` <span class="framework-tags">${tags.join('')}</span>` : '';
+        }
+
         // State
         let filters = {
             component: 'all',
@@ -5428,9 +5576,8 @@
                                         <div class="detail-title">🛡️ Protective Controls</div>
                                         <ul class="detail-list controls-list" style="border-left: 3px solid #10B981;">
                                             ${(tech.controls?.protective || []).map(c => {
-                                                const spvs = c.frameworks?.spvs || [];
-                                                const spvsTags = spvs.length > 0 ? ` <span class="spvs-tags">${spvs.map(s => `<span class="spvs-tag">${s}</span>`).join('')}</span>` : '';
-                                                return `<li>${c.name || c}${spvsTags}</li>`;
+                                                const frameworkTags = formatFrameworkTags(c);
+                                                return `<li>${c.name || c}${frameworkTags}</li>`;
                                             }).join('')}
                                         </ul>
                                     </div>
@@ -5442,9 +5589,8 @@
                                             ${(tech.controls?.detective || []).map(c => {
                                                 const rules = c.detectionRules || [];
                                                 const ruleCount = rules.length > 0 ? ` <span style="color: #9D4EDD; font-size: 0.8em;">(${rules.length} rule${rules.length > 1 ? 's' : ''})</span>` : '';
-                                                const spvs = c.frameworks?.spvs || [];
-                                                const spvsTags = spvs.length > 0 ? ` <span class="spvs-tags">${spvs.map(s => `<span class="spvs-tag">${s}</span>`).join('')}</span>` : '';
-                                                return `<li>${c.name || c}${ruleCount}${spvsTags}</li>`;
+                                                const frameworkTags = formatFrameworkTags(c);
+                                                return `<li>${c.name || c}${ruleCount}${frameworkTags}</li>`;
                                             }).join('')}
                                         </ul>
                                     </div>

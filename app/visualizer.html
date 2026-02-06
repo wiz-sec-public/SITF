@@ -407,6 +407,115 @@
     "Detection & Containment",
     "Custom"
   ],
+  "frameworkDefinitions": {
+    "spvs": {
+      "name": "OWASP SPVS",
+      "version": "1.0",
+      "url": "https://owasp.org/www-project-spvs/",
+      "categories": {
+        "V1.1": {
+          "stage": "Plan",
+          "name": "Identity and Access Management"
+        },
+        "V1.2": {
+          "stage": "Plan",
+          "name": "Hardening User Machines"
+        },
+        "V1.3": {
+          "stage": "Plan",
+          "name": "Security Requirements and Risk Assessment"
+        },
+        "V1.4": {
+          "stage": "Plan",
+          "name": "Developer Tool Operation"
+        },
+        "V1.5": {
+          "stage": "Plan",
+          "name": "Source Code Management Hardening"
+        },
+        "V2.1": {
+          "stage": "Develop",
+          "name": "Secure Coding Practices"
+        },
+        "V2.2": {
+          "stage": "Develop",
+          "name": "Software Quality"
+        },
+        "V2.3": {
+          "stage": "Develop",
+          "name": "Code Review and Analysis"
+        },
+        "V2.4": {
+          "stage": "Develop",
+          "name": "Perform Security Checks"
+        },
+        "V2.5": {
+          "stage": "Develop",
+          "name": "Credential Hygiene"
+        },
+        "V2.6": {
+          "stage": "Develop",
+          "name": "3rd Party Library Audit"
+        },
+        "V2.7": {
+          "stage": "Develop",
+          "name": "Unit Testing"
+        },
+        "V3.1": {
+          "stage": "Integrate",
+          "name": "Security of Pipeline Environment"
+        },
+        "V3.2": {
+          "stage": "Integrate",
+          "name": "Credential Hygiene"
+        },
+        "V3.3": {
+          "stage": "Integrate",
+          "name": "Continuous Security Checks"
+        },
+        "V3.4": {
+          "stage": "Integrate",
+          "name": "Integrity of Artifacts"
+        },
+        "V4.1": {
+          "stage": "Release",
+          "name": "Final Security Assessments"
+        },
+        "V4.2": {
+          "stage": "Release",
+          "name": "Compliance Checks"
+        },
+        "V4.3": {
+          "stage": "Release",
+          "name": "Secure Deployment Practices"
+        },
+        "V4.4": {
+          "stage": "Release",
+          "name": "Transition Security"
+        },
+        "V5.1": {
+          "stage": "Operate",
+          "name": "Access Audit"
+        },
+        "V5.2": {
+          "stage": "Operate",
+          "name": "Security Standard Enforcement"
+        },
+        "V5.3": {
+          "stage": "Operate",
+          "name": "Secure Maintenance Practices"
+        },
+        "V5.4": {
+          "stage": "Operate",
+          "name": "Detection & Monitoring"
+        },
+        "V5.5": {
+          "stage": "Operate",
+          "name": "Incident Response & Recovery"
+        }
+      }
+    }
+  },
   "techniques": [
     {
       "id": "T-E001",
@@ -5192,6 +5301,63 @@
             'production': '#EF4444'
         };
         
+        // Helper function to render framework tags - one tag per framework with tooltip showing all mappings
+        const renderFrameworkTags = (control) => {
+            if (!control.frameworks) return null;
+            
+            const frameworkDefs = techniquesData.frameworkDefinitions || {};
+            const tags = [];
+            
+            Object.entries(control.frameworks).forEach(([frameworkId, values]) => {
+                const frameworkDef = frameworkDefs[frameworkId];
+                if (!frameworkDef || !Array.isArray(values) || values.length === 0) return;
+                
+                // Group by stage for organized tooltip
+                const stageGroups = {};
+                values.forEach(v => {
+                    const catMeta = frameworkDef.categories?.[v];
+                    if (catMeta) {
+                        if (!stageGroups[catMeta.stage]) {
+                            stageGroups[catMeta.stage] = [];
+                        }
+                        stageGroups[catMeta.stage].push({ id: v, name: catMeta.name });
+                    }
+                });
+                
+                // Build tooltip with all stages and categories
+                const tooltipLines = [`${frameworkDef.name} v${frameworkDef.version}`];
+                Object.entries(stageGroups).forEach(([stage, cats]) => {
+                    tooltipLines.push(`\n${stage}:`);
+                    cats.forEach(c => tooltipLines.push(`  ${c.id}: ${c.name}`));
+                });
+                
+                // Create single tag for this framework
+                const displayName = frameworkId.toUpperCase();
+                tags.push({ displayName, tooltip: tooltipLines.join('\n'), key: frameworkId });
+            });
+            
+            if (tags.length === 0) return null;
+            
+            return (
+                <span style={{ marginLeft: '4px' }}>
+                    {tags.map(tag => (
+                        <span key={tag.key} title={tag.tooltip} style={{
+                            display: 'inline-block',
+                            background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)',
+                            color: '#90cdf4',
+                            fontSize: '8px',
+                            padding: '1px 4px',
+                            borderRadius: '2px',
+                            marginLeft: '2px',
+                            fontWeight: 600,
+                            border: '1px solid #2b6cb0',
+                            cursor: 'help'
+                        }}>{tag.displayName}</span>
+                    ))}
+                </span>
+            );
+        };
+        
         // Custom Node Components
         const EntryPointNode = ({ data, id }) => {
             const [isEditing, setIsEditing] = useState(false);
@@ -5627,23 +5793,7 @@
                                         {(fullTechnique.controls?.protective || []).map((control, idx) => (
                                             <li key={idx} style={{ marginBottom: '2px' }}>
                                                 {control.name || control}
-                                                {control.frameworks?.spvs && control.frameworks.spvs.length > 0 && (
-                                                    <span style={{ marginLeft: '4px' }}>
-                                                        {control.frameworks.spvs.map((s, i) => (
-                                                            <span key={i} style={{
-                                                                display: 'inline-block',
-                                                                background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)',
-                                                                color: '#90cdf4',
-                                                                fontSize: '8px',
-                                                                padding: '1px 4px',
-                                                                borderRadius: '2px',
-                                                                marginLeft: '2px',
-                                                                fontWeight: 600,
-                                                                border: '1px solid #2b6cb0'
-                                                            }}>{s}</span>
-                                                        ))}
-                                                    </span>
-                                                )}
+                                                {renderFrameworkTags(control)}
                                             </li>
                                         ))}
                                     </ul>
@@ -5658,23 +5808,7 @@
                                         {(fullTechnique.controls?.detective || []).map((control, idx) => (
                                             <li key={idx} style={{ marginBottom: '2px' }}>
                                                 {control.name || control}
-                                                {control.frameworks?.spvs && control.frameworks.spvs.length > 0 && (
-                                                    <span style={{ marginLeft: '4px' }}>
-                                                        {control.frameworks.spvs.map((s, i) => (
-                                                            <span key={i} style={{
-                                                                display: 'inline-block',
-                                                                background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)',
-                                                                color: '#90cdf4',
-                                                                fontSize: '8px',
-                                                                padding: '1px 4px',
-                                                                borderRadius: '2px',
-                                                                marginLeft: '2px',
-                                                                fontWeight: 600,
-                                                                border: '1px solid #2b6cb0'
-                                                            }}>{s}</span>
-                                                        ))}
-                                                    </span>
-                                                )}
+                                                {renderFrameworkTags(control)}
                                             </li>
                                         ))}
                                     </ul>

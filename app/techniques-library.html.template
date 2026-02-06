@@ -300,11 +300,11 @@
             color: #9D4EDD;
         }
 
-        .spvs-tags {
+        .framework-tags {
             margin-left: 6px;
         }
 
-        .spvs-tag {
+        .framework-tag {
             display: inline-block;
             background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
             color: #90cdf4;
@@ -315,9 +315,10 @@
             font-weight: 600;
             border: 1px solid #2b6cb0;
             vertical-align: middle;
+            white-space: pre-line;
         }
 
-        .spvs-tag:hover {
+        .framework-tag:hover {
             background: linear-gradient(135deg, #2c5282 0%, #3182ce 100%);
             cursor: help;
         }
@@ -414,6 +415,44 @@
             'registry': '📚',
             'production': '☁️'
         };
+
+        // Helper function to format framework tags - one tag per framework with tooltip showing all mappings
+        function formatFrameworkTags(control) {
+            if (!control.frameworks) return '';
+            
+            const frameworkDefs = techniquesData.frameworkDefinitions || {};
+            const tags = [];
+            
+            Object.entries(control.frameworks).forEach(([frameworkId, values]) => {
+                const frameworkDef = frameworkDefs[frameworkId];
+                if (!frameworkDef || !Array.isArray(values) || values.length === 0) return;
+                
+                // Group by stage for organized tooltip
+                const stageGroups = {};
+                values.forEach(v => {
+                    const catMeta = frameworkDef.categories?.[v];
+                    if (catMeta) {
+                        if (!stageGroups[catMeta.stage]) {
+                            stageGroups[catMeta.stage] = [];
+                        }
+                        stageGroups[catMeta.stage].push({ id: v, name: catMeta.name });
+                    }
+                });
+                
+                // Build tooltip with all stages and categories
+                const tooltipLines = [`${frameworkDef.name} v${frameworkDef.version}`];
+                Object.entries(stageGroups).forEach(([stage, cats]) => {
+                    tooltipLines.push(`\n${stage}:`);
+                    cats.forEach(c => tooltipLines.push(`  ${c.id}: ${c.name}`));
+                });
+                
+                // Create single tag for this framework
+                const displayName = frameworkId.toUpperCase();
+                tags.push(`<span class="framework-tag" title="${tooltipLines.join('\n')}">${displayName}</span>`);
+            });
+            
+            return tags.length > 0 ? ` <span class="framework-tags">${tags.join('')}</span>` : '';
+        }
 
         // State
         let filters = {
@@ -611,9 +650,8 @@
                                         <div class="detail-title">🛡️ Protective Controls</div>
                                         <ul class="detail-list controls-list" style="border-left: 3px solid #10B981;">
                                             ${(tech.controls?.protective || []).map(c => {
-                                                const spvs = c.frameworks?.spvs || [];
-                                                const spvsTags = spvs.length > 0 ? ` <span class="spvs-tags">${spvs.map(s => `<span class="spvs-tag">${s}</span>`).join('')}</span>` : '';
-                                                return `<li>${c.name || c}${spvsTags}</li>`;
+                                                const frameworkTags = formatFrameworkTags(c);
+                                                return `<li>${c.name || c}${frameworkTags}</li>`;
                                             }).join('')}
                                         </ul>
                                     </div>
@@ -625,9 +663,8 @@
                                             ${(tech.controls?.detective || []).map(c => {
                                                 const rules = c.detectionRules || [];
                                                 const ruleCount = rules.length > 0 ? ` <span style="color: #9D4EDD; font-size: 0.8em;">(${rules.length} rule${rules.length > 1 ? 's' : ''})</span>` : '';
-                                                const spvs = c.frameworks?.spvs || [];
-                                                const spvsTags = spvs.length > 0 ? ` <span class="spvs-tags">${spvs.map(s => `<span class="spvs-tag">${s}</span>`).join('')}</span>` : '';
-                                                return `<li>${c.name || c}${ruleCount}${spvsTags}</li>`;
+                                                const frameworkTags = formatFrameworkTags(c);
+                                                return `<li>${c.name || c}${ruleCount}${frameworkTags}</li>`;
                                             }).join('')}
                                         </ul>
                                     </div>
