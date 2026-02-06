@@ -1146,8 +1146,20 @@
                 const mainStages = ['Initial Access', 'Discovery and Lateral Movement', 'Post-Compromise'];
                 const components = techniquesData.components;
                 
-                // Build CSV content with one row per control, including control type
-                let csv = 'Component,Stage,Control Type,Control,Status\n';
+                // Helper function to format frameworks from control object
+                const formatFrameworks = (control) => {
+                    if (typeof control !== 'object' || !control.frameworks) return '';
+                    const parts = [];
+                    Object.entries(control.frameworks).forEach(([framework, values]) => {
+                        if (Array.isArray(values) && values.length > 0) {
+                            parts.push(`${framework.toUpperCase()}: ${values.join(', ')}`);
+                        }
+                    });
+                    return parts.join('; ');
+                };
+                
+                // Build CSV content with one row per control, including control type and frameworks
+                let csv = 'Component,Stage,Control Type,Control,Frameworks,Status\n';
                 
                 components.forEach(comp => {
                     mainStages.forEach(stage => {
@@ -1155,17 +1167,23 @@
                         // Handle both old format (array) and new format (object with protective/detective)
                         if (Array.isArray(cellData)) {
                             cellData.forEach(control => {
-                                const escapedControl = control.replace(/"/g, '""');
-                                csv += `"${comp.name}","${stage}","","${escapedControl}",""\n`;
+                                const controlName = typeof control === 'object' ? control.name : control;
+                                const escapedControl = controlName.replace(/"/g, '""');
+                                const frameworks = formatFrameworks(control);
+                                csv += `"${comp.name}","${stage}","","${escapedControl}","${frameworks}",""\n`;
                             });
                         } else {
                             (cellData.protective || []).forEach(control => {
-                                const escapedControl = control.replace(/"/g, '""');
-                                csv += `"${comp.name}","${stage}","Protective","${escapedControl}",""\n`;
+                                const controlName = typeof control === 'object' ? control.name : control;
+                                const escapedControl = controlName.replace(/"/g, '""');
+                                const frameworks = formatFrameworks(control);
+                                csv += `"${comp.name}","${stage}","Protective","${escapedControl}","${frameworks}",""\n`;
                             });
                             (cellData.detective || []).forEach(control => {
-                                const escapedControl = control.replace(/"/g, '""');
-                                csv += `"${comp.name}","${stage}","Detective","${escapedControl}",""\n`;
+                                const controlName = typeof control === 'object' ? control.name : control;
+                                const escapedControl = controlName.replace(/"/g, '""');
+                                const frameworks = formatFrameworks(control);
+                                csv += `"${comp.name}","${stage}","Detective","${escapedControl}","${frameworks}",""\n`;
                             });
                         }
                     });
@@ -1219,7 +1237,8 @@
                 components.forEach(comp => {
                     matrix[comp.id] = {};
                     mainStages.forEach(stage => {
-                        matrix[comp.id][stage] = { protective: new Set(), detective: new Set() };
+                        // Use Map to store full control objects, keyed by name for deduplication
+                        matrix[comp.id][stage] = { protective: new Map(), detective: new Map() };
                     });
                 });
                 
@@ -1240,26 +1259,28 @@
                         
                         protective.forEach(control => {
                             const controlName = control.name || control;
-                            matrix[component][mappedStage].protective.add(controlName);
+                            // Store full control object, keyed by name
+                            matrix[component][mappedStage].protective.set(controlName, control);
                             totalControlsSet.add(controlName);
                         });
                         
                         detective.forEach(control => {
                             const controlName = control.name || control;
-                            matrix[component][mappedStage].detective.add(controlName);
+                            // Store full control object, keyed by name
+                            matrix[component][mappedStage].detective.set(controlName, control);
                             totalControlsSet.add(controlName);
                         });
                     }
                 });
                 
-                // Convert Sets to Arrays for rendering
+                // Convert Maps to Arrays for rendering (extract values which are full control objects)
                 const matrixArrays = {};
                 components.forEach(comp => {
                     matrixArrays[comp.id] = {};
                     mainStages.forEach(stage => {
                         matrixArrays[comp.id][stage] = {
-                            protective: Array.from(matrix[comp.id][stage].protective),
-                            detective: Array.from(matrix[comp.id][stage].detective)
+                            protective: Array.from(matrix[comp.id][stage].protective.values()),
+                            detective: Array.from(matrix[comp.id][stage].detective.values())
                         };
                     });
                 });
@@ -1404,7 +1425,7 @@
                                                                                 <ul className="list-disc list-inside space-y-0.5" style={{ marginLeft: '4px' }}>
                                                                                     {cellData.protective.map((control, idx) => (
                                                                                         <li key={idx} style={{ color: 'var(--wiz-text-primary)', fontSize: '11px' }}>
-                                                                                            {control}
+                                                                                            {typeof control === 'object' ? control.name : control}
                                                                                         </li>
                                                                                     ))}
                                                                                 </ul>
@@ -1416,7 +1437,7 @@
                                                                                 <ul className="list-disc list-inside space-y-0.5" style={{ marginLeft: '4px' }}>
                                                                                     {cellData.detective.map((control, idx) => (
                                                                                         <li key={idx} style={{ color: 'var(--wiz-text-primary)', fontSize: '11px' }}>
-                                                                                            {control}
+                                                                                            {typeof control === 'object' ? control.name : control}
                                                                                         </li>
                                                                                     ))}
                                                                                 </ul>
