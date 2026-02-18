@@ -57,32 +57,36 @@ Apply these layout rules:
 - Order components by their **sequence in the attack chain**, not by standard SITF order
 - If attack flows CI/CD → Registry → Endpoint → VCS, layout left-to-right accordingly
 - Minimum horizontal gap between components: 80-100px
-- Component x-positions: Use increments of ~300px starting from x=0
+- Component x-positions: Use increments of ~300px starting from x=50
 
 #### Rule 2: Technique Ordering (Top-to-Bottom)
 - **Primary**: Order techniques by their **sequence in the attack flow**
 - **Secondary**: Within same attack step, order by stage (Initial Access → Discovery → Post-Compromise)
-- Vertical gap between techniques: ~130-150px
+- Vertical gap between techniques: ~130px
 - First technique starts at y = component.y + 80
 
-#### Rule 3: Technique-Component Alignment
-- Every technique node MUST be visually positioned within its parent component
-- Calculate x-position: `component.x + 30`
+#### Rule 3: Technique-Component Centering
+- Every technique node MUST be visually centered within its parent component
+- **Centering formula**: `technique.x = component.x + (component.width - technique.width) / 2`
+- With component.width=250 and technique.width=160: offset = (250-160)/2 = 45
+- Example: component at x=50 → technique at x=95
+- Example: component at x=350 → technique at x=395
 - Validate technique.data.component matches parent component.data.componentId
 
 #### Rule 4: Component Sizing
-- Height = (technique_count × 150) + 120 (padding)
-- Width = 230-250px
+- Width = 250px (standard)
+- Height = max(500, (technique_count × 130) + 160) — ensures adequate vertical space
+- All components should have consistent height for visual alignment
 
 #### Rule 5: Edge Connections
 - Connect source.bottom → target.top for vertical flows within component
 - Connect source.right → target.left for cross-component flows
-- Add labels for significant transitions ("Second wave", etc.)
+- Add labels for significant transitions ("Stolen token", "pip install", etc.)
 - Use `"type": "smoothstep"` for all edges
 
 ### Phase 4: JSON Generation
 
-Generate the attack flow JSON with this structure:
+Generate the attack flow JSON with this exact structure:
 
 ```json
 {
@@ -93,17 +97,128 @@ Generate the attack flow JSON with this structure:
     "framework": "SITF",
     "description": "Brief attack description"
   },
-  "nodes": [
-    // Entry points, components, techniques, exit points
-  ],
-  "edges": [
-    // Connections between nodes
-  ]
+  "nodes": [],
+  "edges": []
+}
+```
+
+#### Node Structure - Entry Point
+```json
+{
+  "id": "entryPoint-attackname-1",
+  "type": "entryPoint",
+  "position": { "x": -150, "y": 200 },
+  "data": {
+    "label": "Entry Point Label"
+  },
+  "zIndex": 10,
+  "width": 195,
+  "height": 46
+}
+```
+
+#### Node Structure - Component
+```json
+{
+  "id": "component-cicd-1",
+  "type": "component",
+  "position": { "x": 50, "y": 80 },
+  "data": {
+    "label": "CI/CD",
+    "componentId": "cicd",
+    "techniques": [],
+    "customLabel": "Context-specific label"
+  },
+  "zIndex": -1,
+  "width": 250,
+  "height": 500,
+  "style": { "width": 250, "height": 500 }
+}
+```
+
+#### Node Structure - Technique (CRITICAL: use exact field names)
+```json
+{
+  "id": "technique-c003-1",
+  "type": "technique",
+  "position": { "x": 95, "y": 160 },
+  "data": {
+    "id": "T-C003",
+    "name": "PWN Request / Poisoned Pipeline Execution",
+    "component": "cicd",
+    "stage": "Initial Access",
+    "description": "Full description from techniques.json",
+    "risks": ["risk1", "risk2"],
+    "controls": ["control1", "control2"],
+    "customLabel": "Attack-specific context"
+  },
+  "zIndex": 10,
+  "width": 160,
+  "height": 96
+}
+```
+
+**IMPORTANT technique.data fields:**
+- `id`: Use technique ID (e.g., "T-C003") — NOT "techniqueId"
+- `name`: Use technique name — NOT "label"
+- `risks`: Copy full array from techniques.json
+- `controls`: Copy full array from techniques.json
+- `customLabel`: Add attack-specific context (e.g., "PRs #18018, #18020")
+
+#### Node Structure - Exit Point
+```json
+{
+  "id": "exitPoint-attackname-1",
+  "type": "exitPoint",
+  "position": { "x": 950, "y": 200 },
+  "data": {
+    "label": "Secondary Supply Chain Attack"
+  },
+  "zIndex": 10,
+  "width": 144,
+  "height": 46
+}
+```
+
+#### Edge Structure (with full styling)
+```json
+{
+  "id": "edge-source-target",
+  "source": "technique-c003-1",
+  "sourceHandle": "bottom",
+  "target": "technique-c004-1",
+  "targetHandle": "top",
+  "type": "smoothstep",
+  "animated": false,
+  "zIndex": 100,
+  "markerEnd": { "type": "arrowclosed" },
+  "label": "",
+  "labelStyle": { "fill": "#DC2626", "fontWeight": 600, "fontSize": 12 },
+  "labelBgStyle": { "fill": "#FEE2E2", "fillOpacity": 0.9 }
+}
+```
+
+#### Cross-component Edge (with gray styling)
+```json
+{
+  "id": "edge-cross-component",
+  "source": "technique-c011-1",
+  "sourceHandle": "right",
+  "target": "technique-r001-1",
+  "targetHandle": "left",
+  "type": "smoothstep",
+  "animated": false,
+  "zIndex": 100,
+  "style": { "stroke": "#9ca3af" },
+  "markerEnd": { "type": "arrowclosed", "color": "#9ca3af" },
+  "label": "Transition label",
+  "labelStyle": { "fill": "#DC2626", "fontWeight": 600, "fontSize": 12 },
+  "labelBgStyle": { "fill": "#FEE2E2", "fillOpacity": 0.9 }
 }
 ```
 
 Node types:
-- `entryPoint`: Attack entry (Phishing, Vulnerability Exploit, Stolen Credentials, etc.)
+- `entryPoint`: Attack entry (Phishing, Vulnerability Exploit, Stolen Credentials, Malicious Fork PR, etc.)
 - `component`: SITF component container (endpoint, vcs, cicd, registry, production)
 - `technique`: Attack technique from techniques.json
 - `technique-gap`: Placeholder for missing technique (flag for /technique-proposal)
@@ -118,12 +233,16 @@ Run this checklist before outputting:
 [ ] Required fields present: metadata.{name,created,version,framework}, nodes[], edges[]
 [ ] All node IDs are unique
 [ ] All edge source/target reference valid node IDs
-[ ] All techniques positioned within their component boundaries (x/y validation)
+[ ] Technique nodes use data.id and data.name (NOT techniqueId/label)
+[ ] Technique nodes include full risks[] and controls[] arrays
+[ ] All techniques centered within components (x = component.x + 45 for width=250)
+[ ] Component heights are adequate (minimum 500px)
 [ ] Techniques ordered by attack flow sequence
 [ ] Initial Access techniques appear first when order is ambiguous
 [ ] All technique IDs exist in techniques.json OR flagged as technique-gap
 [ ] Exit points connected to terminal techniques
 [ ] No orphaned nodes (every non-entry node has incoming edge)
+[ ] Edges have sourceHandle, targetHandle, markerEnd, labelStyle, labelBgStyle
 ```
 
 ### Phase 6: Output
@@ -136,11 +255,15 @@ Run this checklist before outputting:
 ## Example
 
 ```
-/attack-flow s1ngularity websearch
+/attack-flow ultralytics websearch
 ```
 
 This will:
-1. Search for s1ngularity attack details
+1. Search for ultralytics attack details
 2. Map attack steps to SITF techniques
-3. Generate `sample-flows/s1ngularity.json`
+3. Generate `sample-flows/ultralytics.json`
 4. Output attack flow summary
+
+## Reference: Working Sample
+
+See `sample-flows/ultralytics.json` or `sample-flows/tj-actions.json` for correctly structured examples.
