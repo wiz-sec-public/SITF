@@ -1050,6 +1050,37 @@ Controls are split into two categories:
 
 ---
 
+#### T-C021: AI Agent Prompt Injection in Workflow
+
+**Technique:** Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data
+
+**Risks:**
+- AI agents with Bash/shell execution capabilities in workflows
+- AI agents with Write/Edit file permissions
+- User-controlled input passed to AI prompts without sanitization
+- Overly permissive AI tool configurations (allowedTools includes Bash)
+- AI workflows triggered by any GitHub user (no write-access requirement)
+- No input validation or content filtering for AI context
+- AI agents with access to workflow secrets
+- No human approval gates for AI-suggested actions
+
+**Protective Controls:** 🛡️
+- Restrict AI agent tool permissions
+- Input sanitization before AI context injection
+- Require write access to trigger AI-powered workflows
+- Sandboxed AI execution environment
+- Human approval gates for AI-suggested actions
+- Separate AI workflows from release/publish workflows
+- Rate limiting for AI workflow triggers
+
+**Detective Controls:** 🔍
+- AI prompt injection detection
+- Audit logging of AI agent actions
+- Anomaly detection for AI workflow behavior
+- Runtime agent on runner (1 detection rules)
+
+---
+
 ### REGISTRY (Container / Artifact Registry)
 
 #### T-R001: Abuse Credentials for Registry Access
@@ -1672,6 +1703,7 @@ Controls are split into two categories:
 - T-C004: Workflow Script Injection
 - T-C009: CI/CD Vulnerability Exploitation
 - T-C020: CI/CD Misconfiguration Exploitation
+- T-C021: AI Agent Prompt Injection in Workflow
 - T-E001: Malicious Execution on Endpoint
 - T-E002: Endpoint Phishing
 - T-E011: Unicode Stealth Code Injection

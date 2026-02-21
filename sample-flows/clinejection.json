@@ -1,0 +1,923 @@
+{
+  "metadata": {
+    "name": "Attack Flow",
+    "created": "2026-02-21T18:27:33.347Z",
+    "version": "1.0",
+    "framework": "SITF"
+  },
+  "nodes": [
+    {
+      "id": "entryPoint-clinejection-1",
+      "type": "entryPoint",
+      "position": {
+        "x": 77.75819145258527,
+        "y": -95.80101589676582
+      },
+      "data": {
+        "label": "Malicious GitHub Issue"
+      },
+      "zIndex": 10,
+      "width": 194,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 77.75819145258527,
+        "y": -95.80101589676582
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-cicd-1",
+      "type": "component",
+      "position": {
+        "x": 32.56523412445961,
+        "y": 81.42348869657872
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "Cline GitHub Actions"
+      },
+      "zIndex": -1,
+      "width": 285,
+      "height": 798,
+      "style": {
+        "width": 285,
+        "height": 798
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false,
+      "positionAbsolute": {
+        "x": 32.56523412445961,
+        "y": 81.42348869657872
+      }
+    },
+    {
+      "id": "technique-c021-1",
+      "type": "technique",
+      "position": {
+        "x": 95,
+        "y": 160
+      },
+      "data": {
+        "id": "T-C021",
+        "name": "AI Agent Prompt Injection in Workflow",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data",
+        "risks": [
+          "AI agents with Bash/shell execution capabilities in workflows",
+          "AI agents with Write/Edit file permissions",
+          "User-controlled input passed to AI prompts without sanitization",
+          "Overly permissive AI tool configurations (allowedTools includes Bash)",
+          "AI workflows triggered by any GitHub user (no write-access requirement)",
+          "No input validation or content filtering for AI context",
+          "AI agents with access to workflow secrets",
+          "No human approval gates for AI-suggested actions"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "Restrict AI agent tool permissions",
+              "description": "Remove Bash, Write, and Edit from allowedTools when processing untrusted input",
+              "frameworks": [
+                "V3.1"
+              ]
+            },
+            {
+              "name": "Input sanitization before AI context injection",
+              "description": "Filter or escape user-controlled input before including in AI prompts",
+              "frameworks": [
+                "V2.1"
+              ]
+            },
+            {
+              "name": "Require write access to trigger AI-powered workflows",
+              "description": "Do not use 'allowed_non_write_users: *' for AI workflows with code execution",
+              "frameworks": [
+                "V3.1"
+              ]
+            },
+            {
+              "name": "Sandboxed AI execution environment",
+              "description": "Run AI agents in isolated environment without secret access",
+              "frameworks": [
+                "V3.1"
+              ]
+            },
+            {
+              "name": "Human approval gates for AI-suggested actions",
+              "description": "Require human review before AI agent executes code changes or commands",
+              "frameworks": [
+                "V3.1"
+              ]
+            },
+            {
+              "name": "Separate AI workflows from release/publish workflows",
+              "description": "Isolate AI triage workflows from workflows with publishing credentials",
+              "frameworks": [
+                "V3.1",
+                "V3.2"
+              ]
+            },
+            {
+              "name": "Rate limiting for AI workflow triggers",
+              "description": "Prevent abuse by limiting frequency of AI workflow invocations per user",
+              "frameworks": [
+                "V5.2"
+              ]
+            }
+          ],
+          "detective": [
+            {
+              "name": "AI prompt injection detection",
+              "description": "Monitor AI inputs for prompt injection patterns and adversarial instructions",
+              "frameworks": [
+                "V5.4"
+              ]
+            },
+            {
+              "name": "Audit logging of AI agent actions",
+              "description": "Log all commands executed by AI agents for forensic analysis",
+              "frameworks": [
+                "V5.4"
+              ]
+            },
+            {
+              "name": "Anomaly detection for AI workflow behavior",
+              "description": "Alert on unusual AI agent actions like npm install from external commits",
+              "frameworks": [
+                "V5.4"
+              ]
+            },
+            {
+              "name": "Runtime agent on runner",
+              "description": "Monitor AI workflow execution for malicious behavior patterns",
+              "frameworks": [
+                "V5.4"
+              ],
+              "detectionRules": [
+                {
+                  "source": "sigma",
+                  "ruleId": "proc_creation_lnx_susp_npm_install",
+                  "ruleName": "Suspicious NPM Install from External Source",
+                  "description": "Detects npm install commands referencing external GitHub commits"
+                }
+              ]
+            }
+          ]
+        },
+        "customLabel": "Claude tricked via issue title prompt injection"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "technique-c002-1",
+      "type": "technique",
+      "position": {
+        "x": 95,
+        "y": 326.3745755503214
+      },
+      "data": {
+        "id": "T-C002",
+        "name": "Malicious Execution in Workflow Context",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker executes malicious code within CI/CD workflow",
+        "risks": [
+          "Using untrusted GitHub actions",
+          "Using untrusted GitHub Apps",
+          "Using untrusted reusable workflows",
+          "Using untrusted SW packages on runners",
+          "Using untrusted container / VM image for runners",
+          "Lack of GitHub action pinning"
+        ],
+        "controls": [
+          "Pinning 3rd-party actions",
+          "Action whitelisting",
+          "Automated maintainer reputation and hygiene checks",
+          "Requiring code owner approval (VCS)",
+          "Branch protection rules (VCS)",
+          "Runner SBOM",
+          "Image scanning"
+        ],
+        "customLabel": "Claude executes npm install from attacker commit"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 95,
+        "y": 326.3745755503214
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c007-1",
+      "type": "technique",
+      "position": {
+        "x": 96.6335379822201,
+        "y": 517.3656426176458
+      },
+      "data": {
+        "id": "T-C007",
+        "name": "Action Cache Poisoning",
+        "component": "cicd",
+        "stage": "Post-Compromise",
+        "description": "Attacker poisons shared action cache to inject malicious code",
+        "risks": [
+          "Shared actions cache",
+          "No cache isolation",
+          "No cache verification"
+        ],
+        "controls": [
+          "Don't use actions cache",
+          "Workflow ordering",
+          "Cache artifact signing / verification",
+          "Cache isolation per repository"
+        ],
+        "customLabel": "Cacheract tool poisons node_modules cache"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 96.6335379822201,
+        "y": 517.3656426176458
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c011-1",
+      "type": "technique",
+      "position": {
+        "x": 95.02870069399455,
+        "y": 706.8288300510487
+      },
+      "data": {
+        "id": "T-C011",
+        "name": "Stealing Registry Tokens",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts registry publishing tokens from workflow",
+        "risks": [
+          "Workflow with access to secrets",
+          "Overprivileged registry tokens",
+          "Long-lived credentials"
+        ],
+        "controls": [
+          "OIDC setup in workflows",
+          "Trusted publishing (registry)",
+          "Runtime agent on runner",
+          "Secret scanning"
+        ],
+        "customLabel": "VSCE_PAT, OVSX_PAT, NPM_RELEASE_TOKEN exfiltrated"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 95.02870069399455,
+        "y": 706.8288300510487
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-registry-1",
+      "type": "component",
+      "position": {
+        "x": 412.43136640607145,
+        "y": 82.99112901560636
+      },
+      "data": {
+        "label": "Registry",
+        "componentId": "registry",
+        "techniques": [],
+        "customLabel": "VS Code Marketplace, OpenVSX, npm"
+      },
+      "zIndex": -1,
+      "width": 332,
+      "height": 650,
+      "style": {
+        "width": 332,
+        "height": 650
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 412.43136640607145,
+        "y": 82.99112901560636
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-r001-1",
+      "type": "technique",
+      "position": {
+        "x": 485.23610867450634,
+        "y": 186.6248706315522
+      },
+      "data": {
+        "id": "T-R001",
+        "name": "Abuse Credentials for Registry Access",
+        "component": "registry",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access registry",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "Default credentials / bad out-of-the-box config",
+          "Credentials in public images",
+          "Credentials in workflow logs",
+          "Previous breaches"
+        ],
+        "controls": [
+          "Mandatory MFA",
+          "IDP / SSO setup",
+          "Secret scanning",
+          "CSPM/CNAPP"
+        ],
+        "customLabel": "Stolen tokens authenticate to registries"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 485.23610867450634,
+        "y": 186.6248706315522
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-r006-1",
+      "type": "technique",
+      "position": {
+        "x": 563.2433011292164,
+        "y": 379.31139155290873
+      },
+      "data": {
+        "id": "T-R006",
+        "name": "Publishing Malicious IDE/Browser Extension",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious extension to extension marketplace",
+        "risks": [
+          "Overprivileged publishing credentials",
+          "No extension review process",
+          "No signing requirements"
+        ],
+        "controls": [
+          "Extension signing requirements",
+          "Extension review process",
+          "MFA for publisher account",
+          "Trusted publishing"
+        ],
+        "customLabel": "Malicious Cline extension to VS Code Marketplace"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 563.2433011292164,
+        "y": 379.31139155290873
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-r004-1",
+      "type": "technique",
+      "position": {
+        "x": 440.7242188182065,
+        "y": 562.2173589144813
+      },
+      "data": {
+        "id": "T-R004",
+        "name": "Publishing Malicious Package",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious package to registry",
+        "risks": [
+          "Overprivileged NPM token",
+          "Lack of provenance",
+          "Lack of trusted publishing",
+          "No package signing"
+        ],
+        "controls": [
+          "Trusted publishing",
+          "Provenance attestation",
+          "MFA for registry account",
+          "Package signing and verification",
+          "OIDC for publishing"
+        ],
+        "customLabel": "Cline CLI 2.3.0 with OpenClaw payload"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 440.7242188182065,
+        "y": 562.2173589144813
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-endpoint-1",
+      "type": "component",
+      "position": {
+        "x": 872.4897095377053,
+        "y": 81.39226229898873
+      },
+      "data": {
+        "label": "Endpoint/IDE",
+        "componentId": "endpoint",
+        "techniques": [],
+        "customLabel": "Developer Workstations"
+      },
+      "zIndex": -1,
+      "width": 487,
+      "height": 332,
+      "style": {
+        "width": 487,
+        "height": 332
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 872.4897095377053,
+        "y": 81.39226229898873
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-e015-1",
+      "type": "technique",
+      "position": {
+        "x": 1133.0290109156329,
+        "y": 201.67457292662954
+      },
+      "data": {
+        "id": "T-E015",
+        "name": "Extension Auto-Update Exploitation",
+        "component": "endpoint",
+        "stage": "Initial Access",
+        "description": "Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction",
+        "risks": [
+          "Auto-updates enabled for extensions",
+          "No update verification",
+          "Compromised extension publisher accounts",
+          "No extension version pinning",
+          "Silent updates without user notification"
+        ],
+        "controls": [
+          "Extension update approval workflow",
+          "Extension version pinning",
+          "Update signature verification",
+          "Extension update monitoring and alerting",
+          "Delayed update deployment (canary testing)",
+          "Extension marketplace security monitoring"
+        ],
+        "customLabel": "VS Code auto-updates to malicious Cline"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1133.0290109156329,
+        "y": 201.67457292662954
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-e001-1",
+      "type": "technique",
+      "position": {
+        "x": 939.2445782853727,
+        "y": 203.87845004142957
+      },
+      "data": {
+        "id": "T-E001",
+        "name": "Malicious Execution on Endpoint",
+        "component": "endpoint",
+        "stage": "Initial Access",
+        "description": "Attacker executes malicious code on developer workstation",
+        "risks": [
+          "Using untrusted IDE extensions",
+          "Using untrusted software packages on endpoints",
+          "No EDR",
+          "Lack of application sandboxing",
+          "Package installation scripts enabled",
+          "Direct downloads from public registries"
+        ],
+        "controls": [
+          "Local registry proxy with filtering",
+          "EDR on endpoint",
+          "IDE sandboxing",
+          "Mandating signed extensions",
+          "Package version pinning",
+          "Automated maintainer reputation and hygiene checks",
+          "Application whitelisting",
+          "Disable package installation scripts (--ignore-scripts)"
+        ],
+        "customLabel": "npm postinstall installs OpenClaw"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 939.2445782853727,
+        "y": 203.87845004142957
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-clinejection-1",
+      "type": "exitPoint",
+      "position": {
+        "x": 991.3927909213974,
+        "y": 586.2055302504639
+      },
+      "data": {
+        "label": "Secondary Supply Chain Attack"
+      },
+      "zIndex": 10,
+      "width": 252,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 991.3927909213974,
+        "y": 586.2055302504639
+      },
+      "dragging": false
+    },
+    {
+      "id": "entryPoint-1771679111053",
+      "type": "entryPoint",
+      "position": {
+        "x": 1040.27237563883,
+        "y": -32.01352027655244
+      },
+      "data": {
+        "label": "Consumer entry"
+      },
+      "zIndex": 10,
+      "width": 156,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1040.27237563883,
+        "y": -32.01352027655244
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-entry-gap",
+      "source": "entryPoint-clinejection-1",
+      "sourceHandle": "bottom",
+      "target": "technique-c021-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "Prompt injection",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-gap-c002",
+      "source": "technique-c021-1",
+      "sourceHandle": "bottom",
+      "target": "technique-c002-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-c002-c007",
+      "source": "technique-c002-1",
+      "sourceHandle": "bottom",
+      "target": "technique-c007-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "Cacheract deployed",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-c007-c011",
+      "source": "technique-c007-1",
+      "sourceHandle": "bottom",
+      "target": "technique-c011-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "Cache hijacks post-step",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-c011-r001",
+      "source": "technique-c011-1",
+      "sourceHandle": "right",
+      "target": "technique-r001-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Stolen tokens",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r001-r006",
+      "source": "technique-r001-1",
+      "sourceHandle": "bottom",
+      "target": "technique-r006-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r001-r004",
+      "source": "technique-r001-1",
+      "sourceHandle": "bottom",
+      "target": "technique-r004-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r006-e015",
+      "source": "technique-r006-1",
+      "sourceHandle": "right",
+      "target": "technique-e015-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Auto-update",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r004-e001",
+      "source": "technique-r004-1",
+      "sourceHandle": "right",
+      "target": "technique-e001-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "npm install",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-e015-exit",
+      "source": "technique-e015-1",
+      "sourceHandle": "right",
+      "target": "exitPoint-clinejection-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-e001-exit",
+      "source": "technique-e001-1",
+      "sourceHandle": "right",
+      "target": "exitPoint-clinejection-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "OpenClaw",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "zIndex": 100,
+      "source": "entryPoint-1771679111053",
+      "sourceHandle": "bottom",
+      "target": "technique-e001-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-1771679111053bottom-technique-e001-1top"
+    },
+    {
+      "zIndex": 100,
+      "source": "entryPoint-1771679111053",
+      "sourceHandle": "bottom",
+      "target": "technique-e015-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-1771679111053bottom-technique-e015-1top"
+    }
+  ]
+}
