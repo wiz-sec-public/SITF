@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "Attack Flow",
-    "created": "2026-02-18T12:50:02.829Z",
+    "created": "2026-02-18T12:58:26.117Z",
     "version": "1.0",
     "framework": "SITF"
   },
@@ -182,12 +182,15 @@
         "customLabel": "PyPI"
       },
       "zIndex": -1,
-      "width": 250,
-      "height": 500,
+      "width": 252,
+      "height": 453,
       "style": {
-        "width": 250,
-        "height": 500
-      }
+        "width": 252,
+        "height": 453
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false
     },
     {
       "id": "technique-r001-1",
@@ -279,12 +282,15 @@
         "customLabel": "Consumer Systems"
       },
       "zIndex": -1,
-      "width": 250,
-      "height": 500,
+      "width": 244,
+      "height": 415,
       "style": {
-        "width": 250,
-        "height": 500
-      }
+        "width": 244,
+        "height": 415
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false
     },
     {
       "id": "technique-e001-1",
@@ -369,19 +375,19 @@
       "id": "exitPoint-ultralytics-1",
       "type": "exitPoint",
       "position": {
-        "x": 946.266908344686,
-        "y": 414.5283337920338
+        "x": 649.6852449768196,
+        "y": 561.7759133937685
       },
       "data": {
         "label": "Secondary Supply Chain Attack"
       },
       "zIndex": 10,
-      "width": 251,
+      "width": 252,
       "height": 46,
-      "selected": false,
+      "selected": true,
       "positionAbsolute": {
-        "x": 946.266908344686,
-        "y": 414.5283337920338
+        "x": 649.6852449768196,
+        "y": 561.7759133937685
       },
       "dragging": false
     }
@@ -568,7 +574,7 @@
       "source": "technique-e005-1",
       "sourceHandle": "right",
       "target": "exitPoint-ultralytics-1",
-      "targetHandle": "left",
+      "targetHandle": "top",
       "type": "smoothstep",
       "animated": false,
       "zIndex": 100,
