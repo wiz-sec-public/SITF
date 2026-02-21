@@ -3495,6 +3495,158 @@
       }
     },
     {
+      "id": "T-C021",
+      "name": "AI Agent Prompt Injection in Workflow",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data",
+      "risks": [
+        "AI agents with Bash/shell execution capabilities in workflows",
+        "AI agents with Write/Edit file permissions",
+        "User-controlled input passed to AI prompts without sanitization",
+        "Overly permissive AI tool configurations (allowedTools includes Bash)",
+        "AI workflows triggered by any GitHub user (no write-access requirement)",
+        "No input validation or content filtering for AI context",
+        "AI agents with access to workflow secrets",
+        "No human approval gates for AI-suggested actions"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Restrict AI agent tool permissions",
+            "description": "Remove Bash, Write, and Edit from allowedTools when processing untrusted input",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Input sanitization before AI context injection",
+            "description": "Filter or escape user-controlled input before including in AI prompts",
+            "frameworks": {
+              "spvs": [
+                "V2.1"
+              ]
+            }
+          },
+          {
+            "name": "Require write access to trigger AI-powered workflows",
+            "description": "Do not use 'allowed_non_write_users: *' for AI workflows with code execution",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Sandboxed AI execution environment",
+            "description": "Run AI agents in isolated environment without secret access",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Human approval gates for AI-suggested actions",
+            "description": "Require human review before AI agent executes code changes or commands",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Separate AI workflows from release/publish workflows",
+            "description": "Isolate AI triage workflows from workflows with publishing credentials",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Rate limiting for AI workflow triggers",
+            "description": "Prevent abuse by limiting frequency of AI workflow invocations per user",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "AI prompt injection detection",
+            "description": "Monitor AI inputs for prompt injection patterns and adversarial instructions",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Audit logging of AI agent actions",
+            "description": "Log all commands executed by AI agents for forensic analysis",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Anomaly detection for AI workflow behavior",
+            "description": "Alert on unusual AI agent actions like npm install from external commits",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Runtime agent on runner",
+            "description": "Monitor AI workflow execution for malicious behavior patterns",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            },
+            "detectionRules": [
+              {
+                "source": "sigma",
+                "ruleId": "proc_creation_lnx_susp_npm_install",
+                "ruleName": "Suspicious NPM Install from External Source",
+                "description": "Detects npm install commands referencing external GitHub commits"
+              }
+            ]
+          }
+        ]
+      },
+      "frameworkMappings": {
+        "mitre_attack": [
+          {
+            "techniqueId": "T1059.004",
+            "techniqueName": "Command and Scripting Interpreter: Unix Shell",
+            "tactic": "Execution"
+          },
+          {
+            "techniqueId": "T1195.002",
+            "techniqueName": "Supply Chain Compromise: Compromise Software Supply Chain",
+            "tactic": "Initial Access"
+          }
+        ],
+        "owasp_spvs": [
+          "V2.1",
+          "V3.1",
+          "V3.2",
+          "V5.2",
+          "V5.4"
+        ]
+      }
+    },
+    {
       "id": "T-R001",
       "name": "Abuse Credentials for Registry Access",
       "component": "registry",
