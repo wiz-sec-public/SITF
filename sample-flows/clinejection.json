@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "Attack Flow",
-    "created": "2026-02-21T18:27:33.347Z",
+    "created": "2026-02-22T09:49:57.727Z",
     "version": "1.0",
     "framework": "SITF"
   },
@@ -30,7 +30,7 @@
       "id": "component-cicd-1",
       "type": "component",
       "position": {
-        "x": 32.56523412445961,
+        "x": 30.829882401092277,
         "y": 81.42348869657872
       },
       "data": {
@@ -40,17 +40,17 @@
         "customLabel": "Cline GitHub Actions"
       },
       "zIndex": -1,
-      "width": 285,
-      "height": 798,
+      "width": 293,
+      "height": 895,
       "style": {
-        "width": 285,
-        "height": 798
+        "width": 293,
+        "height": 895
       },
       "selected": false,
       "dragging": false,
       "resizing": false,
       "positionAbsolute": {
-        "x": 32.56523412445961,
+        "x": 30.829882401092277,
         "y": 81.42348869657872
       }
     },
@@ -182,7 +182,7 @@
       "type": "technique",
       "position": {
         "x": 95,
-        "y": 326.3745755503214
+        "y": 368.02301691113735
       },
       "data": {
         "id": "T-C002",
@@ -215,7 +215,7 @@
       "selected": false,
       "positionAbsolute": {
         "x": 95,
-        "y": 326.3745755503214
+        "y": 368.02301691113735
       },
       "dragging": false
     },
@@ -223,8 +223,8 @@
       "id": "technique-c007-1",
       "type": "technique",
       "position": {
-        "x": 96.6335379822201,
-        "y": 517.3656426176458
+        "x": 94.89818625885277,
+        "y": 590.2504149990737
       },
       "data": {
         "id": "T-C007",
@@ -250,8 +250,8 @@
       "height": 113,
       "selected": false,
       "positionAbsolute": {
-        "x": 96.6335379822201,
-        "y": 517.3656426176458
+        "x": 94.89818625885277,
+        "y": 590.2504149990737
       },
       "dragging": false
     },
@@ -259,8 +259,8 @@
       "id": "technique-c011-1",
       "type": "technique",
       "position": {
-        "x": 95.02870069399455,
-        "y": 706.8288300510487
+        "x": 96.76405241736188,
+        "y": 798.8024713895172
       },
       "data": {
         "id": "T-C011",
@@ -286,8 +286,8 @@
       "height": 129,
       "selected": false,
       "positionAbsolute": {
-        "x": 95.02870069399455,
-        "y": 706.8288300510487
+        "x": 96.76405241736188,
+        "y": 798.8024713895172
       },
       "dragging": false
     },
@@ -305,11 +305,11 @@
         "customLabel": "VS Code Marketplace, OpenVSX, npm"
       },
       "zIndex": -1,
-      "width": 332,
-      "height": 650,
+      "width": 660,
+      "height": 449,
       "style": {
-        "width": 332,
-        "height": 650
+        "width": 660,
+        "height": 449
       },
       "selected": false,
       "positionAbsolute": {
@@ -323,8 +323,8 @@
       "id": "technique-r001-1",
       "type": "technique",
       "position": {
-        "x": 485.23610867450634,
-        "y": 186.6248706315522
+        "x": 667.42357778727,
+        "y": 188.07080292609794
       },
       "data": {
         "id": "T-R001",
@@ -352,8 +352,8 @@
       "height": 129,
       "selected": false,
       "positionAbsolute": {
-        "x": 485.23610867450634,
-        "y": 186.6248706315522
+        "x": 667.42357778727,
+        "y": 188.07080292609794
       },
       "dragging": false
     },
@@ -361,8 +361,8 @@
       "id": "technique-r006-1",
       "type": "technique",
       "position": {
-        "x": 563.2433011292164,
-        "y": 379.31139155290873
+        "x": 859.6594215110936,
+        "y": 367.7439331965428
       },
       "data": {
         "id": "T-R006",
@@ -388,8 +388,8 @@
       "height": 129,
       "selected": false,
       "positionAbsolute": {
-        "x": 563.2433011292164,
-        "y": 379.31139155290873
+        "x": 859.6594215110936,
+        "y": 367.7439331965428
       },
       "dragging": false
     },
@@ -397,8 +397,8 @@
       "id": "technique-r004-1",
       "type": "technique",
       "position": {
-        "x": 440.7242188182065,
-        "y": 562.2173589144813
+        "x": 500.7777814218532,
+        "y": 374.46243144535185
       },
       "data": {
         "id": "T-R004",
@@ -426,8 +426,8 @@
       "height": 113,
       "selected": false,
       "positionAbsolute": {
-        "x": 440.7242188182065,
-        "y": 562.2173589144813
+        "x": 500.7777814218532,
+        "y": 374.46243144535185
       },
       "dragging": false
     },
@@ -435,8 +435,8 @@
       "id": "component-endpoint-1",
       "type": "component",
       "position": {
-        "x": 872.4897095377053,
-        "y": 81.39226229898873
+        "x": 496.81592868755115,
+        "y": 663.0015258206796
       },
       "data": {
         "label": "Endpoint/IDE",
@@ -453,8 +453,8 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 872.4897095377053,
-        "y": 81.39226229898873
+        "x": 496.81592868755115,
+        "y": 663.0015258206796
       },
       "dragging": false,
       "resizing": false
@@ -463,8 +463,8 @@
       "id": "technique-e015-1",
       "type": "technique",
       "position": {
-        "x": 1133.0290109156329,
-        "y": 201.67457292662954
+        "x": 786.3491800857266,
+        "y": 790.7034420040726
       },
       "data": {
         "id": "T-E015",
@@ -494,8 +494,8 @@
       "height": 113,
       "selected": false,
       "positionAbsolute": {
-        "x": 1133.0290109156329,
-        "y": 201.67457292662954
+        "x": 786.3491800857266,
+        "y": 790.7034420040726
       },
       "dragging": false
     },
@@ -503,8 +503,8 @@
       "id": "technique-e001-1",
       "type": "technique",
       "position": {
-        "x": 939.2445782853727,
-        "y": 203.87845004142957
+        "x": 536.8263818918111,
+        "y": 791.4613868243267
       },
       "data": {
         "id": "T-E001",
@@ -537,8 +537,8 @@
       "height": 113,
       "selected": false,
       "positionAbsolute": {
-        "x": 939.2445782853727,
-        "y": 203.87845004142957
+        "x": 536.8263818918111,
+        "y": 791.4613868243267
       },
       "dragging": false
     },
@@ -546,8 +546,8 @@
       "id": "exitPoint-clinejection-1",
       "type": "exitPoint",
       "position": {
-        "x": 991.3927909213974,
-        "y": 586.2055302504639
+        "x": 617.0148953603536,
+        "y": 1177.4412304610073
       },
       "data": {
         "label": "Secondary Supply Chain Attack"
@@ -557,8 +557,8 @@
       "height": 46,
       "selected": false,
       "positionAbsolute": {
-        "x": 991.3927909213974,
-        "y": 586.2055302504639
+        "x": 617.0148953603536,
+        "y": 1177.4412304610073
       },
       "dragging": false
     },
@@ -566,8 +566,8 @@
       "id": "entryPoint-1771679111053",
       "type": "entryPoint",
       "position": {
-        "x": 1040.27237563883,
-        "y": -32.01352027655244
+        "x": 659.9966721991434,
+        "y": 559.2221799339909
       },
       "data": {
         "label": "Consumer entry"
@@ -577,8 +577,8 @@
       "height": 46,
       "selected": false,
       "positionAbsolute": {
-        "x": 1040.27237563883,
-        "y": -32.01352027655244
+        "x": 659.9966721991434,
+        "y": 559.2221799339909
       },
       "dragging": false
     }
@@ -620,7 +620,7 @@
       "markerEnd": {
         "type": "arrowclosed"
       },
-      "label": "",
+      "label": "Commit in the fork bypass",
       "labelStyle": {
         "fill": "#DC2626",
         "fontWeight": 600,
@@ -629,7 +629,8 @@
       "labelBgStyle": {
         "fill": "#FEE2E2",
         "fillOpacity": 0.9
-      }
+      },
+      "selected": false
     },
     {
       "id": "edge-c002-c007",
@@ -717,7 +718,7 @@
       "markerEnd": {
         "type": "arrowclosed"
       },
-      "label": "",
+      "label": "Potential flow",
       "labelStyle": {
         "fill": "#DC2626",
         "fontWeight": 600,
@@ -835,7 +836,7 @@
         "fill": "#FEE2E2",
         "fillOpacity": 0.9
       },
-      "selected": false
+      "selected": true
     },
     {
       "id": "edge-e001-exit",
@@ -890,7 +891,8 @@
         "fill": "#FEE2E2",
         "fillOpacity": 0.9
       },
-      "id": "reactflow__edge-entryPoint-1771679111053bottom-technique-e001-1top"
+      "id": "reactflow__edge-entryPoint-1771679111053bottom-technique-e001-1top",
+      "selected": false
     },
     {
       "zIndex": 100,
@@ -917,7 +919,8 @@
         "fill": "#FEE2E2",
         "fillOpacity": 0.9
       },
-      "id": "reactflow__edge-entryPoint-1771679111053bottom-technique-e015-1top"
+      "id": "reactflow__edge-entryPoint-1771679111053bottom-technique-e015-1top",
+      "selected": false
     }
   ]
 }

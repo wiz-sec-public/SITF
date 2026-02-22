@@ -200,36 +200,46 @@
         
         /* Force component nodes to always be in background */
         .react-flow__node[data-type="component"] {
-            z-index: -1 !important;
+            z-index: 0 !important;
         }
         
         /* Keep components in background even when selected */
         .react-flow__node[data-type="component"].selected {
-            z-index: -1 !important;
+            z-index: 0 !important;
         }
         
-        /* Technique nodes and other nodes on top */
+        /* Technique nodes and other nodes on top of edges */
         .react-flow__node[data-type="technique"],
         .react-flow__node[data-type="entryPoint"],
         .react-flow__node[data-type="exitPoint"] {
-            z-index: 10 !important;
+            z-index: 100 !important;
         }
         
         /* Keep technique nodes on top even when not selected */
         .react-flow__node[data-type="technique"]:not(.selected),
         .react-flow__node[data-type="entryPoint"]:not(.selected),
         .react-flow__node[data-type="exitPoint"]:not(.selected) {
-            z-index: 10 !important;
+            z-index: 100 !important;
         }
         
         /* Edges should be above component nodes but below technique nodes and popups */
         .react-flow__edge {
-            z-index: 5 !important;
+            z-index: 50 !important;
         }
         
         /* Ensure edge labels are also at same level as edges */
         .react-flow__edge-text {
-            z-index: 5 !important;
+            z-index: 50 !important;
+        }
+        
+        /* Force the edges SVG container to be above components but below technique nodes */
+        .react-flow__edges {
+            z-index: 10 !important;
+        }
+        
+        /* Ensure the nodes container is above edges for technique nodes */
+        .react-flow__nodes {
+            z-index: 20 !important;
         }
         
         /* Force popups to be above everything including edges */
@@ -1537,48 +1547,61 @@
             const onEdgeDoubleClick = useCallback((event, edge) => {
                 event.stopPropagation();
                 
-                if (!techniquesData?.impactTypes) return;
+                let newLabel;
                 
-                // Combine all impact types into a single flat list
-                const allImpacts = [
-                    ...techniquesData.impactTypes.primary,
-                    ...techniquesData.impactTypes.secondary
-                ];
-                
-                // Remove duplicates and create selection list
-                const uniqueImpacts = [...new Set(allImpacts)];
-                const impactOptions = [
-                    ...uniqueImpacts.map(i => ({ label: i, value: i })),
-                    { label: 'No Label', value: '' }
-                ];
-                
-                const options = impactOptions
-                    .map((item, idx) => `${idx}. ${item.label}`)
-                    .join('\n');
-                
-                const selection = prompt(
-                    'Select Impact Type:\n\n' + options + '\n\nEnter number or custom text:',
-                    edge.label || ''
-                );
-                
-                if (selection !== null) {
-                    let newLabel = selection.trim();
+                // Check if impactTypes are defined for predefined options
+                if (techniquesData?.impactTypes) {
+                    // Combine all impact types into a single flat list
+                    const allImpacts = [
+                        ...techniquesData.impactTypes.primary,
+                        ...techniquesData.impactTypes.secondary
+                    ];
+                    
+                    // Remove duplicates and create selection list
+                    const uniqueImpacts = [...new Set(allImpacts)];
+                    const impactOptions = [
+                        ...uniqueImpacts.map(i => ({ label: i, value: i })),
+                        { label: 'No Label', value: '' }
+                    ];
+                    
+                    const options = impactOptions
+                        .map((item, idx) => `${idx}. ${item.label}`)
+                        .join('\n');
+                    
+                    const selection = prompt(
+                        'Select Impact Type:\n\n' + options + '\n\nEnter number or custom text:',
+                        edge.label || ''
+                    );
+                    
+                    if (selection === null) return;
+                    
+                    newLabel = selection.trim();
                     
                     // Check if it's a number selection
                     const num = parseInt(selection);
                     if (!isNaN(num) && num >= 0 && num < impactOptions.length) {
                         newLabel = impactOptions[num].value;
                     }
+                } else {
+                    // No predefined impact types - allow free text entry
+                    const selection = prompt(
+                        'Enter edge label (or leave empty to remove):',
+                        edge.label || ''
+                    );
                     
-                    setEdges((eds) => eds.map((e) =>
-                        e.id === edge.id ? {
-                            ...e,
-                            label: newLabel,
-                            labelStyle: { fill: '#DC2626', fontWeight: 600, fontSize: 12 },
-                            labelBgStyle: { fill: '#FEE2E2', fillOpacity: 0.9 }
-                        } : e
-                    ));
+                    if (selection === null) return;
+                    
+                    newLabel = selection.trim();
                 }
+                
+                setEdges((eds) => eds.map((e) =>
+                    e.id === edge.id ? {
+                        ...e,
+                        label: newLabel,
+                        labelStyle: { fill: '#DC2626', fontWeight: 600, fontSize: 12 },
+                        labelBgStyle: { fill: '#FEE2E2', fillOpacity: 0.9 }
+                    } : e
+                ));
             }, [setEdges]);
             
             const onDragStart = (event, nodeType, data) => {
