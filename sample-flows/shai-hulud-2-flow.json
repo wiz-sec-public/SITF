@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "Attack Flow",
-    "created": "2026-01-05T06:43:44.829Z",
+    "created": "2026-03-15T11:17:57.976Z",
     "version": "1.0",
     "framework": "SITF"
   },
@@ -31,7 +31,7 @@
       "type": "component",
       "position": {
         "x": 459.9382399236488,
-        "y": 101.57011058610169
+        "y": 96.02358128412135
       },
       "data": {
         "label": "Endpoint/IDE",
@@ -45,7 +45,7 @@
       "selected": false,
       "positionAbsolute": {
         "x": 459.9382399236488,
-        "y": 101.57011058610169
+        "y": 96.02358128412135
       },
       "dragging": false,
       "style": {
@@ -65,11 +65,11 @@
         "label": "CI/CD",
         "componentId": "cicd",
         "techniques": [],
-        "customLabel": "GitHub Actions"
+        "customLabel": "Patiernt Zero's GitHub Actions"
       },
       "zIndex": -1,
       "width": 226,
-      "height": 524,
+      "height": 371,
       "selected": false,
       "positionAbsolute": {
         "x": -184.95150703712466,
@@ -78,7 +78,7 @@
       "dragging": false,
       "style": {
         "width": 226,
-        "height": 524
+        "height": 371
       },
       "resizing": false
     },
@@ -86,8 +86,8 @@
       "id": "component-1765192768857",
       "type": "component",
       "position": {
-        "x": 762.9600109542254,
-        "y": 107.15935217348834
+        "x": 791.4805677138114,
+        "y": 98.75557644321333
       },
       "data": {
         "label": "VCS",
@@ -100,8 +100,8 @@
       "height": 235,
       "selected": false,
       "positionAbsolute": {
-        "x": 762.9600109542254,
-        "y": 107.15935217348834
+        "x": 791.4805677138114,
+        "y": 98.75557644321333
       },
       "dragging": false,
       "style": {
@@ -114,8 +114,8 @@
       "id": "component-1765192777220",
       "type": "component",
       "position": {
-        "x": 152.0349517800563,
-        "y": 108.4653241449428
+        "x": 133.38737229524827,
+        "y": 363.14446911342066
       },
       "data": {
         "label": "Registry",
@@ -128,8 +128,8 @@
       "height": 278,
       "selected": false,
       "positionAbsolute": {
-        "x": 152.0349517800563,
-        "y": 108.4653241449428
+        "x": 133.38737229524827,
+        "y": 363.14446911342066
       },
       "dragging": false,
       "resizing": false,
@@ -220,8 +220,8 @@
       "id": "technique-1765192851809",
       "type": "technique",
       "position": {
-        "x": 171.4478014276823,
-        "y": 220.42648011381493
+        "x": 160.31425155162822,
+        "y": 476.49457012466223
       },
       "data": {
         "id": "T-R004",
@@ -248,8 +248,8 @@
       "height": 96,
       "selected": false,
       "positionAbsolute": {
-        "x": 171.4478014276823,
-        "y": 220.42648011381493
+        "x": 160.31425155162822,
+        "y": 476.49457012466223
       },
       "dragging": false
     },
@@ -333,7 +333,7 @@
       "type": "entryPoint",
       "position": {
         "x": 479.8711651962851,
-        "y": 0.4640370756697081
+        "y": 11.374059826525212
       },
       "data": {
         "label": "Consumer entry point"
@@ -344,7 +344,7 @@
       "selected": false,
       "positionAbsolute": {
         "x": 479.8711651962851,
-        "y": 0.4640370756697081
+        "y": 11.374059826525212
       },
       "dragging": false
     },
@@ -352,8 +352,8 @@
       "id": "technique-1765193033758",
       "type": "technique",
       "position": {
-        "x": 797.0705833197418,
-        "y": 209.00614488495623
+        "x": 825.5911400793278,
+        "y": 200.60236915468124
       },
       "data": {
         "id": "T-V004",
@@ -378,8 +378,8 @@
       "height": 96,
       "selected": false,
       "positionAbsolute": {
-        "x": 797.0705833197418,
-        "y": 209.00614488495623
+        "x": 825.5911400793278,
+        "y": 200.60236915468124
       },
       "dragging": false
     },
@@ -387,8 +387,8 @@
       "id": "exitPoint-1765193081459",
       "type": "exitPoint",
       "position": {
-        "x": 804.6286460830191,
-        "y": 376.389742854306
+        "x": 833.1492028426052,
+        "y": 367.98596712403105
       },
       "data": {
         "label": "Future Breach"
@@ -398,8 +398,8 @@
       "height": 46,
       "selected": false,
       "positionAbsolute": {
-        "x": 804.6286460830191,
-        "y": 376.389742854306
+        "x": 833.1492028426052,
+        "y": 367.98596712403105
       },
       "dragging": false
     },
@@ -442,8 +442,8 @@
       "id": "exitPoint-1765193150677",
       "type": "exitPoint",
       "position": {
-        "x": 495.41087596609214,
-        "y": 762.3717892560098
+        "x": 496.5624899428127,
+        "y": 767.4388907535811
       },
       "data": {
         "label": "Ongoing Access"
@@ -453,28 +453,8 @@
       "height": 46,
       "selected": false,
       "positionAbsolute": {
-        "x": 495.41087596609214,
-        "y": 762.3717892560098
-      },
-      "dragging": false
-    },
-    {
-      "id": "exitPoint-1765193177090",
-      "type": "exitPoint",
-      "position": {
-        "x": 125.73812428494875,
-        "y": 506.765168577188
-      },
-      "data": {
-        "label": "Secondary Supply Chain Attack"
-      },
-      "zIndex": 10,
-      "width": 252,
-      "height": 46,
-      "selected": false,
-      "positionAbsolute": {
-        "x": 125.73812428494875,
-        "y": 506.765168577188
+        "x": 496.5624899428127,
+        "y": 767.4388907535811
       },
       "dragging": false
     },
@@ -482,8 +462,8 @@
       "id": "technique-1765193232563",
       "type": "technique",
       "position": {
-        "x": -155.19054368548768,
-        "y": 501.9346247709658
+        "x": 160.58556855822633,
+        "y": 143.82025140660443
       },
       "data": {
         "id": "T-C005",
@@ -510,8 +490,8 @@
       "height": 96,
       "selected": false,
       "positionAbsolute": {
-        "x": -155.19054368548768,
-        "y": 501.9346247709658
+        "x": 160.58556855822633,
+        "y": 143.82025140660443
       },
       "dragging": false
     },
@@ -519,8 +499,8 @@
       "id": "technique-1765705449405",
       "type": "technique",
       "position": {
-        "x": 494.1494302254897,
-        "y": 473.4223823703654
+        "x": 495.74454164825454,
+        "y": 476.61260521589486
       },
       "data": {
         "id": "T-E010",
@@ -551,10 +531,38 @@
       "height": 96,
       "selected": false,
       "positionAbsolute": {
-        "x": 494.1494302254897,
-        "y": 473.4223823703654
+        "x": 495.74454164825454,
+        "y": 476.61260521589486
       },
       "dragging": false
+    },
+    {
+      "id": "component-1773570626254",
+      "type": "component",
+      "position": {
+        "x": 127.6974825094884,
+        "y": 46.59247068168321
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "Secondary CI/CD component"
+      },
+      "zIndex": -1,
+      "width": 227,
+      "height": 248,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 127.6974825094884,
+        "y": 46.59247068168321
+      },
+      "dragging": false,
+      "style": {
+        "width": 227,
+        "height": 248
+      },
+      "resizing": false
     }
   ],
   "edges": [
@@ -776,30 +784,6 @@
     },
     {
       "zIndex": 1000,
-      "source": "technique-1765192851809",
-      "sourceHandle": "bottom",
-      "target": "exitPoint-1765193177090",
-      "targetHandle": "top",
-      "type": "smoothstep",
-      "animated": false,
-      "markerEnd": {
-        "type": "arrowclosed"
-      },
-      "label": "",
-      "labelStyle": {
-        "fill": "#DC2626",
-        "fontWeight": 600,
-        "fontSize": 12
-      },
-      "labelBgStyle": {
-        "fill": "#FEE2E2",
-        "fillOpacity": 0.9
-      },
-      "id": "reactflow__edge-technique-1765192851809bottom-exitPoint-1765193177090top",
-      "selected": false
-    },
-    {
-      "zIndex": 1000,
       "source": "technique-1765192928174",
       "sourceHandle": "bottom",
       "target": "technique-1765193232563",
@@ -872,6 +856,33 @@
         "fillOpacity": 0.9
       },
       "id": "reactflow__edge-technique-1765705449405bottom-technique-1765193129128top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-1765192928174",
+      "sourceHandle": "bottom",
+      "target": "technique-1765705449405",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765192928174bottom-technique-1765705449405top"
     }
   ]
 }
