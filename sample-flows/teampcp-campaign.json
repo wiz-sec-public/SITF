@@ -1,0 +1,2281 @@
+{
+  "metadata": {
+    "name": "Attack Flow",
+    "created": "2026-03-24T22:02:54.017Z",
+    "version": "1.0",
+    "framework": "SITF"
+  },
+  "nodes": [
+    {
+      "id": "victimZone-aqua",
+      "type": "victimZone",
+      "position": {
+        "x": -24,
+        "y": 15
+      },
+      "data": {
+        "label": "Aqua Security",
+        "color": "#3B82F6"
+      },
+      "zIndex": -10,
+      "width": 1444,
+      "height": 945,
+      "style": {
+        "width": 1444,
+        "height": 945
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "victimZone-checkmarx",
+      "type": "victimZone",
+      "position": {
+        "x": 778.7918879446197,
+        "y": 1050.546676640395
+      },
+      "data": {
+        "label": "Checkmarx",
+        "color": "#06B6D4"
+      },
+      "zIndex": -10,
+      "width": 640,
+      "height": 542,
+      "style": {
+        "width": 640,
+        "height": 542
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 778.7918879446197,
+        "y": 1050.546676640395
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "victimZone-berryai",
+      "type": "victimZone",
+      "position": {
+        "x": 1486.4927006335545,
+        "y": 939.593397409554
+      },
+      "data": {
+        "label": "BerryAI (LiteLLM)",
+        "color": "#22C55E"
+      },
+      "zIndex": -10,
+      "width": 665,
+      "height": 570,
+      "style": {
+        "width": 665,
+        "height": 570
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1486.4927006335545,
+        "y": 939.593397409554
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "victimZone-downstream",
+      "type": "victimZone",
+      "position": {
+        "x": 1480,
+        "y": 40
+      },
+      "data": {
+        "label": "Downstream Victims",
+        "color": "#EF4444"
+      },
+      "zIndex": -10,
+      "width": 355,
+      "height": 667,
+      "style": {
+        "width": 355,
+        "height": 667
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "entryPoint-teampcp-1",
+      "type": "entryPoint",
+      "position": {
+        "x": -161.99288060905695,
+        "y": -95.66485493574358
+      },
+      "data": {
+        "label": "Malicious Fork PR"
+      },
+      "zIndex": 10,
+      "width": 161,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -161.99288060905695,
+        "y": -95.66485493574358
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-cicd-1",
+      "type": "component",
+      "position": {
+        "x": 35.816688453824156,
+        "y": 81.40834422691216
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "GitHub Actions @ aquasecurity org - Initial"
+      },
+      "zIndex": -1,
+      "width": 264,
+      "height": 481,
+      "style": {
+        "width": 264,
+        "height": 481
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false,
+      "positionAbsolute": {
+        "x": 52.816688453824156,
+        "y": 81.40834422691216
+      }
+    },
+    {
+      "id": "technique-c003-1",
+      "type": "technique",
+      "position": {
+        "x": 95,
+        "y": 178.308474949857
+      },
+      "data": {
+        "id": "T-C003",
+        "name": "PWN Request / Poisoned Pipeline Execution",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker submits malicious PR that triggers workflow with elevated privileges",
+        "risks": [
+          "Misconfigured repo - visibility",
+          "Misconfigured VCS access - external contributors",
+          "Allowing PRs from forks",
+          "Usage of pull_request_target/workflow_run",
+          "Default workflow permissions set to WRITE",
+          "Default workflow permissions set to approve PR",
+          "Workflows with access to secrets"
+        ],
+        "controls": [
+          "Branch protection rules (VCS)",
+          "Private repo (VCS)",
+          "CICD scanning tools",
+          "Require explicit approval/ disallow workflows from forks (VCS)",
+          "Minimal workflow permissions",
+          "Default workflow permissions not set to approve PRs"
+        ],
+        "customLabel": "Feb 27: Memory dump via /proc/<pid>/mem"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 95,
+        "y": 178.308474949857
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c005-1",
+      "type": "technique",
+      "position": {
+        "x": 96.40834422691205,
+        "y": 373.0923093878124
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": [
+          "OIDC setup in workflows",
+          "Runtime agent on runner",
+          "Secret scanning",
+          "Minimal workflow permissions",
+          "Log sanitization"
+        ],
+        "customLabel": "aqua-bot PAT stolen (campaign pivot point)"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 96.40834422691205,
+        "y": 373.0923093878124
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-vcs-1",
+      "type": "component",
+      "position": {
+        "x": 367.9732887824257,
+        "y": 78.75166945109845
+      },
+      "data": {
+        "label": "VCS",
+        "componentId": "vcs",
+        "techniques": [],
+        "customLabel": "GitHub @ aquasecurity org"
+      },
+      "zIndex": -1,
+      "width": 255,
+      "height": 520,
+      "style": {
+        "width": 255,
+        "height": 520
+      },
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 369.9732887824257,
+        "y": 78.75166945109845
+      },
+      "resizing": false
+    },
+    {
+      "id": "technique-v001-1",
+      "type": "technique",
+      "position": {
+        "x": 412.4766276846225,
+        "y": 158.75166945109845
+      },
+      "data": {
+        "id": "T-V001",
+        "name": "Abuse Credentials for VCS Access",
+        "component": "vcs",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access VCS",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "Credentials in org public repos",
+          "Credentials in public repos of org members",
+          "Credentials in workflow logs",
+          "Previous breaches",
+          "Fine-grained PATs not enforced",
+          "PATs without expiration"
+        ],
+        "controls": [
+          "Mandatory MFA",
+          "IDP / SSO setup",
+          "Enforcing fine-grained PATs",
+          "Enforcing PAT expiration",
+          "Secret scanning on org",
+          "Secret scanning on personal repos"
+        ],
+        "customLabel": "Mar 19: aqua-bot PAT used"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 412.4766276846225,
+        "y": 158.75166945109845
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-v002-1",
+      "type": "technique",
+      "position": {
+        "x": 413.88497191153454,
+        "y": 288.75166945109845
+      },
+      "data": {
+        "id": "T-V002",
+        "name": "Imposter Commits",
+        "component": "vcs",
+        "stage": "Post-Compromise",
+        "description": "Attacker commits code impersonating another developer",
+        "risks": [
+          "No commit signing required",
+          "Email verification not enforced",
+          "No code review process"
+        ],
+        "controls": [
+          "Commit signing",
+          "Requiring code owner approval",
+          "Branch protection rules",
+          "Email verification enforcement"
+        ],
+        "customLabel": "Forged as rauchg & DmitriyLewen"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 97,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 413.88497191153454,
+        "y": 288.75166945109845
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-v010-1",
+      "type": "technique",
+      "position": {
+        "x": 412.4766276846225,
+        "y": 418.75166945109845
+      },
+      "data": {
+        "id": "T-V010",
+        "name": "Malicious Code Modification in Repository",
+        "component": "vcs",
+        "stage": "Post-Compromise",
+        "description": "Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase",
+        "risks": [
+          "Overprivileged VCS access",
+          "No code review requirements",
+          "Direct push to protected branches allowed",
+          "Lack of commit signing",
+          "No automated code security scanning",
+          "Insufficient branch protection rules",
+          "No detection of suspicious code patterns"
+        ],
+        "controls": [
+          "Branch protection rules (VCS)",
+          "Require code owner approval",
+          "Mandatory code review by multiple reviewers",
+          "Commit signing enforcement",
+          "Automated code security scanning (SAST)",
+          "Detection infra on audit logs (VCS)",
+          "Minimal VCS permissions (principle of least privilege)",
+          "Code change anomaly detection",
+          "Pre-commit hooks for security checks"
+        ],
+        "customLabel": "75/76 trivy-action tags force-pushed"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 412.4766276846225,
+        "y": 418.75166945109845
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-cicd-2",
+      "type": "component",
+      "position": {
+        "x": 699.1850455816069,
+        "y": 79.61568150350769
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "GitHub Actions @ aquasecurity - Release"
+      },
+      "zIndex": -1,
+      "width": 265,
+      "height": 602,
+      "style": {
+        "width": 265,
+        "height": 602
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 701.1850455816069,
+        "y": 79.61568150350769
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-c002-1",
+      "type": "technique",
+      "position": {
+        "x": 750.0158275796655,
+        "y": 160.0403809841747
+      },
+      "data": {
+        "id": "T-C002",
+        "name": "Malicious Execution in Workflow Context",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker executes malicious code within CI/CD workflow",
+        "risks": [
+          "Using untrusted GitHub actions",
+          "Using untrusted GitHub Apps",
+          "Using untrusted reusable workflows",
+          "Using untrusted SW packages on runners",
+          "Using untrusted container / VM image for runners",
+          "Lack of GitHub action pinning"
+        ],
+        "controls": [
+          "Pinning 3rd-party actions",
+          "Action whitelisting",
+          "Automated maintainer reputation and hygiene checks",
+          "Requiring code owner approval (VCS)",
+          "Branch protection rules (VCS)",
+          "Runner SBOM",
+          "Image scanning"
+        ],
+        "customLabel": "Imposter checkout → scan.aquasecurtiy.org"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 750.0158275796655,
+        "y": 160.0403809841747
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c005-2",
+      "type": "technique",
+      "position": {
+        "x": 750.0158275796655,
+        "y": 347.5219729344727
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": [
+          "OIDC setup in workflows",
+          "Runtime agent on runner",
+          "Secret scanning",
+          "Minimal workflow permissions",
+          "Log sanitization"
+        ],
+        "customLabel": "GPG, Docker Hub, ECR, cx-plugins creds"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 750.0158275796655,
+        "y": 347.5219729344727
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c011-1",
+      "type": "technique",
+      "position": {
+        "x": 749.6879507450261,
+        "y": 528.2116072671038
+      },
+      "data": {
+        "id": "T-C011",
+        "name": "Stealing Registry Tokens",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts registry publishing tokens from workflow",
+        "risks": [
+          "Workflow with access to secrets",
+          "Overprivileged registry tokens",
+          "Long-lived credentials"
+        ],
+        "controls": [
+          "OIDC setup in workflows",
+          "Trusted publishing (registry)",
+          "Runtime agent on runner",
+          "Secret scanning"
+        ],
+        "customLabel": "PyPI, npm, Docker tokens harvested"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 749.6879507450261,
+        "y": 528.2116072671038
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-registry-1",
+      "type": "component",
+      "position": {
+        "x": 1073.6954772751285,
+        "y": 80.62032414486481
+      },
+      "data": {
+        "label": "Registry",
+        "componentId": "registry",
+        "techniques": [],
+        "customLabel": "Docker Hub / GHCR / ECR"
+      },
+      "zIndex": -1,
+      "width": 292,
+      "height": 496,
+      "style": {
+        "width": 292,
+        "height": 496
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1073.6954772751285,
+        "y": 80.62032414486481
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-r005-1",
+      "type": "technique",
+      "position": {
+        "x": 1141.1193336003248,
+        "y": 158.75166945109845
+      },
+      "data": {
+        "id": "T-R005",
+        "name": "Publishing Malicious Container/VM Image",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious container or VM image",
+        "risks": [
+          "Overprivileged registry credentials",
+          "No image signing",
+          "No provenance attestation",
+          "No image scanning"
+        ],
+        "controls": [
+          "Trusted publishing",
+          "Provenance attestation",
+          "Image signing and verification",
+          "Image vulnerability scanning",
+          "OIDC for publishing"
+        ],
+        "customLabel": "trivy:0.69.4 poisoned images"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1141.1193336003248,
+        "y": 158.75166945109845
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-r004-1",
+      "type": "technique",
+      "position": {
+        "x": 1142.987988294091,
+        "y": 359.7605478142201
+      },
+      "data": {
+        "id": "T-R004",
+        "name": "Publishing Malicious Package",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious package to registry",
+        "risks": [
+          "Overprivileged NPM token",
+          "Lack of provenance",
+          "Lack of trusted publishing",
+          "No package signing"
+        ],
+        "controls": [
+          "Trusted publishing",
+          "Provenance attestation",
+          "MFA for registry account",
+          "Package signing and verification",
+          "OIDC for publishing"
+        ],
+        "customLabel": "trivy v0.69.4 binaries"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 97,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1142.987988294091,
+        "y": 359.7605478142201
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-vcs-2",
+      "type": "component",
+      "position": {
+        "x": 813.8787341770189,
+        "y": 1301.3744334342516
+      },
+      "data": {
+        "label": "VCS",
+        "componentId": "vcs",
+        "techniques": [],
+        "customLabel": "GitHub (Checkmarx)"
+      },
+      "zIndex": -1,
+      "width": 250,
+      "height": 217,
+      "style": {
+        "width": 250,
+        "height": 217
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 813.8787341770189,
+        "y": 1301.3744334342516
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-v010-2",
+      "type": "technique",
+      "position": {
+        "x": 857.3095659812254,
+        "y": 1375.6352835879802
+      },
+      "data": {
+        "id": "T-V010",
+        "name": "Malicious Code Modification in Repository",
+        "component": "vcs",
+        "stage": "Post-Compromise",
+        "description": "Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase",
+        "risks": [
+          "Overprivileged VCS access",
+          "No code review requirements",
+          "Direct push to protected branches allowed",
+          "Lack of commit signing",
+          "No automated code security scanning",
+          "Insufficient branch protection rules",
+          "No detection of suspicious code patterns"
+        ],
+        "controls": [
+          "Branch protection rules (VCS)",
+          "Require code owner approval",
+          "Mandatory code review by multiple reviewers",
+          "Commit signing enforcement",
+          "Automated code security scanning (SAST)",
+          "Detection infra on audit logs (VCS)",
+          "Minimal VCS permissions (principle of least privilege)",
+          "Code change anomaly detection",
+          "Pre-commit hooks for security checks"
+        ],
+        "customLabel": "35 kics-action + ast-action tags hijacked"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 857.3095659812254,
+        "y": 1375.6352835879802
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-registry-2",
+      "type": "component",
+      "position": {
+        "x": 1850.7916379006097,
+        "y": 985.4744122758977
+      },
+      "data": {
+        "label": "Registry",
+        "componentId": "registry",
+        "techniques": [],
+        "customLabel": "PyPI"
+      },
+      "zIndex": -1,
+      "width": 250,
+      "height": 370,
+      "style": {
+        "width": 250,
+        "height": 370
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1850.7916379006097,
+        "y": 985.4744122758977
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-r001-1",
+      "type": "technique",
+      "position": {
+        "x": 1895.7916379006097,
+        "y": 1065.4744122758977
+      },
+      "data": {
+        "id": "T-R001",
+        "name": "Abuse Credentials for Registry Access",
+        "component": "registry",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access registry",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "Default credentials / bad out-of-the-box config",
+          "Credentials in public images",
+          "Credentials in workflow logs",
+          "Previous breaches"
+        ],
+        "controls": [
+          "Mandatory MFA",
+          "IDP / SSO setup",
+          "Secret scanning",
+          "CSPM/CNAPP"
+        ],
+        "customLabel": "Mar 24: LiteLLM maintainer account"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1895.7916379006097,
+        "y": 1065.4744122758977
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-r004-2",
+      "type": "technique",
+      "position": {
+        "x": 1895.7916379006097,
+        "y": 1195.4744122758977
+      },
+      "data": {
+        "id": "T-R004",
+        "name": "Publishing Malicious Package",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious package to registry",
+        "risks": [
+          "Overprivileged NPM token",
+          "Lack of provenance",
+          "Lack of trusted publishing",
+          "No package signing"
+        ],
+        "controls": [
+          "Trusted publishing",
+          "Provenance attestation",
+          "MFA for registry account",
+          "Package signing and verification",
+          "OIDC for publishing"
+        ],
+        "customLabel": "litellm 1.82.7/1.82.8 with .pth backdoor"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1895.7916379006097,
+        "y": 1195.4744122758977
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-teampcp-1",
+      "type": "exitPoint",
+      "position": {
+        "x": 1114.6891565185538,
+        "y": 653.7864848846399
+      },
+      "data": {
+        "label": "Secondary Supply Chain Attack"
+      },
+      "zIndex": 10,
+      "width": 252,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1114.6891565185538,
+        "y": 653.7864848846399
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-teampcp-2",
+      "type": "exitPoint",
+      "position": {
+        "x": 1842.7916379006097,
+        "y": 1407.4744122758977
+      },
+      "data": {
+        "label": "95M+ Monthly Downloads Affected"
+      },
+      "zIndex": 10,
+      "width": 271,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1842.7916379006097,
+        "y": 1407.4744122758977
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-teampcp-3",
+      "type": "exitPoint",
+      "position": {
+        "x": 1101.2719078247417,
+        "y": 1529.3627296627196
+      },
+      "data": {
+        "label": "Checkmarx Users Compromised"
+      },
+      "zIndex": 10,
+      "width": 257,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1101.2719078247417,
+        "y": 1529.3627296627196
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-registry-3",
+      "type": "component",
+      "position": {
+        "x": 700,
+        "y": 720
+      },
+      "data": {
+        "label": "Registry",
+        "componentId": "registry",
+        "techniques": [],
+        "customLabel": "npm (CanisterWorm)"
+      },
+      "zIndex": -1,
+      "width": 250,
+      "height": 240,
+      "style": {
+        "width": 250,
+        "height": 240
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 700,
+        "y": 720
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-r004-3",
+      "type": "technique",
+      "position": {
+        "x": 745,
+        "y": 800
+      },
+      "data": {
+        "id": "T-R004",
+        "name": "Publishing Malicious Package",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious package to registry",
+        "risks": [
+          "Overprivileged NPM token",
+          "Lack of provenance",
+          "Lack of trusted publishing",
+          "No package signing"
+        ],
+        "controls": [
+          "Trusted publishing",
+          "Provenance attestation",
+          "MFA for registry account",
+          "Package signing and verification",
+          "OIDC for publishing"
+        ],
+        "customLabel": "Mar 20: 28+ npm packages via ICP canister C2"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 745,
+        "y": 800
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-vcs-3",
+      "type": "component",
+      "position": {
+        "x": 377.9067832730659,
+        "y": 661.2693922821481
+      },
+      "data": {
+        "label": "VCS",
+        "componentId": "vcs",
+        "techniques": [],
+        "customLabel": "GitHub (Aqua Internal)"
+      },
+      "zIndex": -1,
+      "width": 250,
+      "height": 240,
+      "style": {
+        "width": 250,
+        "height": 240
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 377.9067832730659,
+        "y": 661.2693922821481
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-v009-1",
+      "type": "technique",
+      "position": {
+        "x": 422.9067832730659,
+        "y": 753.1418862967862
+      },
+      "data": {
+        "id": "T-V009",
+        "name": "Mass Deletion of Repositories",
+        "component": "vcs",
+        "stage": "Post-Compromise",
+        "description": "Attacker deletes multiple repositories to cause data loss and operational disruption",
+        "risks": [
+          "Overprivileged VCS access",
+          "No backup and recovery",
+          "No audit log monitoring",
+          "Insufficient access controls on critical repositories",
+          "No repository deletion approval process",
+          "Lack of deletion protection"
+        ],
+        "controls": [
+          "Minimal VCS user permissions",
+          "Regular repository backups",
+          "Detection infra on audit logs (VCS)",
+          "Repository deletion approval workflow",
+          "Immutable audit logs",
+          "Repository recovery procedures",
+          "Deletion protection on critical repositories"
+        ],
+        "customLabel": "Mar 22: 44 internal repos defaced (Argon-DevOps-Mgt)"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 422.9067832730659,
+        "y": 753.1418862967862
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-production-1",
+      "type": "component",
+      "position": {
+        "x": 1528.6362120562542,
+        "y": 83.86957549727128
+      },
+      "data": {
+        "label": "Production/Cloud",
+        "componentId": "production",
+        "techniques": [],
+        "customLabel": "Victim K8s Clusters"
+      },
+      "zIndex": -1,
+      "width": 262,
+      "height": 488,
+      "style": {
+        "width": 262,
+        "height": 488
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1528.6362120562542,
+        "y": 83.86957549727128
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-p004-1",
+      "type": "technique",
+      "position": {
+        "x": 1573.6362120562542,
+        "y": 187.61456352654722
+      },
+      "data": {
+        "id": "T-P004",
+        "name": "Container Image Poisoning to Production",
+        "component": "production",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious container image that gets deployed to production",
+        "risks": [
+          "Lack of image signing/verification",
+          "No provenance attestation",
+          "Automatic deployment without review",
+          "No image scanning"
+        ],
+        "controls": [
+          "Image signing and verification",
+          "Provenance attestation",
+          "Deployment approval gates",
+          "Image vulnerability scanning",
+          "Runtime security monitoring"
+        ],
+        "customLabel": "Mar 22: trivy:0.69.5/0.69.6 deployed"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1573.6362120562542,
+        "y": 187.61456352654722
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-p014-1",
+      "type": "technique",
+      "position": {
+        "x": 1575.6149610586938,
+        "y": 398.7432726265736
+      },
+      "data": {
+        "id": "T-P014",
+        "name": "Production Infrastructure Destruction",
+        "component": "production",
+        "stage": "Post-Compromise",
+        "description": "Attacker destroys production infrastructure, databases, storage, or configurations to cause severe operational disruption and data loss",
+        "risks": [
+          "Overprivileged IAM roles allowing destructive actions",
+          "No backup and disaster recovery plan",
+          "Lack of deletion protection on critical resources",
+          "No audit log monitoring",
+          "Insufficient access controls on critical infrastructure",
+          "No approval process for destructive operations",
+          "Backup data not isolated from production"
+        ],
+        "controls": [
+          "Minimal IAM permissions",
+          "Regular backups with offsite/offline storage",
+          "Deletion protection on critical resources",
+          "Detection infra on audit logs (production)",
+          "Destructive operation approval workflow",
+          "Immutable backups",
+          "Disaster recovery procedures and testing",
+          "CSPM/CNAPP",
+          "Resource tagging and protection policies",
+          "Backup isolation from production network"
+        ],
+        "customLabel": "kamikaze.sh: Iran-targeted wiper (rm -rf /)"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1575.6149610586938,
+        "y": 398.7432726265736
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-teampcp-4",
+      "type": "exitPoint",
+      "position": {
+        "x": 1130,
+        "y": 780
+      },
+      "data": {
+        "label": "npm Ecosystem Infected"
+      },
+      "zIndex": 10,
+      "width": 210,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1130,
+        "y": 780
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-teampcp-5",
+      "type": "exitPoint",
+      "position": {
+        "x": 1546.5724590635734,
+        "y": 625.9112770272199
+      },
+      "data": {
+        "label": "K8s Clusters Wiped (Iran)"
+      },
+      "zIndex": 10,
+      "width": 215,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1546.5724590635734,
+        "y": 625.9112770272199
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-1774389254188",
+      "type": "component",
+      "position": {
+        "x": 1108.8125066731009,
+        "y": 1096.9417751395204
+      },
+      "data": {
+        "label": "Registry",
+        "componentId": "registry",
+        "techniques": [],
+        "customLabel": "Actions registry"
+      },
+      "zIndex": -1,
+      "width": 253,
+      "height": 371,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1108.8125066731009,
+        "y": 1096.9417751395204
+      },
+      "dragging": false,
+      "style": {
+        "width": 253,
+        "height": 371
+      },
+      "resizing": false
+    },
+    {
+      "id": "technique-1774389279157",
+      "type": "technique",
+      "position": {
+        "x": 1150.8300626344596,
+        "y": 1193.7171813115397
+      },
+      "data": {
+        "id": "T-R001",
+        "name": "Abuse Credentials for Registry Access",
+        "component": "registry",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access registry",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "Default credentials / bad out-of-the-box config",
+          "Credentials in public images",
+          "Credentials in workflow logs",
+          "Previous breaches"
+        ],
+        "controls": [
+          "Mandatory MFA",
+          "IDP / SSO setup",
+          "Secret scanning",
+          "CSPM/CNAPP"
+        ]
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 96,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1150.8300626344596,
+        "y": 1193.7171813115397
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-1774389295177",
+      "type": "technique",
+      "position": {
+        "x": 1150.8300626344596,
+        "y": 1333.373150737161
+      },
+      "data": {
+        "id": "T-R004",
+        "name": "Publishing Malicious Package",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious package to registry",
+        "risks": [
+          "Overprivileged NPM token",
+          "Lack of provenance",
+          "Lack of trusted publishing",
+          "No package signing"
+        ],
+        "controls": [
+          "Trusted publishing",
+          "Provenance attestation",
+          "MFA for registry account",
+          "Package signing and verification",
+          "OIDC for publishing"
+        ],
+        "customLabel": "actions"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 97,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1150.8300626344596,
+        "y": 1333.373150737161
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-1774389389979",
+      "type": "component",
+      "position": {
+        "x": 811.8897323430634,
+        "y": 1091.7212485849625
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "GitHub Actions @ Checkmarx org"
+      },
+      "zIndex": -1,
+      "width": 256,
+      "height": 176,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 811.8897323430634,
+        "y": 1091.7212485849625
+      },
+      "dragging": false,
+      "style": {
+        "width": 256,
+        "height": 176
+      },
+      "resizing": false
+    },
+    {
+      "id": "technique-1774389436159",
+      "type": "technique",
+      "position": {
+        "x": 857.3956100210748,
+        "y": 1165.4721537872565
+      },
+      "data": {
+        "id": "T-C002",
+        "name": "Malicious Execution in Workflow Context",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker executes malicious code within CI/CD workflow",
+        "risks": [
+          "Using untrusted GitHub actions",
+          "Using untrusted GitHub Apps",
+          "Using untrusted reusable workflows",
+          "Using untrusted SW packages on runners",
+          "Using untrusted container / VM image for runners",
+          "Lack of GitHub action pinning"
+        ],
+        "controls": [
+          "Pinning 3rd-party actions",
+          "Action whitelisting",
+          "Automated maintainer reputation and hygiene checks",
+          "Requiring code owner approval (VCS)",
+          "Branch protection rules (VCS)",
+          "Runner SBOM",
+          "Image scanning"
+        ]
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 96,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 857.3956100210748,
+        "y": 1165.4721537872565
+      },
+      "dragging": false
+    },
+    {
+      "id": "entryPoint-1774389487308",
+      "type": "entryPoint",
+      "position": {
+        "x": 847.9806008463141,
+        "y": 975.6028020962431
+      },
+      "data": {
+        "label": "Supply chain victim"
+      },
+      "zIndex": 10,
+      "width": 177,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 847.9806008463141,
+        "y": 975.6028020962431
+      },
+      "dragging": false
+    },
+    {
+      "id": "entryPoint-1774389505821",
+      "type": "entryPoint",
+      "position": {
+        "x": 1574.8284056437597,
+        "y": 852.8524596647898
+      },
+      "data": {
+        "label": "Supply chain victim"
+      },
+      "zIndex": 10,
+      "width": 177,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1574.8284056437597,
+        "y": 852.8524596647898
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-1774389601241",
+      "type": "component",
+      "position": {
+        "x": 1535.2762706038668,
+        "y": 988.1561476625909
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "CircleCI @ BerriAI"
+      },
+      "zIndex": -1,
+      "width": 254,
+      "height": 202,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1535.2762706038668,
+        "y": 988.1561476625909
+      },
+      "dragging": false,
+      "style": {
+        "width": 254,
+        "height": 202
+      },
+      "resizing": false
+    },
+    {
+      "id": "technique-1774389617224",
+      "type": "technique",
+      "position": {
+        "x": 1583.9204846734654,
+        "y": 1076.0295666270272
+      },
+      "data": {
+        "id": "T-C002",
+        "name": "Malicious Execution in Workflow Context",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker executes malicious code within CI/CD workflow",
+        "risks": [
+          "Using untrusted GitHub actions",
+          "Using untrusted GitHub Apps",
+          "Using untrusted reusable workflows",
+          "Using untrusted SW packages on runners",
+          "Using untrusted container / VM image for runners",
+          "Lack of GitHub action pinning"
+        ],
+        "controls": [
+          "Pinning 3rd-party actions",
+          "Action whitelisting",
+          "Automated maintainer reputation and hygiene checks",
+          "Requiring code owner approval (VCS)",
+          "Branch protection rules (VCS)",
+          "Runner SBOM",
+          "Image scanning"
+        ]
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 96,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1583.9204846734654,
+        "y": 1076.0295666270272
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-1774389702902",
+      "type": "component",
+      "position": {
+        "x": 1540.590562705382,
+        "y": 1229.6422257260322
+      },
+      "data": {
+        "label": "VCS",
+        "componentId": "vcs",
+        "techniques": [],
+        "customLabel": "BerriAI"
+      },
+      "zIndex": -1,
+      "width": 251,
+      "height": 221,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1539.590562705382,
+        "y": 1229.6422257260322
+      },
+      "dragging": false,
+      "style": {
+        "width": 251,
+        "height": 221
+      },
+      "resizing": false
+    },
+    {
+      "id": "technique-1774389716308",
+      "type": "technique",
+      "position": {
+        "x": 1584.249824601318,
+        "y": 1312.3445625703582
+      },
+      "data": {
+        "id": "T-V001",
+        "name": "Abuse Credentials for VCS Access",
+        "component": "vcs",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access VCS",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "Credentials in org public repos",
+          "Credentials in public repos of org members",
+          "Credentials in workflow logs",
+          "Previous breaches",
+          "Fine-grained PATs not enforced",
+          "PATs without expiration"
+        ],
+        "controls": [
+          "Mandatory MFA",
+          "IDP / SSO setup",
+          "Enforcing fine-grained PATs",
+          "Enforcing PAT expiration",
+          "Secret scanning on org",
+          "Secret scanning on personal repos"
+        ],
+        "customLabel": "Founder creds compromised"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1584.249824601318,
+        "y": 1312.3445625703582
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-entry-c003",
+      "source": "entryPoint-teampcp-1",
+      "sourceHandle": "right",
+      "target": "technique-c003-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "Feb 27",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-c003-c005",
+      "source": "technique-c003-1",
+      "sourceHandle": "bottom",
+      "target": "technique-c005-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "Memory dump",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-c005-v001",
+      "source": "technique-c005-1",
+      "sourceHandle": "right",
+      "target": "technique-v001-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Stolen PAT",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-v001-v002",
+      "source": "technique-v001-1",
+      "sourceHandle": "bottom",
+      "target": "technique-v002-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-v002-v010",
+      "source": "technique-v002-1",
+      "sourceHandle": "bottom",
+      "target": "technique-v010-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-v010-c002",
+      "source": "technique-v010-1",
+      "sourceHandle": "right",
+      "target": "technique-c002-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Tag push",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-c002-c005-2",
+      "source": "technique-c002-1",
+      "sourceHandle": "bottom",
+      "target": "technique-c005-2",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-c005-2-c011",
+      "source": "technique-c005-2",
+      "sourceHandle": "bottom",
+      "target": "technique-c011-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-c011-r005",
+      "source": "technique-c011-1",
+      "sourceHandle": "right",
+      "target": "technique-r005-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r005-r004",
+      "source": "technique-r005-1",
+      "sourceHandle": "bottom",
+      "target": "technique-r004-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r005-exit1",
+      "source": "technique-r005-1",
+      "sourceHandle": "right",
+      "target": "exitPoint-teampcp-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Trivy users",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-exit1-r001",
+      "source": "exitPoint-teampcp-1",
+      "sourceHandle": "bottom",
+      "target": "technique-r001-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#EF4444",
+        "strokeWidth": 2
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#EF4444"
+      },
+      "label": "BerryAI runs poisoned Trivy",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r001-r004-2",
+      "source": "technique-r001-1",
+      "sourceHandle": "bottom",
+      "target": "technique-r004-2",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r004-2-exit2",
+      "source": "technique-r004-2",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-teampcp-2",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-c011-r004-3",
+      "source": "technique-c011-1",
+      "sourceHandle": "bottom",
+      "target": "technique-r004-3",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#EF4444",
+        "strokeWidth": 2
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#EF4444"
+      },
+      "label": "Stolen npm tokens",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r004-3-exit4",
+      "source": "technique-r004-3",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-teampcp-4",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-c005-v009",
+      "source": "technique-c005-1",
+      "sourceHandle": "bottom",
+      "target": "technique-v009-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#EF4444",
+        "strokeWidth": 2
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#EF4444"
+      },
+      "label": "Argon-DevOps-Mgt PAT",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-r005-p004",
+      "source": "technique-r005-1",
+      "sourceHandle": "right",
+      "target": "technique-p004-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Victim pulls image",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-p004-p014",
+      "source": "technique-p004-1",
+      "sourceHandle": "bottom",
+      "target": "technique-p014-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "kamikaze.sh",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-p014-exit5",
+      "source": "technique-p014-1",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-teampcp-5",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "zIndex": 100,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-r004-1",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-teampcp-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Trivy users",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-r004-1bottom-exitPoint-teampcp-1left",
+      "selected": false
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-v010-2",
+      "sourceHandle": "bottom",
+      "target": "technique-1774389279157",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-v010-2bottom-technique-1774389279157top",
+      "selected": false
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-1774389279157",
+      "sourceHandle": "bottom",
+      "target": "technique-1774389295177",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1774389279157bottom-technique-1774389295177top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-1774389295177",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-teampcp-3",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1774389295177bottom-exitPoint-teampcp-3top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-1774389436159",
+      "sourceHandle": "bottom",
+      "target": "technique-v010-2",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1774389436159bottom-technique-v010-2top",
+      "selected": false
+    },
+    {
+      "zIndex": 100,
+      "source": "entryPoint-1774389487308",
+      "sourceHandle": "bottom",
+      "target": "technique-1774389436159",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-1774389487308bottom-technique-1774389436159top",
+      "selected": false
+    },
+    {
+      "zIndex": 100,
+      "source": "entryPoint-1774389505821",
+      "sourceHandle": "bottom",
+      "target": "technique-1774389617224",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-1774389505821bottom-technique-1774389617224top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-1774389617224",
+      "sourceHandle": "bottom",
+      "target": "technique-1774389716308",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1774389617224bottom-technique-1774389716308top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-1774389716308",
+      "sourceHandle": "bottom",
+      "target": "technique-r001-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1774389716308bottom-technique-r001-1top"
+    }
+  ]
+}
