@@ -28,9 +28,6 @@
     <!-- html2canvas for PNG export -->
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     
-    <!-- jsPDF for PDF export -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
     <!-- Babel Standalone for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
@@ -198,21 +195,40 @@
             border: 1px solid var(--wiz-dark-border);
         }
         
-        /* Force component nodes to always be in background */
+        /* Force victimZone nodes to be furthest back */
+        .react-flow__node[data-type="victimZone"] {
+            z-index: -10 !important;
+        }
+
+        /* Keep victimZone in background even when selected */
+        .react-flow__node[data-type="victimZone"].selected {
+            z-index: -10 !important;
+        }
+
+        /* Force component nodes to always be in background (but above zones) */
         .react-flow__node[data-type="component"] {
             z-index: -1 !important;
         }
-        
+
         /* Keep components in background even when selected */
         .react-flow__node[data-type="component"].selected {
             z-index: -1 !important;
         }
-        
+
         /* Technique nodes and other nodes on top */
         .react-flow__node[data-type="technique"],
         .react-flow__node[data-type="entryPoint"],
         .react-flow__node[data-type="exitPoint"] {
             z-index: 10 !important;
+        }
+
+        /* Victim zone styling */
+        .victim-zone-node {
+            min-width: 300px;
+            min-height: 200px;
+            border-radius: 12px;
+            border: 3px dashed;
+            background-color: rgba(99, 102, 241, 0.05);
         }
         
         /* Keep technique nodes on top even when not selected */
@@ -509,7 +525,153 @@
                 </div>
             );
         };
-        
+
+        // Victim Zone Node - organizational boundary for multi-victim attacks
+        const VictimZoneNode = ({ data, selected, id }) => {
+            const [isEditing, setIsEditing] = useState(false);
+            const [label, setLabel] = useState(data.label || 'Organization');
+            const inputRef = useRef(null);
+
+            const zoneColors = [
+                { name: 'Indigo', value: '#6366F1' },
+                { name: 'Blue', value: '#3B82F6' },
+                { name: 'Cyan', value: '#06B6D4' },
+                { name: 'Teal', value: '#14B8A6' },
+                { name: 'Green', value: '#22C55E' },
+                { name: 'Orange', value: '#F97316' },
+                { name: 'Pink', value: '#EC4899' },
+                { name: 'Purple', value: '#A855F7' },
+            ];
+
+            const currentColor = data.color || '#6366F1';
+
+            useEffect(() => {
+                if (isEditing && inputRef.current) {
+                    inputRef.current.focus();
+                    inputRef.current.select();
+                }
+            }, [isEditing]);
+
+            const handleDoubleClick = (e) => {
+                e.stopPropagation();
+                setIsEditing(true);
+            };
+
+            const handleBlur = () => {
+                setIsEditing(false);
+                if (label.trim()) {
+                    data.label = label.trim();
+                } else {
+                    setLabel(data.label || 'Organization');
+                }
+            };
+
+            const handleKeyDown = (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleBlur();
+                } else if (e.key === 'Escape') {
+                    setLabel(data.label || 'Organization');
+                    setIsEditing(false);
+                }
+            };
+
+            const handleColorChange = (e, newColor) => {
+                e.stopPropagation();
+                data.color = newColor;
+                // Force re-render by updating a state
+                setLabel(label);
+            };
+
+            return (
+                <>
+                    <NodeResizer
+                        isVisible={selected}
+                        minWidth={300}
+                        minHeight={200}
+                    />
+                    <div className="victim-zone-node" style={{
+                        borderColor: currentColor,
+                        backgroundColor: `${currentColor}10`,
+                        width: '100%',
+                        height: '100%',
+                        position: 'relative'
+                    }}>
+                        {/* Zone label header */}
+                        <div style={{
+                            position: 'absolute',
+                            top: '-12px',
+                            left: '16px',
+                            backgroundColor: 'var(--wiz-dark-surface)',
+                            padding: '2px 12px',
+                            borderRadius: '4px',
+                            border: `2px solid ${currentColor}`,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px'
+                        }}>
+                            {isEditing ? (
+                                <input
+                                    ref={inputRef}
+                                    type="text"
+                                    value={label}
+                                    onChange={(e) => setLabel(e.target.value)}
+                                    onBlur={handleBlur}
+                                    onKeyDown={handleKeyDown}
+                                    className="font-bold text-sm bg-transparent border-none outline-none"
+                                    style={{
+                                        minWidth: '120px',
+                                        color: currentColor
+                                    }}
+                                />
+                            ) : (
+                                <div
+                                    className="font-bold text-sm cursor-pointer"
+                                    onDoubleClick={handleDoubleClick}
+                                    title="Double-click to edit organization name"
+                                    style={{ color: currentColor }}
+                                >
+                                    🏢 {label}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Color picker (visible when selected) */}
+                        {selected && (
+                            <div style={{
+                                position: 'absolute',
+                                top: '-12px',
+                                right: '16px',
+                                backgroundColor: 'var(--wiz-dark-surface)',
+                                padding: '4px 8px',
+                                borderRadius: '4px',
+                                border: '1px solid var(--wiz-dark-border)',
+                                display: 'flex',
+                                gap: '4px'
+                            }}>
+                                {zoneColors.map(c => (
+                                    <button
+                                        key={c.value}
+                                        onClick={(e) => handleColorChange(e, c.value)}
+                                        title={c.name}
+                                        style={{
+                                            width: '16px',
+                                            height: '16px',
+                                            borderRadius: '50%',
+                                            backgroundColor: c.value,
+                                            border: c.value === currentColor ? '2px solid white' : '1px solid var(--wiz-dark-border)',
+                                            cursor: 'pointer',
+                                            padding: 0
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </>
+            );
+        };
+
         const ComponentNode = ({ data, selected, id }) => {
             const component = techniquesData?.components.find(c => c.id === data.componentId);
             const bgColor = componentColors[data.componentId] || '#6B7280';
@@ -818,6 +980,7 @@
         const nodeTypes = {
             entryPoint: EntryPointNode,
             exitPoint: ExitPointNode,
+            victimZone: VictimZoneNode,
             component: ComponentNode,
             technique: TechniqueNode,
         };
@@ -886,7 +1049,29 @@
                                 </div>
                             </div>
                         </div>
-                        
+
+                        {/* Victim Zones */}
+                        <div className="border-b" style={{ borderColor: 'var(--wiz-dark-border)' }}>
+                            <div className="p-2">
+                                <div
+                                    draggable
+                                    onDragStart={(e) => onDragStart(e, 'victimZone', {
+                                        label: 'Organization',
+                                        color: '#6366F1'
+                                    })}
+                                    className="palette-item p-3 mb-2 rounded cursor-grab"
+                                    style={{
+                                        background: 'rgba(99, 102, 241, 0.1)',
+                                        border: '2px dashed #6366F1',
+                                        color: 'var(--wiz-text-primary)'
+                                    }}
+                                >
+                                    <div className="text-sm font-bold" style={{ color: '#6366F1' }}>🏢 Victim Zone</div>
+                                    <div className="text-xs mt-1" style={{ color: 'var(--wiz-text-secondary)' }}>Organizational boundary for multi-victim attacks</div>
+                                </div>
+                            </div>
+                        </div>
+
                         {/* Components */}
                         <div className="border-b" style={{ borderColor: 'var(--wiz-dark-border)' }}>
                             <button
@@ -1456,13 +1641,20 @@
                         y: event.clientY - reactFlowBounds.top,
                     });
                     
+                    // Determine z-index based on node type
+                    let zIndex = 10; // Default for techniques, entry/exit points
+                    if (draggedItem.type === 'victimZone') {
+                        zIndex = -10; // Furthest back
+                    } else if (draggedItem.type === 'component') {
+                        zIndex = -1; // Behind techniques but in front of zones
+                    }
+
                     const newNode = {
                         id: `${draggedItem.type}-${Date.now()}`,
                         type: draggedItem.type,
                         position,
                         data: draggedItem.data,
-                        // Set z-index: components always in background, other nodes on top
-                        zIndex: draggedItem.type === 'component' ? -1 : 10,
+                        zIndex: zIndex,
                     };
                     
                     setNodes((nds) => nds.concat(newNode));
@@ -1485,21 +1677,26 @@
                         if (nodeElement) {
                             // Get the full bounding box including all children
                             const rect = nodeElement.getBoundingClientRect();
-                            
+
                             // For technique nodes, account for potential popup panels (200px each side)
                             let extraWidth = 0;
                             let extraLeft = 0;
+                            let extraTop = 0;
                             if (node.type === 'technique') {
                                 extraLeft = 220; // Space for risks popup on left
                                 extraWidth = 220; // Space for controls popup on right
                             }
-                            
+                            // Victim zone labels extend above the node (top: -12px + label height ~30px)
+                            if (node.type === 'victimZone') {
+                                extraTop = 40; // Label extends above the zone
+                            }
+
                             const nodeWidth = (rect.width || nodeElement.offsetWidth || 200) + extraWidth;
                             const nodeHeight = rect.height || nodeElement.offsetHeight || 100;
-                            
+
                             return {
                                 minX: Math.min(acc.minX, node.position.x - extraLeft),
-                                minY: Math.min(acc.minY, node.position.y),
+                                minY: Math.min(acc.minY, node.position.y - extraTop),
                                 maxX: Math.max(acc.maxX, node.position.x + nodeWidth),
                                 maxY: Math.max(acc.maxY, node.position.y + nodeHeight),
                             };
@@ -1517,7 +1714,7 @@
                     nodesBounds.maxY = 600;
                 }
                 
-                const padding = 50;
+                const padding = 60;
                 const width = nodesBounds.maxX - nodesBounds.minX + padding * 2;
                 const height = nodesBounds.maxY - nodesBounds.minY + padding * 2;
                 
@@ -1571,150 +1768,7 @@
                     });
                 }, 200);
             }, [reactFlowInstance]);
-            
-            const exportToSVG = useCallback(() => {
-                if (!reactFlowInstance) return;
-                
-                const flowElement = document.querySelector('.react-flow__viewport');
-                if (!flowElement) return;
-                
-                // Get the bounding box
-                const bbox = flowElement.getBoundingClientRect();
-                const svgWidth = bbox.width;
-                const svgHeight = bbox.height;
-                
-                // Create SVG
-                let svgContent = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">
-    <rect width="100%" height="100%" fill="#ffffff"/>
-    <g>`;
-                
-                // Add nodes
-                nodes.forEach(node => {
-                    const nodeElement = document.querySelector(`[data-id="${node.id}"]`);
-                    if (!nodeElement) return;
-                    
-                    const nodeBbox = nodeElement.getBoundingClientRect();
-                    const x = node.position.x;
-                    const y = node.position.y;
-                    
-                    let color = '#3B82F6';
-                    if (node.type === 'entryPoint') color = '#10B981';
-                    if (node.type === 'exitPoint') color = '#EF4444';
-                    if (node.type === 'component') {
-                        color = componentColors[node.data.componentId] || '#6B7280';
-                    }
-                    
-                    svgContent += `
-        <rect x="${x}" y="${y}" width="${nodeBbox.width}" height="${nodeBbox.height}"
-              fill="white" stroke="${color}" stroke-width="2" rx="8"/>
-        <text x="${x + 10}" y="${y + 25}" font-family="Arial" font-size="14" fill="${color}" font-weight="bold">
-            ${node.data.label || node.id}
-        </text>`;
-                });
-                
-                // Add edges
-                edges.forEach(edge => {
-                    const sourceNode = nodes.find(n => n.id === edge.source);
-                    const targetNode = nodes.find(n => n.id === edge.target);
-                    if (!sourceNode || !targetNode) return;
-                    
-                    const sourceElement = document.querySelector(`[data-id="${edge.source}"]`);
-                    const targetElement = document.querySelector(`[data-id="${edge.target}"]`);
-                    if (!sourceElement || !targetElement) return;
-                    
-                    const sourceBbox = sourceElement.getBoundingClientRect();
-                    const targetBbox = targetElement.getBoundingClientRect();
-                    
-                    const x1 = sourceNode.position.x + sourceBbox.width;
-                    const y1 = sourceNode.position.y + sourceBbox.height / 2;
-                    const x2 = targetNode.position.x;
-                    const y2 = targetNode.position.y + targetBbox.height / 2;
-                    
-                    svgContent += `
-        <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
-              stroke="#6B7280" stroke-width="2" marker-end="url(#arrowhead)"/>`;
-                });
-                
-                svgContent += `
-    </g>
-    <defs>
-        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-            <polygon points="0 0, 10 3, 0 6" fill="#6B7280"/>
-        </marker>
-    </defs>
-</svg>`;
-                
-                const blob = new Blob([svgContent], { type: 'image/svg+xml' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `attack-flow-${Date.now()}.svg`;
-                link.click();
-                URL.revokeObjectURL(url);
-            }, [reactFlowInstance, nodes, edges]);
-            
-            const exportToPDF = useCallback(() => {
-                const flowElement = document.querySelector('.react-flow');
-                if (!flowElement) return;
-                
-                html2canvas(flowElement, {
-                    backgroundColor: '#ffffff',
-                    scale: 2,
-                    logging: false,
-                    useCORS: true,
-                }).then(canvas => {
-                    const imgData = canvas.toDataURL('image/png');
-                    const { jsPDF } = window.jspdf;
-                    
-                    // Calculate PDF dimensions
-                    const imgWidth = canvas.width;
-                    const imgHeight = canvas.height;
-                    const ratio = imgWidth / imgHeight;
-                    
-                    // Use landscape A4 if wide, portrait if tall
-                    const pdfWidth = ratio > 1 ? 297 : 210;
-                    const pdfHeight = ratio > 1 ? 210 : 297;
-                    
-                    const pdf = new jsPDF({
-                        orientation: ratio > 1 ? 'landscape' : 'portrait',
-                        unit: 'mm',
-                        format: 'a4'
-                    });
-                    
-                    // Add title page
-                    pdf.setFontSize(24);
-                    pdf.text('SITF Attack Flow', pdfWidth / 2, 30, { align: 'center' });
-                    
-                    pdf.setFontSize(12);
-                    pdf.text(`Generated: ${new Date().toLocaleString()}`, pdfWidth / 2, 45, { align: 'center' });
-                    pdf.text(`Framework: SDLC Infrastructure Threat Framework`, pdfWidth / 2, 55, { align: 'center' });
-                    
-                    // Add diagram on second page
-                    pdf.addPage();
-                    
-                    // Fit image to page with margins
-                    const margin = 10;
-                    const availableWidth = pdfWidth - (2 * margin);
-                    const availableHeight = pdfHeight - (2 * margin);
-                    
-                    let finalWidth = availableWidth;
-                    let finalHeight = finalWidth / ratio;
-                    
-                    if (finalHeight > availableHeight) {
-                        finalHeight = availableHeight;
-                        finalWidth = finalHeight * ratio;
-                    }
-                    
-                    const xOffset = (pdfWidth - finalWidth) / 2;
-                    const yOffset = (pdfHeight - finalHeight) / 2;
-                    
-                    pdf.addImage(imgData, 'PNG', xOffset, yOffset, finalWidth, finalHeight);
-                    
-                    pdf.save(`attack-flow-${Date.now()}.pdf`);
-                });
-            }, []);
-            
+
             const exportWithCustomDimensions = useCallback(() => {
                 const width = prompt('Enter width in pixels (default: current size):', '');
                 const height = prompt('Enter height in pixels (default: current size):', '');
@@ -1832,11 +1886,16 @@
                                 `Continue?`;
                             
                             if (confirm(message)) {
-                                // Ensure components have z-index -1 when loading
-                                const nodesWithZIndex = flowData.nodes.map(node => ({
-                                    ...node,
-                                    zIndex: node.type === 'component' ? -1 : (node.zIndex || 10)
-                                }));
+                                // Ensure proper z-index when loading: zones < components < other nodes
+                                const nodesWithZIndex = flowData.nodes.map(node => {
+                                    let zIndex = node.zIndex || 10;
+                                    if (node.type === 'victimZone') {
+                                        zIndex = -10;
+                                    } else if (node.type === 'component') {
+                                        zIndex = -1;
+                                    }
+                                    return { ...node, zIndex };
+                                });
                                 setNodes(nodesWithZIndex);
                                 setEdges(flowData.edges);
                             }
@@ -2045,11 +2104,16 @@
                     try {
                         const { nodes: savedNodes, edges: savedEdges } = JSON.parse(saved);
                         if (savedNodes) {
-                            // Ensure components have z-index -1 when loading from localStorage
-                            const nodesWithZIndex = savedNodes.map(node => ({
-                                ...node,
-                                zIndex: node.type === 'component' ? -1 : (node.zIndex || 10)
-                            }));
+                            // Ensure proper z-index when loading: zones < components < other nodes
+                            const nodesWithZIndex = savedNodes.map(node => {
+                                let zIndex = node.zIndex || 10;
+                                if (node.type === 'victimZone') {
+                                    zIndex = -10;
+                                } else if (node.type === 'component') {
+                                    zIndex = -1;
+                                }
+                                return { ...node, zIndex };
+                            });
                             setNodes(nodesWithZIndex);
                         }
                         if (savedEdges) setEdges(savedEdges);
@@ -2190,51 +2254,6 @@
                                                     <div>
                                                         <div className="font-medium">PNG Image</div>
                                                         <div className="text-xs" style={{ color: 'var(--wiz-text-secondary)' }}>High quality (3x)</div>
-                                                    </div>
-                                                </button>
-                                                <div className="my-1" style={{ borderTop: '1px solid var(--wiz-dark-border)' }}></div>
-                                                <button
-                                                    onClick={() => {
-                                                        exportToSVG();
-                                                        setShowExportMenu(false);
-                                                    }}
-                                                    className="w-full text-left px-4 py-2 text-sm flex items-center gap-2"
-                                                    style={{
-                                                        color: 'var(--wiz-text-primary)',
-                                                        background: 'transparent',
-                                                        border: 'none',
-                                                        cursor: 'pointer',
-                                                        transition: 'background 0.2s'
-                                                    }}
-                                                    onMouseEnter={(e) => e.currentTarget.style.background = 'var(--wiz-dark-hover)'}
-                                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-                                                >
-                                                    <span style={{ color: 'var(--wiz-accent-purple)' }}>▪</span>
-                                                    <div>
-                                                        <div className="font-medium">SVG (Vector)</div>
-                                                        <div className="text-xs" style={{ color: 'var(--wiz-text-secondary)' }}>Scalable format</div>
-                                                    </div>
-                                                </button>
-                                                <button
-                                                    onClick={() => {
-                                                        exportToPDF();
-                                                        setShowExportMenu(false);
-                                                    }}
-                                                    className="w-full text-left px-4 py-2 text-sm flex items-center gap-2"
-                                                    style={{
-                                                        color: 'var(--wiz-text-primary)',
-                                                        background: 'transparent',
-                                                        border: 'none',
-                                                        cursor: 'pointer',
-                                                        transition: 'background 0.2s'
-                                                    }}
-                                                    onMouseEnter={(e) => e.currentTarget.style.background = 'var(--wiz-dark-hover)'}
-                                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-                                                >
-                                                    <span style={{ color: 'var(--wiz-danger)' }}>▪</span>
-                                                    <div>
-                                                        <div className="font-medium">PDF Document</div>
-                                                        <div className="text-xs" style={{ color: 'var(--wiz-text-secondary)' }}>With title page</div>
                                                     </div>
                                                 </button>
                                             </div>
