@@ -27,6 +27,10 @@ def generate_markdown(data, output_path):
     md_lines.append("2. **The Risks** - Underlying conditions that enable this technique")
     md_lines.append("3. **The Controls** - Security measures that prevent or detect this technique")
     md_lines.append("")
+    md_lines.append("Controls are split into two categories:")
+    md_lines.append("- 🛡️ **Protective Controls** - Configuration-based measures that prevent attacks")
+    md_lines.append("- 🔍 **Detective Controls** - Monitoring and detection rules that identify attacks")
+    md_lines.append("")
     md_lines.append("**To analyze an attack:** Find the techniques used in this library, and you'll immediately see what risks enabled them and what controls would have prevented them.")
     md_lines.append("")
     md_lines.append("---")
@@ -74,9 +78,33 @@ def generate_markdown(data, output_path):
             for risk in tech['risks']:
                 md_lines.append(f"- {risk}")
             md_lines.append("")
-            md_lines.append("**Controls:**")
-            for control in tech['controls']:
-                md_lines.append(f"- {control}")
+            
+            # Handle new controls schema (protective/detective split)
+            controls = tech.get('controls', {})
+            protective = controls.get('protective', [])
+            detective = controls.get('detective', [])
+            
+            md_lines.append("**Protective Controls:** 🛡️")
+            if protective:
+                for control in protective:
+                    control_name = control.get('name', control) if isinstance(control, dict) else control
+                    md_lines.append(f"- {control_name}")
+            else:
+                md_lines.append("- (none)")
+            md_lines.append("")
+            
+            md_lines.append("**Detective Controls:** 🔍")
+            if detective:
+                for control in detective:
+                    control_name = control.get('name', control) if isinstance(control, dict) else control
+                    # Check for detection rules
+                    rules = control.get('detectionRules', []) if isinstance(control, dict) else []
+                    if rules:
+                        md_lines.append(f"- {control_name} ({len(rules)} detection rules)")
+                    else:
+                        md_lines.append(f"- {control_name}")
+            else:
+                md_lines.append("- (none)")
             md_lines.append("")
             md_lines.append("---")
             md_lines.append("")

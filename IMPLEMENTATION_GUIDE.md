@@ -157,10 +157,15 @@ Controls that prevent it:
 - Understanding risks helps prioritize fixes
 
 **CONTROLS** (The Defenses)
-- The "How to prevent" - security measures that break the attack chain
-- Technical controls (tools, configurations)
-- Process controls (reviews, approvals)
-- Architecture controls (segmentation, isolation)
+- The "How to prevent/detect" - security measures that break the attack chain
+- **Protective Controls** (🛡️): Prevent attacks before they occur
+  - Technical controls (tools, configurations)
+  - Process controls (reviews, approvals)
+  - Architecture controls (segmentation, isolation)
+- **Detective Controls** (🔍): Detect attacks in progress or after the fact
+  - Monitoring and alerting (SIEM, EDR, audit logs)
+  - Anomaly detection and behavioral analysis
+- **Framework Mappings**: Controls are mapped to industry frameworks like OWASP SPVS
 - Multiple controls typically needed per technique (defense in depth)
 
 ---
@@ -230,17 +235,20 @@ The visualizer is an interactive web application for building and analyzing atta
 *Attack Flow Builder (visualizer.html):*
 - Drag-and-drop interface with 75+ attack techniques
 - Expandable technique nodes showing risks (left) and controls (right)
+- **Dual control types**: Protective controls (🛡️) and Detective controls (🔍)
+- **Framework mappings**: Controls mapped to OWASP SPVS with hover tooltips
 - Auto-populating Controls Matrix organized by component and attack stage
-- Export options: PNG, SVG, PDF, and CSV
 - Dark/light theme toggle
 - Save/Load flows as JSON files
 
 *Techniques Library Explorer (techniques-library.html):*
 - Visual browsing of all 75 techniques organized by component and attack stage
+- **Dual control types**: Protective controls (🛡️) and Detective controls (🔍)
+- **Framework tags**: SPVS mappings displayed as badges with detailed tooltips
 - Real-time filtering by component (Endpoint, VCS, CI/CD, Registry, Production)
 - Stage filtering (Initial Access, Lateral Movement, Post-Compromise, Discovery)
 - Search functionality across technique names, descriptions, risks, and controls
-- Interactive statistics showing technique counts, risks, and controls
+- Interactive statistics showing technique counts, risks, and 408 controls
 - Color-coded components for easy visual identification
 
 Using the Visualizer:

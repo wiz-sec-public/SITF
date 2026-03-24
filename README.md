@@ -41,10 +41,12 @@ SITF helps security teams analyze supply chain attacks by:
 
 ## Framework Components
 
-- 5 Infrastructure Components: Endpoint/IDE, VCS, CI/CD, Registry, Production/Cloud
-- Over 70 Attack Techniques: Pre-mapped with enabling risks and preventive controls
-- Interactive Visualizer: Drag-and-drop interface for building attack flow diagrams
-- Real-World Case Studies: CircleCI breach, Shai-Hulud-2, Codecov
+- **5 Infrastructure Components**: Endpoint/IDE, VCS, CI/CD, Registry, Production/Cloud
+- **75+ Attack Techniques**: Pre-mapped with enabling risks and security controls
+- **Dual Control Types**: Protective controls (prevent attacks) and Detective controls (detect attacks)
+- **Framework Mappings**: Controls mapped to industry frameworks (OWASP SPVS)
+- **Interactive Visualizer**: Drag-and-drop interface for building attack flow diagrams
+- **Real-World Case Studies**: CircleCI breach, Shai-Hulud-2, TrustWallet, tj-actions, CodeBreach, s1ngularity
 
 ## Documentation
 

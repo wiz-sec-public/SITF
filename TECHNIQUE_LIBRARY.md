@@ -7,6 +7,10 @@ This library contains **technique triplets** - each entry shows:
 2. **The Risks** - Underlying conditions that enable this technique
 3. **The Controls** - Security measures that prevent or detect this technique
 
+Controls are split into two categories:
+- 🛡️ **Protective Controls** - Configuration-based measures that prevent attacks
+- 🔍 **Detective Controls** - Monitoring and detection rules that identify attacks
+
 **To analyze an attack:** Find the techniques used in this library, and you'll immediately see what risks enabled them and what controls would have prevented them.
 
 ---
@@ -27,15 +31,17 @@ This library contains **technique triplets** - each entry shows:
 - Package installation scripts enabled
 - Direct downloads from public registries
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Local registry proxy with filtering
-- EDR on endpoint
 - IDE sandboxing
 - Mandating signed extensions
 - Package version pinning
 - Automated maintainer reputation and hygiene checks
 - Application whitelisting
 - Disable package installation scripts (--ignore-scripts)
+
+**Detective Controls:** 🔍
+- EDR on endpoint
 
 ---
 
@@ -49,11 +55,13 @@ This library contains **technique triplets** - each entry shows:
 - Credentials stored in plaintext
 - No email security controls
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Mandatory MFA
 - Phishing-resistant authentication
 - Security awareness training
 - Email security (SPF, DMARC, DKIM)
+
+**Detective Controls:** 🔍
 - EDR on endpoint
 
 ---
@@ -69,12 +77,14 @@ This library contains **technique triplets** - each entry shows:
 - SSH keys without passwords
 - Cloud credentials in environment variables
 
-**Controls:**
-- Local DLP
-- EDR on endpoint
+**Protective Controls:** 🛡️
 - Credential manager enforcement
 - No production credentials on endpoints
 - Encrypted credential storage
+
+**Detective Controls:** 🔍
+- Local DLP
+- EDR on endpoint
 
 ---
 
@@ -88,11 +98,13 @@ This library contains **technique triplets** - each entry shows:
 - Sensitive data stored locally
 - No encryption at rest
 
-**Controls:**
-- Local DLP
-- EDR on endpoint
+**Protective Controls:** 🛡️
 - Data classification and handling policies
 - Encryption at rest
+
+**Detective Controls:** 🔍
+- Local DLP
+- EDR on endpoint
 - Network monitoring
 
 ---
@@ -106,10 +118,12 @@ This library contains **technique triplets** - each entry shows:
 - Untrusted software packages
 - No resource monitoring
 
-**Controls:**
+**Protective Controls:** 🛡️
+- Application whitelisting
+
+**Detective Controls:** 🔍
 - EDR on endpoint
 - Resource monitoring and alerting
-- Application whitelisting
 - Network monitoring (detect mining pool connections)
 
 ---
@@ -123,11 +137,14 @@ This library contains **technique triplets** - each entry shows:
 - No runner registration approval process
 - Runner registration tokens not protected
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Using managed runners only
 - Runner registration approval workflow
 - Runner registration token protection
 - Network segmentation (runners isolated from endpoints)
+
+**Detective Controls:** 🔍
+- (none)
 
 ---
 
@@ -140,10 +157,12 @@ This library contains **technique triplets** - each entry shows:
 - No credential rotation
 - Overprivileged VCS access
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Credential manager enforcement
 - Fine-grained PATs with expiration
 - Mandatory MFA for VCS
+
+**Detective Controls:** 🔍
 - Audit log monitoring
 
 ---
@@ -157,10 +176,12 @@ This library contains **technique triplets** - each entry shows:
 - No credential rotation
 - Overprivileged CI/CD access
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Credential manager enforcement
 - OIDC instead of long-lived tokens
 - Mandatory MFA for CI/CD
+
+**Detective Controls:** 🔍
 - Audit log monitoring
 
 ---
@@ -175,11 +196,13 @@ This library contains **technique triplets** - each entry shows:
 - AI tools with excessive permissions
 - Sensitive code sent to AI services
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Acceptable use policy against unapproved AI tools
 - Approved AI tools with data protection
-- Network monitoring for AI service connections
 - Code review for AI-generated code
+
+**Detective Controls:** 🔍
+- Network monitoring for AI service connections
 
 ---
 
@@ -194,14 +217,16 @@ This library contains **technique triplets** - each entry shows:
 - Lack of system integrity monitoring
 - Insufficient access controls on critical system files
 
-**Controls:**
-- EDR on endpoint
+**Protective Controls:** 🛡️
 - Regular endpoint backups
-- System integrity monitoring
 - Minimal local user privileges
 - Offline backup storage
 - File system access controls
 - Endpoint recovery procedures
+
+**Detective Controls:** 🔍
+- EDR on endpoint
+- System integrity monitoring
 
 ---
 
@@ -216,13 +241,15 @@ This library contains **technique triplets** - each entry shows:
 - Diff tools don't highlight invisible code
 - Developer trust in visual code inspection
 
-**Controls:**
-- Unicode character detection in code review tools
+**Protective Controls:** 🛡️
 - IDE plugins to visualize invisible characters
 - Static analysis with Unicode normalization
-- Automated detection of unprintable characters in commits
 - Extension code signing and verification
 - Mandatory code review with specialized tools
+
+**Detective Controls:** 🔍
+- Unicode character detection in code review tools
+- Automated detection of unprintable characters in commits
 
 ---
 
@@ -237,12 +264,14 @@ This library contains **technique triplets** - each entry shows:
 - Endpoint inside corporate network
 - No process monitoring
 
-**Controls:**
-- EDR on endpoint
-- Network egress monitoring and filtering
+**Protective Controls:** 🛡️
 - Application whitelisting
 - Network segmentation (endpoints from production)
 - Outbound connection restrictions
+
+**Detective Controls:** 🔍
+- EDR on endpoint
+- Network egress monitoring and filtering
 - Anomalous network behavior detection
 
 ---
@@ -257,12 +286,14 @@ This library contains **technique triplets** - each entry shows:
 - Lack of application sandboxing
 - Privileged user accounts
 
-**Controls:**
+**Protective Controls:** 🛡️
+- Minimal local user privileges
+
+**Detective Controls:** 🔍
 - EDR on endpoint
 - Process monitoring and whitelisting
 - Session activity monitoring
 - Behavioral analysis for hidden processes
-- Minimal local user privileges
 - Virtual desktop detection
 
 ---
@@ -278,12 +309,14 @@ This library contains **technique triplets** - each entry shows:
 - No EDR
 - P2P connections not logged
 
-**Controls:**
-- EDR on endpoint
-- WebRTC traffic monitoring
+**Protective Controls:** 🛡️
 - Network behavior analysis
 - WebRTC restrictions in corporate browsers
 - STUN/TURN server whitelisting
+
+**Detective Controls:** 🔍
+- EDR on endpoint
+- WebRTC traffic monitoring
 - Deep packet inspection
 
 ---
@@ -299,12 +332,14 @@ This library contains **technique triplets** - each entry shows:
 - No extension version pinning
 - Silent updates without user notification
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Extension update approval workflow
 - Extension version pinning
 - Update signature verification
-- Extension update monitoring and alerting
 - Delayed update deployment (canary testing)
+
+**Detective Controls:** 🔍
+- Extension update monitoring and alerting
 - Extension marketplace security monitoring
 
 ---
@@ -318,13 +353,15 @@ This library contains **technique triplets** - each entry shows:
 - No EDR
 - Cryptocurrency node connections not restricted
 
-**Controls:**
-- EDR on endpoint
+**Protective Controls:** 🛡️
 - Network behavior analysis
-- Blockchain RPC connection monitoring
 - Cryptocurrency-related traffic restrictions
-- Anomalous blockchain query detection
 - Application whitelisting
+
+**Detective Controls:** 🔍
+- EDR on endpoint
+- Blockchain RPC connection monitoring
+- Anomalous blockchain query detection
 
 ---
 
@@ -339,9 +376,11 @@ This library contains **technique triplets** - each entry shows:
 - No EDR
 - Encoded payloads in legitimate service data
 
-**Controls:**
-- EDR on endpoint
+**Protective Controls:** 🛡️
 - Deep content inspection of legitimate service traffic
+
+**Detective Controls:** 🔍
+- EDR on endpoint
 - Behavioral analysis for unusual service usage patterns
 - Network traffic anomaly detection
 - Application-level monitoring
@@ -360,13 +399,15 @@ This library contains **technique triplets** - each entry shows:
 - Decentralized C2 cannot be taken down
 - P2P protocols not restricted
 
-**Controls:**
-- EDR on endpoint
+**Protective Controls:** 🛡️
 - P2P protocol blocking
-- BitTorrent traffic monitoring and blocking
-- DHT network connection detection
 - Network behavior analysis
 - Application whitelisting
+
+**Detective Controls:** 🔍
+- EDR on endpoint
+- BitTorrent traffic monitoring and blocking
+- DHT network connection detection
 
 ---
 
@@ -385,11 +426,13 @@ This library contains **technique triplets** - each entry shows:
 - Fine-grained PATs not enforced
 - PATs without expiration
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Mandatory MFA
 - IDP / SSO setup
 - Enforcing fine-grained PATs
 - Enforcing PAT expiration
+
+**Detective Controls:** 🔍
 - Secret scanning on org
 - Secret scanning on personal repos
 
@@ -404,11 +447,14 @@ This library contains **technique triplets** - each entry shows:
 - Email verification not enforced
 - No code review process
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Commit signing
 - Requiring code owner approval
 - Branch protection rules
 - Email verification enforcement
+
+**Detective Controls:** 🔍
+- (none)
 
 ---
 
@@ -423,13 +469,15 @@ This library contains **technique triplets** - each entry shows:
 - Dangling webhooks
 - Secrets committed to repo
 
-**Controls:**
-- Secret scanning on org
-- Secret scanning on personal repos
-- Detection infra on audit logs
+**Protective Controls:** 🛡️
 - Private repo visibility
 - Webhook security review
 - Branch protection rules
+
+**Detective Controls:** 🔍
+- Secret scanning on org
+- Secret scanning on personal repos
+- Detection infra on audit logs
 
 ---
 
@@ -442,11 +490,13 @@ This library contains **technique triplets** - each entry shows:
 - Using personal repos for work
 - Org members with public repos containing work content
 
-**Controls:**
-- Secret scanning on personal repos
+**Protective Controls:** 🛡️
 - Policy against using personal repos for work
-- Detection infra on audit logs
 - Security awareness training
+
+**Detective Controls:** 🔍
+- Secret scanning on personal repos
+- Detection infra on audit logs
 
 ---
 
@@ -459,9 +509,11 @@ This library contains **technique triplets** - each entry shows:
 - Known CVEs not addressed
 - Self-hosted VCS without security updates
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Using managed VCS instances
 - Patching schedule
+
+**Detective Controls:** 🔍
 - Vulnerability scanning
 - Security update monitoring
 
@@ -476,11 +528,13 @@ This library contains **technique triplets** - each entry shows:
 - No approval for visibility changes
 - No audit log monitoring
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal VCS permissions
 - Approval workflow for visibility changes
-- Detection infra on audit logs
 - CSPM/CNAPP
+
+**Detective Controls:** 🔍
+- Detection infra on audit logs
 
 ---
 
@@ -493,11 +547,13 @@ This library contains **technique triplets** - each entry shows:
 - No audit log monitoring
 - No DLP on network
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal VCS permissions
+- Repository access reviews
+
+**Detective Controls:** 🔍
 - Detection infra on audit logs
 - Network DLP
-- Repository access reviews
 
 ---
 
@@ -510,11 +566,13 @@ This library contains **technique triplets** - each entry shows:
 - No repository review process
 - Unlimited repository creation
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Repository creation approval
+- Resource quotas
+
+**Detective Controls:** 🔍
 - Repository security scanning
 - Detection infra on audit logs
-- Resource quotas
 
 ---
 
@@ -530,14 +588,16 @@ This library contains **technique triplets** - each entry shows:
 - No repository deletion approval process
 - Lack of deletion protection
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal VCS user permissions
 - Regular repository backups
-- Detection infra on audit logs (VCS)
 - Repository deletion approval workflow
-- Immutable audit logs
 - Repository recovery procedures
 - Deletion protection on critical repositories
+
+**Detective Controls:** 🔍
+- Detection infra on audit logs (VCS)
+- Immutable audit logs
 
 ---
 
@@ -554,16 +614,18 @@ This library contains **technique triplets** - each entry shows:
 - Insufficient branch protection rules
 - No detection of suspicious code patterns
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Branch protection rules (VCS)
 - Require code owner approval
 - Mandatory code review by multiple reviewers
 - Commit signing enforcement
+- Minimal VCS permissions (principle of least privilege)
+- Pre-commit hooks for security checks
+
+**Detective Controls:** 🔍
 - Automated code security scanning (SAST)
 - Detection infra on audit logs (VCS)
-- Minimal VCS permissions (principle of least privilege)
 - Code change anomaly detection
-- Pre-commit hooks for security checks
 
 ---
 
@@ -579,11 +641,13 @@ This library contains **technique triplets** - each entry shows:
 - Credentials in org public repos
 - Previous breaches
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Mandatory MFA
 - IDP / SSO setup
 - Enforcing fine-grained PATs (VCS)
 - Enforcing PAT expiration (VCS)
+
+**Detective Controls:** 🔍
 - Secret scanning
 
 ---
@@ -600,13 +664,15 @@ This library contains **technique triplets** - each entry shows:
 - Using untrusted container / VM image for runners
 - Lack of GitHub action pinning
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Pinning 3rd-party actions
 - Action whitelisting
 - Automated maintainer reputation and hygiene checks
 - Requiring code owner approval (VCS)
 - Branch protection rules (VCS)
 - Runner SBOM
+
+**Detective Controls:** 🔍
 - Image scanning
 
 ---
@@ -624,13 +690,15 @@ This library contains **technique triplets** - each entry shows:
 - Default workflow permissions set to approve PR
 - Workflows with access to secrets
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Branch protection rules (VCS)
 - Private repo (VCS)
-- CICD scanning tools
 - Require explicit approval/ disallow workflows from forks (VCS)
 - Minimal workflow permissions
 - Default workflow permissions not set to approve PRs
+
+**Detective Controls:** 🔍
+- CICD scanning tools
 
 ---
 
@@ -646,12 +714,14 @@ This library contains **technique triplets** - each entry shows:
 - Workflow with excessive permissions
 - Workflow with access to secrets
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Branch protection rules (VCS)
 - Private repo (VCS)
-- CICD scanning tools
 - Minimal workflow permissions
 - Code review for workflows
+
+**Detective Controls:** 🔍
+- CICD scanning tools
 
 ---
 
@@ -665,12 +735,14 @@ This library contains **technique triplets** - each entry shows:
 - Secrets in workflow logs
 - Overprivileged secrets
 
-**Controls:**
+**Protective Controls:** 🛡️
 - OIDC setup in workflows
-- Runtime agent on runner
-- Secret scanning
 - Minimal workflow permissions
 - Log sanitization
+
+**Detective Controls:** 🔍
+- Runtime agent on runner
+- Secret scanning
 
 ---
 
@@ -683,11 +755,13 @@ This library contains **technique triplets** - each entry shows:
 - Public repositories
 - Secrets in workflow files
 
-**Controls:**
+**Protective Controls:** 🛡️
 - OIDC setup in workflows
-- Secret scanning
 - Private repositories
 - Code review for workflows
+
+**Detective Controls:** 🔍
+- Secret scanning
 
 ---
 
@@ -700,11 +774,14 @@ This library contains **technique triplets** - each entry shows:
 - No cache isolation
 - No cache verification
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Don't use actions cache
 - Workflow ordering
 - Cache artifact signing / verification
 - Cache isolation per repository
+
+**Detective Controls:** 🔍
+- (none)
 
 ---
 
@@ -717,11 +794,13 @@ This library contains **technique triplets** - each entry shows:
 - Default workflow permissions set to approve PR
 - Workflow with excessive permissions
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal workflow permissions
 - Default workflow permissions not set to approve PRs
-- CICD scanning tools
 - Code review requirements
+
+**Detective Controls:** 🔍
+- CICD scanning tools
 
 ---
 
@@ -734,9 +813,11 @@ This library contains **technique triplets** - each entry shows:
 - Known CVEs not addressed
 - Self-hosted CI/CD without security updates
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Using managed CI/CD instances
 - Patching schedule
+
+**Detective Controls:** 🔍
 - Vulnerability scanning
 - Security update monitoring
 
@@ -753,13 +834,15 @@ This library contains **technique triplets** - each entry shows:
 - Package installation scripts enabled
 - Direct downloads from public registries
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Local registry proxy with filtering
-- Runtime agent on runner
 - Runner SBOM
 - Package version pinning
 - Package signature verification
 - Disable package installation scripts (--ignore-scripts)
+
+**Detective Controls:** 🔍
+- Runtime agent on runner
 
 ---
 
@@ -772,9 +855,11 @@ This library contains **technique triplets** - each entry shows:
 - Overprivileged registry tokens
 - Long-lived credentials
 
-**Controls:**
+**Protective Controls:** 🛡️
 - OIDC setup in workflows
 - Trusted publishing (registry)
+
+**Detective Controls:** 🔍
 - Runtime agent on runner
 - Secret scanning
 
@@ -789,11 +874,13 @@ This library contains **technique triplets** - each entry shows:
 - Default workflow permissions set to approve PR
 - No PR review requirements
 
-**Controls:**
-- CICD scanning tools
+**Protective Controls:** 🛡️
 - Minimal workflow permissions
 - Branch protection rules (VCS)
 - Require code owner approval (VCS)
+
+**Detective Controls:** 🔍
+- CICD scanning tools
 
 ---
 
@@ -807,10 +894,12 @@ This library contains **technique triplets** - each entry shows:
 - Overshared self-hosted runner
 - No runtime monitoring
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Using managed runners only
 - Ephemeral runners
 - Runner isolation
+
+**Detective Controls:** 🔍
 - Runtime agent on runner
 
 ---
@@ -824,8 +913,10 @@ This library contains **technique triplets** - each entry shows:
 - No resource limits
 - Self-hosted runners
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Using managed runners only
+
+**Detective Controls:** 🔍
 - Runtime agent on runner
 - Resource monitoring and limits
 - Network monitoring
@@ -841,11 +932,13 @@ This library contains **technique triplets** - each entry shows:
 - No CICD scanning
 - No runtime monitoring
 
-**Controls:**
+**Protective Controls:** 🛡️
 - OIDC setup in workflows
+- Minimal workflow permissions
+
+**Detective Controls:** 🔍
 - CICD scanning tools
 - Runtime agent on runner
-- Minimal workflow permissions
 
 ---
 
@@ -859,12 +952,14 @@ This library contains **technique triplets** - each entry shows:
 - Self-hosted runner in production network
 - No network segmentation
 
-**Controls:**
-- K8s sensor on runner cluster
-- KSPM on runner cluster
+**Protective Controls:** 🛡️
 - Minimal runner pod privileges
 - Network segmentation
 - Using managed runners only
+
+**Detective Controls:** 🔍
+- K8s sensor on runner cluster
+- KSPM on runner cluster
 
 ---
 
@@ -878,12 +973,14 @@ This library contains **technique triplets** - each entry shows:
 - No pod security policies
 - Privileged containers allowed
 
-**Controls:**
-- K8s sensor on runner cluster
-- KSPM on runner cluster
+**Protective Controls:** 🛡️
 - Minimal runner pod privileges
 - Pod security policies
 - Using managed runners only
+
+**Detective Controls:** 🔍
+- K8s sensor on runner cluster
+- KSPM on runner cluster
 
 ---
 
@@ -898,15 +995,17 @@ This library contains **technique triplets** - each entry shows:
 - Logs contain secrets or sensitive information
 - No DLP on CI/CD network
 
-**Controls:**
+**Protective Controls:** 🛡️
+- Log sanitization
+- Artifact encryption
+- Network segmentation (CI/CD from internet)
+
+**Detective Controls:** 🔍
 - Network DLP
 - Egress traffic monitoring and filtering
 - Runtime agent on runner
 - Large data transfer detection
-- Log sanitization
-- Artifact encryption
 - Detection infra on audit logs (CI/CD)
-- Network segmentation (CI/CD from internet)
 
 ---
 
@@ -922,15 +1021,17 @@ This library contains **technique triplets** - each entry shows:
 - Insufficient access controls on critical workflows
 - No approval process for infrastructure changes
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal workflow permissions
 - Regular CI/CD configuration backups
 - Workflow protection rules
-- Detection infra on audit logs (CI/CD)
 - Infrastructure change approval workflow
-- Immutable audit logs
 - CI/CD recovery procedures
 - Using managed runners only
+
+**Detective Controls:** 🔍
+- Detection infra on audit logs (CI/CD)
+- Immutable audit logs
 
 ---
 
@@ -941,8 +1042,42 @@ This library contains **technique triplets** - each entry shows:
 **Risks:**
 - Misconfigured CI/CD instances
 
-**Controls:**
+**Protective Controls:** 🛡️
 - CSPM/CNAPP
+
+**Detective Controls:** 🔍
+- (none)
+
+---
+
+#### T-C021: AI Agent Prompt Injection in Workflow
+
+**Technique:** Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data
+
+**Risks:**
+- AI agents with Bash/shell execution capabilities in workflows
+- AI agents with Write/Edit file permissions
+- User-controlled input passed to AI prompts without sanitization
+- Overly permissive AI tool configurations (allowedTools includes Bash)
+- AI workflows triggered by any GitHub user (no write-access requirement)
+- No input validation or content filtering for AI context
+- AI agents with access to workflow secrets
+- No human approval gates for AI-suggested actions
+
+**Protective Controls:** 🛡️
+- Restrict AI agent tool permissions
+- Input sanitization before AI context injection
+- Require write access to trigger AI-powered workflows
+- Sandboxed AI execution environment
+- Human approval gates for AI-suggested actions
+- Separate AI workflows from release/publish workflows
+- Rate limiting for AI workflow triggers
+
+**Detective Controls:** 🔍
+- AI prompt injection detection
+- Audit logging of AI agent actions
+- Anomaly detection for AI workflow behavior
+- Runtime agent on runner (1 detection rules)
 
 ---
 
@@ -959,11 +1094,13 @@ This library contains **technique triplets** - each entry shows:
 - Credentials in workflow logs
 - Previous breaches
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Mandatory MFA
 - IDP / SSO setup
-- Secret scanning
 - CSPM/CNAPP
+
+**Detective Controls:** 🔍
+- Secret scanning
 
 ---
 
@@ -976,11 +1113,14 @@ This library contains **technique triplets** - each entry shows:
 - Anonymous access enabled
 - Overly permissive access controls
 
-**Controls:**
+**Protective Controls:** 🛡️
 - IDP / SSO setup
-- CSPM/CNAPP
 - Access control reviews
 - Principle of least privilege
+- CSPM/CNAPP
+
+**Detective Controls:** 🔍
+- (none)
 
 ---
 
@@ -993,9 +1133,11 @@ This library contains **technique triplets** - each entry shows:
 - Known CVEs not addressed
 - Self-hosted registry without security updates
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Using managed registry instances
 - Patching schedule
+
+**Detective Controls:** 🔍
 - Vulnerability scanning
 - Security update monitoring
 
@@ -1011,12 +1153,15 @@ This library contains **technique triplets** - each entry shows:
 - Lack of trusted publishing
 - No package signing
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Trusted publishing
 - Provenance attestation
 - MFA for registry account
 - Package signing and verification
 - OIDC for publishing
+
+**Detective Controls:** 🔍
+- (none)
 
 ---
 
@@ -1030,12 +1175,14 @@ This library contains **technique triplets** - each entry shows:
 - No provenance attestation
 - No image scanning
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Trusted publishing
 - Provenance attestation
 - Image signing and verification
-- Image vulnerability scanning
 - OIDC for publishing
+
+**Detective Controls:** 🔍
+- Image vulnerability scanning
 
 ---
 
@@ -1048,11 +1195,14 @@ This library contains **technique triplets** - each entry shows:
 - No extension review process
 - No signing requirements
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Extension signing requirements
 - Extension review process
 - MFA for publisher account
 - Trusted publishing
+
+**Detective Controls:** 🔍
+- (none)
 
 ---
 
@@ -1065,11 +1215,13 @@ This library contains **technique triplets** - each entry shows:
 - Secrets in artifacts
 - No audit log monitoring
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal registry permissions
+- Artifact encryption
+
+**Detective Controls:** 🔍
 - Secret scanning
 - Detection infra on audit logs
-- Artifact encryption
 
 ---
 
@@ -1082,11 +1234,13 @@ This library contains **technique triplets** - each entry shows:
 - No image scanning
 - No resource quotas
 
-**Controls:**
-- Image vulnerability scanning
+**Protective Controls:** 🛡️
 - Resource quotas
-- Detection infra on audit logs
 - Access control reviews
+
+**Detective Controls:** 🔍
+- Image vulnerability scanning
+- Detection infra on audit logs
 
 ---
 
@@ -1102,15 +1256,17 @@ This library contains **technique triplets** - each entry shows:
 - Insufficient access controls on critical artifacts
 - No artifact deletion approval process
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal user permissions (registry)
 - Regular artifact backups
 - Artifact deletion protection
-- Detection infra on audit logs (registry)
 - Artifact deletion approval workflow
 - Immutable artifact storage
 - Registry recovery procedures
 - Artifact retention policies
+
+**Detective Controls:** 🔍
+- Detection infra on audit logs (registry)
 
 ---
 
@@ -1126,15 +1282,17 @@ This library contains **technique triplets** - each entry shows:
 - Lack of security awareness training
 - Direct downloads from public registries
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Local registry proxy with filtering
-- Typosquatting detection and prevention
 - Package name similarity checks
 - Automated maintainer reputation and hygiene checks
 - Security awareness training on package verification
 - Package installation verification workflows
 - Dependency review and approval process
 - Package popularity and reputation scoring
+
+**Detective Controls:** 🔍
+- Typosquatting detection and prevention
 
 ---
 
@@ -1150,7 +1308,7 @@ This library contains **technique triplets** - each entry shows:
 - Higher version numbers in public repositories
 - Direct downloads from public registries
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Local registry proxy with filtering
 - Internal repository enforcement and prioritization
 - Namespace isolation and scoping
@@ -1159,6 +1317,9 @@ This library contains **technique triplets** - each entry shows:
 - Private package registry configuration
 - Dependency resolution policies
 - Package source verification
+
+**Detective Controls:** 🔍
+- (none)
 
 ---
 
@@ -1174,12 +1335,14 @@ This library contains **technique triplets** - each entry shows:
 - Overprivileged cloud service accounts
 - No credential rotation
 
-**Controls:**
+**Protective Controls:** 🛡️
 - OIDC for deployment (no long-lived credentials)
 - Minimal IAM permissions
 - Credential rotation
-- Secret scanning
 - Network segmentation from SDLC
+
+**Detective Controls:** 🔍
+- Secret scanning
 
 ---
 
@@ -1193,11 +1356,13 @@ This library contains **technique triplets** - each entry shows:
 - No code signing verification
 - Insufficient workflow permissions review
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Deployment approval gates
 - Code signing and verification
 - Minimal workflow permissions
 - Branch protection rules (VCS)
+
+**Detective Controls:** 🔍
 - Deployment monitoring
 
 ---
@@ -1212,12 +1377,14 @@ This library contains **technique triplets** - each entry shows:
 - Overprivileged runner identity
 - No network monitoring
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Network segmentation from SDLC
 - Using managed runners only
 - Runner isolation
-- Network monitoring
 - Minimal runner privileges
+
+**Detective Controls:** 🔍
+- Network monitoring
 
 ---
 
@@ -1231,10 +1398,12 @@ This library contains **technique triplets** - each entry shows:
 - Automatic deployment without review
 - No image scanning
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Image signing and verification
 - Provenance attestation
 - Deployment approval gates
+
+**Detective Controls:** 🔍
 - Image vulnerability scanning
 - Runtime security monitoring
 
@@ -1249,12 +1418,14 @@ This library contains **technique triplets** - each entry shows:
 - Lack of drift detection
 - Overprivileged deployment credentials
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Code review for IaC changes
 - Deployment approval gates
-- Drift detection
-- CSPM/CNAPP
 - Minimal deployment permissions
+- CSPM/CNAPP
+
+**Detective Controls:** 🔍
+- Drift detection
 
 ---
 
@@ -1268,10 +1439,12 @@ This library contains **technique triplets** - each entry shows:
 - Lack of token rotation
 - Tokens in CI/CD secrets
 
-**Controls:**
+**Protective Controls:** 🛡️
 - OIDC for K8s access
 - Minimal service account permissions
 - Token rotation
+
+**Detective Controls:** 🔍
 - Secret scanning
 - Runtime security monitoring
 
@@ -1287,12 +1460,14 @@ This library contains **technique triplets** - each entry shows:
 - No network segmentation
 - Compromised workload with metadata access
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Metadata service restrictions
 - Minimal IAM permissions
 - Network segmentation
-- Runtime security monitoring
 - IMDSv2 enforcement (AWS)
+
+**Detective Controls:** 🔍
+- Runtime security monitoring
 
 ---
 
@@ -1306,9 +1481,11 @@ This library contains **technique triplets** - each entry shows:
 - Overprivileged pod identity
 - Host filesystem mounted
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Pod security policies
 - Minimal pod privileges
+
+**Detective Controls:** 🔍
 - K8s sensor on cluster
 - KSPM
 - Runtime security monitoring
@@ -1325,11 +1502,13 @@ This library contains **technique triplets** - each entry shows:
 - Lack of service-to-service authentication
 - No audit log monitoring
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal IAM permissions
 - Network segmentation
 - Service mesh / zero trust
 - CSPM/CNAPP
+
+**Detective Controls:** 🔍
 - Detection infra on audit logs
 
 ---
@@ -1344,12 +1523,14 @@ This library contains **technique triplets** - each entry shows:
 - No network monitoring
 - Unpatched systems
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Network segmentation
 - Micro-segmentation
-- Network monitoring
 - Security group hardening
 - Vulnerability management
+
+**Detective Controls:** 🔍
+- Network monitoring
 
 ---
 
@@ -1365,13 +1546,15 @@ This library contains **technique triplets** - each entry shows:
 - No data loss prevention (DLP) on production systems
 - Lack of egress traffic monitoring
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Store encryption keys in HSM (Hardware Security Module)
 - Envelope encryption with key hierarchy
 - Customer-managed encryption keys (CMEK)
 - Automatic secrets rotation (30-90 days)
 - Secrets segmentation (per-customer isolation)
 - Memory protection and anti-dumping controls
+
+**Detective Controls:** 🔍
 - DLP on production systems
 - Egress traffic monitoring and filtering
 - Detection infra on audit logs (production)
@@ -1392,14 +1575,16 @@ This library contains **technique triplets** - each entry shows:
 - Lack of honeypots or deception technology
 - No rate limiting on API calls
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal IAM permissions
-- Detection infra on audit logs (production)
 - API rate limiting and throttling
 - Network segmentation (production internal)
-- Honeypots and deception technology
 - Metadata service restrictions
 - Generic error messages (no infrastructure details)
+
+**Detective Controls:** 🔍
+- Detection infra on audit logs (production)
+- Honeypots and deception technology
 - Anomaly detection for enumeration patterns
 
 ---
@@ -1416,17 +1601,19 @@ This library contains **technique triplets** - each entry shows:
 - Use of encrypted channels to bypass DLP
 - Cloud storage buckets with public access
 
-**Controls:**
+**Protective Controls:** 🛡️
+- Backup encryption and access controls
+- SSL/TLS inspection
+- Data classification and handling policies
+- Network segmentation (production from internet)
+- CSPM/CNAPP
+
+**Detective Controls:** 🔍
 - Network DLP
 - Egress traffic monitoring and filtering
 - Large data transfer detection
 - Database activity monitoring
-- Backup encryption and access controls
-- SSL/TLS inspection
 - Detection infra on audit logs (production)
-- CSPM/CNAPP
-- Data classification and handling policies
-- Network segmentation (production from internet)
 
 ---
 
@@ -1443,17 +1630,19 @@ This library contains **technique triplets** - each entry shows:
 - No approval process for destructive operations
 - Backup data not isolated from production
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Minimal IAM permissions
 - Regular backups with offsite/offline storage
 - Deletion protection on critical resources
-- Detection infra on audit logs (production)
 - Destructive operation approval workflow
 - Immutable backups
 - Disaster recovery procedures and testing
-- CSPM/CNAPP
 - Resource tagging and protection policies
 - Backup isolation from production network
+- CSPM/CNAPP
+
+**Detective Controls:** 🔍
+- Detection infra on audit logs (production)
 
 ---
 
@@ -1468,15 +1657,17 @@ This library contains **technique triplets** - each entry shows:
 - No anomaly detection for new service creation
 - Persistent backdoor services remain undetected
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Deployment approval gates for new services
 - Code review for all IaC changes
+- Baseline approved services list
 - CSPM/CNAPP
+
+**Detective Controls:** 🔍
 - Detection infra on audit logs (production)
 - Anomaly detection for new service creation patterns
 - Immutable audit logs
 - Regular service inventory audits
-- Baseline approved services list
 
 ---
 
@@ -1490,14 +1681,16 @@ This library contains **technique triplets** - each entry shows:
 - No provenance attestation for sensor binaries
 - No multi-party approval for releases
 
-**Controls:**
+**Protective Controls:** 🛡️
 - Code signing and verification for all distributed binaries
 - Provenance attestation (SLSA Level 3+)
-- Multi-party approval for sensor/agent releases
 - Customer-controlled update policies with verification
-- Regular security audits of build infrastructure
 - Separation of duties for release signing
 - Immutable build logs and attestations
+
+**Detective Controls:** 🔍
+- Multi-party approval for sensor/agent releases
+- Regular security audits of build infrastructure
 
 ---
 
@@ -1507,8 +1700,10 @@ This library contains **technique triplets** - each entry shows:
 - T-C001: Abuse Credentials for CI/CD Access
 - T-C002: Malicious Execution in Workflow Context
 - T-C003: PWN Request / Poisoned Pipeline Execution
+- T-C004: Workflow Script Injection
 - T-C009: CI/CD Vulnerability Exploitation
 - T-C020: CI/CD Misconfiguration Exploitation
+- T-C021: AI Agent Prompt Injection in Workflow
 - T-E001: Malicious Execution on Endpoint
 - T-E002: Endpoint Phishing
 - T-E011: Unicode Stealth Code Injection
@@ -1523,7 +1718,6 @@ This library contains **technique triplets** - each entry shows:
 - T-V005: VCS Vulnerability Exploitation
 
 ### Post-Compromise Techniques
-- T-C004: Workflow Script Injection
 - T-C007: Action Cache Poisoning
 - T-C008: Malicious Workflow Performing Code Modification
 - T-C013: Persistence on Self-Hosted Runners
