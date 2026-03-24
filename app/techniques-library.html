@@ -224,6 +224,50 @@
             box-shadow: 0 2px 8px rgba(157, 78, 221, 0.2);
         }
 
+        .technique-card:target,
+        .technique-card.highlighted {
+            border-color: #9D4EDD;
+            box-shadow: 0 0 0 2px rgba(157, 78, 221, 0.4);
+            animation: highlight-pulse 2s ease-out;
+        }
+
+        @keyframes highlight-pulse {
+            0% { box-shadow: 0 0 0 4px rgba(157, 78, 221, 0.6); }
+            100% { box-shadow: 0 0 0 2px rgba(157, 78, 221, 0.4); }
+        }
+
+        .technique-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+
+        .copy-link-btn {
+            background: transparent;
+            border: none;
+            color: #64748B;
+            cursor: pointer;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            transition: all 0.2s;
+            opacity: 0;
+        }
+
+        .technique-card:hover .copy-link-btn {
+            opacity: 1;
+        }
+
+        .copy-link-btn:hover {
+            background: #2D3A5F;
+            color: #E2E8F0;
+        }
+
+        .copy-link-btn.copied {
+            color: #10B981;
+        }
+
         .technique-id {
             display: inline-block;
             background: #2D3A5F;
@@ -2166,8 +2210,11 @@
 
                     techniques.forEach(tech => {
                         html += `
-                            <div class="technique-card">
-                                <div class="technique-id">${tech.id}</div>
+                            <div class="technique-card" id="${tech.id}">
+                                <div class="technique-header">
+                                    <div class="technique-id">${tech.id}</div>
+                                    <button class="copy-link-btn" onclick="copyTechniqueLink('${tech.id}')" title="Copy link">🔗</button>
+                                </div>
                                 <div class="technique-name">${tech.name}</div>
                                 <div class="technique-description">${tech.description}</div>
                                 <div class="technique-details">
@@ -2234,8 +2281,62 @@
             `;
         }
 
+        // Copy technique link to clipboard
+        function copyTechniqueLink(techId) {
+            const url = `${window.location.origin}${window.location.pathname}#${techId}`;
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.querySelector(`#${techId} .copy-link-btn`);
+                btn.textContent = '✓';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '🔗';
+                    btn.classList.remove('copied');
+                }, 1500);
+            });
+        }
+
+        // Handle URL hash - scroll to and highlight technique
+        function handleHashNavigation() {
+            const hash = window.location.hash.slice(1);
+            if (hash && hash.match(/^T-[A-Z]\d{3}$/)) {
+                // Clear filters to ensure the technique is visible
+                filters.component = 'all';
+                filters.stage = 'all';
+                filters.search = '';
+
+                // Update filter button states
+                document.querySelectorAll('#componentFilters .filter-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.filter === 'all');
+                });
+                document.querySelectorAll('#stageFilters .filter-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.filter === 'all');
+                });
+                document.getElementById('searchBox').value = '';
+
+                // Re-render to show all techniques
+                renderTechniques();
+
+                // Scroll to technique after render
+                setTimeout(() => {
+                    const element = document.getElementById(hash);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        element.classList.add('highlighted');
+                    }
+                }, 100);
+            }
+        }
+
+        // Listen for hash changes
+        window.addEventListener('hashchange', handleHashNavigation);
+
         // Start
         init();
+
+        // Handle initial hash if present
+        if (window.location.hash) {
+            handleHashNavigation();
+        }
     </script>
 </body>
 </html>
