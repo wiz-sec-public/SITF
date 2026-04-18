@@ -104,3 +104,7 @@ The build script generates:
 **Target Audience**: Incident Response Teams, Security Architects, Threat Intelligence Teams, Security Engineers
 
 **Focus**: Protecting producer organizations (software vendors, OSS maintainers) who create supply chain components
+
+---
+
+Starting April 14 2026, SITF is licensed under CC BY-NC 4.0. Versions prior to this date remain under CC BY-NC-ND 4.0.
