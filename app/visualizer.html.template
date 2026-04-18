@@ -2462,6 +2462,7 @@
                                 nodeTypes={nodeTypes}
                                 elevateNodesOnSelect={false}
                                 elevateEdgesOnSelect={false}
+                                defaultEdgeOptions={{ zIndex: 100 }}
                                 multiSelectionKeyCode="Shift"
                                 selectionKeyCode="Shift"
                                 panOnDrag={[1, 2]}

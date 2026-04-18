@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "Attack Flow",
-    "created": "2026-01-28T09:07:49.635Z",
+    "created": "2026-04-18T19:28:49.978Z",
     "version": "1.0",
     "framework": "SITF"
   },
@@ -91,7 +91,7 @@
       "type": "technique",
       "position": {
         "x": 30,
-        "y": 375.36658387575847
+        "y": 387.36658387575847
       },
       "data": {
         "id": "T-C002",
@@ -124,7 +124,7 @@
       "selected": false,
       "positionAbsolute": {
         "x": 30,
-        "y": 375.36658387575847
+        "y": 387.36658387575847
       },
       "dragging": false
     },
@@ -133,7 +133,7 @@
       "type": "technique",
       "position": {
         "x": 30,
-        "y": 615.8553623767696
+        "y": 617.8553623767696
       },
       "data": {
         "id": "T-C013",
@@ -158,10 +158,10 @@
       "zIndex": 10,
       "width": 160,
       "height": 145,
-      "selected": false,
+      "selected": true,
       "positionAbsolute": {
         "x": 30,
-        "y": 615.8553623767696
+        "y": 617.8553623767696
       },
       "dragging": false
     },
@@ -578,7 +578,7 @@
         "label": "Persistence Established"
       },
       "zIndex": 10,
-      "width": 201,
+      "width": 203,
       "height": 46,
       "selected": false,
       "positionAbsolute": {
@@ -598,7 +598,7 @@
         "label": "Secondary Supply Chain Attack"
       },
       "zIndex": 10,
-      "width": 251,
+      "width": 252,
       "height": 46,
       "selected": false,
       "positionAbsolute": {
@@ -609,20 +609,6 @@
     }
   ],
   "edges": [
-    {
-      "id": "edge-entry-to-cicd-creds",
-      "zIndex": 1000,
-      "source": "entryPoint-solarwinds-001",
-      "sourceHandle": "bottom",
-      "target": "technique-cicd-creds",
-      "targetHandle": "top",
-      "type": "smoothstep",
-      "animated": false,
-      "markerEnd": {
-        "type": "arrowclosed"
-      },
-      "label": "Sep 2019"
-    },
     {
       "id": "edge-cicd-creds-to-exec",
       "zIndex": 100,
@@ -806,6 +792,33 @@
         "fillOpacity": 0.9
       },
       "id": "reactflow__edge-technique-steal-secretsbottom-exitPoint-secondary-supply-chaintop"
+    },
+    {
+      "zIndex": 100,
+      "source": "entryPoint-solarwinds-001",
+      "sourceHandle": "bottom",
+      "target": "technique-cicd-creds",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-solarwinds-001bottom-technique-cicd-credstop"
     }
   ]
 }

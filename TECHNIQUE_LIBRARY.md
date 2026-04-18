@@ -629,32 +629,6 @@ Controls are split into two categories:
 
 ---
 
-#### T-V011: Git Tag/Reference Manipulation
-
-**Technique:** Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code
-
-**Risks:**
-- Tags not protected from force-push
-- No tag signing enforcement
-- Consumers reference actions/packages by mutable tags
-- No alerting on tag reference changes
-- Service accounts with tag push permissions
-- No approval workflow for tag operations
-
-**Protective Controls:** 🛡️
-- Tag protection rules
-- Tag signing enforcement
-- Restrict tag push permissions
-- Pin actions/dependencies by SHA
-- Tag operation approval workflow
-
-**Detective Controls:** 🔍
-- Tag mutation monitoring
-- Audit log monitoring for tag operations
-- Tag-to-commit drift detection
-
----
-
 ### CI/CD
 
 #### T-C001: Abuse Credentials for CI/CD Access
@@ -1349,33 +1323,6 @@ Controls are split into two categories:
 
 ---
 
-#### T-R012: Package Lifecycle Script Abuse
-
-**Technique:** Attacker leverages package manager lifecycle hooks (postinstall, preinstall) or language-specific initialization mechanisms (.pth files) to execute malicious code during package installation
-
-**Risks:**
-- Lifecycle scripts enabled by default in package managers
-- No review or approval of install-time scripts
-- Scripts execute with user privileges automatically
-- Python .pth files execute on any interpreter startup
-- No network restrictions during package installation
-- Self-cleaning payloads evade post-install detection
-
-**Protective Controls:** 🛡️
-- Disable lifecycle scripts during installation
-- Network isolation during package installation
-- Lockfile integrity verification
-- Package version pinning with hash verification
-- Python .pth file restrictions
-
-**Detective Controls:** 🔍
-- Lifecycle script content analysis
-- Network monitoring during package installation
-- Process monitoring during installation
-- File integrity monitoring for .pth files
-
----
-
 ### PRODUCTION / CLOUD
 
 #### T-P001: Abuse Production Credentials from CI/CD
@@ -1799,7 +1746,6 @@ Controls are split into two categories:
 - T-V008: Malicious Repo Hosting
 - T-V009: Mass Deletion of Repositories
 - T-V010: Malicious Code Modification in Repository
-- T-V011: Git Tag/Reference Manipulation
 
 ---
 
