@@ -45,9 +45,10 @@ When this skill is invoked:
    - Example: Accessing VCS with stolen creds → T-V001 must come BEFORE any VCS actions
 
 3. If no matching technique exists:
-   - Create a placeholder node with `"type": "technique-gap"`
-   - Include suggested technique metadata in the data field
-   - Note in output that `/technique-proposal` should be run for gaps
+   - Check if attack step is **in-scope** for SITF (SDLC/supply-chain related)
+   - If in-scope: Create placeholder with `"type": "technique-gap"`
+   - If out-of-scope (generic cloud/infra attack): Note in output, reference MITRE ATT&CK
+   - Note in output that `/technique-proposal` should be run for in-scope gaps
 
 ### Phase 3: Layout Calculation
 
@@ -149,8 +150,12 @@ Generate the attack flow JSON with this exact structure:
     "stage": "Initial Access",
     "description": "Full description from techniques.json",
     "risks": ["risk1", "risk2"],
-    "controls": ["control1", "control2"],
-    "customLabel": "Attack-specific context"
+    "controls": {
+      "protective": [{ "name": "control1", "frameworks": {...} }],
+      "detective": [{ "name": "control2", "frameworks": {...} }]
+    },
+    "customLabel": "Attack-specific context",
+    "evidence": "Optional: specific evidence from the attack"
   },
   "zIndex": 10,
   "width": 160,
@@ -162,8 +167,9 @@ Generate the attack flow JSON with this exact structure:
 - `id`: Use technique ID (e.g., "T-C003") — NOT "techniqueId"
 - `name`: Use technique name — NOT "label"
 - `risks`: Copy full array from techniques.json
-- `controls`: Copy full array from techniques.json
+- `controls`: Copy full object with `protective` and `detective` arrays from techniques.json
 - `customLabel`: Add attack-specific context (e.g., "PRs #18018, #18020")
+- `evidence`: Optional field for attack-specific evidence
 
 #### Node Structure - Exit Point
 ```json
@@ -190,7 +196,6 @@ Generate the attack flow JSON with this exact structure:
   "targetHandle": "top",
   "type": "smoothstep",
   "animated": false,
-  "zIndex": 100,
   "markerEnd": { "type": "arrowclosed" },
   "label": "",
   "labelStyle": { "fill": "#DC2626", "fontWeight": 600, "fontSize": 12 },
@@ -208,7 +213,6 @@ Generate the attack flow JSON with this exact structure:
   "targetHandle": "left",
   "type": "smoothstep",
   "animated": false,
-  "zIndex": 100,
   "style": { "stroke": "#9ca3af" },
   "markerEnd": { "type": "arrowclosed", "color": "#9ca3af" },
   "label": "Transition label",
@@ -224,7 +228,28 @@ Node types:
 - `technique-gap`: Placeholder for missing technique (flag for /technique-proposal)
 - `exitPoint`: Attack outcome (Future Breach, Persistence, Secondary Supply Chain Attack, etc.)
 
-### Phase 5: Validation
+### Phase 5: Control Gap Analysis
+
+After generating the flow, analyze defensive gaps:
+
+1. For each technique used in the attack:
+   - List the protective controls from techniques.json
+   - Identify which controls were missing (enabled the attack)
+   
+2. Generate a **Controls Gap Summary**:
+   ```
+   | Technique | Missing Control | Type | OWASP SPVS |
+   |-----------|-----------------|------|------------|
+   | T-C003    | Minimal workflow permissions | Protective | V3.1 |
+   | T-C005    | Log sanitization | Protective | V2.5 |
+   | T-C005    | Runtime agent on runner | Detective | V5.4 |
+   ```
+
+3. Prioritize recommendations by:
+   - Number of techniques the control would prevent
+   - Stage of attack it would block (earlier = higher priority)
+
+### Phase 6: Validation
 
 Run this checklist before outputting:
 
@@ -234,7 +259,8 @@ Run this checklist before outputting:
 [ ] All node IDs are unique
 [ ] All edge source/target reference valid node IDs
 [ ] Technique nodes use data.id and data.name (NOT techniqueId/label)
-[ ] Technique nodes include full risks[] and controls[] arrays
+[ ] Technique nodes include full risks[] array and controls object with protective/detective arrays
+[ ] Out-of-scope attack steps noted but not forced into SITF techniques
 [ ] All techniques centered within components (x = component.x + 45 for width=250)
 [ ] Component heights are adequate (minimum 500px)
 [ ] Techniques ordered by attack flow sequence
@@ -245,11 +271,39 @@ Run this checklist before outputting:
 [ ] Edges have sourceHandle, targetHandle, markerEnd, labelStyle, labelBgStyle
 ```
 
-### Phase 6: Output
+### Phase 7: Output
 
-1. Write the JSON file to `sample-flows/<attack-name>.json`
+1. Write the JSON file to `flows/incidents/<attack-name>.json`
 2. Validate the JSON with Python: `python3 -c "import json; json.load(open('file'))"`
-3. Provide a summary table of the attack flow
+3. Provide output summary:
+
+```markdown
+## Attack Flow: <attack-name>
+
+### Attack Chain
+1. Initial Access via [entry point]
+2. [Technique] → [Technique] → ...
+3. Impact: [exit point]
+
+### Techniques Used
+| ID | Name | Component | Stage |
+|----|------|-----------|-------|
+| T-C003 | PWN Request | CI/CD | Initial Access |
+| ... | ... | ... | ... |
+
+### Control Gaps Identified
+| Missing Control | Type | Would Prevent | OWASP SPVS |
+|-----------------|------|---------------|------------|
+| Minimal workflow permissions | Protective | T-C003 | V3.1 |
+| ... | ... | ... | ... |
+
+### Out-of-Scope Steps
+- [Step X]: Generic cloud attack, see MITRE ATT&CK T1078
+
+### Technique Gaps
+- [Step Y]: No matching SITF technique, run `/technique-proposal`
+```
+
 4. If any technique-gaps exist, list them and recommend running `/technique-proposal`
 
 ## Example
@@ -261,9 +315,9 @@ Run this checklist before outputting:
 This will:
 1. Search for ultralytics attack details
 2. Map attack steps to SITF techniques
-3. Generate `sample-flows/ultralytics.json`
+3. Generate `flows/incidents/ultralytics.json`
 4. Output attack flow summary
 
 ## Reference: Working Sample
 
-See `sample-flows/ultralytics.json` or `sample-flows/tj-actions.json` for correctly structured examples.
+See `flows/incidents/ultralytics.json` or `flows/incidents/tj-actions.json` for correctly structured examples.

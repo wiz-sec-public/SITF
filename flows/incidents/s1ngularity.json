@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "Attack Flow",
-    "created": "2026-01-27T11:21:12.877Z",
+    "created": "2026-04-18T19:22:40.214Z",
     "version": "1.0",
     "framework": "SITF"
   },
@@ -30,8 +30,8 @@
       "id": "component-nrwl-cicd",
       "type": "component",
       "position": {
-        "x": -156.13708939772084,
-        "y": 54.904093202859826
+        "x": -154.86212000069764,
+        "y": 54.904093202859855
       },
       "data": {
         "label": "CI/CD",
@@ -48,8 +48,8 @@
       },
       "selected": false,
       "positionAbsolute": {
-        "x": -157.13708939772084,
-        "y": 54.904093202859826
+        "x": -154.86212000069764,
+        "y": 54.904093202859855
       },
       "dragging": false,
       "resizing": false
@@ -653,54 +653,6 @@
   ],
   "edges": [
     {
-      "id": "edge-entry-to-pwn",
-      "zIndex": 1000,
-      "source": "entryPoint-s1ng-001",
-      "sourceHandle": "bottom",
-      "target": "technique-pwn-request",
-      "targetHandle": "top",
-      "type": "smoothstep",
-      "animated": false,
-      "markerEnd": {
-        "type": "arrowclosed"
-      },
-      "label": "",
-      "labelStyle": {
-        "fill": "#DC2626",
-        "fontWeight": 600,
-        "fontSize": 12
-      },
-      "labelBgStyle": {
-        "fill": "#FEE2E2",
-        "fillOpacity": 0.9
-      },
-      "selected": false
-    },
-    {
-      "id": "edge-pwn-to-injection",
-      "zIndex": 1000,
-      "source": "technique-pwn-request",
-      "sourceHandle": "bottom",
-      "target": "technique-script-injection",
-      "targetHandle": "top",
-      "type": "smoothstep",
-      "animated": false,
-      "markerEnd": {
-        "type": "arrowclosed"
-      },
-      "label": "",
-      "labelStyle": {
-        "fill": "#DC2626",
-        "fontWeight": 600,
-        "fontSize": 12
-      },
-      "labelBgStyle": {
-        "fill": "#FEE2E2",
-        "fillOpacity": 0.9
-      },
-      "selected": false
-    },
-    {
       "id": "edge-injection-to-steal",
       "zIndex": 100,
       "source": "technique-script-injection",
@@ -1031,6 +983,60 @@
         "fillOpacity": 0.9
       },
       "id": "reactflow__edge-technique-1769512822901bottom-exitPoint-future-breachtop"
+    },
+    {
+      "zIndex": 100,
+      "source": "entryPoint-s1ng-001",
+      "sourceHandle": "bottom",
+      "target": "technique-pwn-request",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-s1ng-001bottom-technique-pwn-requesttop"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-pwn-request",
+      "sourceHandle": "bottom",
+      "target": "technique-script-injection",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-pwn-requestbottom-technique-script-injectiontop"
     }
   ]
 }

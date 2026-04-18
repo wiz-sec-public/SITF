@@ -1,0 +1,824 @@
+{
+  "metadata": {
+    "name": "Attack Flow",
+    "created": "2026-04-18T19:28:49.978Z",
+    "version": "1.0",
+    "framework": "SITF"
+  },
+  "nodes": [
+    {
+      "id": "entryPoint-solarwinds-001",
+      "type": "entryPoint",
+      "position": {
+        "x": 26,
+        "y": -38
+      },
+      "data": {
+        "label": "Stolen Credentials"
+      },
+      "zIndex": 10,
+      "width": 169,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 26,
+        "y": -38
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-solarwinds-cicd",
+      "type": "component",
+      "position": {
+        "x": -26.20917433151442,
+        "y": 78.36192660428037
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "SolarWinds Build Infrastructure"
+      },
+      "zIndex": -1,
+      "width": 287,
+      "height": 738,
+      "style": {
+        "width": 287,
+        "height": 738
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false,
+      "positionAbsolute": {
+        "x": -26.20917433151442,
+        "y": 78.36192660428037
+      }
+    },
+    {
+      "id": "technique-cicd-creds",
+      "type": "technique",
+      "position": {
+        "x": 30,
+        "y": 160
+      },
+      "data": {
+        "id": "T-C001",
+        "name": "Abuse Credentials for CI/CD Access",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access CI/CD system",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "Default credentials / bad out-of-the-box config",
+          "Credentials in org public repos",
+          "Previous breaches"
+        ],
+        "controls": [
+          "Mandatory MFA",
+          "IDP / SSO setup",
+          "Enforcing fine-grained PATs (VCS)",
+          "Enforcing PAT expiration (VCS)",
+          "Secret scanning"
+        ],
+        "customLabel": "APT29 gains access to SolarWinds build environment (Sep 2019)"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 145
+    },
+    {
+      "id": "technique-malicious-exec-cicd",
+      "type": "technique",
+      "position": {
+        "x": 30,
+        "y": 387.36658387575847
+      },
+      "data": {
+        "id": "T-C002",
+        "name": "Malicious Execution in Workflow Context",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker executes malicious code within CI/CD workflow",
+        "risks": [
+          "Using untrusted GitHub actions",
+          "Using untrusted GitHub Apps",
+          "Using untrusted reusable workflows",
+          "Using untrusted SW packages on runners",
+          "Using untrusted container / VM image for runners",
+          "Lack of GitHub action pinning"
+        ],
+        "controls": [
+          "Pinning 3rd-party actions",
+          "Action whitelisting",
+          "Automated maintainer reputation and hygiene checks",
+          "Requiring code owner approval (VCS)",
+          "Branch protection rules (VCS)",
+          "Runner SBOM",
+          "Image scanning"
+        ],
+        "customLabel": "SUNSPOT implant monitors MSBuild.exe for Orion builds"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 30,
+        "y": 387.36658387575847
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-persistence-runner",
+      "type": "technique",
+      "position": {
+        "x": 30,
+        "y": 617.8553623767696
+      },
+      "data": {
+        "id": "T-C013",
+        "name": "Persistence on Self-Hosted Runners",
+        "component": "cicd",
+        "stage": "Post-Compromise",
+        "description": "Attacker establishes persistence on self-hosted runner",
+        "risks": [
+          "Misconfigured self-hosted runner",
+          "Non-ephemeral self-hosted runner",
+          "Overshared self-hosted runner",
+          "No runtime monitoring"
+        ],
+        "controls": [
+          "Using managed runners only",
+          "Ephemeral runners",
+          "Runner isolation",
+          "Runtime agent on runner"
+        ],
+        "customLabel": "SUNSPOT persists in build environment, injects SUNBURST into Orion.Core.BusinessLayer.dll"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 145,
+      "selected": true,
+      "positionAbsolute": {
+        "x": 30,
+        "y": 617.8553623767696
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-solarwinds-registry",
+      "type": "component",
+      "position": {
+        "x": 325.0244389250505,
+        "y": 80
+      },
+      "data": {
+        "label": "Registry",
+        "componentId": "registry",
+        "techniques": [],
+        "customLabel": "SolarWinds Update Distribution"
+      },
+      "zIndex": -1,
+      "width": 300,
+      "height": 325,
+      "style": {
+        "width": 300,
+        "height": 325
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 325.0244389250505,
+        "y": 80
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-publish-malicious-image",
+      "type": "technique",
+      "position": {
+        "x": 384.3853363927699,
+        "y": 195.56394051664574
+      },
+      "data": {
+        "id": "T-R005",
+        "name": "Publishing Malicious Container/VM Image",
+        "component": "registry",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious container or VM image",
+        "risks": [
+          "Overprivileged registry credentials",
+          "No image signing",
+          "No provenance attestation",
+          "No image scanning"
+        ],
+        "controls": [
+          "Trusted publishing",
+          "Provenance attestation",
+          "Image signing and verification",
+          "Image vulnerability scanning",
+          "OIDC for publishing"
+        ],
+        "customLabel": "Trojanized Orion updates signed with legitimate SolarWinds certificate (Mar 2020)"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 145,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 384.3853363927699,
+        "y": 195.56394051664574
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-victim-production",
+      "type": "component",
+      "position": {
+        "x": 740.9849873521525,
+        "y": 82.26411503695476
+      },
+      "data": {
+        "label": "Production/Cloud",
+        "componentId": "production",
+        "techniques": [],
+        "customLabel": "Victim Production Environments (~18,000 customers)"
+      },
+      "zIndex": -1,
+      "width": 326,
+      "height": 1102,
+      "style": {
+        "width": 326,
+        "height": 1102
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 740.9849873521525,
+        "y": 82.26411503695476
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-container-poison",
+      "type": "technique",
+      "position": {
+        "x": 829.1072326266012,
+        "y": 195.49159901598205
+      },
+      "data": {
+        "id": "T-P004",
+        "name": "Container Image Poisoning to Production",
+        "component": "production",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker publishes malicious container image that gets deployed to production",
+        "risks": [
+          "Lack of image signing/verification",
+          "No provenance attestation",
+          "Automatic deployment without review",
+          "No image scanning"
+        ],
+        "controls": [
+          "Image signing and verification",
+          "Provenance attestation",
+          "Deployment approval gates",
+          "Image vulnerability scanning",
+          "Runtime security monitoring"
+        ],
+        "customLabel": "SUNBURST backdoor executes after 2-week dormancy period"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 829.1072326266012,
+        "y": 195.49159901598205
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-prod-recon",
+      "type": "technique",
+      "position": {
+        "x": 829.1072326266012,
+        "y": 361.1406145911395
+      },
+      "data": {
+        "id": "T-P012",
+        "name": "Production Infrastructure Reconnaissance",
+        "component": "production",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker enumerates production infrastructure, services, and resources to identify targets and plan attacks",
+        "risks": [
+          "Overprivileged IAM roles allowing enumeration",
+          "No detection of reconnaissance activities",
+          "Publicly exposed cloud metadata",
+          "Insufficient network segmentation allowing scanning",
+          "Verbose error messages revealing infrastructure details",
+          "Lack of honeypots or deception technology",
+          "No rate limiting on API calls"
+        ],
+        "controls": [
+          "Minimal IAM permissions",
+          "Detection infra on audit logs (production)",
+          "API rate limiting and throttling",
+          "Network segmentation (production internal)",
+          "Honeypots and deception technology",
+          "Metadata service restrictions",
+          "Generic error messages (no infrastructure details)",
+          "Anomaly detection for enumeration patterns"
+        ],
+        "customLabel": "SUNBURST profiles system, checks for security tools and forensic software"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 145,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 829.1072326266012,
+        "y": 361.1406145911395
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-lateral-movement",
+      "type": "technique",
+      "position": {
+        "x": 829.1072326266012,
+        "y": 580.9462733105919
+      },
+      "data": {
+        "id": "T-P010",
+        "name": "Network Lateral Movement Within Production",
+        "component": "production",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker moves between production systems via network",
+        "risks": [
+          "Weak network segmentation",
+          "Overly permissive security groups",
+          "No network monitoring",
+          "Unpatched systems"
+        ],
+        "controls": [
+          "Network segmentation",
+          "Micro-segmentation",
+          "Network monitoring",
+          "Security group hardening",
+          "Vulnerability management"
+        ],
+        "customLabel": "TEARDROP/RAINDROP payloads deployed, RDP and SMB lateral movement"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 145,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 829.1072326266012,
+        "y": 580.9462733105919
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-cloud-lateral",
+      "type": "technique",
+      "position": {
+        "x": 829.1072326266014,
+        "y": 781.7402196486031
+      },
+      "data": {
+        "id": "T-P009",
+        "name": "Cloud Service Lateral Movement",
+        "component": "production",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker uses compromised cloud credentials to access other cloud services",
+        "risks": [
+          "Overprivileged IAM roles",
+          "No network segmentation",
+          "Lack of service-to-service authentication",
+          "No audit log monitoring"
+        ],
+        "controls": [
+          "Minimal IAM permissions",
+          "Network segmentation",
+          "Service mesh / zero trust",
+          "CSPM/CNAPP",
+          "Detection infra on audit logs"
+        ],
+        "customLabel": "OAuth app abuse and service principal compromise for M365/Azure access"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 145,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 829.1072326266014,
+        "y": 781.7402196486031
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-steal-secrets",
+      "type": "technique",
+      "position": {
+        "x": 829.1072326266012,
+        "y": 993.6821580117265
+      },
+      "data": {
+        "id": "T-P011",
+        "name": "Steal Secrets from Production Environment",
+        "component": "production",
+        "stage": "Post-Compromise",
+        "description": "Attacker accesses production secrets store and exfiltrates customer secrets, tokens, and credentials",
+        "risks": [
+          "Encryption keys accessible in process memory",
+          "Lack of hardware security module (HSM) for key storage",
+          "No secrets rotation policies",
+          "Centralized storage of all customer secrets",
+          "No data loss prevention (DLP) on production systems",
+          "Lack of egress traffic monitoring"
+        ],
+        "controls": [
+          "Store encryption keys in HSM (Hardware Security Module)",
+          "Envelope encryption with key hierarchy",
+          "Customer-managed encryption keys (CMEK)",
+          "Automatic secrets rotation (30-90 days)",
+          "Secrets segmentation (per-customer isolation)",
+          "Memory protection and anti-dumping controls",
+          "DLP on production systems",
+          "Egress traffic monitoring and filtering",
+          "Detection infra on audit logs (production)",
+          "Large data transfer detection"
+        ],
+        "customLabel": "Credential theft from Chrome browser profiles and service accounts"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 145,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 829.1072326266012,
+        "y": 993.6821580117265
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-victim-endpoint",
+      "type": "component",
+      "position": {
+        "x": 1150.8439943079693,
+        "y": 84.1935678656672
+      },
+      "data": {
+        "label": "Endpoint/IDE",
+        "componentId": "endpoint",
+        "techniques": [],
+        "customLabel": "Victim Workstations (Government & Enterprise)"
+      },
+      "zIndex": -1,
+      "width": 283,
+      "height": 454,
+      "style": {
+        "width": 283,
+        "height": 454
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1150.8439943079693,
+        "y": 84.1935678656672
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-endpoint-phishing",
+      "type": "technique",
+      "position": {
+        "x": 1218.010406298968,
+        "y": 205.27223375045543
+      },
+      "data": {
+        "id": "T-E002",
+        "name": "Endpoint Phishing",
+        "component": "endpoint",
+        "stage": "Initial Access",
+        "description": "Attacker phishes developer to steal credentials or install malware",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "No security awareness training",
+          "Credentials stored in plaintext",
+          "No email security controls"
+        ],
+        "controls": [
+          "Mandatory MFA",
+          "Phishing-resistant authentication",
+          "Security awareness training",
+          "Email security (SPF, DMARC, DKIM)",
+          "EDR on endpoint"
+        ],
+        "customLabel": "Cobalt Strike Beacon deployed via TEARDROP, C2 established"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1218.010406298968,
+        "y": 205.27223375045543
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-harvest-endpoint-creds",
+      "type": "technique",
+      "position": {
+        "x": 1218.0104062989683,
+        "y": 382.43864574145425
+      },
+      "data": {
+        "id": "T-E003",
+        "name": "Harvest Local Secrets / Credentials from Endpoint",
+        "component": "endpoint",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts credentials stored on developer machine",
+        "risks": [
+          "Credentials stored in plaintext",
+          "Production credentials on developer machines",
+          "No local DLP",
+          "SSH keys without passwords",
+          "Cloud credentials in environment variables"
+        ],
+        "controls": [
+          "Local DLP",
+          "EDR on endpoint",
+          "Credential manager enforcement",
+          "No production credentials on endpoints",
+          "Encrypted credential storage"
+        ],
+        "customLabel": "Browser credential theft, WMI persistence established"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 129,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1218.0104062989683,
+        "y": 382.43864574145425
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-persistence",
+      "type": "exitPoint",
+      "position": {
+        "x": 1198.4491368300214,
+        "y": 716.3145787495541
+      },
+      "data": {
+        "label": "Persistence Established"
+      },
+      "zIndex": 10,
+      "width": 203,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1198.4491368300214,
+        "y": 716.3145787495541
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-secondary-supply-chain",
+      "type": "exitPoint",
+      "position": {
+        "x": 783.8872823011461,
+        "y": 1205.6109731262638
+      },
+      "data": {
+        "label": "Secondary Supply Chain Attack"
+      },
+      "zIndex": 10,
+      "width": 252,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 783.8872823011461,
+        "y": 1205.6109731262638
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-cicd-creds-to-exec",
+      "zIndex": 100,
+      "source": "technique-cicd-creds",
+      "sourceHandle": "bottom",
+      "target": "technique-malicious-exec-cicd",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      }
+    },
+    {
+      "id": "edge-exec-to-persistence",
+      "zIndex": 100,
+      "source": "technique-malicious-exec-cicd",
+      "sourceHandle": "bottom",
+      "target": "technique-persistence-runner",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "SUNSPOT deployed"
+    },
+    {
+      "id": "edge-persistence-to-registry",
+      "zIndex": 100,
+      "source": "technique-persistence-runner",
+      "sourceHandle": "right",
+      "target": "technique-publish-malicious-image",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "Feb-Mar 2020"
+    },
+    {
+      "id": "edge-registry-to-production",
+      "zIndex": 100,
+      "source": "technique-publish-malicious-image",
+      "sourceHandle": "right",
+      "target": "technique-container-poison",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "~18,000 victims",
+      "selected": false
+    },
+    {
+      "id": "edge-poison-to-recon",
+      "zIndex": 100,
+      "source": "technique-container-poison",
+      "sourceHandle": "bottom",
+      "target": "technique-prod-recon",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-recon-to-lateral",
+      "zIndex": 100,
+      "source": "technique-prod-recon",
+      "sourceHandle": "bottom",
+      "target": "technique-lateral-movement",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "TEARDROP/RAINDROP",
+      "selected": false
+    },
+    {
+      "id": "edge-lateral-to-cloud",
+      "zIndex": 100,
+      "source": "technique-lateral-movement",
+      "sourceHandle": "bottom",
+      "target": "technique-cloud-lateral",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-cloud-to-secrets",
+      "zIndex": 100,
+      "source": "technique-cloud-lateral",
+      "sourceHandle": "bottom",
+      "target": "technique-steal-secrets",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-lateral-to-endpoint",
+      "zIndex": 100,
+      "source": "technique-lateral-movement",
+      "sourceHandle": "right",
+      "target": "technique-endpoint-phishing",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "Cobalt Strike",
+      "selected": false
+    },
+    {
+      "id": "edge-endpoint-to-harvest",
+      "zIndex": 100,
+      "source": "technique-endpoint-phishing",
+      "sourceHandle": "bottom",
+      "target": "technique-harvest-endpoint-creds",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-harvest-to-persistence",
+      "zIndex": 100,
+      "source": "technique-harvest-endpoint-creds",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-persistence",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "WMI/Scheduled Tasks",
+      "selected": false
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-steal-secrets",
+      "sourceHandle": "bottom",
+      "target": "exitPoint-secondary-supply-chain",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-steal-secretsbottom-exitPoint-secondary-supply-chaintop"
+    },
+    {
+      "zIndex": 100,
+      "source": "entryPoint-solarwinds-001",
+      "sourceHandle": "bottom",
+      "target": "technique-cicd-creds",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-solarwinds-001bottom-technique-cicd-credstop"
+    }
+  ]
+}

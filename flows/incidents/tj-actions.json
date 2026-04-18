@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "Attack Flow",
-    "created": "2026-01-26T13:57:21.900Z",
+    "created": "2026-04-18T19:05:07.543Z",
     "version": "1.0",
     "framework": "SITF"
   },
@@ -177,7 +177,7 @@
       "zIndex": -1,
       "width": 213,
       "height": 373,
-      "selected": true,
+      "selected": false,
       "positionAbsolute": {
         "x": 919.3024945468221,
         "y": 103.58492794928935
@@ -329,7 +329,7 @@
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 113,
       "selected": false,
       "positionAbsolute": {
         "x": 953.5644448729555,
@@ -625,54 +625,6 @@
   ],
   "edges": [
     {
-      "zIndex": 1000,
-      "source": "entryPoint-1765192751091",
-      "sourceHandle": "bottom",
-      "target": "technique-1765192795298",
-      "targetHandle": "top",
-      "type": "smoothstep",
-      "animated": false,
-      "markerEnd": {
-        "type": "arrowclosed"
-      },
-      "label": "",
-      "labelStyle": {
-        "fill": "#DC2626",
-        "fontWeight": 600,
-        "fontSize": 12
-      },
-      "labelBgStyle": {
-        "fill": "#FEE2E2",
-        "fillOpacity": 0.9
-      },
-      "id": "reactflow__edge-entryPoint-1765192751091bottom-technique-1765192795298top",
-      "selected": false
-    },
-    {
-      "zIndex": 1000,
-      "source": "technique-1765192795298",
-      "sourceHandle": "bottom",
-      "target": "technique-1765192833166",
-      "targetHandle": "top",
-      "type": "smoothstep",
-      "animated": false,
-      "markerEnd": {
-        "type": "arrowclosed"
-      },
-      "label": "",
-      "labelStyle": {
-        "fill": "#DC2626",
-        "fontWeight": 600,
-        "fontSize": 12
-      },
-      "labelBgStyle": {
-        "fill": "#FEE2E2",
-        "fillOpacity": 0.9
-      },
-      "id": "reactflow__edge-technique-1765192795298bottom-technique-1765192833166top",
-      "selected": false
-    },
-    {
       "zIndex": 100,
       "source": "technique-1769432066376",
       "sourceHandle": "bottom",
@@ -946,6 +898,60 @@
       },
       "id": "reactflow__edge-technique-1769432131294bottom-exitPoint-1769434992925top",
       "selected": false
+    },
+    {
+      "zIndex": 100,
+      "source": "entryPoint-1765192751091",
+      "sourceHandle": "bottom",
+      "target": "technique-1765192795298",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-entryPoint-1765192751091bottom-technique-1765192795298top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-1765192795298",
+      "sourceHandle": "bottom",
+      "target": "technique-1765192833166",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-1765192795298bottom-technique-1765192833166top"
     }
   ]
 }

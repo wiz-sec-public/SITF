@@ -215,10 +215,13 @@
             z-index: 0 !important;
         }
         
-        /* Technique nodes and other nodes on top of edges */
+        /* Technique nodes and other nodes ALWAYS on top - both selected and not selected */
         .react-flow__node[data-type="technique"],
+        .react-flow__node[data-type="technique"].selected,
         .react-flow__node[data-type="entryPoint"],
-        .react-flow__node[data-type="exitPoint"] {
+        .react-flow__node[data-type="entryPoint"].selected,
+        .react-flow__node[data-type="exitPoint"],
+        .react-flow__node[data-type="exitPoint"].selected {
             z-index: 100 !important;
         }
 
@@ -231,11 +234,12 @@
             background-color: rgba(99, 102, 241, 0.05);
         }
         
-        /* Keep technique nodes on top even when not selected */
-        .react-flow__node[data-type="technique"]:not(.selected),
-        .react-flow__node[data-type="entryPoint"]:not(.selected),
-        .react-flow__node[data-type="exitPoint"]:not(.selected) {
-            z-index: 100 !important;
+        /* Edges ALWAYS above component nodes - in all states */
+        .react-flow__edge,
+        .react-flow__edge.selected,
+        .react-flow__edge.animated,
+        .react-flow__edge:hover {
+            z-index: 50 !important;
         }
         
         /* Edges should be above component nodes but below technique nodes and popups */
@@ -244,7 +248,8 @@
         }
         
         /* Ensure edge labels are also at same level as edges */
-        .react-flow__edge-text {
+        .react-flow__edge-text,
+        .react-flow__edge-textwrapper {
             z-index: 50 !important;
         }
         
@@ -7731,11 +7736,9 @@
                                 onDrop={onDrop}
                                 onDragOver={onDragOver}
                                 nodeTypes={nodeTypes}
-                                defaultEdgeOptions={{
-                                    zIndex: 100
-                                }}
                                 elevateNodesOnSelect={false}
-                                elevateEdgesOnSelect={true}
+                                elevateEdgesOnSelect={false}
+                                defaultEdgeOptions={{ zIndex: 100 }}
                                 multiSelectionKeyCode="Shift"
                                 selectionKeyCode="Shift"
                                 panOnDrag={[1, 2]}
