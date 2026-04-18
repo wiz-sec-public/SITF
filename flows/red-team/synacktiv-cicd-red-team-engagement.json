@@ -1,0 +1,1055 @@
+{
+  "metadata": {
+    "name": "Attack Flow",
+    "created": "2026-04-18T17:38:54.105Z",
+    "version": "1.0",
+    "framework": "SITF"
+  },
+  "nodes": [
+    {
+      "id": "entryPoint-url-1",
+      "type": "entryPoint",
+      "position": {
+        "x": -68.13986032745828,
+        "y": -16.949733380942675
+      },
+      "data": {
+        "label": "Leaked Azure DevOps PAT"
+      },
+      "zIndex": 10,
+      "width": 213,
+      "height": 46,
+      "selected": true,
+      "positionAbsolute": {
+        "x": -68.13986032745828,
+        "y": -16.949733380942675
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-cicd-ado",
+      "type": "component",
+      "position": {
+        "x": 50,
+        "y": 80
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [
+          "technique-c001-ado",
+          "technique-c005-vargroups",
+          "technique-c005-secfiles",
+          "technique-c005-svcconn"
+        ],
+        "customLabel": "Azure DevOps"
+      },
+      "zIndex": -1,
+      "width": 250,
+      "height": 680,
+      "style": {
+        "width": 250,
+        "height": 680
+      }
+    },
+    {
+      "id": "component-production",
+      "type": "component",
+      "position": {
+        "x": 430.7755999754263,
+        "y": 79.99999999999994
+      },
+      "data": {
+        "label": "Production",
+        "componentId": "production",
+        "techniques": [
+          "technique-p001-azure"
+        ],
+        "customLabel": "Azure Resource Manager"
+      },
+      "zIndex": -1,
+      "width": 246,
+      "height": 286,
+      "style": {
+        "width": 246,
+        "height": 286
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false,
+      "positionAbsolute": {
+        "x": 430.7755999754263,
+        "y": 79.99999999999994
+      }
+    },
+    {
+      "id": "component-cicd-gh",
+      "type": "component",
+      "position": {
+        "x": 432.8033867327424,
+        "y": 401.3073865689181
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [
+          "technique-c001-gh",
+          "technique-c005-ghsecrets",
+          "technique-c005-oidc"
+        ],
+        "customLabel": "GitHub Actions"
+      },
+      "zIndex": -1,
+      "width": 251,
+      "height": 562,
+      "style": {
+        "width": 251,
+        "height": 562
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 432.8033867327424,
+        "y": 401.3073865689181
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-c001-ado",
+      "type": "technique",
+      "position": {
+        "x": 95,
+        "y": 165.38503999836172
+      },
+      "data": {
+        "id": "T-C001",
+        "name": "Abuse Credentials for CI/CD Access",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access CI/CD system",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "Default credentials / bad out-of-the-box config",
+          "Credentials in org public repos",
+          "Previous breaches"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "Mandatory MFA",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            },
+            {
+              "name": "IDP / SSO setup",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            },
+            {
+              "name": "Enforcing fine-grained PATs (VCS)",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            },
+            {
+              "name": "Enforcing PAT expiration (VCS)",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Leaked PAT → Azure DevOps access",
+        "evidence": "Somehow managed to leak a PAT used by target to authenticate to Azure DevOps",
+        "severity": "Critical"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 95,
+        "y": 165.38503999836172
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c005-vargroups",
+      "type": "technique",
+      "position": {
+        "x": 94.99999999999977,
+        "y": 315.11770135393283
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "OIDC setup in workflows",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Minimal workflow permissions",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Log sanitization",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Runtime agent on runner",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Variable Groups extraction",
+        "evidence": "Bash@3 task with env | grep ^secret_ | base64 -w0 | base64 -w0 - double encoding bypasses secret masking",
+        "severity": "Critical"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 94.99999999999977,
+        "y": 315.11770135393283
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c005-secfiles",
+      "type": "technique",
+      "position": {
+        "x": 95,
+        "y": 470.23555823084666
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "OIDC setup in workflows",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Minimal workflow permissions",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Log sanitization",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Runtime agent on runner",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Secure Files extraction",
+        "evidence": "DownloadSecureFile@1 task - Azure Pipelines don't mask secure file contents in logs",
+        "severity": "High"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 97,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 95,
+        "y": 470.23555823084666
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c005-svcconn",
+      "type": "technique",
+      "position": {
+        "x": 93.93850920782859,
+        "y": 613.0095337571545
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "OIDC setup in workflows",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Minimal workflow permissions",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Log sanitization",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Runtime agent on runner",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Service Connections + GitHub PAT",
+        "evidence": "AzureCLI@2 with addSpnToEnvironment:true exposes servicePrincipalId/Key; checkout with persistCredentials reveals ghp_ token in .git/config",
+        "severity": "Critical"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 93.93850920782859,
+        "y": 613.0095337571545
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-p001-azure",
+      "type": "technique",
+      "position": {
+        "x": 475.7755999754263,
+        "y": 185.88922669833931
+      },
+      "data": {
+        "id": "T-P001",
+        "name": "Abuse Production Credentials from CI/CD",
+        "component": "production",
+        "stage": "Initial Access",
+        "description": "Attacker extracts production credentials from CI/CD and uses them to access production",
+        "risks": [
+          "Production credentials in CI/CD workflows",
+          "Long-lived production credentials",
+          "Overprivileged cloud service accounts",
+          "No credential rotation"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "OIDC for deployment (no long-lived credentials)",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Minimal IAM permissions",
+              "frameworks": {
+                "spvs": [
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Credential rotation",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
+            },
+            {
+              "name": "Network segmentation from SDLC",
+              "frameworks": {
+                "spvs": [
+                  "V4.4"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Azure RM access via Service Principal",
+        "evidence": "Credentials matching Azure portal extracted - enables cloud resource enumeration and compromise",
+        "severity": "Critical"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 475.7755999754263,
+        "y": 185.88922669833931
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c001-gh",
+      "type": "technique",
+      "position": {
+        "x": 477.80338673274264,
+        "y": 501.0525332295779
+      },
+      "data": {
+        "id": "T-C001",
+        "name": "Abuse Credentials for CI/CD Access",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker uses stolen credentials to access CI/CD system",
+        "risks": [
+          "Lack of 2FA / phishing protection",
+          "Default credentials / bad out-of-the-box config",
+          "Credentials in org public repos",
+          "Previous breaches"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "Mandatory MFA",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            },
+            {
+              "name": "IDP / SSO setup",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            },
+            {
+              "name": "Enforcing fine-grained PATs (VCS)",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            },
+            {
+              "name": "Enforcing PAT expiration (VCS)",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "GitHub access via stolen PAT",
+        "evidence": "GitHub PAT (ghp_xxx) from Azure DevOps service connection enables repository and Actions access",
+        "severity": "Critical"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 477.80338673274264,
+        "y": 501.0525332295779
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c005-ghsecrets",
+      "type": "technique",
+      "position": {
+        "x": 477.8033867327424,
+        "y": 652.5926932230249
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "OIDC setup in workflows",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Minimal workflow permissions",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Log sanitization",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Runtime agent on runner",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Repository & Environment secrets",
+        "evidence": "Malicious workflow in .github/workflows/ with ${{secrets.X}} and double base64 encoding",
+        "severity": "Critical"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 477.8033867327424,
+        "y": 652.5926932230249
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c005-oidc",
+      "type": "technique",
+      "position": {
+        "x": 477.8033867327424,
+        "y": 807.7228798820463
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "OIDC setup in workflows",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Minimal workflow permissions",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Log sanitization",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Runtime agent on runner",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "OIDC token abuse for Azure",
+        "evidence": "azure/login@v1 with id-token:write generates Azure access tokens via federated identity trust misconfiguration",
+        "severity": "High"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 477.8033867327424,
+        "y": 807.7228798820463
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-url-1",
+      "type": "exitPoint",
+      "position": {
+        "x": 781.2687467179983,
+        "y": 359.7561866180655
+      },
+      "data": {
+        "label": "Azure Cloud Compromise"
+      },
+      "zIndex": 10,
+      "width": 215,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 781.2687467179983,
+        "y": 359.7561866180655
+      },
+      "dragging": false
+    },
+    {
+      "id": "victimZone-1776533810411",
+      "type": "victimZone",
+      "position": {
+        "x": 10.70621490625922,
+        "y": 43.613348645471945
+      },
+      "data": {
+        "label": "Organization",
+        "color": "#6366F1"
+      },
+      "zIndex": -10,
+      "width": 775,
+      "height": 949,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 10.70621490625922,
+        "y": 43.613348645471945
+      },
+      "style": {
+        "width": 775,
+        "height": 949
+      },
+      "resizing": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-entry-to-c001-ado",
+      "source": "entryPoint-url-1",
+      "sourceHandle": "right",
+      "target": "technique-c001-ado",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Leaked PAT",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-c001-ado-to-vargroups",
+      "source": "technique-c001-ado",
+      "sourceHandle": "bottom",
+      "target": "technique-c005-vargroups",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-vargroups-to-secfiles",
+      "source": "technique-c005-vargroups",
+      "sourceHandle": "bottom",
+      "target": "technique-c005-secfiles",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-secfiles-to-svcconn",
+      "source": "technique-c005-secfiles",
+      "sourceHandle": "bottom",
+      "target": "technique-c005-svcconn",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-svcconn-to-p001",
+      "source": "technique-c005-svcconn",
+      "sourceHandle": "right",
+      "target": "technique-p001-azure",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Service Principal",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-svcconn-to-c001-gh",
+      "source": "technique-c005-svcconn",
+      "sourceHandle": "right",
+      "target": "technique-c001-gh",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "GitHub PAT",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-c001-gh-to-ghsecrets",
+      "source": "technique-c001-gh",
+      "sourceHandle": "bottom",
+      "target": "technique-c005-ghsecrets",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-ghsecrets-to-oidc",
+      "source": "technique-c005-ghsecrets",
+      "sourceHandle": "bottom",
+      "target": "technique-c005-oidc",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-p001-to-exit1",
+      "source": "technique-p001-azure",
+      "sourceHandle": "right",
+      "target": "exitPoint-url-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    },
+    {
+      "id": "edge-oidc-to-exit1",
+      "source": "technique-c005-oidc",
+      "sourceHandle": "right",
+      "target": "exitPoint-url-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Azure tokens",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "selected": false
+    }
+  ]
+}
