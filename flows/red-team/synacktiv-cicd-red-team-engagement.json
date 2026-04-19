@@ -3,7 +3,8 @@
     "name": "Attack Flow",
     "created": "2026-04-18T17:38:54.105Z",
     "version": "1.0",
-    "framework": "SITF"
+    "framework": "SITF",
+    "title": "CI/CD Secrets Extraction and Lateral Movement"
   },
   "nodes": [
     {
@@ -179,7 +180,7 @@
             }
           ]
         },
-        "customLabel": "Leaked PAT → Azure DevOps access",
+        "customLabel": "Leaked PAT \u2192 Azure DevOps access",
         "evidence": "Somehow managed to leak a PAT used by target to authenticate to Azure DevOps",
         "severity": "Critical"
       },
