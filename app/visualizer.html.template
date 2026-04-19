@@ -254,13 +254,16 @@
             z-index: 50 !important;
         }
 
-        /* Force the entire edges SVG container above nodes layer */
-        .react-flow__edges {
-            z-index: 10 !important;
-            position: relative !important;
+        /* Force edges layer ABOVE nodes layer in ReactFlow rendering */
+        .react-flow__viewport > svg.react-flow__edges {
+            z-index: 1000 !important;
         }
 
-        /* Ensure component boxes stay in background - lower than edges container */
+        .react-flow__viewport > .react-flow__nodes {
+            z-index: 1 !important;
+        }
+
+        /* Ensure component boxes stay in background within nodes layer */
         .react-flow__node[data-type="component"] {
             z-index: 0 !important;
         }
@@ -1708,7 +1711,8 @@
             const [matrixHeight, setMatrixHeight] = useState(300);
             const [isResizingMatrix, setIsResizingMatrix] = useState(false);
             const [isDarkMode, setIsDarkMode] = useState(true);
-            
+            const [flowMetadata, setFlowMetadata] = useState(null);
+
             // History management for undo/redo
             const [history, setHistory] = useState([]);
             const [historyIndex, setHistoryIndex] = useState(-1);
@@ -2080,6 +2084,7 @@
                                 });
                                 setNodes(nodesWithZIndex);
                                 setEdges(flowData.edges);
+                                setFlowMetadata(flowData.metadata || null);
                             }
                         } catch (error) {
                             alert(`❌ Error Loading File\n\n${error.message}\n\nPlease check the file format and try again.`);
@@ -2110,6 +2115,7 @@
                 if (confirm(message)) {
                     setNodes([]);
                     setEdges([]);
+                    setFlowMetadata(null);
                     alert('✅ Canvas cleared successfully.');
                 }
             }, [nodes, edges, setNodes, setEdges]);
@@ -2446,7 +2452,53 @@
                         </div>
                         
                         {/* Canvas */}
-                        <div ref={reactFlowWrapper} className="flex-1" style={{ height: 'calc(100vh - 80px - 300px)' }}>
+                        <div ref={reactFlowWrapper} className="flex-1" style={{ height: 'calc(100vh - 80px - 300px)', position: 'relative' }}>
+                            {/* Flow Title Overlay */}
+                            {flowMetadata && (
+                                <div className="flow-title-overlay" style={{
+                                    position: 'absolute',
+                                    top: '12px',
+                                    left: '12px',
+                                    zIndex: 5,
+                                    background: isDarkMode ? 'rgba(26, 26, 26, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+                                    border: `1px solid ${isDarkMode ? '#333' : '#e5e7eb'}`,
+                                    borderRadius: '8px',
+                                    padding: '10px 14px',
+                                    maxWidth: '400px',
+                                    boxShadow: isDarkMode ? '0 2px 8px rgba(0,0,0,0.3)' : '0 2px 8px rgba(0,0,0,0.1)'
+                                }}>
+                                    <div style={{
+                                        fontSize: '14px',
+                                        fontWeight: 600,
+                                        color: isDarkMode ? '#e5e5e5' : '#1f2937',
+                                        marginBottom: flowMetadata.description ? '4px' : 0
+                                    }}>
+                                        {flowMetadata.title || flowMetadata.name || 'Untitled Flow'}
+                                    </div>
+                                    {flowMetadata.description && (
+                                        <div style={{
+                                            fontSize: '11px',
+                                            color: isDarkMode ? '#a0a0a0' : '#6b7280',
+                                            lineHeight: '1.4'
+                                        }}>
+                                            {flowMetadata.description}
+                                        </div>
+                                    )}
+                                    {(flowMetadata.source || flowMetadata.engagement) && (
+                                        <div style={{
+                                            fontSize: '10px',
+                                            color: isDarkMode ? '#666' : '#9ca3af',
+                                            marginTop: '6px',
+                                            borderTop: `1px solid ${isDarkMode ? '#333' : '#e5e7eb'}`,
+                                            paddingTop: '6px'
+                                        }}>
+                                            {flowMetadata.engagement && <span>Engagement: {flowMetadata.engagement}</span>}
+                                            {flowMetadata.engagement && flowMetadata.source && <span> | </span>}
+                                            {flowMetadata.source && <span>Source: {flowMetadata.source}</span>}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                             <ReactFlow
                                 nodes={nodes}
                                 edges={edges}

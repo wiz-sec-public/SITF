@@ -3,7 +3,8 @@
     "name": "Attack Flow",
     "created": "2026-03-24T22:02:54.017Z",
     "version": "1.0",
-    "framework": "SITF"
+    "framework": "SITF",
+    "title": "TeamPCP Campaign: Multi-Stage Supply Chain Attack"
   },
   "nodes": [
     {
@@ -439,7 +440,7 @@
           "Runner SBOM",
           "Image scanning"
         ],
-        "customLabel": "Imposter checkout → scan.aquasecurtiy.org"
+        "customLabel": "Imposter checkout \u2192 scan.aquasecurtiy.org"
       },
       "zIndex": 10,
       "width": 160,

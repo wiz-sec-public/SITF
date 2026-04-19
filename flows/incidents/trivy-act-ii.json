@@ -3,7 +3,8 @@
     "name": "Attack Flow",
     "created": "2026-03-20T20:53:09.209Z",
     "version": "1.0",
-    "framework": "SITF"
+    "framework": "SITF",
+    "title": "Trivy Act II: VSCode Extension Attack"
   },
   "nodes": [
     {
