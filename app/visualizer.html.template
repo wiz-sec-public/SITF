@@ -9,10 +9,10 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="sitf-icon-round.png">
     
-    <!-- Poppins Font (Wiz Style) -->
+    <!-- Fonts: Poppins (Wiz Style) + JetBrains Mono for IDs -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -135,24 +135,32 @@
         
         .react-flow__controls {
             background: var(--wiz-dark-surface);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--wiz-dark-border);
-            border-radius: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
-        
+
         .react-flow__controls button {
-            background: var(--wiz-dark-surface);
+            background: transparent;
             border-bottom: 1px solid var(--wiz-dark-border);
             color: var(--wiz-text-primary);
+            transition: all 0.2s ease;
         }
-        
+
         .react-flow__controls button:hover {
-            background: var(--wiz-dark-hover);
+            background: rgba(252, 128, 255, 0.1);
+            color: var(--wiz-accent-purple);
         }
-        
+
         .react-flow__minimap {
             background: var(--wiz-dark-surface);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--wiz-dark-border);
-            border-radius: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
         
         .react-flow__background {
@@ -189,12 +197,27 @@
         
         .component-node {
             min-width: 200px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
             background-color: var(--wiz-dark-surface);
             border: 1px solid var(--wiz-dark-border);
+            transition: box-shadow 0.3s ease;
         }
-        
+
+        .component-node:hover {
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        /* Expand buttons on technique nodes */
+        .expand-button {
+            transition: all 0.2s ease;
+        }
+
+        .expand-button:hover {
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
         /* Force victimZone nodes to be furthest back */
         .react-flow__node[data-type="victimZone"] {
             z-index: -10 !important;
@@ -233,7 +256,7 @@
             border: 3px dashed;
             background-color: rgba(99, 102, 241, 0.05);
         }
-        
+
         /* Edges ALWAYS above component nodes - in all states */
         .react-flow__edge,
         .react-flow__edge.selected,
@@ -263,6 +286,11 @@
             z-index: 1 !important;
         }
 
+        /* When ANY popup is open, lower the edges layer so popup appears on top */
+        .react-flow:has(.technique-popup) .react-flow__viewport > svg.react-flow__edges {
+            z-index: 40 !important;
+        }
+
         /* Ensure component boxes stay in background within nodes layer */
         .react-flow__node[data-type="component"] {
             z-index: 0 !important;
@@ -272,23 +300,68 @@
             position: relative;
             z-index: auto;
         }
-        
+
         /* Force popups to be above everything including edges */
         .technique-popup {
-            z-index: 1000 !important;
+            z-index: 9999 !important;
             position: absolute !important;
+            animation: popupSlideIn 0.2s ease-out;
         }
-        
+
+        /* When a technique node has an open popup, elevate the entire node */
+        .react-flow__node[data-type="technique"]:has(.technique-popup) {
+            z-index: 9998 !important;
+        }
+
+        @keyframes popupSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .technique-popup-left {
+            animation: popupSlideInLeft 0.2s ease-out;
+        }
+
+        @keyframes popupSlideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         .technique-node {
             font-size: 11px;
             padding: 8px;
             margin: 4px;
             background: var(--wiz-dark-surface);
-            border-radius: 6px;
+            border-radius: 8px;
             border: 1px solid var(--wiz-dark-border);
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
+        .technique-node:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Technique ID styling */
+        .technique-id {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
         .entry-exit-node {
             border-radius: 20px;
             padding: 12px 20px;
@@ -895,77 +968,89 @@
             };
             
             const displayLabel = customLabel || data.customLabel;
-            
+
+            // When popup is open, this node needs highest z-index so popup appears on top
+            const hasPopupOpen = showRisks || showControls;
+
             return (
-                <div style={{ position: 'relative', width: '160px' }}>
+                <div style={{
+                    position: 'relative',
+                    width: '160px',
+                    zIndex: hasPopupOpen ? 9999 : 'auto'
+                }}>
                     {/* Vertical connection handles only */}
                     <Handle type="target" position={Position.Top} id="top" style={{ left: '50%' }} />
                     <Handle type="source" position={Position.Bottom} id="bottom" style={{ left: '50%' }} />
-                    
+
                     {/* Risks expansion button (LEFT - swapped) */}
                     <button
+                        className="expand-button"
                         onClick={() => setShowRisks(!showRisks)}
                         style={{
                             position: 'absolute',
-                            left: '-12px',
+                            left: '-14px',
                             top: '50%',
                             transform: 'translateY(-50%)',
-                            width: '24px',
-                            height: '24px',
+                            width: '28px',
+                            height: '28px',
                             borderRadius: '50%',
                             border: '2px solid var(--wiz-danger)',
-                            backgroundColor: 'var(--wiz-dark-surface)',
+                            backgroundColor: showRisks ? 'var(--wiz-danger)' : 'var(--wiz-dark-surface)',
                             cursor: 'pointer',
                             fontSize: '14px',
-                            lineHeight: '20px',
+                            lineHeight: '24px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             padding: 0,
                             zIndex: 10,
-                            color: 'var(--wiz-danger)',
-                            fontWeight: 'bold'
+                            color: showRisks ? 'white' : 'var(--wiz-danger)',
+                            fontWeight: 'bold',
+                            boxShadow: showRisks ? '0 2px 8px rgba(239, 68, 68, 0.4)' : 'none'
                         }}
                         title="Show Risks"
                     >
-                        {showRisks ? '−' : '⋯'}
+                        {showRisks ? '×' : '!'}
                     </button>
-                    
+
                     {/* Controls expansion button (RIGHT - swapped) */}
                     <button
+                        className="expand-button"
                         onClick={() => setShowControls(!showControls)}
                         style={{
                             position: 'absolute',
-                            right: '-12px',
+                            right: '-14px',
                             top: '50%',
                             transform: 'translateY(-50%)',
-                            width: '24px',
-                            height: '24px',
+                            width: '28px',
+                            height: '28px',
                             borderRadius: '50%',
                             border: '2px solid var(--wiz-success)',
-                            backgroundColor: 'var(--wiz-dark-surface)',
+                            backgroundColor: showControls ? 'var(--wiz-success)' : 'var(--wiz-dark-surface)',
                             cursor: 'pointer',
                             fontSize: '14px',
-                            lineHeight: '20px',
+                            lineHeight: '24px',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             padding: 0,
                             zIndex: 10,
-                            color: 'var(--wiz-success)',
-                            fontWeight: 'bold'
+                            color: showControls ? 'white' : 'var(--wiz-success)',
+                            fontWeight: 'bold',
+                            boxShadow: showControls ? '0 2px 8px rgba(16, 185, 129, 0.4)' : 'none'
                         }}
                         title="Show Controls"
                     >
-                        {showControls ? '−' : '⋯'}
+                        {showControls ? '×' : '✓'}
                     </button>
-                    
+
                     {/* Main technique card */}
-                    <div className="p-2 border-2 rounded shadow-sm" style={{
+                    <div className="p-2 border-2 rounded-lg shadow-sm" style={{
                         borderColor: bgColor,
-                        background: 'rgba(252, 128, 255, 0.08)'
+                        background: 'rgba(252, 128, 255, 0.08)',
+                        transition: 'all 0.2s ease'
                     }}>
-                        <div className="text-xs font-bold mb-0.5" style={{ color: bgColor }}>
+                        <div className="technique-id text-xs font-bold mb-0.5" style={{ color: bgColor }}>
                             {data.id}
                         </div>
                         <div className="text-xs font-medium mb-2 line-clamp-2" style={{ color: 'var(--wiz-text-primary)' }}>
@@ -1008,16 +1093,17 @@
                     
                     {/* Risks popup (LEFT - swapped) */}
                     {showRisks && fullTechnique && (
-                        <div className="technique-popup" style={{
+                        <div className="technique-popup technique-popup-left" style={{
                             right: '100%',
                             top: 0,
                             marginRight: '20px',
-                            width: '200px',
+                            width: '220px',
                             backgroundColor: 'var(--wiz-dark-surface)',
+                            backdropFilter: 'blur(12px)',
                             border: '2px solid var(--wiz-danger)',
-                            borderRadius: '4px',
-                            padding: '8px',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                            borderRadius: '10px',
+                            padding: '12px',
+                            boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(239, 68, 68, 0.1)',
                             pointerEvents: 'auto'
                         }}>
                             <div style={{ fontSize: '11px', fontWeight: 'bold', color: 'var(--wiz-danger)', marginBottom: '4px' }}>
@@ -1030,19 +1116,20 @@
                             </ul>
                         </div>
                     )}
-                    
+
                     {/* Controls popup (RIGHT - swapped) */}
                     {showControls && fullTechnique && (
                         <div className="technique-popup" style={{
                             left: '100%',
                             top: 0,
                             marginLeft: '20px',
-                            width: '200px',
+                            width: '220px',
                             backgroundColor: 'var(--wiz-dark-surface)',
+                            backdropFilter: 'blur(12px)',
                             border: '2px solid var(--wiz-success)',
-                            borderRadius: '4px',
-                            padding: '8px',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                            borderRadius: '10px',
+                            padding: '12px',
+                            boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(16, 185, 129, 0.1)',
                             pointerEvents: 'auto'
                         }}>
                             {(fullTechnique.controls?.protective || []).length > 0 && (
@@ -1718,7 +1805,16 @@
             const [historyIndex, setHistoryIndex] = useState(-1);
             const isUndoRedoAction = useRef(false);
             const saveTimeoutRef = useRef(null);
-            
+
+            // Helper to ensure edges have proper label styles when loaded from JSON
+            const ensureEdgeLabelStyles = (edges) => {
+                return edges.map(edge => ({
+                    ...edge,
+                    labelStyle: edge.labelStyle || { fill: '#DC2626', fontWeight: 600, fontSize: 12 },
+                    labelBgStyle: edge.labelBgStyle || { fill: '#FEE2E2', fillOpacity: 0.9 }
+                }));
+            };
+
             const onConnect = useCallback(
                 (params) => {
                     const edgeColor = isDarkMode ? '#666666' : '#9ca3af';
@@ -2083,7 +2179,7 @@
                                     return { ...node, zIndex };
                                 });
                                 setNodes(nodesWithZIndex);
-                                setEdges(flowData.edges);
+                                setEdges(ensureEdgeLabelStyles(flowData.edges));
                                 setFlowMetadata(flowData.metadata || null);
                             }
                         } catch (error) {
@@ -2304,7 +2400,7 @@
                             });
                             setNodes(nodesWithZIndex);
                         }
-                        if (savedEdges) setEdges(savedEdges);
+                        if (savedEdges) setEdges(ensureEdgeLabelStyles(savedEdges));
                     } catch (e) {
                         console.error('Failed to load saved data:', e);
                     }
