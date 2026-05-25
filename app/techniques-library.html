@@ -1742,6 +1742,122 @@
       }
     },
     {
+      "id": "T-E019",
+      "name": "OAuth Token Abuse for Cross-Organizational Access",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access",
+      "risks": [
+        "OAuth tokens stored in browser or credential stores",
+        "Third-party apps granted excessive OAuth scopes ('Allow All')",
+        "OAuth tokens not bound to device or IP",
+        "No monitoring of OAuth token usage across organizations",
+        "Long-lived OAuth refresh tokens without rotation",
+        "Third-party vendors with OAuth access to enterprise identity systems",
+        "No revocation of tokens when third-party is compromised"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "OAuth scope minimization",
+            "description": "Restrict third-party OAuth apps to minimal required scopes",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "OAuth token binding",
+            "description": "Bind OAuth tokens to specific devices, IPs, or client certificates",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "OAuth app approval workflow",
+            "description": "Require admin approval for third-party OAuth integrations",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Short-lived OAuth tokens with frequent rotation",
+            "description": "Reduce token lifetime and enforce regular re-authentication",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "Third-party vendor security assessment",
+            "description": "Assess OAuth-connected vendors for security posture before integration",
+            "frameworks": {
+              "spvs": [
+                "V1.3",
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Conditional access policies for OAuth apps",
+            "description": "Require MFA re-verification for sensitive OAuth operations",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "OAuth token usage anomaly detection",
+            "description": "Detect OAuth tokens used from unexpected locations, devices, or user agents",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Cross-organization OAuth activity monitoring",
+            "description": "Monitor and alert on OAuth access patterns across organizational boundaries",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Third-party OAuth app audit logging",
+            "description": "Log all actions performed by third-party OAuth applications",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "OAuth scope elevation alerting",
+            "description": "Alert when OAuth apps request or use elevated scopes",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
       "id": "T-V001",
       "name": "Abuse Credentials for VCS Access",
       "component": "vcs",

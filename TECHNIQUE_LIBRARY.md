@@ -411,6 +411,35 @@ Controls are split into two categories:
 
 ---
 
+#### T-E019: OAuth Token Abuse for Cross-Organizational Access
+
+**Technique:** Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access
+
+**Risks:**
+- OAuth tokens stored in browser or credential stores
+- Third-party apps granted excessive OAuth scopes ('Allow All')
+- OAuth tokens not bound to device or IP
+- No monitoring of OAuth token usage across organizations
+- Long-lived OAuth refresh tokens without rotation
+- Third-party vendors with OAuth access to enterprise identity systems
+- No revocation of tokens when third-party is compromised
+
+**Protective Controls:** 🛡️
+- OAuth scope minimization
+- OAuth token binding
+- OAuth app approval workflow
+- Short-lived OAuth tokens with frequent rotation
+- Third-party vendor security assessment
+- Conditional access policies for OAuth apps
+
+**Detective Controls:** 🔍
+- OAuth token usage anomaly detection
+- Cross-organization OAuth activity monitoring
+- Third-party OAuth app audit logging
+- OAuth scope elevation alerting
+
+---
+
 ### VCS (Version Control System)
 
 #### T-V001: Abuse Credentials for VCS Access
@@ -1761,6 +1790,7 @@ Controls are split into two categories:
 - T-E002: Endpoint Phishing
 - T-E011: Unicode Stealth Code Injection
 - T-E015: Extension Auto-Update Exploitation
+- T-E019: OAuth Token Abuse for Cross-Organizational Access
 - T-P001: Abuse Production Credentials from CI/CD
 - T-R001: Abuse Credentials for Registry Access
 - T-R002: Misconfigured / Anonymous Access
