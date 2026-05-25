@@ -2578,6 +2578,77 @@
       }
     },
     {
+      "id": "T-V012",
+      "name": "Cross-Fork Object Reference Abuse",
+      "component": "vcs",
+      "stage": "Initial Access",
+      "description": "Attacker pushes malicious commits to a repository fork, exploiting git's shared object model to make those commits referenceable by SHA from the upstream repository without merging",
+      "risks": [
+        "No branch membership verification for SHAs",
+        "SHAs not validated against protected branches",
+        "Unrestricted forking on sensitive repos",
+        "No origin validation for fetched commits",
+        "No monitoring of non-branch commit references"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "SHA branch membership validation",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V3.3"
+              ]
+            }
+          },
+          {
+            "name": "Disable forking on sensitive repos",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Signed commit enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Action pinning with hash verification",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Workflow SHA provenance checks",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Fork push activity monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
       "id": "T-C001",
       "name": "Abuse Credentials for CI/CD Access",
       "component": "cicd",
@@ -4682,6 +4753,84 @@
             "description": "Alert on .pth file creation or modification in Python environments",
             "frameworks": {
               "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-R013",
+      "name": "Version String Impersonation",
+      "component": "registry",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses",
+      "risks": [
+        "Registry permits version republishing",
+        "No immutable version policy",
+        "Lockfile integrity checks not enforced",
+        "No alerting on content changes for existing versions",
+        "Version strings trusted without content verification"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Immutable version policy",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Lockfile integrity enforcement",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.3"
+              ]
+            }
+          },
+          {
+            "name": "Registry mirror with snapshots",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Provenance attestation requirement",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Package content hash monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Unpublish event monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Install integrity failure alerting",
+            "frameworks": {
+              "spvs": [
+                "V3.3",
                 "V5.4"
               ]
             }

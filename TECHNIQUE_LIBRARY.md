@@ -684,6 +684,29 @@ Controls are split into two categories:
 
 ---
 
+#### T-V012: Cross-Fork Object Reference Abuse
+
+**Technique:** Attacker pushes malicious commits to a repository fork, exploiting git's shared object model to make those commits referenceable by SHA from the upstream repository without merging
+
+**Risks:**
+- No branch membership verification for SHAs
+- SHAs not validated against protected branches
+- Unrestricted forking on sensitive repos
+- No origin validation for fetched commits
+- No monitoring of non-branch commit references
+
+**Protective Controls:** 🛡️
+- SHA branch membership validation
+- Disable forking on sensitive repos
+- Signed commit enforcement
+- Action pinning with hash verification
+
+**Detective Controls:** 🔍
+- Workflow SHA provenance checks
+- Fork push activity monitoring
+
+---
+
 ### CI/CD
 
 #### T-C001: Abuse Credentials for CI/CD Access
@@ -1405,6 +1428,30 @@ Controls are split into two categories:
 
 ---
 
+#### T-R013: Version String Impersonation
+
+**Technique:** Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses
+
+**Risks:**
+- Registry permits version republishing
+- No immutable version policy
+- Lockfile integrity checks not enforced
+- No alerting on content changes for existing versions
+- Version strings trusted without content verification
+
+**Protective Controls:** 🛡️
+- Immutable version policy
+- Lockfile integrity enforcement
+- Registry mirror with snapshots
+- Provenance attestation requirement
+
+**Detective Controls:** 🔍
+- Package content hash monitoring
+- Unpublish event monitoring
+- Install integrity failure alerting
+
+---
+
 ### PRODUCTION / CLOUD
 
 #### T-P001: Abuse Production Credentials from CI/CD
@@ -1799,6 +1846,7 @@ Controls are split into two categories:
 - T-R011: Namespace/Dependency Confusion
 - T-V001: Abuse Credentials for VCS Access
 - T-V005: VCS Vulnerability Exploitation
+- T-V012: Cross-Fork Object Reference Abuse
 
 ### Post-Compromise Techniques
 - T-C007: Action Cache Poisoning
