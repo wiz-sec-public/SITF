@@ -411,6 +411,35 @@ Controls are split into two categories:
 
 ---
 
+#### T-E019: OAuth Token Abuse for Cross-Organizational Access
+
+**Technique:** Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access
+
+**Risks:**
+- OAuth tokens stored in browser or credential stores
+- Third-party apps granted excessive OAuth scopes ('Allow All')
+- OAuth tokens not bound to device or IP
+- No monitoring of OAuth token usage across organizations
+- Long-lived OAuth refresh tokens without rotation
+- Third-party vendors with OAuth access to enterprise identity systems
+- No revocation of tokens when third-party is compromised
+
+**Protective Controls:** 🛡️
+- OAuth scope minimization
+- OAuth token binding
+- OAuth app approval workflow
+- Short-lived OAuth tokens with frequent rotation
+- Third-party vendor security assessment
+- Conditional access policies for OAuth apps
+
+**Detective Controls:** 🔍
+- OAuth token usage anomaly detection
+- Cross-organization OAuth activity monitoring
+- Third-party OAuth app audit logging
+- OAuth scope elevation alerting
+
+---
+
 ### VCS (Version Control System)
 
 #### T-V001: Abuse Credentials for VCS Access
@@ -652,6 +681,29 @@ Controls are split into two categories:
 - Tag mutation monitoring
 - Audit log monitoring for tag operations
 - Tag-to-commit drift detection
+
+---
+
+#### T-V012: Cross-Fork Object Reference Abuse
+
+**Technique:** Attacker pushes malicious commits to a repository fork, exploiting git's shared object model to make those commits referenceable by SHA from the upstream repository without merging
+
+**Risks:**
+- No branch membership verification for SHAs
+- SHAs not validated against protected branches
+- Unrestricted forking on sensitive repos
+- No origin validation for fetched commits
+- No monitoring of non-branch commit references
+
+**Protective Controls:** 🛡️
+- SHA branch membership validation
+- Disable forking on sensitive repos
+- Signed commit enforcement
+- Action pinning with hash verification
+
+**Detective Controls:** 🔍
+- Workflow SHA provenance checks
+- Fork push activity monitoring
 
 ---
 
@@ -1376,6 +1428,30 @@ Controls are split into two categories:
 
 ---
 
+#### T-R013: Version String Impersonation
+
+**Technique:** Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses
+
+**Risks:**
+- Registry permits version republishing
+- No immutable version policy
+- Lockfile integrity checks not enforced
+- No alerting on content changes for existing versions
+- Version strings trusted without content verification
+
+**Protective Controls:** 🛡️
+- Immutable version policy
+- Lockfile integrity enforcement
+- Registry mirror with snapshots
+- Provenance attestation requirement
+
+**Detective Controls:** 🔍
+- Package content hash monitoring
+- Unpublish event monitoring
+- Install integrity failure alerting
+
+---
+
 ### PRODUCTION / CLOUD
 
 #### T-P001: Abuse Production Credentials from CI/CD
@@ -1761,6 +1837,7 @@ Controls are split into two categories:
 - T-E002: Endpoint Phishing
 - T-E011: Unicode Stealth Code Injection
 - T-E015: Extension Auto-Update Exploitation
+- T-E019: OAuth Token Abuse for Cross-Organizational Access
 - T-P001: Abuse Production Credentials from CI/CD
 - T-R001: Abuse Credentials for Registry Access
 - T-R002: Misconfigured / Anonymous Access
@@ -1769,6 +1846,7 @@ Controls are split into two categories:
 - T-R011: Namespace/Dependency Confusion
 - T-V001: Abuse Credentials for VCS Access
 - T-V005: VCS Vulnerability Exploitation
+- T-V012: Cross-Fork Object Reference Abuse
 
 ### Post-Compromise Techniques
 - T-C007: Action Cache Poisoning
