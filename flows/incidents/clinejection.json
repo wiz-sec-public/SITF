@@ -3,7 +3,8 @@
     "name": "Attack Flow",
     "created": "2026-02-22T09:49:57.727Z",
     "version": "1.0",
-    "framework": "SITF"
+    "framework": "SITF",
+    "title": "Clinejection: MCP Tool Prompt Injection"
   },
   "nodes": [
     {

@@ -3,7 +3,8 @@
     "name": "Attack Flow",
     "created": "2026-04-18T19:22:40.214Z",
     "version": "1.0",
-    "framework": "SITF"
+    "framework": "SITF",
+    "title": "S1ngularity Campaign"
   },
   "nodes": [
     {

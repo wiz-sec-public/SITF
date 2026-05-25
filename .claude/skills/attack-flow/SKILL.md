@@ -92,6 +92,7 @@ Generate the attack flow JSON with this exact structure:
 ```json
 {
   "metadata": {
+    "title": "Human-readable title for canvas display",
     "name": "Attack Name",
     "created": "ISO-8601 timestamp",
     "version": "1.0",
@@ -255,7 +256,7 @@ Run this checklist before outputting:
 
 ```
 [ ] Valid JSON structure (parse test passes)
-[ ] Required fields present: metadata.{name,created,version,framework}, nodes[], edges[]
+[ ] Required fields present: metadata.{title,name,created,version,framework}, nodes[], edges[]
 [ ] All node IDs are unique
 [ ] All edge source/target reference valid node IDs
 [ ] Technique nodes use data.id and data.name (NOT techniqueId/label)
