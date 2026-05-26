@@ -3,7 +3,8 @@
     "name": "Attack Flow",
     "created": "2026-01-21T12:26:31.806Z",
     "version": "1.0",
-    "framework": "SITF"
+    "framework": "SITF",
+    "title": "CodeBreach Supply Chain Attack"
   },
   "nodes": [
     {

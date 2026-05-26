@@ -1,0 +1,595 @@
+{
+  "metadata": {
+    "name": "Attack Flow",
+    "created": "2026-04-16T15:42:12.262Z",
+    "version": "1.0",
+    "framework": "SITF",
+    "title": "GitLab Pipeline Identity Hijacking (CVE-2024-6678)"
+  },
+  "nodes": [
+    {
+      "id": "entryPoint-gitlab-hijack-1",
+      "type": "entryPoint",
+      "position": {
+        "x": -115.75881470713665,
+        "y": -79.55542181812919
+      },
+      "data": {
+        "label": "External Attacker (Two Accounts)"
+      },
+      "zIndex": 10,
+      "width": 261,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -115.75881470713665,
+        "y": -79.55542181812919
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-cicd-1",
+      "type": "component",
+      "position": {
+        "x": 50,
+        "y": 80
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [
+          "technique-c009-1",
+          "technique-c005-1"
+        ],
+        "customLabel": "GitLab CI/CD Pipelines"
+      },
+      "zIndex": -1,
+      "width": 250,
+      "height": 500,
+      "style": {
+        "width": 250,
+        "height": 500
+      }
+    },
+    {
+      "id": "component-vcs-1",
+      "type": "component",
+      "position": {
+        "x": 350,
+        "y": 80
+      },
+      "data": {
+        "label": "VCS",
+        "componentId": "vcs",
+        "techniques": [
+          "technique-v007-1"
+        ],
+        "customLabel": "GitLab Enterprise"
+      },
+      "zIndex": -1,
+      "width": 251,
+      "height": 305,
+      "style": {
+        "width": 251,
+        "height": 305
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "component-registry-1",
+      "type": "component",
+      "position": {
+        "x": 650,
+        "y": 80
+      },
+      "data": {
+        "label": "Registry",
+        "componentId": "registry",
+        "techniques": [
+          "technique-r007-1"
+        ],
+        "customLabel": "GitLab Container Registry"
+      },
+      "zIndex": -1,
+      "width": 238,
+      "height": 303,
+      "style": {
+        "width": 238,
+        "height": 303
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "technique-c009-1",
+      "type": "technique",
+      "position": {
+        "x": 95,
+        "y": 196.3590877659007
+      },
+      "data": {
+        "id": "T-C009",
+        "name": "CI/CD Vulnerability Exploitation",
+        "component": "cicd",
+        "stage": "Initial Access",
+        "description": "Attacker exploits vulnerability in CI/CD platform",
+        "risks": [
+          "Non-patched CI/CD instance",
+          "Known CVEs not addressed",
+          "Self-hosted CI/CD without security updates"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "Using managed CI/CD instances",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.3"
+                ]
+              }
+            },
+            {
+              "name": "Patching schedule",
+              "frameworks": {
+                "spvs": [
+                  "V5.3"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Vulnerability scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Security update monitoring",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Pipeline identity hijacking via mirror",
+        "evidence": "CVE-2024-6678 (CVSS 9.9) - Pipeline executes under victim identity via mirror sync after group ownership transfer",
+        "severity": "Critical"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 95,
+        "y": 196.3590877659007
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c005-1",
+      "type": "technique",
+      "position": {
+        "x": 95,
+        "y": 384.53362819134173
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "OIDC setup in workflows",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Minimal workflow permissions",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Log sanitization",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Runtime agent on runner",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "CI_JOB_TOKEN theft",
+        "evidence": "Malicious .gitlab-ci.yml exfiltrated $CI_JOB_TOKEN via curl to attacker server",
+        "severity": "Critical"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 97,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 95,
+        "y": 384.53362819134173
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-v007-1",
+      "type": "technique",
+      "position": {
+        "x": 392.09127297872794,
+        "y": 209.0020013830037
+      },
+      "data": {
+        "id": "T-V007",
+        "name": "Clone Sensitive Repositories",
+        "component": "vcs",
+        "stage": "Post-Compromise",
+        "description": "Attacker clones private repositories to steal IP and source code",
+        "risks": [
+          "Overprivileged VCS access",
+          "No audit log monitoring",
+          "No DLP on network"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "Minimal VCS permissions",
+              "frameworks": {
+                "spvs": [
+                  "V1.5",
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Repository access reviews",
+              "frameworks": {
+                "spvs": [
+                  "V1.5",
+                  "V5.1"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Detection infra on audit logs",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Network DLP",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Cloned victim's private repos",
+        "evidence": "Used stolen CI_JOB_TOKEN to clone victim/internal-secrets.git containing AWS credentials",
+        "severity": "Critical"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 392.09127297872794,
+        "y": 209.0020013830037
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-r007-1",
+      "type": "technique",
+      "position": {
+        "x": 693.5456364893639,
+        "y": 195.91272978727943
+      },
+      "data": {
+        "id": "T-R007",
+        "name": "Harvest Data from Private Artifacts",
+        "component": "registry",
+        "stage": "Post-Compromise",
+        "description": "Attacker extracts sensitive data from private artifacts",
+        "risks": [
+          "Overprivileged registry access",
+          "Secrets in artifacts",
+          "No audit log monitoring"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "Minimal registry permissions",
+              "frameworks": {
+                "spvs": [
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Artifact encryption",
+              "frameworks": {
+                "spvs": [
+                  "V3.4"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Detection infra on audit logs",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Pulled victim's private images",
+        "evidence": "docker pull registry.acme.com/victim/private-image:latest using stolen token",
+        "severity": "High"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 113,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 693.5456364893639,
+        "y": 195.91272978727943
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-gitlab-hijack-1",
+      "type": "exitPoint",
+      "position": {
+        "x": 507.8734927666478,
+        "y": 437.06125223367246
+      },
+      "data": {
+        "label": "Data Exfiltration"
+      },
+      "zIndex": 10,
+      "width": 156,
+      "height": 46,
+      "selected": true,
+      "positionAbsolute": {
+        "x": 507.8734927666478,
+        "y": 437.06125223367246
+      },
+      "dragging": false
+    },
+    {
+      "id": "exitPoint-gitlab-hijack-2",
+      "type": "exitPoint",
+      "position": {
+        "x": 801.6549219151252,
+        "y": 439.979986169963
+      },
+      "data": {
+        "label": "Supply Chain Risk"
+      },
+      "zIndex": 10,
+      "width": 168,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 801.6549219151252,
+        "y": 439.979986169963
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-entry-to-c009",
+      "source": "entryPoint-gitlab-hijack-1",
+      "sourceHandle": "right",
+      "target": "technique-c009-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Exploits mirror + ownership",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-c009-to-c005",
+      "source": "technique-c009-1",
+      "sourceHandle": "bottom",
+      "target": "technique-c005-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "markerEnd": {
+        "type": "arrowclosed"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-c005-to-v007",
+      "source": "technique-c005-1",
+      "sourceHandle": "right",
+      "target": "technique-v007-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "Stolen CI_JOB_TOKEN",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-v007-to-r007",
+      "source": "technique-v007-1",
+      "sourceHandle": "right",
+      "target": "technique-r007-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-v007-to-exit1",
+      "source": "technique-v007-1",
+      "sourceHandle": "right",
+      "target": "exitPoint-gitlab-hijack-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "AWS creds stolen",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    },
+    {
+      "id": "edge-r007-to-exit2",
+      "source": "technique-r007-1",
+      "sourceHandle": "right",
+      "target": "exitPoint-gitlab-hijack-2",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      }
+    }
+  ]
+}

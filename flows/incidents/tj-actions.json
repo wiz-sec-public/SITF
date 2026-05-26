@@ -3,7 +3,8 @@
     "name": "Attack Flow",
     "created": "2026-04-18T19:05:07.543Z",
     "version": "1.0",
-    "framework": "SITF"
+    "framework": "SITF",
+    "title": "tj-actions/changed-files Compromise"
   },
   "nodes": [
     {

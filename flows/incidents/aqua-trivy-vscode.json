@@ -3,7 +3,8 @@
     "name": "Attack Flow",
     "created": "2026-03-04T09:24:54.263Z",
     "version": "1.0",
-    "framework": "SITF"
+    "framework": "SITF",
+    "title": "Aqua Trivy VSCode Extension Attack"
   },
   "nodes": [
     {

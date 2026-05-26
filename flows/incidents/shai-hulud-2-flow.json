@@ -3,7 +3,8 @@
     "name": "Attack Flow",
     "created": "2026-04-18T19:26:48.618Z",
     "version": "1.0",
-    "framework": "SITF"
+    "framework": "SITF",
+    "title": "Shai-Hulud-2: GitHub Actions Persistence"
   },
   "nodes": [
     {
