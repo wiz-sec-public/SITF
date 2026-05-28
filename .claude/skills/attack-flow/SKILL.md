@@ -92,8 +92,8 @@ Generate the attack flow JSON with this exact structure:
 ```json
 {
   "metadata": {
-    "title": "Human-readable title for canvas display",
     "name": "Attack Name",
+    "title": "Canvas Display Title",
     "created": "ISO-8601 timestamp",
     "version": "1.0",
     "framework": "SITF",
@@ -103,6 +103,12 @@ Generate the attack flow JSON with this exact structure:
   "edges": []
 }
 ```
+
+**Metadata field guidelines:**
+- `name`: Short identifier (e.g., "tj-actions", "circleci")
+- `title`: Concise canvas title, max 5-7 words (e.g., "tj-actions/changed-files Compromise", "CircleCI Security Incident (2023)")
+- `description`: One sentence summary, max 150 characters
+- Do NOT write paragraph-length titles — save details for technique customLabels and evidence fields
 
 #### Node Structure - Entry Point
 ```json
@@ -228,6 +234,42 @@ Node types:
 - `technique`: Attack technique from techniques.json
 - `technique-gap`: Placeholder for missing technique (flag for /technique-proposal)
 - `exitPoint`: Attack outcome (Future Breach, Persistence, Secondary Supply Chain Attack, etc.)
+- `victimZone`: Visual container grouping components belonging to a single victim organization
+
+#### Victim Zones (Multi-Organization Attacks)
+
+When an attack involves multiple victim organizations (e.g., supply chain attacks that cascade across vendors), use `victimZone` nodes to visually group each victim's components.
+
+**When to use victim zones:**
+- Attack spreads from one organization to another (e.g., TeamPCP: Aqua → Checkmarx → GitHub)
+- Multiple independent victims are compromised via shared dependency
+- Supply chain attack where upstream compromise affects downstream organizations
+
+**Victim Zone Structure:**
+```json
+{
+  "id": "victimZone-aqua",
+  "type": "victimZone",
+  "position": { "x": -24, "y": 15 },
+  "data": {
+    "label": "Aqua Security",
+    "color": "#3B82F6"
+  },
+  "zIndex": -10,
+  "width": 1444,
+  "height": 945,
+  "style": { "width": 1444, "height": 945 }
+}
+```
+
+**Layout rules for victim zones:**
+- Place victim zones left-to-right in order of compromise (first victim on left)
+- Size each zone to fully contain its components with ~20px padding
+- Use distinct colors for each victim (e.g., `#3B82F6` blue, `#06B6D4` cyan, `#8B5CF6` purple)
+- Set `zIndex: -10` so zones render behind components and techniques
+- Connect cross-zone techniques with edges showing the pivot between organizations
+
+**Reference:** See `flows/incidents/teampcp-campaign.json` for a multi-victim example with 4 victim zones.
 
 ### Phase 5: Control Gap Analysis
 
@@ -256,7 +298,7 @@ Run this checklist before outputting:
 
 ```
 [ ] Valid JSON structure (parse test passes)
-[ ] Required fields present: metadata.{title,name,created,version,framework}, nodes[], edges[]
+[ ] Required fields present: metadata.{name,title,created,version,framework}, nodes[], edges[]
 [ ] All node IDs are unique
 [ ] All edge source/target reference valid node IDs
 [ ] Technique nodes use data.id and data.name (NOT techniqueId/label)
