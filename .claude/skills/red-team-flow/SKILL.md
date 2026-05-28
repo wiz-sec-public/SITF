@@ -130,18 +130,24 @@ Generate attack flow JSON with this structure (identical to `/attack-flow` outpu
 ```json
 {
   "metadata": {
-    "title": "Human-readable title for canvas display",
     "name": "Engagement Name",
+    "title": "Canvas Display Title",
     "created": "ISO-8601 timestamp",
     "version": "1.0",
     "framework": "SITF",
     "source": "red-team-report",
-    "description": "Red team engagement against ACME Corp SDLC infrastructure"
+    "description": "Brief engagement description"
   },
   "nodes": [],
   "edges": []
 }
 ```
+
+**Metadata field guidelines:**
+- `name`: Short identifier (e.g., "acme-2026q1", "client-sdlc-audit")
+- `title`: Concise canvas title, max 5-7 words (e.g., "ACME CI/CD Pipeline Assessment", "Client SDLC Red Team Q1")
+- `description`: One sentence summary, max 150 characters
+- Do NOT write paragraph-length titles — save details for technique customLabels and evidence fields
 
 **Node types** (same as /attack-flow):
 - `entryPoint`: How the engagement started (Assumed Breach, External Attacker, Insider, etc.)
@@ -205,7 +211,7 @@ Run this checklist before outputting:
 
 ```
 [ ] Valid JSON structure (parse test passes)
-[ ] Required fields: metadata.{title,name,created,version,framework,source}, nodes[], edges[]
+[ ] Required fields: metadata.{name,title,created,version,framework,source}, nodes[], edges[]
 [ ] All node IDs are unique
 [ ] All edge source/target reference valid node IDs
 [ ] Technique nodes use data.id and data.name (NOT techniqueId/label)
