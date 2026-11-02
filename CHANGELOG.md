@@ -4,7 +4,55 @@ This page documents changes to SITF organized by release version.
 
 ---
 
-## Current Version: SITF v1.5 (July 2026)
+## Current Version: SITF v1.6 (November 2026)
+
+### Techniques
+
+#### New Techniques
+
+| ID | Name | Component |
+|----|------|-----------|
+| [T-V013](techniques.json) | VCS Evidence Destruction | VCS |
+
+#### Major Version Changes
+_None_
+
+#### Minor Version Changes
+
+New risks and controls from the LiteLLM 1.107.0 compromise (October 2026):
+
+| ID | Added Risks | Added Controls |
+|----|-------------|----------------|
+| T-V001 | Broad-scope CLI OAuth tokens without expiry; privileged accounts used for daily work | Dedicated admin accounts for org owners; IP allow list for token access (protective). Token usage anomaly detection (detective) |
+| T-V003 | Leaked secrets deleted but not revoked; secret scanning limited to the primary org | Revoke leaked secrets, not just delete them (protective) |
+| T-V010 | Admins can bypass branch protection | Branch rulesets with no bypass actors (protective). Branch protection override alerting (detective) |
+| T-C001 | Release approval satisfiable by any developer account | Dedicated release approver accounts (protective) |
+| T-C002 | Build source controllable through workflow inputs | Build source validation against protected branches (protective) |
+| T-C005 | Secrets available to workflows on any branch; personal tokens or signing keys stored as CI secrets | Environment-scoped secrets with branch policies; network-level runner egress allow-list (protective). Exfiltration workflow detection on new branches (detective) |
+| T-R004 | Trusted publisher not bound to a protected environment; provenance not verified before publishing | Pre-publish provenance verification (protective) |
+| T-R005 | Provenance not verified before publishing | Pre-publish provenance verification (protective) |
+| T-P011 | Services configured with personal or admin credentials; admin APIs return stored secrets | Service identities instead of personal credentials; write-only secret storage (redact on read) (protective) |
+
+Renamed controls:
+- "Secret scanning on org" → "Secret scanning on all orgs" (T-V001, T-V003), to cover sibling and legacy orgs the producer controls
+
+#### Deprecations
+_None_
+
+### Attack Flows
+
+#### New Flows
+
+| Name | Type | Reference |
+|------|------|-----------|
+| [LiteLLM October 2026](flows/incidents/litellm-oct-2026.json) | Incident | Leaked admin key leads to an org owner's GitHub token, CI secret theft and a hijacked release of `litellm` 1.107.0 |
+
+### Other Changes
+- LiteLLM flow rewritten to follow BerriAI's root-cause analysis (2026-10-23). The entry point is now a leaked, never-revoked admin key rather than an internet-exposed gateway, and the flow adds CI secret exfiltration (T-C005), the lookalike fork (T-V008) and evidence destruction (T-V013)
+
+---
+
+## SITF v1.5 (July 2026)
 
 ### Framework Integrations
 
