@@ -454,16 +454,21 @@ Controls are split into two categories:
 - Previous breaches
 - Fine-grained PATs not enforced
 - PATs without expiration
+- Broad-scope CLI OAuth tokens without expiry
+- Privileged accounts used for daily work
 
 **Protective Controls:** 🛡️
 - Mandatory MFA
 - IDP / SSO setup
 - Enforcing fine-grained PATs
 - Enforcing PAT expiration
+- Dedicated admin accounts for org owners
+- IP allow list for token access
 
 **Detective Controls:** 🔍
-- Secret scanning on org
+- Secret scanning on all orgs
 - Secret scanning on personal repos
+- Token usage anomaly detection
 
 ---
 
@@ -497,14 +502,17 @@ Controls are split into two categories:
 - Using untrusted webhooks
 - Dangling webhooks
 - Secrets committed to repo
+- Leaked secrets deleted but not revoked
+- Secret scanning limited to the primary org
 
 **Protective Controls:** 🛡️
 - Private repo visibility
 - Webhook security review
 - Branch protection rules
+- Revoke leaked secrets, not just delete them
 
 **Detective Controls:** 🔍
-- Secret scanning on org
+- Secret scanning on all orgs
 - Secret scanning on personal repos
 - Detection infra on audit logs
 
@@ -642,6 +650,7 @@ Controls are split into two categories:
 - No automated code security scanning
 - Insufficient branch protection rules
 - No detection of suspicious code patterns
+- Admins can bypass branch protection
 
 **Protective Controls:** 🛡️
 - Branch protection rules (VCS)
@@ -650,11 +659,13 @@ Controls are split into two categories:
 - Commit signing enforcement
 - Minimal VCS permissions (principle of least privilege)
 - Pre-commit hooks for security checks
+- Branch rulesets with no bypass actors
 
 **Detective Controls:** 🔍
 - Automated code security scanning (SAST)
 - Detection infra on audit logs (VCS)
 - Code change anomaly detection
+- Branch protection override alerting
 
 ---
 
@@ -707,6 +718,27 @@ Controls are split into two categories:
 
 ---
 
+#### T-V013: VCS Evidence Destruction
+
+**Technique:** Attacker deletes workflow run records and rewrites protected branch history to remove evidence of malicious activity
+
+**Risks:**
+- Any user with write access can delete workflow runs and logs
+- Admins can bypass force-push protection
+- Audit and workflow logs retained only in the VCS platform
+- No alerting on run deletion or history rewrites
+
+**Protective Controls:** 🛡️
+- Audit log streaming outside the VCS platform
+- Workflow log export to external storage
+- Force-push and deletion blocked with no bypass actors
+
+**Detective Controls:** 🔍
+- Workflow run deletion alerting
+- Protected branch history rewrite alerting
+
+---
+
 ### CI/CD
 
 #### T-C001: Abuse Credentials for CI/CD Access
@@ -718,12 +750,14 @@ Controls are split into two categories:
 - Default credentials / bad out-of-the-box config
 - Credentials in org public repos
 - Previous breaches
+- Release approval satisfiable by any developer account
 
 **Protective Controls:** 🛡️
 - Mandatory MFA
 - IDP / SSO setup
 - Enforcing fine-grained PATs (VCS)
 - Enforcing PAT expiration (VCS)
+- Dedicated release approver accounts
 
 **Detective Controls:** 🔍
 - Secret scanning
@@ -741,6 +775,7 @@ Controls are split into two categories:
 - Using untrusted SW packages on runners
 - Using untrusted container / VM image for runners
 - Lack of GitHub action pinning
+- Build source controllable through workflow inputs
 
 **Protective Controls:** 🛡️
 - Pinning 3rd-party actions
@@ -749,6 +784,7 @@ Controls are split into two categories:
 - Requiring code owner approval (VCS)
 - Branch protection rules (VCS)
 - Runner SBOM
+- Build source validation against protected branches
 
 **Detective Controls:** 🔍
 - Image scanning
@@ -812,15 +848,20 @@ Controls are split into two categories:
 - No runtime monitoring
 - Secrets in workflow logs
 - Overprivileged secrets
+- Secrets available to workflows on any branch
+- Personal tokens or signing keys stored as CI secrets
 
 **Protective Controls:** 🛡️
 - OIDC setup in workflows
 - Minimal workflow permissions
 - Log sanitization
+- Environment-scoped secrets with branch policies
+- Network-level runner egress allow-list
 
 **Detective Controls:** 🔍
 - Runtime agent on runner
 - Secret scanning
+- Exfiltration workflow detection on new branches
 
 ---
 
@@ -1230,6 +1271,8 @@ Controls are split into two categories:
 - Lack of provenance
 - Lack of trusted publishing
 - No package signing
+- Trusted publisher not bound to a protected environment
+- Provenance not verified before publishing
 
 **Protective Controls:** 🛡️
 - Trusted publishing
@@ -1237,6 +1280,7 @@ Controls are split into two categories:
 - MFA for registry account
 - Package signing and verification
 - OIDC for publishing
+- Pre-publish provenance verification
 
 **Detective Controls:** 🔍
 - (none)
@@ -1252,12 +1296,14 @@ Controls are split into two categories:
 - No image signing
 - No provenance attestation
 - No image scanning
+- Provenance not verified before publishing
 
 **Protective Controls:** 🛡️
 - Trusted publishing
 - Provenance attestation
 - Image signing and verification
 - OIDC for publishing
+- Pre-publish provenance verification
 
 **Detective Controls:** 🔍
 - Image vulnerability scanning
@@ -1674,6 +1720,8 @@ Controls are split into two categories:
 - Centralized storage of all customer secrets
 - No data loss prevention (DLP) on production systems
 - Lack of egress traffic monitoring
+- Services configured with personal or admin credentials
+- Admin APIs return stored secrets
 
 **Protective Controls:** 🛡️
 - Store encryption keys in HSM (Hardware Security Module)
@@ -1682,6 +1730,8 @@ Controls are split into two categories:
 - Automatic secrets rotation (30-90 days)
 - Secrets segmentation (per-customer isolation)
 - Memory protection and anti-dumping controls
+- Service identities instead of personal credentials
+- Write-only secret storage (redact on read)
 
 **Detective Controls:** 🔍
 - DLP on production systems
@@ -1878,6 +1928,7 @@ Controls are split into two categories:
 - T-V009: Mass Deletion of Repositories
 - T-V010: Malicious Code Modification in Repository
 - T-V011: Git Tag/Reference Manipulation
+- T-V013: VCS Evidence Destruction
 
 ---
 

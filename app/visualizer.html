@@ -1933,7 +1933,9 @@
         "Credentials in workflow logs",
         "Previous breaches",
         "Fine-grained PATs not enforced",
-        "PATs without expiration"
+        "PATs without expiration",
+        "Broad-scope CLI OAuth tokens without expiry",
+        "Privileged accounts used for daily work"
       ],
       "controls": {
         "protective": [
@@ -1968,11 +1970,28 @@
                 "V1.1"
               ]
             }
+          },
+          {
+            "name": "Dedicated admin accounts for org owners",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "IP allow list for token access",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning on org",
+            "name": "Secret scanning on all orgs",
             "frameworks": {
               "spvs": [
                 "V5.4"
@@ -1981,6 +2000,14 @@
           },
           {
             "name": "Secret scanning on personal repos",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Token usage anomaly detection",
             "frameworks": {
               "spvs": [
                 "V5.4"
@@ -2052,7 +2079,9 @@
         "Misconfigured VCS access - external contributors",
         "Using untrusted webhooks",
         "Dangling webhooks",
-        "Secrets committed to repo"
+        "Secrets committed to repo",
+        "Leaked secrets deleted but not revoked",
+        "Secret scanning limited to the primary org"
       ],
       "controls": {
         "protective": [
@@ -2079,11 +2108,19 @@
                 "V1.5"
               ]
             }
+          },
+          {
+            "name": "Revoke leaked secrets, not just delete them",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
           }
         ],
         "detective": [
           {
-            "name": "Secret scanning on org",
+            "name": "Secret scanning on all orgs",
             "frameworks": {
               "spvs": [
                 "V5.4"
@@ -2462,7 +2499,8 @@
         "Lack of commit signing",
         "No automated code security scanning",
         "Insufficient branch protection rules",
-        "No detection of suspicious code patterns"
+        "No detection of suspicious code patterns",
+        "Admins can bypass branch protection"
       ],
       "controls": {
         "protective": [
@@ -2518,6 +2556,14 @@
                 "V2.4"
               ]
             }
+          },
+          {
+            "name": "Branch rulesets with no bypass actors",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
           }
         ],
         "detective": [
@@ -2539,6 +2585,14 @@
           },
           {
             "name": "Code change anomaly detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Branch protection override alerting",
             "frameworks": {
               "spvs": [
                 "V5.4"
@@ -2717,6 +2771,72 @@
       }
     },
     {
+      "id": "T-V013",
+      "name": "VCS Evidence Destruction",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker deletes workflow run records and rewrites protected branch history to remove evidence of malicious activity",
+      "frameworks": {
+        "mitre_attack": [
+          "T1070"
+        ]
+      },
+      "risks": [
+        "Any user with write access can delete workflow runs and logs",
+        "Admins can bypass force-push protection",
+        "Audit and workflow logs retained only in the VCS platform",
+        "No alerting on run deletion or history rewrites"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Audit log streaming outside the VCS platform",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Workflow log export to external storage",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Force-push and deletion blocked with no bypass actors",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Workflow run deletion alerting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Protected branch history rewrite alerting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
       "id": "T-C001",
       "name": "Abuse Credentials for CI/CD Access",
       "component": "cicd",
@@ -2726,7 +2846,8 @@
         "Lack of 2FA / phishing protection",
         "Default credentials / bad out-of-the-box config",
         "Credentials in org public repos",
-        "Previous breaches"
+        "Previous breaches",
+        "Release approval satisfiable by any developer account"
       ],
       "controls": {
         "protective": [
@@ -2761,6 +2882,15 @@
                 "V1.1"
               ]
             }
+          },
+          {
+            "name": "Dedicated release approver accounts",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V4.3"
+              ]
+            }
           }
         ],
         "detective": [
@@ -2787,7 +2917,8 @@
         "Using untrusted reusable workflows",
         "Using untrusted SW packages on runners",
         "Using untrusted container / VM image for runners",
-        "Lack of GitHub action pinning"
+        "Lack of GitHub action pinning",
+        "Build source controllable through workflow inputs"
       ],
       "controls": {
         "protective": [
@@ -2837,6 +2968,15 @@
             "frameworks": {
               "spvs": [
                 "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Build source validation against protected branches",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V3.3"
               ]
             }
           }
@@ -3006,7 +3146,9 @@
         "Workflow with access to secrets",
         "No runtime monitoring",
         "Secrets in workflow logs",
-        "Overprivileged secrets"
+        "Overprivileged secrets",
+        "Secrets available to workflows on any branch",
+        "Personal tokens or signing keys stored as CI secrets"
       ],
       "controls": {
         "protective": [
@@ -3035,6 +3177,24 @@
                 "V2.5"
               ]
             }
+          },
+          {
+            "name": "Environment-scoped secrets with branch policies",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Network-level runner egress allow-list",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V4.4"
+              ]
+            }
           }
         ],
         "detective": [
@@ -3048,6 +3208,14 @@
           },
           {
             "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Exfiltration workflow detection on new branches",
             "frameworks": {
               "spvs": [
                 "V5.4"
@@ -4220,7 +4388,9 @@
         "Overprivileged NPM token",
         "Lack of provenance",
         "Lack of trusted publishing",
-        "No package signing"
+        "No package signing",
+        "Trusted publisher not bound to a protected environment",
+        "Provenance not verified before publishing"
       ],
       "controls": {
         "protective": [
@@ -4265,6 +4435,14 @@
                 "V3.2"
               ]
             }
+          },
+          {
+            "name": "Pre-publish provenance verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
           }
         ],
         "detective": []
@@ -4280,7 +4458,8 @@
         "Overprivileged registry credentials",
         "No image signing",
         "No provenance attestation",
-        "No image scanning"
+        "No image scanning",
+        "Provenance not verified before publishing"
       ],
       "controls": {
         "protective": [
@@ -4314,6 +4493,14 @@
               "spvs": [
                 "V1.1",
                 "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Pre-publish provenance verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
               ]
             }
           }
@@ -5583,7 +5770,9 @@
         "No secrets rotation policies",
         "Centralized storage of all customer secrets",
         "No data loss prevention (DLP) on production systems",
-        "Lack of egress traffic monitoring"
+        "Lack of egress traffic monitoring",
+        "Services configured with personal or admin credentials",
+        "Admin APIs return stored secrets"
       ],
       "controls": {
         "protective": [
@@ -5632,6 +5821,22 @@
             "frameworks": {
               "spvs": [
                 "V5.5"
+              ]
+            }
+          },
+          {
+            "name": "Service identities instead of personal credentials",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Write-only secret storage (redact on read)",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
               ]
             }
           }

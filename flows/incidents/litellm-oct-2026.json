@@ -1,11 +1,9 @@
 {
   "metadata": {
-    "name": "litellm-oct-2026",
-    "created": "2026-10-22T11:17:47.885Z",
+    "name": "Attack Flow",
+    "created": "2026-11-02T14:03:42.005Z",
     "version": "1.0",
-    "framework": "SITF",
-    "title": "LiteLLM 1.107.0 Compromise (Oct 2026)",
-    "description": "Gh tokens stolen from BerriAI's internal LLM gateway logs redirect the release pipeline to a lookalike repo; poisoned PyPI/Docker"
+    "framework": "SITF"
   },
   "nodes": [
     {
@@ -21,137 +19,147 @@
       },
       "zIndex": -10,
       "width": 1510,
-      "height": 727,
+      "height": 940,
       "style": {
         "width": 1510,
-        "height": 727
-      },
-      "selected": false,
-      "dragging": false,
-      "resizing": false
-    },
-    {
-      "id": "victimZone-consumers",
-      "type": "victimZone",
-      "position": {
-        "x": 515.7464961536814,
-        "y": 869.8234649507763
-      },
-      "data": {
-        "label": "Downstream Consumers",
-        "color": "#8B5CF6"
-      },
-      "zIndex": -10,
-      "width": 1032,
-      "height": 901,
-      "style": {
-        "width": 1032,
-        "height": 901
-      },
-      "selected": false,
-      "dragging": false,
-      "resizing": false,
-      "positionAbsolute": {
-        "x": 873.7464961536814,
-        "y": 867.8234649507763
+        "height": 940
       }
     },
     {
-      "id": "component-endpoint-1",
-      "type": "component",
+      "id": "entryPoint-litellm-1",
+      "type": "entryPoint",
       "position": {
-        "x": 50,
-        "y": 80
+        "x": 70.57765701374626,
+        "y": -53.14721988253662
       },
       "data": {
-        "label": "Endpoint/IDE",
-        "componentId": "endpoint",
+        "label": "Stolen Credentials",
+        "customLabel": "Agent Platform admin key leaked 05-27, never revoked"
+      },
+      "zIndex": 10,
+      "width": 169,
+      "height": 46,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 70.57765701374626,
+        "y": -53.14721988253662
+      },
+      "dragging": false
+    },
+    {
+      "id": "component-vcs-1",
+      "type": "component",
+      "position": {
+        "x": 38.07493684659323,
+        "y": 78.67499298295479
+      },
+      "data": {
+        "label": "VCS",
+        "componentId": "vcs",
         "techniques": [],
-        "customLabel": "Developer machines (Claude Code)"
+        "customLabel": "LiteLLM-Labs/lite-harness (public, sibling org)"
       },
       "zIndex": -1,
-      "width": 237,
-      "height": 408,
+      "width": 238,
+      "height": 880,
       "style": {
-        "width": 237,
-        "height": 408
+        "width": 238,
+        "height": 880
       },
       "selected": false,
       "dragging": false,
+      "positionAbsolute": {
+        "x": 38.07493684659323,
+        "y": 78.67499298295479
+      },
       "resizing": false
     },
     {
       "id": "component-production-1",
       "type": "component",
       "position": {
-        "x": 350,
-        "y": 80
+        "x": 327.4748807102318,
+        "y": 76.02497894886437
       },
       "data": {
         "label": "Production/Cloud",
         "componentId": "production",
         "techniques": [],
-        "customLabel": "Internal LiteLLM gateway (internet-exposed)"
+        "customLabel": "Internal LiteLLM Agent Platform"
       },
       "zIndex": -1,
-      "width": 250,
-      "height": 412,
+      "width": 239,
+      "height": 880,
       "style": {
-        "width": 250,
-        "height": 412
+        "width": 239,
+        "height": 880
       },
       "selected": false,
+      "positionAbsolute": {
+        "x": 327.4748807102318,
+        "y": 76.02497894886437
+      },
       "dragging": false,
       "resizing": false
     },
     {
-      "id": "component-vcs-1",
+      "id": "component-vcs-2",
       "type": "component",
       "position": {
-        "x": 650,
-        "y": 80
+        "x": 627.4249228125029,
+        "y": 73.37496491477407
       },
       "data": {
         "label": "VCS",
         "componentId": "vcs",
         "techniques": [],
-        "customLabel": "GitHub BerriAI org (private release repo)"
+        "customLabel": "GitHub BerriAI org (litellm, project-releaser)"
       },
       "zIndex": -1,
-      "width": 250,
-      "height": 560,
+      "width": 258,
+      "height": 898,
       "style": {
-        "width": 250,
-        "height": 560
+        "width": 258,
+        "height": 898
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false,
+      "positionAbsolute": {
+        "x": 627.4249228125029,
+        "y": 73.37496491477407
       }
     },
     {
       "id": "component-cicd-1",
       "type": "component",
       "position": {
-        "x": 950,
-        "y": 80
+        "x": 938,
+        "y": 73
       },
       "data": {
         "label": "CI/CD",
         "componentId": "cicd",
         "techniques": [],
-        "customLabel": "Private release workflow"
+        "customLabel": "GitHub Actions: litellm repos + private release workflows"
       },
       "zIndex": -1,
-      "width": 250,
-      "height": 560,
+      "width": 262,
+      "height": 887,
       "style": {
-        "width": 250,
-        "height": 560
-      }
+        "width": 262,
+        "height": 887
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false
     },
     {
       "id": "component-registry-1",
       "type": "component",
       "position": {
         "x": 1250,
-        "y": 80
+        "y": 75
       },
       "data": {
         "label": "Registry",
@@ -160,143 +168,92 @@
         "customLabel": "PyPI, GHCR, Docker Hub"
       },
       "zIndex": -1,
-      "width": 250,
-      "height": 662,
+      "width": 254,
+      "height": 885,
       "style": {
-        "width": 250,
-        "height": 662
+        "width": 254,
+        "height": 885
       },
       "selected": false,
       "dragging": false,
       "resizing": false
     },
     {
-      "id": "component-cicd-2",
-      "type": "component",
-      "position": {
-        "x": 1251.4957161150633,
-        "y": 998.8072642734014
-      },
-      "data": {
-        "label": "CI/CD",
-        "componentId": "cicd",
-        "techniques": [],
-        "customLabel": "Consumer CI runners"
-      },
-      "zIndex": -1,
-      "width": 257,
-      "height": 486,
-      "style": {
-        "width": 257,
-        "height": 486
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 1251.4957161150633,
-        "y": 998.8072642734014
-      },
-      "dragging": false,
-      "resizing": false
-    },
-    {
-      "id": "component-production-2",
-      "type": "component",
-      "position": {
-        "x": 913.5404494398008,
-        "y": 999.1802678738233
-      },
-      "data": {
-        "label": "Production/Cloud",
-        "componentId": "production",
-        "techniques": [],
-        "customLabel": "Consumer K8s nodes, LiteLLM proxies, AWS"
-      },
-      "zIndex": -1,
-      "width": 286,
-      "height": 675,
-      "style": {
-        "width": 286,
-        "height": 675
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 958.5404494398008,
-        "y": 999.1802678738233
-      },
-      "dragging": false,
-      "resizing": false
-    },
-    {
-      "id": "entryPoint-litellm-1",
-      "type": "entryPoint",
-      "position": {
-        "x": 385.6557024067871,
-        "y": -42.482854983052206
-      },
-      "data": {
-        "label": "Vulnerability Exploit",
-        "customLabel": "Internet-exposed internal gateway; suspected recently patched CVE"
-      },
-      "zIndex": 10,
-      "width": 195,
-      "height": 46,
-      "selected": false,
-      "positionAbsolute": {
-        "x": 385.6557024067871,
-        "y": -42.482854983052206
-      },
-      "dragging": false
-    },
-    {
-      "id": "technique-e009-1",
+      "id": "technique-v003-1",
       "type": "technique",
       "position": {
-        "x": 91.46298853284475,
-        "y": 229.55569371839977
+        "x": 75.5753612695836,
+        "y": 183.63417917876444
       },
       "data": {
-        "id": "T-E009",
-        "name": "Abuse Local AI Tools",
-        "component": "endpoint",
+        "id": "T-V003",
+        "name": "Secret Exfiltration from Repo",
+        "component": "vcs",
         "stage": "Discovery and Lateral Movement",
-        "description": "Attacker uses AI coding assistants to exfiltrate code or inject malicious suggestions",
+        "description": "Attacker extracts secrets from repository content or history",
         "risks": [
-          "Using untrusted AI tools",
-          "No acceptable use policy",
-          "AI tools with excessive permissions",
-          "Sensitive code sent to AI services"
+          "Misconfigured repo - visibility (public when should be private)",
+          "Misconfigured VCS access - external contributors",
+          "Using untrusted webhooks",
+          "Dangling webhooks",
+          "Secrets committed to repo",
+          "Leaked secrets deleted but not revoked",
+          "Secret scanning limited to the primary org"
         ],
         "controls": {
           "protective": [
             {
-              "name": "Acceptable use policy against unapproved AI tools",
+              "name": "Private repo visibility",
               "frameworks": {
                 "spvs": [
-                  "V1.3"
+                  "V1.5"
                 ]
               }
             },
             {
-              "name": "Approved AI tools with data protection",
+              "name": "Webhook security review",
               "frameworks": {
                 "spvs": [
-                  "V1.4"
+                  "V1.5"
                 ]
               }
             },
             {
-              "name": "Code review for AI-generated code",
+              "name": "Branch protection rules",
               "frameworks": {
                 "spvs": [
-                  "V1.4",
-                  "V2.3"
+                  "V1.5"
+                ]
+              }
+            },
+            {
+              "name": "Revoke leaked secrets, not just delete them",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
                 ]
               }
             }
           ],
           "detective": [
             {
-              "name": "Network monitoring for AI service connections",
+              "name": "Secret scanning on all orgs",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Secret scanning on personal repos",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Detection infra on audit logs",
               "frameworks": {
                 "spvs": [
                   "V5.4"
@@ -305,16 +262,16 @@
             }
           ]
         },
-        "customLabel": "Contributing: Claude Code traffic carries developers' gh OAuth tokens",
-        "evidence": "Not an attacker action. Coding-agent tool output (e.g. gh auth token, hosts.yml) travels in request/response bodies through the internal LiteLLM gateway, which logged full bodies [Maintainer + Inference]"
+        "customLabel": "opencode.json with admin key in public history (05-27 18:53)",
+        "evidence": "Agent Platform admin key committed to public LiteLLM-Labs/lite-harness on 2026-05-27 18:53:14Z. File deleted ~3h later, but the commit stayed in public history until 10-22 and the key was never revoked (still valid 136 days later). The repo started under BerriAI (merge from BerriAI/restructure-harnesses), so scanning only the BerriAI org misses it [BerriAI + Verified]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 125,
       "selected": false,
       "positionAbsolute": {
-        "x": 91.46298853284475,
-        "y": 229.55569371839977
+        "x": 75.5753612695836,
+        "y": 183.63417917876444
       },
       "dragging": false
     },
@@ -322,8 +279,8 @@
       "id": "technique-p011-1",
       "type": "technique",
       "position": {
-        "x": 393.7585725084739,
-        "y": 233.24422200004022
+        "x": 361.084983039023,
+        "y": 178.64603397291847
       },
       "data": {
         "id": "T-P011",
@@ -331,21 +288,15 @@
         "component": "production",
         "stage": "Post-Compromise",
         "description": "Attacker accesses production secrets store and exfiltrates customer secrets, tokens, and credentials",
-        "frameworks": {
-          "mitre_attack": [
-            "T1552"
-          ],
-          "aws_catalog": [
-            "T1552"
-          ]
-        },
         "risks": [
           "Encryption keys accessible in process memory",
           "Lack of hardware security module (HSM) for key storage",
           "No secrets rotation policies",
           "Centralized storage of all customer secrets",
           "No data loss prevention (DLP) on production systems",
-          "Lack of egress traffic monitoring"
+          "Lack of egress traffic monitoring",
+          "Services configured with personal or admin credentials",
+          "Admin APIs return stored secrets"
         ],
         "controls": {
           "protective": [
@@ -396,6 +347,22 @@
                   "V5.5"
                 ]
               }
+            },
+            {
+              "name": "Service identities instead of personal credentials",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            },
+            {
+              "name": "Write-only secret storage (redact on read)",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
             }
           ],
           "detective": [
@@ -433,16 +400,16 @@
             }
           ]
         },
-        "customLabel": "3 gho_ tokens harvested from gateway logs via rogue 'innocuously named' user",
-        "evidence": "Attacker accessed BerriAI's internal LiteLLM deployment and read logged request/response bodies containing three developers' GitHub CLI OAuth tokens; one belonged to one of two org owners, one could run workflows [Maintainer]"
+        "customLabel": "Agent Platform API returns an org owner's gh OAuth token (10-10 21:27)",
+        "evidence": "Key used from 69.48.229.143 on 10-10 21:13-21:28Z. GET /api/v1/managed_agents/agents?limit=100 returned managed-agent config including the GitHub CLI OAuth token of one of BerriAI's two org owners, which the service used to open PRs [BerriAI]. [Inference] The internal alpha service was reachable from the internet and returned stored secrets in clear text. Withdrawn earlier theory: tokens read from internal gateway logs of Claude Code traffic ('did not turn out to be the mechanism') [BerriAI]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 161,
       "selected": false,
       "positionAbsolute": {
-        "x": 393.7585725084739,
-        "y": 233.24422200004022
+        "x": 361.084983039023,
+        "y": 178.64603397291847
       },
       "dragging": false
     },
@@ -450,8 +417,8 @@
       "id": "technique-v001-1",
       "type": "technique",
       "position": {
-        "x": 695,
-        "y": 219.01306562821946
+        "x": 669.8248666761413,
+        "y": 180.6427509624691
       },
       "data": {
         "id": "T-V001",
@@ -459,11 +426,6 @@
         "component": "vcs",
         "stage": "Initial Access",
         "description": "Attacker uses stolen credentials to access VCS",
-        "frameworks": {
-          "mitre_attack": [
-            "T1078"
-          ]
-        },
         "risks": [
           "Lack of 2FA / phishing protection",
           "Credentials in org public repos",
@@ -471,7 +433,9 @@
           "Credentials in workflow logs",
           "Previous breaches",
           "Fine-grained PATs not enforced",
-          "PATs without expiration"
+          "PATs without expiration",
+          "Broad-scope CLI OAuth tokens without expiry",
+          "Privileged accounts used for daily work"
         ],
         "controls": {
           "protective": [
@@ -506,11 +470,28 @@
                   "V1.1"
                 ]
               }
+            },
+            {
+              "name": "Dedicated admin accounts for org owners",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "IP allow list for token access",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
             }
           ],
           "detective": [
             {
-              "name": "Secret scanning on org",
+              "name": "Secret scanning on all orgs",
               "frameworks": {
                 "spvs": [
                   "V5.4"
@@ -524,19 +505,97 @@
                   "V5.4"
                 ]
               }
+            },
+            {
+              "name": "Token usage anomaly detection",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
             }
           ]
         },
-        "customLabel": "Org-owner gh token used against private release repo",
-        "evidence": "Stolen gho_ tokens are long-lived, not device-bound and carry the user's full rights, including org owner [Maintainer]"
+        "customLabel": "Owner, then maintainer #2/#3 gh tokens used (10-10 to 10-21)",
+        "evidence": "gh CLI OAuth tokens are unscoped, issued after 2FA and skip sudo-mode re-authentication [BerriAI]. The owner token pushed branches, deleted runs, overrode branch protection and dispatched the release; maintainer #2's token approved production; #3's deleted run records. Owner and #2 acted from the same IP (199.91.221.39) [BerriAI]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 161,
       "selected": false,
       "positionAbsolute": {
-        "x": 695,
-        "y": 219.01306562821946
+        "x": 669.8248666761413,
+        "y": 180.6427509624691
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-v008-1",
+      "type": "technique",
+      "position": {
+        "x": 644.8818701076557,
+        "y": 641.5191401222934
+      },
+      "data": {
+        "id": "T-V008",
+        "name": "Malicious Repo Hosting",
+        "component": "vcs",
+        "stage": "Post-Compromise",
+        "description": "Attacker uses compromised VCS to host malicious repositories",
+        "risks": [
+          "Overprivileged VCS access",
+          "No repository review process",
+          "Unlimited repository creation"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "Repository creation approval",
+              "frameworks": {
+                "spvs": [
+                  "V1.5"
+                ]
+              }
+            },
+            {
+              "name": "Resource quotas",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.2"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Repository security scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Detection infra on audit logs",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Attacker preparation: lookalike fork Berri-AI/litellm (10-21 08:56-10:46)",
+        "evidence": "Attacker infrastructure, not a BerriAI repo. 10 commits on Berri-AI/litellm based on legitimate main a8113b0d: cook payload, version 1.107.0, [tool.maturin] data = \"cook\", Dockerfile COPY cook ./cook (9 via the web editor, signed 'Verified'). Commits remain reachable via the parent repo (T-V012 object sharing) [Upwind + Verified]. Related infra: litellm.dev exfil domain and letters9813 dead-drop account, both created 10-13 [Upwind]"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 141,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 644.8818701076557,
+        "y": 641.5191401222934
       },
       "dragging": false
     },
@@ -544,8 +603,8 @@
       "id": "technique-v010-1",
       "type": "technique",
       "position": {
-        "x": 695.4166047018389,
-        "y": 412.07525751662297
+        "x": 671.6087076966242,
+        "y": 404.68260827565916
       },
       "data": {
         "id": "T-V010",
@@ -553,11 +612,6 @@
         "component": "vcs",
         "stage": "Post-Compromise",
         "description": "Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase",
-        "frameworks": {
-          "mitre_attack": [
-            "T1195.002"
-          ]
-        },
         "risks": [
           "Overprivileged VCS access",
           "No code review requirements",
@@ -565,7 +619,8 @@
           "Lack of commit signing",
           "No automated code security scanning",
           "Insufficient branch protection rules",
-          "No detection of suspicious code patterns"
+          "No detection of suspicious code patterns",
+          "Admins can bypass branch protection"
         ],
         "controls": {
           "protective": [
@@ -621,6 +676,14 @@
                   "V2.4"
                 ]
               }
+            },
+            {
+              "name": "Branch rulesets with no bypass actors",
+              "frameworks": {
+                "spvs": [
+                  "V1.5"
+                ]
+              }
             }
           ],
           "detective": [
@@ -647,19 +710,135 @@
                   "V5.4"
                 ]
               }
+            },
+            {
+              "name": "Branch protection override alerting",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
             }
           ]
         },
-        "customLabel": "Branch protection disabled; source-repo override force-pushed (9cf97e9, 10:08:34Z)",
-        "evidence": "Merge of 'releaser points at a different source repository' blocked by branch protection at 10:08:29Z; 5s later owner token disabled protection and force-pushed commit 9cf97e935aeaf791b9c8db224a2bb3ee156134ce [LiteLLM post-mortem]"
+        "customLabel": "9cf97e9 adds source_owner input; owner token overrides branch protection (10:08)",
+        "evidence": "Release workflows in private BerriAI/project-releaser hardcoded BerriAI as source owner. Push of 9cf97e9 with maintainer #2's token rejected by branch protection at 10:08:29Z; same push succeeded with the owner token 5s later (10:08:34Z) [BerriAI]. Gap: SITF has no risk for redirecting the build source through workflow inputs"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 177,
       "selected": false,
       "positionAbsolute": {
-        "x": 695.4166047018389,
-        "y": 412.07525751662297
+        "x": 671.6087076966242,
+        "y": 404.68260827565916
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-c005-1",
+      "type": "technique",
+      "position": {
+        "x": 990.3864694922136,
+        "y": 189.74591865821623
+      },
+      "data": {
+        "id": "T-C005",
+        "name": "Secret Exfiltration from Workflow",
+        "component": "cicd",
+        "stage": "Discovery and Lateral Movement",
+        "description": "Attacker extracts secrets from CI/CD workflow execution",
+        "risks": [
+          "Workflow with access to secrets",
+          "No runtime monitoring",
+          "Secrets in workflow logs",
+          "Overprivileged secrets",
+          "Secrets available to workflows on any branch",
+          "Personal tokens or signing keys stored as CI secrets"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "OIDC setup in workflows",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Minimal workflow permissions",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.1"
+                ]
+              }
+            },
+            {
+              "name": "Log sanitization",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
+            },
+            {
+              "name": "Environment-scoped secrets with branch policies",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Network-level runner egress allow-list",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V4.4"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Runtime agent on runner",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Secret scanning",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Exfiltration workflow detection on new branches",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "ci-tmp-* push workflows post secrets to webhook.site (10-10, 10-12)",
+        "evidence": "10-10 22:11:45Z b69bc36 on ci-tmp-a351cc (BerriAI/litellm): 6 secrets incl. GH_TOKEN (maintainer #2) and GitHub App key PROVIDER_INFO_SYNC_APP_*; 22:12:09Z 78d968b on ci-tmp-be33e9 (litellm-auto): RELEASE_PLEASE_TOKEN (maintainer #3). Runs deleted 22:14Z. 10-12 12:08-12:30Z: 1a6e3c1 binds 5 environments and takes 14 more secrets (model API keys, GitGuardian key, DB/Redis creds) [BerriAI + Socket + Verified]. Cosign signing key believed exposed, rotated 10-23 [BerriAI incident post]. [Inference] Environments had no deployment-branch policy. 11 days of dwell before release"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 161,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 990.3864694922136,
+        "y": 189.74591865821623
       },
       "dragging": false
     },
@@ -667,8 +846,8 @@
       "id": "technique-c001-1",
       "type": "technique",
       "position": {
-        "x": 985.6672616182279,
-        "y": 208.81725776339556
+        "x": 996.6706615028659,
+        "y": 435.9665723324325
       },
       "data": {
         "id": "T-C001",
@@ -680,7 +859,8 @@
           "Lack of 2FA / phishing protection",
           "Default credentials / bad out-of-the-box config",
           "Credentials in org public repos",
-          "Previous breaches"
+          "Previous breaches",
+          "Release approval satisfiable by any developer account"
         ],
         "controls": {
           "protective": [
@@ -715,6 +895,15 @@
                   "V1.1"
                 ]
               }
+            },
+            {
+              "name": "Dedicated release approver accounts",
+              "frameworks": {
+                "spvs": [
+                  "V1.1",
+                  "V4.3"
+                ]
+              }
             }
           ],
           "detective": [
@@ -728,16 +917,16 @@
             }
           ]
         },
-        "customLabel": "Staging run 11:08Z; 2nd stolen account approves prod environment 11:11Z",
-        "evidence": "Release triggered with stolen credentials; production environment approval satisfied by a second compromised account at 11:11:18Z. Monday 10-19 temporary widening of release permissions broadened who could trigger/approve [LiteLLM post-mortem + Maintainer]"
+        "customLabel": "Owner token dispatches staging (10:46); maintainer #2 approves prod (11:11)",
+        "evidence": "Staging dispatched 10:46:39Z with source Berri-AI/litellm@20535d8f; staging ends 11:08:09Z, production starts 11:08:53Z. Production gate approved 11:11:18Z by maintainer #2's token from 199.91.221.39. Gate relaxed on Mon 10-19 from a dedicated device-locked approver to 'any two engineers'; the owner token alone could also have changed it [BerriAI]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 141,
       "selected": false,
       "positionAbsolute": {
-        "x": 985.6672616182279,
-        "y": 208.81725776339556
+        "x": 996.6706615028659,
+        "y": 435.9665723324325
       },
       "dragging": false
     },
@@ -745,8 +934,8 @@
       "id": "technique-c002-1",
       "type": "technique",
       "position": {
-        "x": 985.659984485507,
-        "y": 432.92206182957636
+        "x": 996.8056540641755,
+        "y": 681.6133844966918
       },
       "data": {
         "id": "T-C002",
@@ -760,7 +949,8 @@
           "Using untrusted reusable workflows",
           "Using untrusted SW packages on runners",
           "Using untrusted container / VM image for runners",
-          "Lack of GitHub action pinning"
+          "Lack of GitHub action pinning",
+          "Build source controllable through workflow inputs"
         ],
         "controls": {
           "protective": [
@@ -812,6 +1002,15 @@
                   "V3.1"
                 ]
               }
+            },
+            {
+              "name": "Build source validation against protected branches",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V3.3"
+                ]
+              }
             }
           ],
           "detective": [
@@ -825,16 +1024,16 @@
             }
           ]
         },
-        "customLabel": "Legitimate release build checks out Berri-AI/litellm (~11:21Z)",
-        "evidence": "Identical build fingerprint to clean 1.106.2 (maturin 1.9.4, rustc 1.98.0, manylinux_2_28); payload in maturin .data/purelib layout, built in not repacked. Only dirty version among 42 since 10-01 [Verified]"
+        "customLabel": "Legitimate pipeline builds and signs from the lookalike fork",
+        "evidence": "Images built in staging (~11:00-11:06Z) with SLSA provenance naming github.com/Berri-AI/litellm; promoted with no rebuild and signed with the legitimate cosign key. Wheels built ~11:21Z with the clean 1.106.2 toolchain (maturin 1.9.4), payload in .data/purelib [Upwind]. [Inference] Fork object sharing (T-V012) means BerriAI/litellm@20535d8f resolves to the same tree, so a repo-name check alone is insufficient"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 125,
       "selected": false,
       "positionAbsolute": {
-        "x": 985.659984485507,
-        "y": 432.92206182957636
+        "x": 996.8056540641755,
+        "y": 681.6133844966918
       },
       "dragging": false
     },
@@ -842,8 +1041,8 @@
       "id": "technique-r004-1",
       "type": "technique",
       "position": {
-        "x": 1295,
-        "y": 160
+        "x": 1306.1487198685466,
+        "y": 204.96014969469638
       },
       "data": {
         "id": "T-R004",
@@ -851,16 +1050,13 @@
         "component": "registry",
         "stage": "Discovery and Lateral Movement",
         "description": "Attacker publishes malicious package to registry",
-        "frameworks": {
-          "mitre_attack": [
-            "T1195.001"
-          ]
-        },
         "risks": [
           "Overprivileged NPM token",
           "Lack of provenance",
           "Lack of trusted publishing",
-          "No package signing"
+          "No package signing",
+          "Trusted publisher not bound to a protected environment",
+          "Provenance not verified before publishing"
         ],
         "controls": {
           "protective": [
@@ -905,23 +1101,37 @@
                   "V3.2"
                 ]
               }
+            },
+            {
+              "name": "Pre-publish provenance verification",
+              "frameworks": {
+                "spvs": [
+                  "V3.4"
+                ]
+              }
             }
           ],
           "detective": []
         },
-        "customLabel": "litellm==1.107.0 (7 wheels + sdist) via Trusted Publishing, 11:39Z",
-        "evidence": "8 files uploaded 11:39:51-11:40:13Z; live on PyPI until 13:23Z. Trusted Publishing held: it authenticated the workflow, not its input. No PEP 740 attestations [Verified + LiteLLM post-mortem]"
+        "customLabel": "litellm==1.107.0 (7 wheels + sdist) via Trusted Publishing, 11:39",
+        "evidence": "Uploaded 11:39:51-11:40:13Z; quarantined by 13:23Z. Trusted Publishing authenticated the workflow, not its input. No PEP 740 attestations. sdist has no payload but carries the tampered pyproject.toml. ~49,000 downloads [BerriAI + Upwind + Wiz]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96
+      "height": 145,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1306.1487198685466,
+        "y": 204.96014969469638
+      },
+      "dragging": false
     },
     {
       "id": "technique-r005-1",
       "type": "technique",
       "position": {
-        "x": 1294.8915171861502,
-        "y": 363.26250639126147
+        "x": 1306.1487198685466,
+        "y": 426.49527864925824
       },
       "data": {
         "id": "T-R005",
@@ -933,7 +1143,8 @@
           "Overprivileged registry credentials",
           "No image signing",
           "No provenance attestation",
-          "No image scanning"
+          "No image scanning",
+          "Provenance not verified before publishing"
         ],
         "controls": {
           "protective": [
@@ -969,6 +1180,14 @@
                   "V3.2"
                 ]
               }
+            },
+            {
+              "name": "Pre-publish provenance verification",
+              "frameworks": {
+                "spvs": [
+                  "V3.4"
+                ]
+              }
             }
           ],
           "detective": [
@@ -982,16 +1201,16 @@
             }
           ]
         },
-        "customLabel": "Docker v1.107.0, latest, main-latest, main-stable (COPY cook ./cook)",
-        "evidence": "Final fork commit 20535d8f added COPY cook ./cook to backend/, gateway/, migrations/ Dockerfiles. Images signed and pushed 11:46:56Z; GHCR down by 13:51Z, Docker Hub 14:20Z. Index sha256:1bbcb144... [Verified + LiteLLM post-mortem]"
+        "customLabel": "Signed images v1.107.0, latest, main-latest, main-stable (11:46)",
+        "evidence": "Published to Docker Hub and GHCR 11:46:56Z; GHCR down by 13:51Z, Docker Hub removed/repointed 14:20Z. Fork Dockerfiles add COPY cook ./cook. Signature verifies against the old cosign.pub [BerriAI + Upwind]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 125,
       "selected": false,
       "positionAbsolute": {
-        "x": 1294.8915171861502,
-        "y": 363.26250639126147
+        "x": 1306.1487198685466,
+        "y": 426.49527864925824
       },
       "dragging": false
     },
@@ -999,8 +1218,8 @@
       "id": "technique-r012-1",
       "type": "technique",
       "position": {
-        "x": 1295,
-        "y": 541.697760645315
+        "x": 1307.2112426601293,
+        "y": 734.7294706391439
       },
       "data": {
         "id": "T-R012",
@@ -1110,24 +1329,106 @@
           ]
         },
         "customLabel": "cook.pth + sitecustomize.py run on every Python interpreter start",
-        "evidence": "litellm-1.107.0.data/purelib/{cook.pth,cook.py,sitecustomize.py}; sdist pyproject.toml adds data = \"cook\". Stealer encrypts (AES-256 + RSA-4096) and POSTs to www.litellm.dev/healthcheck; hourly loader execs code from domain in dead-drop file [Verified + Reporter]"
+        "evidence": "litellm-1.107.0.data/purelib/{cook.pth,cook.py,sitecustomize.py}. Stealer encrypts (AES-256 + RSA-4096) and POSTs to www.litellm.dev/healthcheck; sitecustomize.py is an hourly remote-code loader, staged dormant [Upwind + Verified]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 141,
       "selected": false,
       "positionAbsolute": {
-        "x": 1295,
-        "y": 541.697760645315
+        "x": 1307.2112426601293,
+        "y": 734.7294706391439
       },
       "dragging": false
+    },
+    {
+      "id": "victimZone-consumers",
+      "type": "victimZone",
+      "position": {
+        "x": 515.7464961536814,
+        "y": 1069.8234649507763
+      },
+      "data": {
+        "label": "Downstream Consumers",
+        "color": "#8B5CF6"
+      },
+      "zIndex": -10,
+      "width": 1032,
+      "height": 901,
+      "style": {
+        "width": 1032,
+        "height": 901
+      },
+      "selected": false,
+      "dragging": false,
+      "resizing": false,
+      "positionAbsolute": {
+        "x": 873.7464961536814,
+        "y": 1067.8234649507763
+      }
+    },
+    {
+      "id": "component-cicd-2",
+      "type": "component",
+      "position": {
+        "x": 1251.4957161150633,
+        "y": 1198.8072642734014
+      },
+      "data": {
+        "label": "CI/CD",
+        "componentId": "cicd",
+        "techniques": [],
+        "customLabel": "Consumer CI runners"
+      },
+      "zIndex": -1,
+      "width": 257,
+      "height": 486,
+      "style": {
+        "width": 257,
+        "height": 486
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1251.4957161150633,
+        "y": 1198.8072642734014
+      },
+      "dragging": false,
+      "resizing": false
+    },
+    {
+      "id": "component-production-2",
+      "type": "component",
+      "position": {
+        "x": 913.5404494398008,
+        "y": 1199.1802678738231
+      },
+      "data": {
+        "label": "Production/Cloud",
+        "componentId": "production",
+        "techniques": [],
+        "customLabel": "Consumer K8s nodes, LiteLLM proxies, AWS"
+      },
+      "zIndex": -1,
+      "width": 286,
+      "height": 675,
+      "style": {
+        "width": 286,
+        "height": 675
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 958.5404494398008,
+        "y": 1199.1802678738231
+      },
+      "dragging": false,
+      "resizing": false
     },
     {
       "id": "technique-c010-1",
       "type": "technique",
       "position": {
         "x": 1296.4957161150633,
-        "y": 1107.5029459068462
+        "y": 1307.5029459068462
       },
       "data": {
         "id": "T-C010",
@@ -1202,20 +1503,20 @@
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 125,
       "selected": false,
       "positionAbsolute": {
         "x": 1296.4957161150633,
-        "y": 1107.5029459068462
+        "y": 1307.5029459068462
       },
       "dragging": false
     },
     {
-      "id": "technique-c005-1",
+      "id": "technique-c005-2",
       "type": "technique",
       "position": {
         "x": 1296.4957161150633,
-        "y": 1288.5346436838151
+        "y": 1488.5346436838151
       },
       "data": {
         "id": "T-C005",
@@ -1232,7 +1533,9 @@
           "Workflow with access to secrets",
           "No runtime monitoring",
           "Secrets in workflow logs",
-          "Overprivileged secrets"
+          "Overprivileged secrets",
+          "Secrets available to workflows on any branch",
+          "Personal tokens or signing keys stored as CI secrets"
         ],
         "controls": {
           "protective": [
@@ -1261,6 +1564,24 @@
                   "V2.5"
                 ]
               }
+            },
+            {
+              "name": "Environment-scoped secrets with branch policies",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V3.2"
+                ]
+              }
+            },
+            {
+              "name": "Network-level runner egress allow-list",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V4.4"
+                ]
+              }
             }
           ],
           "detective": [
@@ -1279,19 +1600,27 @@
                   "V5.4"
                 ]
               }
+            },
+            {
+              "name": "Exfiltration workflow detection on new branches",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
             }
           ]
         },
         "customLabel": "Runner env, cloud, AI-tool credentials exfiltrated to litellm.dev",
-        "evidence": "Stealer collects developer, cloud and AI-tool credentials plus /proc/*/environ and exfiltrates encrypted [Reporter]"
+        "evidence": "Stealer collects developer, cloud and AI-tool credentials plus /proc/*/environ and exfiltrates encrypted [Upwind]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 145,
       "selected": false,
       "positionAbsolute": {
         "x": 1296.4957161150633,
-        "y": 1288.5346436838151
+        "y": 1488.5346436838151
       },
       "dragging": false
     },
@@ -1300,7 +1629,7 @@
       "type": "technique",
       "position": {
         "x": 982.2751846886581,
-        "y": 1116.3875776588684
+        "y": 1300.3875776588684
       },
       "data": {
         "id": "T-P011",
@@ -1322,7 +1651,9 @@
           "No secrets rotation policies",
           "Centralized storage of all customer secrets",
           "No data loss prevention (DLP) on production systems",
-          "Lack of egress traffic monitoring"
+          "Lack of egress traffic monitoring",
+          "Services configured with personal or admin credentials",
+          "Admin APIs return stored secrets"
         ],
         "controls": {
           "protective": [
@@ -1373,6 +1704,22 @@
                   "V5.5"
                 ]
               }
+            },
+            {
+              "name": "Service identities instead of personal credentials",
+              "frameworks": {
+                "spvs": [
+                  "V1.1"
+                ]
+              }
+            },
+            {
+              "name": "Write-only secret storage (redact on read)",
+              "frameworks": {
+                "spvs": [
+                  "V2.5"
+                ]
+              }
             }
           ],
           "detective": [
@@ -1411,15 +1758,15 @@
           ]
         },
         "customLabel": "Proxy DB dump: LiteLLM_CredentialsTable, LiteLLM_ProxyModelTable",
-        "evidence": "If DATABASE_URL is set, payload dumps LiteLLM proxy credential and model tables (upstream LLM provider keys) [Reporter]"
+        "evidence": "If DATABASE_URL is set, payload dumps LiteLLM proxy credential and model tables (upstream LLM provider keys) [Upwind]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 145,
       "selected": false,
       "positionAbsolute": {
         "x": 982.2751846886581,
-        "y": 1116.3875776588684
+        "y": 1300.3875776588684
       },
       "dragging": false
     },
@@ -1427,8 +1774,8 @@
       "id": "technique-p007-1",
       "type": "technique",
       "position": {
-        "x": 982.2751846886579,
-        "y": 1308.6100023449267
+        "x": 982.4229650800705,
+        "y": 1496.7034514033112
       },
       "data": {
         "id": "T-P007",
@@ -1501,11 +1848,11 @@
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 145,
       "selected": false,
       "positionAbsolute": {
-        "x": 982.2751846886579,
-        "y": 1308.6100023449267
+        "x": 982.4229650800705,
+        "y": 1496.7034514033112
       },
       "dragging": false
     },
@@ -1514,7 +1861,7 @@
       "type": "technique",
       "position": {
         "x": 982.2751846886579,
-        "y": 1499.5689456508308
+        "y": 1699.5689456508308
       },
       "data": {
         "id": "T-P009",
@@ -1588,11 +1935,11 @@
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 145,
       "selected": false,
       "positionAbsolute": {
         "x": 982.2751846886579,
-        "y": 1499.5689456508308
+        "y": 1699.5689456508308
       },
       "dragging": false
     },
@@ -1601,20 +1948,20 @@
       "type": "exitPoint",
       "position": {
         "x": 1250.0242819260757,
-        "y": 1845.5066952860006
+        "y": 2014.4694611150067
       },
       "data": {
         "label": "Secondary Supply Chain Attack",
         "customLabel": "Stolen CI/registry secrets from every litellm installer"
       },
       "zIndex": 10,
-      "width": 210,
+      "width": 252,
       "height": 46,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
         "x": 1250.0242819260757,
-        "y": 1845.5066952860006
+        "y": 2014.4694611150067
       }
     },
     {
@@ -1622,20 +1969,20 @@
       "type": "exitPoint",
       "position": {
         "x": 836.6797057270219,
-        "y": 1792.549049673116
+        "y": 1992.549049673116
       },
       "data": {
         "label": "Future Breach",
         "customLabel": "LLMjacking via stolen cloud credentials; hourly RCE loader"
       },
       "zIndex": 10,
-      "width": 150,
+      "width": 144,
       "height": 46,
       "selected": false,
       "dragging": false,
       "positionAbsolute": {
         "x": 836.6797057270219,
-        "y": 1792.549049673116
+        "y": 1992.549049673116
       }
     },
     {
@@ -1643,7 +1990,7 @@
       "type": "component",
       "position": {
         "x": 621.2182360565794,
-        "y": 1006.8086900984946
+        "y": 1206.8086900984945
       },
       "data": {
         "label": "Endpoint/IDE",
@@ -1661,7 +2008,7 @@
       "selected": false,
       "positionAbsolute": {
         "x": 621.2182360565794,
-        "y": 1006.8086900984946
+        "y": 1206.8086900984945
       },
       "dragging": false,
       "resizing": false
@@ -1671,7 +2018,7 @@
       "type": "technique",
       "position": {
         "x": 666.2182360565794,
-        "y": 1097.9357458721743
+        "y": 1297.9357458721743
       },
       "data": {
         "id": "T-E001",
@@ -1763,15 +2110,15 @@
           ]
         },
         "customLabel": "pip install litellm: cook.pth runs on every Python start",
-        "evidence": "Unpinned installs of 1.107.0 (PyPI 11:39-13:23Z) drop cook.pth/sitecustomize.py into site-packages; executes on any interpreter start, not just import of litellm. IOC: /tmp/.pc_once_* [Verified + LiteLLM post-mortem]"
+        "evidence": "Unpinned installs of 1.107.0 (PyPI 11:39-13:23Z) drop cook.pth/sitecustomize.py into site-packages; executes on any interpreter start, not just import of litellm. IOC: /tmp/.pc_once_* [Verified + BerriAI]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 145,
       "selected": false,
       "positionAbsolute": {
         "x": 666.2182360565794,
-        "y": 1097.9357458721743
+        "y": 1297.9357458721743
       },
       "dragging": false
     },
@@ -1780,7 +2127,7 @@
       "type": "technique",
       "position": {
         "x": 666.2182360565794,
-        "y": 1271.053086995184
+        "y": 1471.053086995184
       },
       "data": {
         "id": "T-E003",
@@ -1850,15 +2197,15 @@
           ]
         },
         "customLabel": "Developer, cloud and AI-tool credentials harvested",
-        "evidence": "Stealer targets developer, cloud and AI-tool credentials plus /proc/*/environ; AES-256 + RSA-4096 encrypted POST to www.litellm.dev/healthcheck. Endpoint victims inferred from payload targeting; Wiz-observed abuse came from CI runners and K8s nodes [Reporter + Inference]"
+        "evidence": "Stealer targets developer, cloud and AI-tool credentials plus /proc/*/environ; AES-256 + RSA-4096 encrypted POST to www.litellm.dev/healthcheck. Endpoint victims inferred from payload targeting; Wiz-observed abuse came from CI runners and K8s nodes [Upwind + Inference]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 145,
       "selected": false,
       "positionAbsolute": {
         "x": 666.2182360565794,
-        "y": 1271.053086995184
+        "y": 1471.053086995184
       },
       "dragging": false
     },
@@ -1867,7 +2214,7 @@
       "type": "technique",
       "position": {
         "x": 666.2182360565798,
-        "y": 1449.4557796106913
+        "y": 1649.4557796106913
       },
       "data": {
         "id": "T-E017",
@@ -1938,25 +2285,105 @@
           ]
         },
         "customLabel": "Hourly loader reads C2 domain from GitHub dead drop",
-        "evidence": "Loader fetches domain.txt from letters9813/pythonclient-test (GitHub) every hour and exec()s code from it; staged dormant (empty) since 10-20. IOC: /tmp/remote_code_loader.lock [Verified + Reporter]"
+        "evidence": "Loader fetches domain.txt from letters9813/pythonclient-test (GitHub) every hour and exec()s code from it; staged dormant (empty) since 10-20. IOC: /tmp/remote_code_loader.lock [Verified + Upwind]"
       },
       "zIndex": 10,
       "width": 160,
-      "height": 96,
+      "height": 125,
       "selected": false,
       "positionAbsolute": {
         "x": 666.2182360565798,
-        "y": 1449.4557796106913
+        "y": 1649.4557796106913
+      },
+      "dragging": false
+    },
+    {
+      "id": "technique-v013-1",
+      "type": "technique",
+      "position": {
+        "x": 703.4499057826267,
+        "y": 812.6559198479289
+      },
+      "data": {
+        "id": "T-V013",
+        "name": "VCS Evidence Destruction",
+        "component": "vcs",
+        "stage": "Post-Compromise",
+        "description": "Attacker deletes workflow run records and rewrites protected branch history to remove evidence of malicious activity",
+        "risks": [
+          "Any user with write access can delete workflow runs and logs",
+          "Admins can bypass force-push protection",
+          "Audit and workflow logs retained only in the VCS platform",
+          "No alerting on run deletion or history rewrites"
+        ],
+        "controls": {
+          "protective": [
+            {
+              "name": "Audit log streaming outside the VCS platform",
+              "frameworks": {
+                "spvs": [
+                  "V5.3",
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Workflow log export to external storage",
+              "frameworks": {
+                "spvs": [
+                  "V3.1",
+                  "V5.3"
+                ]
+              }
+            },
+            {
+              "name": "Force-push and deletion blocked with no bypass actors",
+              "frameworks": {
+                "spvs": [
+                  "V1.5"
+                ]
+              }
+            }
+          ],
+          "detective": [
+            {
+              "name": "Workflow run deletion alerting",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            },
+            {
+              "name": "Protected branch history rewrite alerting",
+              "frameworks": {
+                "spvs": [
+                  "V5.4"
+                ]
+              }
+            }
+          ]
+        },
+        "customLabel": "Run records deleted (10-10, 10-21); main reverted and force-pushed (12:09-12:24)",
+        "evidence": "Owner token deleted the 10-10 exfiltration runs at 22:14Z. Maintainer #3's token deleted the production and staging run records 11:53:49-11:54:01Z. After disclosure the owner token pushed revert 285fbdc5 (12:09:38Z) and force-pushed project-releaser main to d687b69 (12:24:52Z), overriding protection. The org audit log still recorded each action [BerriAI]"
+      },
+      "zIndex": 10,
+      "width": 160,
+      "height": 141,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 703.4499057826267,
+        "y": 812.6559198479289
       },
       "dragging": false
     }
   ],
   "edges": [
     {
-      "id": "edge-entryPoint-litellm-1-technique-p011-1",
+      "id": "edge-entryPoint-litellm-1-technique-v003-1",
       "source": "entryPoint-litellm-1",
       "sourceHandle": "bottom",
-      "target": "technique-p011-1",
+      "target": "technique-v003-1",
       "targetHandle": "top",
       "type": "smoothstep",
       "animated": false,
@@ -1972,26 +2399,24 @@
       "labelBgStyle": {
         "fill": "#FFFFFF",
         "fillOpacity": 0
-      },
-      "selected": false
+      }
     },
     {
-      "id": "edge-technique-e009-1-technique-p011-1",
-      "source": "technique-e009-1",
-      "sourceHandle": "bottom",
+      "id": "edge-technique-v003-1-technique-p011-1",
+      "source": "technique-v003-1",
+      "sourceHandle": "right",
       "target": "technique-p011-1",
-      "targetHandle": "top",
+      "targetHandle": "left",
       "type": "smoothstep",
       "animated": false,
       "style": {
-        "stroke": "#9ca3af",
-        "strokeDasharray": "5,5"
+        "stroke": "#9ca3af"
       },
       "markerEnd": {
         "type": "arrowclosed",
         "color": "#9ca3af"
       },
-      "label": "",
+      "label": "Admin key",
       "labelStyle": {
         "fill": "#DC2626",
         "fontWeight": 600,
@@ -2017,7 +2442,7 @@
         "type": "arrowclosed",
         "color": "#9ca3af"
       },
-      "label": "Tokens",
+      "label": "Owner token",
       "labelStyle": {
         "fill": "#DC2626",
         "fontWeight": 600,
@@ -2029,15 +2454,45 @@
       }
     },
     {
-      "id": "edge-technique-v001-1-technique-v010-1",
+      "id": "edge-technique-v001-1-technique-c005-1",
       "source": "technique-v001-1",
-      "sourceHandle": "bottom",
-      "target": "technique-v010-1",
-      "targetHandle": "top",
+      "sourceHandle": "right",
+      "target": "technique-c005-1",
+      "targetHandle": "left",
       "type": "smoothstep",
       "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
       "markerEnd": {
-        "type": "arrowclosed"
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 10
+      },
+      "labelBgStyle": {
+        "fill": "#FFFFFF",
+        "fillOpacity": 0
+      }
+    },
+    {
+      "id": "edge-technique-c005-1-technique-v010-1",
+      "source": "technique-c005-1",
+      "sourceHandle": "right",
+      "target": "technique-v010-1",
+      "targetHandle": "left",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
       },
       "label": "",
       "labelStyle": {
@@ -2223,10 +2678,10 @@
       "selected": false
     },
     {
-      "id": "edge-technique-c010-1-technique-c005-1",
+      "id": "edge-technique-c010-1-technique-c005-2",
       "source": "technique-c010-1",
       "sourceHandle": "bottom",
-      "target": "technique-c005-1",
+      "target": "technique-c005-2",
       "targetHandle": "top",
       "type": "smoothstep",
       "animated": false,
@@ -2292,8 +2747,8 @@
       "selected": false
     },
     {
-      "id": "edge-technique-c005-1-exitPoint-litellm-1",
-      "source": "technique-c005-1",
+      "id": "edge-technique-c005-2-exitPoint-litellm-1",
+      "source": "technique-c005-2",
       "sourceHandle": "bottom",
       "target": "exitPoint-litellm-1",
       "targetHandle": "top",
@@ -2467,6 +2922,59 @@
         "fillOpacity": 0.9
       },
       "id": "reactflow__edge-technique-e017-1bottom-exitPoint-litellm-1top"
+    },
+    {
+      "zIndex": 100,
+      "source": "technique-c002-1",
+      "sourceHandle": "bottom",
+      "target": "technique-v008-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 12
+      },
+      "labelBgStyle": {
+        "fill": "#FEE2E2",
+        "fillOpacity": 0.9
+      },
+      "id": "reactflow__edge-technique-c002-1bottom-technique-v008-1top"
+    },
+    {
+      "id": "edge-technique-r005-1-technique-v013-1",
+      "source": "technique-r005-1",
+      "sourceHandle": "bottom",
+      "target": "technique-v013-1",
+      "targetHandle": "top",
+      "type": "smoothstep",
+      "animated": false,
+      "style": {
+        "stroke": "#9ca3af"
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#9ca3af"
+      },
+      "label": "",
+      "labelStyle": {
+        "fill": "#DC2626",
+        "fontWeight": 600,
+        "fontSize": 10
+      },
+      "labelBgStyle": {
+        "fill": "#FFFFFF",
+        "fillOpacity": 0
+      }
     }
   ]
 }
