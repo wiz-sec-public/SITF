@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-C021: AI Agent Prompt Injection in Workflow | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-C021 (AI Agent Prompt Injection in Workflow): Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data. Initial Access technique targeting CI/CD in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-C021.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-C021: AI Agent Prompt Injection in Workflow | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-C021 (AI Agent Prompt Injection in Workflow): Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data. Initial Access technique targeting CI/CD in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-C021.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-C021.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-C021.html",
+ "termCode": "T-C021",
+ "name": "SITF T-C021: AI Agent Prompt Injection in Workflow",
+ "alternateName": "AI Agent Prompt Injection in Workflow",
+ "description": "Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › CI/CD › T-C021</p>
+<h1>SITF technique T-C021: AI Agent Prompt Injection in Workflow</h1>
+<p><span class="tag">Component: CI/CD</span><span class="tag">Stage: Initial Access</span><span class="tag">ID: T-C021</span></p>
+<p class="lead">Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data.</p>
+<p>SITF technique T-C021 (AI Agent Prompt Injection in Workflow) is a <strong>Initial Access</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>CI/CD</strong> component (Continuous Integration/Deployment systems).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>AI agents with Bash/shell execution capabilities in workflows</li>
+<li>AI agents with Write/Edit file permissions</li>
+<li>User-controlled input passed to AI prompts without sanitization</li>
+<li>Overly permissive AI tool configurations (allowedTools includes Bash)</li>
+<li>AI workflows triggered by any GitHub user (no write-access requirement)</li>
+<li>No input validation or content filtering for AI context</li>
+<li>AI agents with access to workflow secrets</li>
+<li>No human approval gates for AI-suggested actions</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Restrict AI agent tool permissions</strong> — Remove Bash, Write, and Edit from allowedTools when processing untrusted input<br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment</span></li>
+<li><strong>Input sanitization before AI context injection</strong> — Filter or escape user-controlled input before including in AI prompts<br><span class="small">OWASP SPVS: V2.1 Secure Coding Practices</span></li>
+<li><strong>Require write access to trigger AI-powered workflows</strong> — Do not use &#x27;allowed_non_write_users: *&#x27; for AI workflows with code execution<br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment</span></li>
+<li><strong>Sandboxed AI execution environment</strong> — Run AI agents in isolated environment without secret access<br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment</span></li>
+<li><strong>Human approval gates for AI-suggested actions</strong> — Require human review before AI agent executes code changes or commands<br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment</span></li>
+<li><strong>Separate AI workflows from release/publish workflows</strong> — Isolate AI triage workflows from workflows with publishing credentials<br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment; V3.2 Credential Hygiene</span></li>
+<li><strong>Rate limiting for AI workflow triggers</strong> — Prevent abuse by limiting frequency of AI workflow invocations per user<br><span class="small">OWASP SPVS: V5.2 Security Standard Enforcement</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>AI prompt injection detection</strong> — Monitor AI inputs for prompt injection patterns and adversarial instructions<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Audit logging of AI agent actions</strong> — Log all commands executed by AI agents for forensic analysis<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Anomaly detection for AI workflow behavior</strong> — Alert on unusual AI agent actions like npm install from external commits<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Runtime agent on runner</strong> — Monitor AI workflow execution for malicious behavior patterns<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span><br><span class="small">Detection rule (sigma): <code>proc_creation_lnx_susp_npm_install</code> Suspicious NPM Install from External Source</span></li>
+</ul>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/clinejection.html">Clinejection</a> <span class="small">(incident)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-C021">Open T-C021 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-C021 in the SITF flow builder</a></li>
+<li>Previous CI/CD technique: <a href="T-C020.html">T-C020 CI/CD Misconfiguration Exploitation</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-C021 (AI Agent Prompt Injection in Workflow)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-C021.html">https://wiz-sec-public.github.io/SITF/techniques/T-C021.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

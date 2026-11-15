@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-P006: Kubernetes Service Account Token Theft | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-P006 (Kubernetes Service Account Token Theft): Attacker extracts Kubernetes service account tokens from CI/CD. Discovery and Lateral Movement technique targeting Production/Cloud in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-P006.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-P006: Kubernetes Service Account Token Theft | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-P006 (Kubernetes Service Account Token Theft): Attacker extracts Kubernetes service account tokens from CI/CD. Discovery and Lateral Movement technique targeting Production/Cloud in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-P006.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-P006.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-P006.html",
+ "termCode": "T-P006",
+ "name": "SITF T-P006: Kubernetes Service Account Token Theft",
+ "alternateName": "Kubernetes Service Account Token Theft",
+ "description": "Attacker extracts Kubernetes service account tokens from CI/CD",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Production/Cloud › T-P006</p>
+<h1>SITF technique T-P006: Kubernetes Service Account Token Theft</h1>
+<p><span class="tag">Component: Production/Cloud</span><span class="tag">Stage: Discovery and Lateral Movement</span><span class="tag">ID: T-P006</span></p>
+<p class="lead">Attacker extracts Kubernetes service account tokens from CI/CD.</p>
+<p>SITF technique T-P006 (Kubernetes Service Account Token Theft) is a <strong>Discovery and Lateral Movement</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Production/Cloud</strong> component (Production infrastructure of the producer organization).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Overprivileged service accounts</li>
+<li>Long-lived tokens</li>
+<li>Lack of token rotation</li>
+<li>Tokens in CI/CD secrets</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>OIDC for K8s access</strong><br><span class="small">OWASP SPVS: V1.1 Identity and Access Management</span></li>
+<li><strong>Minimal service account permissions</strong><br><span class="small">OWASP SPVS: V5.1 Access Audit</span></li>
+<li><strong>Token rotation</strong><br><span class="small">OWASP SPVS: V2.5 Credential Hygiene</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Secret scanning</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Runtime security monitoring</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Framework mappings</h2><ul>
+<li>MITRE ATT&amp;CK: <a href="https://attack.mitre.org/techniques/T1552/007/">T1552.007</a></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-P006">Open T-P006 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-P006 in the SITF flow builder</a></li>
+<li>Previous Production/Cloud technique: <a href="T-P005.html">T-P005 Infrastructure-as-Code Manipulation</a></li>
+<li>Next Production/Cloud technique: <a href="T-P007.html">T-P007 Cloud Metadata Service Exploitation</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-P006 (Kubernetes Service Account Token Theft)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-P006.html">https://wiz-sec-public.github.io/SITF/techniques/T-P006.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-C005: Secret Exfiltration from Workflow | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-C005 (Secret Exfiltration from Workflow): Attacker extracts secrets from CI/CD workflow execution. Discovery and Lateral Movement technique targeting CI/CD in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-C005.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-C005: Secret Exfiltration from Workflow | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-C005 (Secret Exfiltration from Workflow): Attacker extracts secrets from CI/CD workflow execution. Discovery and Lateral Movement technique targeting CI/CD in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-C005.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-C005.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-C005.html",
+ "termCode": "T-C005",
+ "name": "SITF T-C005: Secret Exfiltration from Workflow",
+ "alternateName": "Secret Exfiltration from Workflow",
+ "description": "Attacker extracts secrets from CI/CD workflow execution",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › CI/CD › T-C005</p>
+<h1>SITF technique T-C005: Secret Exfiltration from Workflow</h1>
+<p><span class="tag">Component: CI/CD</span><span class="tag">Stage: Discovery and Lateral Movement</span><span class="tag">ID: T-C005</span></p>
+<p class="lead">Attacker extracts secrets from CI/CD workflow execution.</p>
+<p>SITF technique T-C005 (Secret Exfiltration from Workflow) is a <strong>Discovery and Lateral Movement</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>CI/CD</strong> component (Continuous Integration/Deployment systems).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Workflow with access to secrets</li>
+<li>No runtime monitoring</li>
+<li>Secrets in workflow logs</li>
+<li>Overprivileged secrets</li>
+<li>Secrets available to workflows on any branch</li>
+<li>Personal tokens or signing keys stored as CI secrets</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>OIDC setup in workflows</strong><br><span class="small">OWASP SPVS: V1.1 Identity and Access Management; V3.2 Credential Hygiene</span></li>
+<li><strong>Minimal workflow permissions</strong><br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment; V5.1 Access Audit</span></li>
+<li><strong>Log sanitization</strong><br><span class="small">OWASP SPVS: V2.5 Credential Hygiene</span></li>
+<li><strong>Environment-scoped secrets with branch policies</strong><br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment; V3.2 Credential Hygiene</span></li>
+<li><strong>Network-level runner egress allow-list</strong><br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment; V4.4 Transition Security</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Runtime agent on runner</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Secret scanning</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Exfiltration workflow detection on new branches</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Framework mappings</h2><ul>
+<li>MITRE ATT&amp;CK: <a href="https://attack.mitre.org/techniques/T1552/001/">T1552.001</a></li>
+</ul>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/aqua-trivy-vscode.html">Aqua Trivy VS Code Extension</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/asyncapi-generator-2026.html">AsyncAPI Generator (2026)</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/codebreach.html">CodeBreach</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/litellm-oct-2026.html">LiteLLM (October 2026)</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/shai-hulud-2-flow.html">Shai-Hulud 2.0</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/teampcp-campaign.html">TeamPCP Campaign</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/tj-actions.html">tj-actions/changed-files</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/trivy-act-ii.html">Trivy Act II</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/gitlab-pipeline-hijack.html">GitLab Pipeline Hijack</a> <span class="small">(red team engagement)</span></li>
+<li><a href="../incidents/synacktiv-cicd-red-team-engagement.html">Synacktiv CI/CD Red Team Engagement</a> <span class="small">(red team engagement)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-C005">Open T-C005 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-C005 in the SITF flow builder</a></li>
+<li>Previous CI/CD technique: <a href="T-C004.html">T-C004 Workflow Script Injection</a></li>
+<li>Next CI/CD technique: <a href="T-C006.html">T-C006 Secret Enumeration in Workflows Using GitHub Search</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-C005 (Secret Exfiltration from Workflow)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-C005.html">https://wiz-sec-public.github.io/SITF/techniques/T-C005.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trivy Act II attack analysis with SITF | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="The Trivy Act II attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C002 Malicious Execution in Workflow Context, T-C003 PWN Request / Poisoned Pipeline Execution, T-C005 Secret Exfiltration from Workflow, T-C011 Stealing Registry Tokens, T-R004 Publishing Malicious Package, T-R005 Publishing Malicious Container/VM Image.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/incidents/trivy-act-ii.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Trivy Act II attack analysis with SITF | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="The Trivy Act II attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C002 Malicious Execution in Workflow Context, T-C003 PWN Request / Poisoned Pipeline Execution, T-C005 Secret Exfiltration from Workflow, T-C011 Stealing Registry Tokens, T-R004 Publishing Malicious Package, T-R005 Publishing Malicious Container/VM Image.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/incidents/trivy-act-ii.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Incidents</a> › Trivy Act II</p>
+<h1>Trivy Act II: attack mapped to SITF techniques</h1>
+<p><span class="tag">Incident</span><span class="tag">10 SITF techniques</span></p>
+<p class='lead'>This page maps the Trivy Act II attack to the SDLC Infrastructure Threat Framework (SITF), step by step, from initial access to impact.</p>
+<h2>Entry points</h2><ul><li>Malicious for PR</li></ul>
+<h2>Attack path</h2><ol class='steps'>
+<li><a href="../techniques/T-C003.html">SITF T-C003: PWN Request / Poisoned Pipeline Execution</a> — Memory dump via /proc/&lt;pid&gt;/mem on Runner.Worker · in GitHub Actions (Initial)</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — Pattern search: {&quot;value&quot;:&quot;&lt;secret&gt;&quot;,&quot;isSecret&quot;:true} · in GitHub Actions (Initial)</li>
+<li><a href="../techniques/T-V001.html">SITF T-V001: Abuse Credentials for VCS Access</a> — Feb 28: Validate stolen aqua-bot PAT · in GitHub (aquasecurity org)</li>
+<li><a href="../techniques/T-V002.html">SITF T-V002: Imposter Commits</a> — Forged as Guillermo Rauch &amp; DmitriyLewen · in GitHub (aquasecurity org)</li>
+<li><a href="../techniques/T-V010.html">SITF T-V010: Malicious Code Modification in Repository</a> — 75/76 trivy-action + 7 setup-trivy tags force-pushed · in GitHub (aquasecurity org)</li>
+<li><a href="../techniques/T-C002.html">SITF T-C002: Malicious Execution in Workflow Context</a> — Imposter checkout downloads from scan.aquasecurtiy.org · in GitHub Actions (Release)</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — AES-256-CBC + RSA-4096 encrypted as tpcp.tar.gz · in GitHub Actions (Release)</li>
+<li><a href="../techniques/T-C011.html">SITF T-C011: Stealing Registry Tokens</a> — Docker Hub, GHCR, AWS ECR tokens stolen · in GitHub Actions (Release)</li>
+<li><a href="../techniques/T-R005.html">SITF T-R005: Publishing Malicious Container/VM Image</a> — trivy, tfsec, traceshark poisoned across 3 registries · in Docker Hub / GHCR / AWS ECR</li>
+<li><a href="../techniques/T-R004.html">SITF T-R004: Publishing Malicious Package</a> — trivy v0.69.4 binary releases (tar.gz, executables) · in Docker Hub / GHCR / AWS ECR</li>
+<li><a href="../techniques/T-V008.html">SITF T-V008: Malicious Repo Hosting</a> — Hidden repo tpcp-docs as fallback exfil channel · in GitHub (aquasecurity org)</li>
+</ol>
+<h2>Outcomes</h2><ul><li>Secondary Supply Chain Attack</li><li>Future Breach</li></ul>
+<h2>Techniques and controls</h2>
+<table><tr><th>Technique</th><th>Key protective controls</th></tr>
+<tr><td><a href="../techniques/T-C002.html">T-C002 Malicious Execution in Workflow Context</a></td><td>Pinning 3rd-party actions; Action whitelisting; Automated maintainer reputation and hygiene checks</td></tr>
+<tr><td><a href="../techniques/T-C003.html">T-C003 PWN Request / Poisoned Pipeline Execution</a></td><td>Branch protection rules (VCS); Private repo (VCS); Require explicit approval/ disallow workflows from forks (VCS)</td></tr>
+<tr><td><a href="../techniques/T-C005.html">T-C005 Secret Exfiltration from Workflow</a></td><td>OIDC setup in workflows; Minimal workflow permissions; Log sanitization</td></tr>
+<tr><td><a href="../techniques/T-C011.html">T-C011 Stealing Registry Tokens</a></td><td>OIDC setup in workflows; Trusted publishing (registry)</td></tr>
+<tr><td><a href="../techniques/T-R004.html">T-R004 Publishing Malicious Package</a></td><td>Trusted publishing; Provenance attestation; MFA for registry account</td></tr>
+<tr><td><a href="../techniques/T-R005.html">T-R005 Publishing Malicious Container/VM Image</a></td><td>Trusted publishing; Provenance attestation; Image signing and verification</td></tr>
+<tr><td><a href="../techniques/T-V001.html">T-V001 Abuse Credentials for VCS Access</a></td><td>Mandatory MFA; IDP / SSO setup; Enforcing fine-grained PATs</td></tr>
+<tr><td><a href="../techniques/T-V002.html">T-V002 Imposter Commits</a></td><td>Commit signing; Requiring code owner approval; Branch protection rules</td></tr>
+<tr><td><a href="../techniques/T-V008.html">T-V008 Malicious Repo Hosting</a></td><td>Repository creation approval; Resource quotas</td></tr>
+<tr><td><a href="../techniques/T-V010.html">T-V010 Malicious Code Modification in Repository</a></td><td>Branch protection rules (VCS); Require code owner approval; Mandatory code review by multiple reviewers</td></tr>
+</table>
+<p class="small">Source flow: <a href="https://github.com/wiz-sec-public/SITF/blob/main/flows/incidents/trivy-act-ii.json">flows/incidents/trivy-act-ii.json</a>. Load it in the <a href="../visualizer.html">SITF flow builder</a> to view the diagram.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

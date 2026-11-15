@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-V002: Imposter Commits | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-V002 (Imposter Commits): Attacker commits code impersonating another developer. Post-Compromise technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-V002.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-V002: Imposter Commits | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-V002 (Imposter Commits): Attacker commits code impersonating another developer. Post-Compromise technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-V002.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-V002.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-V002.html",
+ "termCode": "T-V002",
+ "name": "SITF T-V002: Imposter Commits",
+ "alternateName": "Imposter Commits",
+ "description": "Attacker commits code impersonating another developer",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › VCS › T-V002</p>
+<h1>SITF technique T-V002: Imposter Commits</h1>
+<p><span class="tag">Component: VCS</span><span class="tag">Stage: Post-Compromise</span><span class="tag">ID: T-V002</span></p>
+<p class="lead">Attacker commits code impersonating another developer.</p>
+<p>SITF technique T-V002 (Imposter Commits) is a <strong>Post-Compromise</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>VCS</strong> component (Version Control Systems (GitHub, GitLab, Azure DevOps)).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>No commit signing required</li>
+<li>Email verification not enforced</li>
+<li>No code review process</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Commit signing</strong><br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening; V3.4 Integrity of Artifacts</span></li>
+<li><strong>Requiring code owner approval</strong><br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening; V2.3 Code Review and Analysis</span></li>
+<li><strong>Branch protection rules</strong><br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening</span></li>
+<li><strong>Email verification enforcement</strong><br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening</span></li>
+</ul>
+<h2>Detective controls</h2>
+<p class='small'>None mapped yet.</p>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/teampcp-campaign.html">TeamPCP Campaign</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/trivy-act-ii.html">Trivy Act II</a> <span class="small">(incident)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-V002">Open T-V002 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-V002 in the SITF flow builder</a></li>
+<li>Previous VCS technique: <a href="T-V001.html">T-V001 Abuse Credentials for VCS Access</a></li>
+<li>Next VCS technique: <a href="T-V003.html">T-V003 Secret Exfiltration from Repo</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-V002 (Imposter Commits)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-V002.html">https://wiz-sec-public.github.io/SITF/techniques/T-V002.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

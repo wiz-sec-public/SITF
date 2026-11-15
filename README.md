@@ -1,6 +1,8 @@
 # SDLC Infrastructure Threat Framework (SITF)
 
-A comprehensive framework for analyzing and defending against attacks targeting Software Development Lifecycle infrastructure.
+A comprehensive framework for analyzing and defending against attacks targeting Software Development Lifecycle infrastructure: developer endpoints and IDEs, version control (VCS), CI/CD pipelines, artifact and container registries, and production cloud.
+
+**Website:** [wiz-sec-public.github.io/SITF](https://wiz-sec-public.github.io/SITF/) · **[Technique reference](https://wiz-sec-public.github.io/SITF/techniques/index.html)** · **[Incidents mapped to SITF](https://wiz-sec-public.github.io/SITF/incidents/index.html)**
 
 ## Quick Start
 
@@ -46,7 +48,7 @@ SITF helps security teams analyze supply chain attacks by:
 ## Framework Components
 
 - **5 Infrastructure Components**: Endpoint/IDE, VCS, CI/CD, Registry, Production/Cloud
-- **75+ Attack Techniques**: Pre-mapped with enabling risks and security controls
+- **80+ Attack Techniques**: Pre-mapped with enabling risks and security controls
 - **Dual Control Types**: Protective controls (prevent attacks) and Detective controls (detect attacks)
 - **Framework Mappings**: Controls mapped to industry frameworks (OWASP SPVS)
 - **Interactive Visualizer**: Drag-and-drop interface for building attack flow diagrams
@@ -57,6 +59,7 @@ SITF helps security teams analyze supply chain attacks by:
 - [IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md) - Start here for complete framework overview
 - [TECHNIQUE_LIBRARY.md](TECHNIQUE_LIBRARY.md) - Reference catalog of all techniques
 - [techniques.json](techniques.json) - Machine-readable source of truth for all techniques
+- [Technique reference](https://wiz-sec-public.github.io/SITF/techniques/index.html) - One web page per technique (e.g. [SITF T-C003](https://wiz-sec-public.github.io/SITF/techniques/T-C003.html))
 - [app/README.md](app/README.md) - Visualizer setup and usage
 - [SKILLS.md](SKILLS.md) - Claude AI skills documentation and usage examples
 
@@ -69,6 +72,24 @@ SITF includes Claude AI skills for automated attack flow generation. See **[SKIL
 | `/attack-flow` | Incident name, URL, or web search | `sample-flows/<name>.json` |
 | `/red-team-flow` | Engagement report (file/URL/text) | `flows/red-team/<name>.json` |
 | `/technique-proposal` | Gap description | `technique-proposals/<id>.md` |
+
+## Using SITF Data
+
+SITF content is published in machine-readable forms for tools, RAG pipelines, and AI agents:
+
+| Resource | URL |
+|----------|-----|
+| Full dataset (techniques, risks, controls, framework mappings) | https://wiz-sec-public.github.io/SITF/techniques.json |
+| Per-technique pages | `https://wiz-sec-public.github.io/SITF/techniques/<ID>.html` |
+| LLM index ([llms.txt](https://llmstxt.org)) | https://wiz-sec-public.github.io/SITF/llms.txt |
+| All techniques as plain text | https://wiz-sec-public.github.io/SITF/llms-full.txt |
+| Attack flows (incidents and red team) | [flows/](flows/) |
+
+Technique IDs are prefixed by component: `T-E` Endpoint/IDE, `T-V` VCS, `T-C` CI/CD, `T-R` Registry, `T-P` Production/Cloud.
+
+## Citing SITF
+
+When referencing a technique, include the framework name, e.g. **"SITF technique T-C003 (PWN Request / Poisoned Pipeline Execution)"**, and link to its page. To cite the framework itself, use [CITATION.cff](CITATION.cff) (GitHub's "Cite this repository" button).
 
 ## Contributing
 
@@ -90,6 +111,10 @@ The build script generates:
 - `TECHNIQUE_LIBRARY.md` - Human-readable documentation
 - `app/techniques-library.html` - Visual technique explorer with filtering and search
 - `app/visualizer.html` - Interactive attack flow builder
+- `app/techniques/`, `app/incidents/` - Static, crawlable per-technique and per-incident pages (via `build_site.py`)
+- `app/llms.txt`, `app/llms-full.txt`, `app/sitemap.xml`, `app/techniques.json` - Machine-readable and search-engine outputs
+
+New flows in `flows/incidents/` or `flows/red-team/` get an incident page automatically on the next build; add a display name to `FLOW_TITLES` in `build_site.py`.
 
 ### Creating Attack Flows
 

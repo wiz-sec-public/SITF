@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-E015: Extension Auto-Update Exploitation | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-E015 (Extension Auto-Update Exploitation): Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction. Initial Access technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-E015.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-E015: Extension Auto-Update Exploitation | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-E015 (Extension Auto-Update Exploitation): Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction. Initial Access technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-E015.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-E015.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-E015.html",
+ "termCode": "T-E015",
+ "name": "SITF T-E015: Extension Auto-Update Exploitation",
+ "alternateName": "Extension Auto-Update Exploitation",
+ "description": "Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Endpoint/IDE › T-E015</p>
+<h1>SITF technique T-E015: Extension Auto-Update Exploitation</h1>
+<p><span class="tag">Component: Endpoint/IDE</span><span class="tag">Stage: Initial Access</span><span class="tag">ID: T-E015</span></p>
+<p class="lead">Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction.</p>
+<p>SITF technique T-E015 (Extension Auto-Update Exploitation) is a <strong>Initial Access</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Endpoint/IDE</strong> component (Developer workstations and development environments).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Auto-updates enabled for extensions</li>
+<li>No update verification</li>
+<li>Compromised extension publisher accounts</li>
+<li>No extension version pinning</li>
+<li>Silent updates without user notification</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Extension update approval workflow</strong><br><span class="small">OWASP SPVS: V1.2 Hardening User Machines</span></li>
+<li><strong>Extension version pinning</strong><br><span class="small">OWASP SPVS: V1.2 Hardening User Machines</span></li>
+<li><strong>Update signature verification</strong><br><span class="small">OWASP SPVS: V1.2 Hardening User Machines; V3.4 Integrity of Artifacts</span></li>
+<li><strong>Delayed update deployment (canary testing)</strong><br><span class="small">OWASP SPVS: V4.1 Final Security Assessments</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Extension update monitoring and alerting</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Extension marketplace security monitoring</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/clinejection.html">Clinejection</a> <span class="small">(incident)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-E015">Open T-E015 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-E015 in the SITF flow builder</a></li>
+<li>Previous Endpoint/IDE technique: <a href="T-E014.html">T-E014 WebRTC P2P Control Channel Establishment</a></li>
+<li>Next Endpoint/IDE technique: <a href="T-E016.html">T-E016 Blockchain-Based C2 Infrastructure</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-E015 (Extension Auto-Update Exploitation)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-E015.html">https://wiz-sec-public.github.io/SITF/techniques/T-E015.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

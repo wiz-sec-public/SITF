@@ -1,4 +1,8 @@
-# SDLC Infrastructure Threat Framework - Technique Library
+# SDLC Infrastructure Threat Framework (SITF) - Technique Library
+
+The SDLC Infrastructure Threat Framework (SITF) catalogs 82 attack techniques against software development lifecycle infrastructure: developer endpoints and IDEs, version control (VCS), CI/CD pipelines, artifact and container registries, and production cloud. Refer to techniques as "SITF technique T-C003".
+
+Each technique also has its own web page at `https://wiz-sec-public.github.io/SITF/techniques/<ID>.html` ([index](https://wiz-sec-public.github.io/SITF/techniques/index.html)).
 
 ## How to Use This Library
 
@@ -20,6 +24,8 @@ Controls are split into two categories:
 ### ENDPOINT / IDE
 
 #### T-E001: Malicious Execution on Endpoint
+
+*SITF technique T-E001 · Stage: Initial Access · MITRE ATT&CK: T1204.002 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E001.html)*
 
 **Technique:** Attacker executes malicious code on developer workstation
 
@@ -47,6 +53,8 @@ Controls are split into two categories:
 
 #### T-E002: Endpoint Phishing
 
+*SITF technique T-E002 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E002.html)*
+
 **Technique:** Attacker phishes developer to steal credentials or install malware
 
 **Risks:**
@@ -67,6 +75,8 @@ Controls are split into two categories:
 ---
 
 #### T-E003: Harvest Local Secrets / Credentials from Endpoint
+
+*SITF technique T-E003 · Stage: Discovery and Lateral Movement · MITRE ATT&CK: T1552.001 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E003.html)*
 
 **Technique:** Attacker extracts credentials stored on developer machine
 
@@ -90,6 +100,8 @@ Controls are split into two categories:
 
 #### T-E004: Harvest Local Data from Endpoint
 
+*SITF technique T-E004 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E004.html)*
+
 **Technique:** Attacker exfiltrates source code, documents, or other sensitive data from endpoint
 
 **Risks:**
@@ -111,6 +123,8 @@ Controls are split into two categories:
 
 #### T-E005: Cryptomining on Endpoints
 
+*SITF technique T-E005 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E005.html)*
+
 **Technique:** Attacker uses endpoint resources for cryptocurrency mining
 
 **Risks:**
@@ -129,6 +143,8 @@ Controls are split into two categories:
 ---
 
 #### T-E006: Register Local Machine as CI Runner
+
+*SITF technique T-E006 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E006.html)*
 
 **Technique:** Attacker registers compromised endpoint as self-hosted CI/CD runner
 
@@ -150,6 +166,8 @@ Controls are split into two categories:
 
 #### T-E007: Abuse Local VCS Access from Endpoint
 
+*SITF technique T-E007 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E007.html)*
+
 **Technique:** Attacker uses local git credentials to access VCS
 
 **Risks:**
@@ -168,6 +186,8 @@ Controls are split into two categories:
 ---
 
 #### T-E008: Abuse Local CI/CD Access from Endpoint
+
+*SITF technique T-E008 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E008.html)*
 
 **Technique:** Attacker uses local CI/CD credentials to access CI/CD system
 
@@ -188,6 +208,8 @@ Controls are split into two categories:
 
 #### T-E009: Abuse Local AI Tools
 
+*SITF technique T-E009 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E009.html)*
+
 **Technique:** Attacker uses AI coding assistants to exfiltrate code or inject malicious suggestions
 
 **Risks:**
@@ -207,6 +229,8 @@ Controls are split into two categories:
 ---
 
 #### T-E010: Endpoint Infrastructure Destruction
+
+*SITF technique T-E010 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E010.html)*
 
 **Technique:** Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption
 
@@ -232,6 +256,8 @@ Controls are split into two categories:
 
 #### T-E011: Unicode Stealth Code Injection
 
+*SITF technique T-E011 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E011.html)*
+
 **Technique:** Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn't render in code editors but executes normally
 
 **Risks:**
@@ -254,6 +280,8 @@ Controls are split into two categories:
 ---
 
 #### T-E012: SOCKS Proxy Deployment on Endpoint
+
+*SITF technique T-E012 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E012.html)*
 
 **Technique:** Attacker deploys SOCKS proxy server on compromised endpoint to route malicious traffic through victim's network and IP address
 
@@ -278,6 +306,8 @@ Controls are split into two categories:
 
 #### T-E013: Hidden VNC (HVNC) Deployment
 
+*SITF technique T-E013 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E013.html)*
+
 **Technique:** Attacker deploys hidden Virtual Network Computing that provides invisible remote desktop access without user awareness
 
 **Risks:**
@@ -299,6 +329,8 @@ Controls are split into two categories:
 ---
 
 #### T-E014: WebRTC P2P Control Channel Establishment
+
+*SITF technique T-E014 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E014.html)*
 
 **Technique:** Attacker establishes WebRTC peer-to-peer connections for direct control that bypasses traditional firewalls via NAT traversal
 
@@ -323,6 +355,8 @@ Controls are split into two categories:
 
 #### T-E015: Extension Auto-Update Exploitation
 
+*SITF technique T-E015 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E015.html)*
+
 **Technique:** Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction
 
 **Risks:**
@@ -346,6 +380,8 @@ Controls are split into two categories:
 
 #### T-E016: Blockchain-Based C2 Infrastructure
 
+*SITF technique T-E016 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E016.html)*
+
 **Technique:** Attacker uses blockchain transactions (e.g., Solana, Bitcoin) as immutable command and control infrastructure that cannot be taken down or censored
 
 **Risks:**
@@ -366,6 +402,8 @@ Controls are split into two categories:
 ---
 
 #### T-E017: Legitimate Service Abuse for C2
+
+*SITF technique T-E017 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E017.html)*
 
 **Technique:** Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection
 
@@ -390,6 +428,8 @@ Controls are split into two categories:
 
 #### T-E018: BitTorrent DHT for C2
 
+*SITF technique T-E018 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E018.html)*
+
 **Technique:** Attacker uses BitTorrent Distributed Hash Table network for decentralized command distribution that cannot be shut down
 
 **Risks:**
@@ -412,6 +452,8 @@ Controls are split into two categories:
 ---
 
 #### T-E019: OAuth Token Abuse for Cross-Organizational Access
+
+*SITF technique T-E019 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-E019.html)*
 
 **Technique:** Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access
 
@@ -444,6 +486,8 @@ Controls are split into two categories:
 
 #### T-V001: Abuse Credentials for VCS Access
 
+*SITF technique T-V001 · Stage: Initial Access · MITRE ATT&CK: T1078 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V001.html)*
+
 **Technique:** Attacker uses stolen credentials to access VCS
 
 **Risks:**
@@ -474,6 +518,8 @@ Controls are split into two categories:
 
 #### T-V002: Imposter Commits
 
+*SITF technique T-V002 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V002.html)*
+
 **Technique:** Attacker commits code impersonating another developer
 
 **Risks:**
@@ -493,6 +539,8 @@ Controls are split into two categories:
 ---
 
 #### T-V003: Secret Exfiltration from Repo
+
+*SITF technique T-V003 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V003.html)*
 
 **Technique:** Attacker extracts secrets from repository content or history
 
@@ -520,6 +568,8 @@ Controls are split into two categories:
 
 #### T-V004: Secret Exfiltration from Personal Repo
 
+*SITF technique T-V004 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V004.html)*
+
 **Technique:** Attacker finds secrets in personal repos of org members
 
 **Risks:**
@@ -538,6 +588,8 @@ Controls are split into two categories:
 ---
 
 #### T-V005: VCS Vulnerability Exploitation
+
+*SITF technique T-V005 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V005.html)*
 
 **Technique:** Attacker exploits vulnerability in VCS platform
 
@@ -558,6 +610,8 @@ Controls are split into two categories:
 
 #### T-V006: Turn Private Repos Public
 
+*SITF technique T-V006 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V006.html)*
+
 **Technique:** Attacker changes repository visibility to public
 
 **Risks:**
@@ -576,6 +630,8 @@ Controls are split into two categories:
 ---
 
 #### T-V007: Clone Sensitive Repositories
+
+*SITF technique T-V007 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V007.html)*
 
 **Technique:** Attacker clones private repositories to steal IP and source code
 
@@ -596,6 +652,8 @@ Controls are split into two categories:
 
 #### T-V008: Malicious Repo Hosting
 
+*SITF technique T-V008 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V008.html)*
+
 **Technique:** Attacker uses compromised VCS to host malicious repositories
 
 **Risks:**
@@ -614,6 +672,8 @@ Controls are split into two categories:
 ---
 
 #### T-V009: Mass Deletion of Repositories
+
+*SITF technique T-V009 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V009.html)*
 
 **Technique:** Attacker deletes multiple repositories to cause data loss and operational disruption
 
@@ -639,6 +699,8 @@ Controls are split into two categories:
 ---
 
 #### T-V010: Malicious Code Modification in Repository
+
+*SITF technique T-V010 · Stage: Post-Compromise · MITRE ATT&CK: T1195.002 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V010.html)*
 
 **Technique:** Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase
 
@@ -671,6 +733,8 @@ Controls are split into two categories:
 
 #### T-V011: Git Tag/Reference Manipulation
 
+*SITF technique T-V011 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V011.html)*
+
 **Technique:** Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code
 
 **Risks:**
@@ -697,6 +761,8 @@ Controls are split into two categories:
 
 #### T-V012: Cross-Fork Object Reference Abuse
 
+*SITF technique T-V012 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V012.html)*
+
 **Technique:** Attacker pushes malicious commits to a repository fork, exploiting git's shared object model to make those commits referenceable by SHA from the upstream repository without merging
 
 **Risks:**
@@ -719,6 +785,8 @@ Controls are split into two categories:
 ---
 
 #### T-V013: VCS Evidence Destruction
+
+*SITF technique T-V013 · Stage: Post-Compromise · MITRE ATT&CK: T1070 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-V013.html)*
 
 **Technique:** Attacker deletes workflow run records and rewrites protected branch history to remove evidence of malicious activity
 
@@ -743,6 +811,8 @@ Controls are split into two categories:
 
 #### T-C001: Abuse Credentials for CI/CD Access
 
+*SITF technique T-C001 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C001.html)*
+
 **Technique:** Attacker uses stolen credentials to access CI/CD system
 
 **Risks:**
@@ -765,6 +835,8 @@ Controls are split into two categories:
 ---
 
 #### T-C002: Malicious Execution in Workflow Context
+
+*SITF technique T-C002 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C002.html)*
 
 **Technique:** Attacker executes malicious code within CI/CD workflow
 
@@ -793,6 +865,8 @@ Controls are split into two categories:
 
 #### T-C003: PWN Request / Poisoned Pipeline Execution
 
+*SITF technique T-C003 · Stage: Initial Access · MITRE ATT&CK: T1195.002 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C003.html)*
+
 **Technique:** Attacker submits malicious PR that triggers workflow with elevated privileges
 
 **Risks:**
@@ -818,6 +892,8 @@ Controls are split into two categories:
 
 #### T-C004: Workflow Script Injection
 
+*SITF technique T-C004 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C004.html)*
+
 **Technique:** Attacker injects malicious code into workflow through user-controlled input
 
 **Risks:**
@@ -840,6 +916,8 @@ Controls are split into two categories:
 ---
 
 #### T-C005: Secret Exfiltration from Workflow
+
+*SITF technique T-C005 · Stage: Discovery and Lateral Movement · MITRE ATT&CK: T1552.001 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C005.html)*
 
 **Technique:** Attacker extracts secrets from CI/CD workflow execution
 
@@ -867,6 +945,8 @@ Controls are split into two categories:
 
 #### T-C006: Secret Enumeration in Workflows Using GitHub Search
 
+*SITF technique T-C006 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C006.html)*
+
 **Technique:** Attacker searches public workflows for exposed secrets
 
 **Risks:**
@@ -885,6 +965,8 @@ Controls are split into two categories:
 ---
 
 #### T-C007: Action Cache Poisoning
+
+*SITF technique T-C007 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C007.html)*
 
 **Technique:** Attacker poisons shared action cache to inject malicious code
 
@@ -906,6 +988,8 @@ Controls are split into two categories:
 
 #### T-C008: Malicious Workflow Performing Code Modification
 
+*SITF technique T-C008 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C008.html)*
+
 **Technique:** Attacker uses workflow to modify code or approve PRs
 
 **Risks:**
@@ -925,6 +1009,8 @@ Controls are split into two categories:
 
 #### T-C009: CI/CD Vulnerability Exploitation
 
+*SITF technique T-C009 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C009.html)*
+
 **Technique:** Attacker exploits vulnerability in CI/CD platform
 
 **Risks:**
@@ -943,6 +1029,8 @@ Controls are split into two categories:
 ---
 
 #### T-C010: Runner Executing Malicious Package
+
+*SITF technique T-C010 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C010.html)*
 
 **Technique:** Malicious package executes on CI/CD runner
 
@@ -967,6 +1055,8 @@ Controls are split into two categories:
 
 #### T-C011: Stealing Registry Tokens
 
+*SITF technique T-C011 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C011.html)*
+
 **Technique:** Attacker extracts registry publishing tokens from workflow
 
 **Risks:**
@@ -986,6 +1076,8 @@ Controls are split into two categories:
 
 #### T-C012: PR from Malicious Workflow
 
+*SITF technique T-C012 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C012.html)*
+
 **Technique:** Workflow creates malicious pull request
 
 **Risks:**
@@ -1004,6 +1096,8 @@ Controls are split into two categories:
 ---
 
 #### T-C013: Persistence on Self-Hosted Runners
+
+*SITF technique T-C013 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C013.html)*
 
 **Technique:** Attacker establishes persistence on self-hosted runner
 
@@ -1025,6 +1119,8 @@ Controls are split into two categories:
 
 #### T-C014: Cryptomining on Runners
 
+*SITF technique T-C014 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C014.html)*
+
 **Technique:** Attacker uses runner resources for cryptocurrency mining
 
 **Risks:**
@@ -1044,6 +1140,8 @@ Controls are split into two categories:
 
 #### T-C015: Harvest Secrets from Workflows Using ${{toJson(secrets)}}
 
+*SITF technique T-C015 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C015.html)*
+
 **Technique:** Attacker uses toJson() to dump all secrets from workflow
 
 **Risks:**
@@ -1062,6 +1160,8 @@ Controls are split into two categories:
 ---
 
 #### T-C016: Pivot from Self-Hosted VM Runner into Local Network / Cloud
+
+*SITF technique T-C016 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C016.html)*
 
 **Technique:** Attacker uses runner network access to pivot into production
 
@@ -1084,6 +1184,8 @@ Controls are split into two categories:
 
 #### T-C017: Pivot from Self-Hosted Container Runner into K8s Cluster
 
+*SITF technique T-C017 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C017.html)*
+
 **Technique:** Attacker escapes container runner to access Kubernetes cluster
 
 **Risks:**
@@ -1104,6 +1206,8 @@ Controls are split into two categories:
 ---
 
 #### T-C018: Data Exfiltration from CI/CD
+
+*SITF technique T-C018 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C018.html)*
 
 **Technique:** Attacker exfiltrates build artifacts, logs, secrets, and sensitive data from CI/CD system over network
 
@@ -1129,6 +1233,8 @@ Controls are split into two categories:
 ---
 
 #### T-C019: CI/CD Infrastructure Destruction
+
+*SITF technique T-C019 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C019.html)*
 
 **Technique:** Attacker destroys CI/CD pipelines, workflows, runners, or build artifacts to disrupt development and deployment operations
 
@@ -1156,6 +1262,8 @@ Controls are split into two categories:
 
 #### T-C020: CI/CD Misconfiguration Exploitation
 
+*SITF technique T-C020 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C020.html)*
+
 **Technique:** Attacker exploits misconfiguration in CI/CD platform
 
 **Risks:**
@@ -1170,6 +1278,8 @@ Controls are split into two categories:
 ---
 
 #### T-C021: AI Agent Prompt Injection in Workflow
+
+*SITF technique T-C021 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-C021.html)*
 
 **Technique:** Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data
 
@@ -1204,6 +1314,8 @@ Controls are split into two categories:
 
 #### T-R001: Abuse Credentials for Registry Access
 
+*SITF technique T-R001 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R001.html)*
+
 **Technique:** Attacker uses stolen credentials to access registry
 
 **Risks:**
@@ -1225,6 +1337,8 @@ Controls are split into two categories:
 
 #### T-R002: Misconfigured / Anonymous Access
 
+*SITF technique T-R002 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R002.html)*
+
 **Technique:** Attacker exploits misconfigured registry permissions
 
 **Risks:**
@@ -1245,6 +1359,8 @@ Controls are split into two categories:
 
 #### T-R003: Registry Vulnerability Exploitation
 
+*SITF technique T-R003 · Stage: Initial Access · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R003.html)*
+
 **Technique:** Attacker exploits vulnerability in registry platform
 
 **Risks:**
@@ -1263,6 +1379,8 @@ Controls are split into two categories:
 ---
 
 #### T-R004: Publishing Malicious Package
+
+*SITF technique T-R004 · Stage: Discovery and Lateral Movement · MITRE ATT&CK: T1195.001 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R004.html)*
 
 **Technique:** Attacker publishes malicious package to registry
 
@@ -1289,6 +1407,8 @@ Controls are split into two categories:
 
 #### T-R005: Publishing Malicious Container/VM Image
 
+*SITF technique T-R005 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R005.html)*
+
 **Technique:** Attacker publishes malicious container or VM image
 
 **Risks:**
@@ -1312,6 +1432,8 @@ Controls are split into two categories:
 
 #### T-R006: Publishing Malicious IDE/Browser Extension
 
+*SITF technique T-R006 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R006.html)*
+
 **Technique:** Attacker publishes malicious extension to extension marketplace
 
 **Risks:**
@@ -1332,6 +1454,8 @@ Controls are split into two categories:
 
 #### T-R007: Harvest Data from Private Artifacts
 
+*SITF technique T-R007 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R007.html)*
+
 **Technique:** Attacker extracts sensitive data from private artifacts
 
 **Risks:**
@@ -1351,6 +1475,8 @@ Controls are split into two categories:
 
 #### T-R008: Malicious Images Hosting
 
+*SITF technique T-R008 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R008.html)*
+
 **Technique:** Attacker uses compromised registry to host malicious images
 
 **Risks:**
@@ -1369,6 +1495,8 @@ Controls are split into two categories:
 ---
 
 #### T-R009: Registry Infrastructure Destruction
+
+*SITF technique T-R009 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R009.html)*
 
 **Technique:** Attacker deletes packages, images, or corrupts registry infrastructure to disrupt software distribution and deployment
 
@@ -1396,6 +1524,8 @@ Controls are split into two categories:
 
 #### T-R010: Typosquatting
 
+*SITF technique T-R010 · Stage: Initial Access · MITRE ATT&CK: T1195.001 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R010.html)*
+
 **Technique:** Attacker publishes malicious packages with names similar to legitimate ones to trick developers into installing them by mistake
 
 **Risks:**
@@ -1421,6 +1551,8 @@ Controls are split into two categories:
 ---
 
 #### T-R011: Namespace/Dependency Confusion
+
+*SITF technique T-R011 · Stage: Initial Access · MITRE ATT&CK: T1195.001 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R011.html)*
 
 **Technique:** Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package
 
@@ -1449,6 +1581,8 @@ Controls are split into two categories:
 
 #### T-R012: Package Lifecycle Script Abuse
 
+*SITF technique T-R012 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R012.html)*
+
 **Technique:** Attacker leverages package manager lifecycle hooks (postinstall, preinstall) or language-specific initialization mechanisms (.pth files) to execute malicious code during package installation
 
 **Risks:**
@@ -1476,6 +1610,8 @@ Controls are split into two categories:
 
 #### T-R013: Version String Impersonation
 
+*SITF technique T-R013 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-R013.html)*
+
 **Technique:** Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses
 
 **Risks:**
@@ -1502,6 +1638,8 @@ Controls are split into two categories:
 
 #### T-P001: Abuse Production Credentials from CI/CD
 
+*SITF technique T-P001 · Stage: Initial Access · MITRE ATT&CK: T1078.004 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P001.html)*
+
 **Technique:** Attacker extracts production credentials from CI/CD and uses them to access production
 
 **Risks:**
@@ -1522,6 +1660,8 @@ Controls are split into two categories:
 ---
 
 #### T-P002: Malicious Deployment via Compromised Pipeline
+
+*SITF technique T-P002 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P002.html)*
 
 **Technique:** Attacker modifies CI/CD pipeline to deploy malicious code to production
 
@@ -1544,6 +1684,8 @@ Controls are split into two categories:
 
 #### T-P003: Pivot from Self-Hosted Runner to Production Network
 
+*SITF technique T-P003 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P003.html)*
+
 **Technique:** Attacker uses self-hosted runner network access to pivot into production
 
 **Risks:**
@@ -1564,6 +1706,8 @@ Controls are split into two categories:
 ---
 
 #### T-P004: Container Image Poisoning to Production
+
+*SITF technique T-P004 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P004.html)*
 
 **Technique:** Attacker publishes malicious container image that gets deployed to production
 
@@ -1586,6 +1730,8 @@ Controls are split into two categories:
 
 #### T-P005: Infrastructure-as-Code Manipulation
 
+*SITF technique T-P005 · Stage: Discovery and Lateral Movement · MITRE ATT&CK: T1098 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P005.html)*
+
 **Technique:** Attacker modifies IaC to create backdoors in production infrastructure
 
 **Risks:**
@@ -1605,6 +1751,8 @@ Controls are split into two categories:
 ---
 
 #### T-P006: Kubernetes Service Account Token Theft
+
+*SITF technique T-P006 · Stage: Discovery and Lateral Movement · MITRE ATT&CK: T1552.007 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P006.html)*
 
 **Technique:** Attacker extracts Kubernetes service account tokens from CI/CD
 
@@ -1627,6 +1775,8 @@ Controls are split into two categories:
 
 #### T-P007: Cloud Metadata Service Exploitation
 
+*SITF technique T-P007 · Stage: Discovery and Lateral Movement · MITRE ATT&CK: T1552.005 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P007.html)*
+
 **Technique:** Attacker accesses cloud metadata service to steal additional credentials
 
 **Risks:**
@@ -1647,6 +1797,8 @@ Controls are split into two categories:
 ---
 
 #### T-P008: Kubernetes Pod Escape
+
+*SITF technique T-P008 · Stage: Discovery and Lateral Movement · MITRE ATT&CK: T1611 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P008.html)*
 
 **Technique:** Attacker escapes from container to underlying node
 
@@ -1669,6 +1821,8 @@ Controls are split into two categories:
 
 #### T-P009: Cloud Service Lateral Movement
 
+*SITF technique T-P009 · Stage: Discovery and Lateral Movement · MITRE ATT&CK: T1199 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P009.html)*
+
 **Technique:** Attacker uses compromised cloud credentials to access other cloud services
 
 **Risks:**
@@ -1690,6 +1844,8 @@ Controls are split into two categories:
 
 #### T-P010: Network Lateral Movement Within Production
 
+*SITF technique T-P010 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P010.html)*
+
 **Technique:** Attacker moves between production systems via network
 
 **Risks:**
@@ -1710,6 +1866,8 @@ Controls are split into two categories:
 ---
 
 #### T-P011: Steal Secrets from Production Environment
+
+*SITF technique T-P011 · Stage: Post-Compromise · MITRE ATT&CK: T1552 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P011.html)*
 
 **Technique:** Attacker accesses production secrets store and exfiltrates customer secrets, tokens, and credentials
 
@@ -1743,6 +1901,8 @@ Controls are split into two categories:
 
 #### T-P012: Production Infrastructure Reconnaissance
 
+*SITF technique T-P012 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P012.html)*
+
 **Technique:** Attacker enumerates production infrastructure, services, and resources to identify targets and plan attacks
 
 **Risks:**
@@ -1769,6 +1929,8 @@ Controls are split into two categories:
 ---
 
 #### T-P013: Data Exfiltration from Production
+
+*SITF technique T-P013 · Stage: Post-Compromise · MITRE ATT&CK: T1567 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P013.html)*
 
 **Technique:** Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network
 
@@ -1797,6 +1959,8 @@ Controls are split into two categories:
 ---
 
 #### T-P014: Production Infrastructure Destruction
+
+*SITF technique T-P014 · Stage: Post-Compromise · MITRE ATT&CK: T1485 · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P014.html)*
 
 **Technique:** Attacker destroys production infrastructure, databases, storage, or configurations to cause severe operational disruption and data loss
 
@@ -1827,6 +1991,8 @@ Controls are split into two categories:
 
 #### T-P015: Malicious Service Provisioning for Persistence
 
+*SITF technique T-P015 · Stage: Post-Compromise · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P015.html)*
+
 **Technique:** Attacker provisions new malicious services or backdoors existing services in orchestration platform (e.g., ArgoCD, Kubernetes) to establish persistence
 
 **Risks:**
@@ -1852,6 +2018,8 @@ Controls are split into two categories:
 
 #### T-P016: Supply Chain Backdoor (Sensor/Agent Poisoning)
 
+*SITF technique T-P016 · Stage: Discovery and Lateral Movement · [Web page](https://wiz-sec-public.github.io/SITF/techniques/T-P016.html)*
+
 **Technique:** Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers
 
 **Risks:**
@@ -1876,59 +2044,92 @@ Controls are split into two categories:
 ## Quick Reference: Technique Index by Attack Stage
 
 ### Initial Access Techniques
-- T-C001: Abuse Credentials for CI/CD Access
-- T-C002: Malicious Execution in Workflow Context
-- T-C003: PWN Request / Poisoned Pipeline Execution
-- T-C004: Workflow Script Injection
-- T-C009: CI/CD Vulnerability Exploitation
-- T-C020: CI/CD Misconfiguration Exploitation
-- T-C021: AI Agent Prompt Injection in Workflow
-- T-E001: Malicious Execution on Endpoint
-- T-E002: Endpoint Phishing
-- T-E011: Unicode Stealth Code Injection
-- T-E015: Extension Auto-Update Exploitation
-- T-E019: OAuth Token Abuse for Cross-Organizational Access
-- T-P001: Abuse Production Credentials from CI/CD
-- T-R001: Abuse Credentials for Registry Access
-- T-R002: Misconfigured / Anonymous Access
-- T-R003: Registry Vulnerability Exploitation
-- T-R010: Typosquatting
-- T-R011: Namespace/Dependency Confusion
-- T-V001: Abuse Credentials for VCS Access
-- T-V005: VCS Vulnerability Exploitation
-- T-V012: Cross-Fork Object Reference Abuse
+- SITF T-C001: Abuse Credentials for CI/CD Access
+- SITF T-C002: Malicious Execution in Workflow Context
+- SITF T-C003: PWN Request / Poisoned Pipeline Execution
+- SITF T-C004: Workflow Script Injection
+- SITF T-C009: CI/CD Vulnerability Exploitation
+- SITF T-C020: CI/CD Misconfiguration Exploitation
+- SITF T-C021: AI Agent Prompt Injection in Workflow
+- SITF T-E001: Malicious Execution on Endpoint
+- SITF T-E002: Endpoint Phishing
+- SITF T-E011: Unicode Stealth Code Injection
+- SITF T-E015: Extension Auto-Update Exploitation
+- SITF T-E019: OAuth Token Abuse for Cross-Organizational Access
+- SITF T-P001: Abuse Production Credentials from CI/CD
+- SITF T-R001: Abuse Credentials for Registry Access
+- SITF T-R002: Misconfigured / Anonymous Access
+- SITF T-R003: Registry Vulnerability Exploitation
+- SITF T-R010: Typosquatting
+- SITF T-R011: Namespace/Dependency Confusion
+- SITF T-V001: Abuse Credentials for VCS Access
+- SITF T-V005: VCS Vulnerability Exploitation
+- SITF T-V012: Cross-Fork Object Reference Abuse
+
+### Discovery and Lateral Movement Techniques
+- SITF T-C005: Secret Exfiltration from Workflow
+- SITF T-C006: Secret Enumeration in Workflows Using GitHub Search
+- SITF T-C010: Runner Executing Malicious Package
+- SITF T-C011: Stealing Registry Tokens
+- SITF T-C012: PR from Malicious Workflow
+- SITF T-C015: Harvest Secrets from Workflows Using ${{toJson(secrets)}}
+- SITF T-C016: Pivot from Self-Hosted VM Runner into Local Network / Cloud
+- SITF T-C017: Pivot from Self-Hosted Container Runner into K8s Cluster
+- SITF T-E003: Harvest Local Secrets / Credentials from Endpoint
+- SITF T-E006: Register Local Machine as CI Runner
+- SITF T-E007: Abuse Local VCS Access from Endpoint
+- SITF T-E008: Abuse Local CI/CD Access from Endpoint
+- SITF T-E009: Abuse Local AI Tools
+- SITF T-P002: Malicious Deployment via Compromised Pipeline
+- SITF T-P003: Pivot from Self-Hosted Runner to Production Network
+- SITF T-P004: Container Image Poisoning to Production
+- SITF T-P005: Infrastructure-as-Code Manipulation
+- SITF T-P006: Kubernetes Service Account Token Theft
+- SITF T-P007: Cloud Metadata Service Exploitation
+- SITF T-P008: Kubernetes Pod Escape
+- SITF T-P009: Cloud Service Lateral Movement
+- SITF T-P010: Network Lateral Movement Within Production
+- SITF T-P012: Production Infrastructure Reconnaissance
+- SITF T-P016: Supply Chain Backdoor (Sensor/Agent Poisoning)
+- SITF T-R004: Publishing Malicious Package
+- SITF T-R005: Publishing Malicious Container/VM Image
+- SITF T-R006: Publishing Malicious IDE/Browser Extension
+- SITF T-R012: Package Lifecycle Script Abuse
+- SITF T-R013: Version String Impersonation
+- SITF T-V003: Secret Exfiltration from Repo
+- SITF T-V004: Secret Exfiltration from Personal Repo
 
 ### Post-Compromise Techniques
-- T-C007: Action Cache Poisoning
-- T-C008: Malicious Workflow Performing Code Modification
-- T-C013: Persistence on Self-Hosted Runners
-- T-C014: Cryptomining on Runners
-- T-C018: Data Exfiltration from CI/CD
-- T-C019: CI/CD Infrastructure Destruction
-- T-E004: Harvest Local Data from Endpoint
-- T-E005: Cryptomining on Endpoints
-- T-E010: Endpoint Infrastructure Destruction
-- T-E012: SOCKS Proxy Deployment on Endpoint
-- T-E013: Hidden VNC (HVNC) Deployment
-- T-E014: WebRTC P2P Control Channel Establishment
-- T-E016: Blockchain-Based C2 Infrastructure
-- T-E017: Legitimate Service Abuse for C2
-- T-E018: BitTorrent DHT for C2
-- T-P011: Steal Secrets from Production Environment
-- T-P013: Data Exfiltration from Production
-- T-P014: Production Infrastructure Destruction
-- T-P015: Malicious Service Provisioning for Persistence
-- T-R007: Harvest Data from Private Artifacts
-- T-R008: Malicious Images Hosting
-- T-R009: Registry Infrastructure Destruction
-- T-V002: Imposter Commits
-- T-V006: Turn Private Repos Public
-- T-V007: Clone Sensitive Repositories
-- T-V008: Malicious Repo Hosting
-- T-V009: Mass Deletion of Repositories
-- T-V010: Malicious Code Modification in Repository
-- T-V011: Git Tag/Reference Manipulation
-- T-V013: VCS Evidence Destruction
+- SITF T-C007: Action Cache Poisoning
+- SITF T-C008: Malicious Workflow Performing Code Modification
+- SITF T-C013: Persistence on Self-Hosted Runners
+- SITF T-C014: Cryptomining on Runners
+- SITF T-C018: Data Exfiltration from CI/CD
+- SITF T-C019: CI/CD Infrastructure Destruction
+- SITF T-E004: Harvest Local Data from Endpoint
+- SITF T-E005: Cryptomining on Endpoints
+- SITF T-E010: Endpoint Infrastructure Destruction
+- SITF T-E012: SOCKS Proxy Deployment on Endpoint
+- SITF T-E013: Hidden VNC (HVNC) Deployment
+- SITF T-E014: WebRTC P2P Control Channel Establishment
+- SITF T-E016: Blockchain-Based C2 Infrastructure
+- SITF T-E017: Legitimate Service Abuse for C2
+- SITF T-E018: BitTorrent DHT for C2
+- SITF T-P011: Steal Secrets from Production Environment
+- SITF T-P013: Data Exfiltration from Production
+- SITF T-P014: Production Infrastructure Destruction
+- SITF T-P015: Malicious Service Provisioning for Persistence
+- SITF T-R007: Harvest Data from Private Artifacts
+- SITF T-R008: Malicious Images Hosting
+- SITF T-R009: Registry Infrastructure Destruction
+- SITF T-V002: Imposter Commits
+- SITF T-V006: Turn Private Repos Public
+- SITF T-V007: Clone Sensitive Repositories
+- SITF T-V008: Malicious Repo Hosting
+- SITF T-V009: Mass Deletion of Repositories
+- SITF T-V010: Malicious Code Modification in Repository
+- SITF T-V011: Git Tag/Reference Manipulation
+- SITF T-V013: VCS Evidence Destruction
 
 ---
 

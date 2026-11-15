@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeBreach attack analysis with SITF | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="The CodeBreach attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C005 Secret Exfiltration from Workflow, T-C020 CI/CD Misconfiguration Exploitation, T-E001 Malicious Execution on Endpoint, T-R004 Publishing Malicious Package, T-V001 Abuse Credentials for VCS Access, T-V010 Malicious Code Modification in Repository.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/incidents/codebreach.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CodeBreach attack analysis with SITF | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="The CodeBreach attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C005 Secret Exfiltration from Workflow, T-C020 CI/CD Misconfiguration Exploitation, T-E001 Malicious Execution on Endpoint, T-R004 Publishing Malicious Package, T-V001 Abuse Credentials for VCS Access, T-V010 Malicious Code Modification in Repository.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/incidents/codebreach.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Incidents</a> › CodeBreach</p>
+<h1>CodeBreach: attack mapped to SITF techniques</h1>
+<p><span class="tag">Incident</span><span class="tag">6 SITF techniques</span></p>
+<p class='lead'>This page maps the CodeBreach attack to the SDLC Infrastructure Threat Framework (SITF), step by step, from initial access to impact.</p>
+<h2>Entry points</h2><ul><li>Producer entry point</li><li>Consumer entry point</li></ul>
+<h2>Attack path</h2><ol class='steps'>
+<li><a href="../techniques/T-C020.html">SITF T-C020: CI/CD Misconfiguration Exploitation</a> — Non-anchored usernames · in AWS CodeBuild project</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — aws-sdk-js-automation PAT · in AWS CodeBuild project</li>
+<li><a href="../techniques/T-V001.html">SITF T-V001: Abuse Credentials for VCS Access</a> — in aws/aws-sdk-js-v3</li>
+<li><a href="../techniques/T-V010.html">SITF T-V010: Malicious Code Modification in Repository</a> — in aws/aws-sdk-js-v3</li>
+<li><a href="../techniques/T-R004.html">SITF T-R004: Publishing Malicious Package</a> — aws-sdk-js-v3 · in GitHub and NPM registries</li>
+<li><a href="../techniques/T-E001.html">SITF T-E001: Malicious Execution on Endpoint</a> — in Dev endpoints with AWS Console</li>
+</ol>
+<h2>Outcomes</h2><ul><li>Custom</li></ul>
+<h2>Techniques and controls</h2>
+<table><tr><th>Technique</th><th>Key protective controls</th></tr>
+<tr><td><a href="../techniques/T-C005.html">T-C005 Secret Exfiltration from Workflow</a></td><td>OIDC setup in workflows; Minimal workflow permissions; Log sanitization</td></tr>
+<tr><td><a href="../techniques/T-C020.html">T-C020 CI/CD Misconfiguration Exploitation</a></td><td>CSPM/CNAPP</td></tr>
+<tr><td><a href="../techniques/T-E001.html">T-E001 Malicious Execution on Endpoint</a></td><td>Local registry proxy with filtering; IDE sandboxing; Mandating signed extensions</td></tr>
+<tr><td><a href="../techniques/T-R004.html">T-R004 Publishing Malicious Package</a></td><td>Trusted publishing; Provenance attestation; MFA for registry account</td></tr>
+<tr><td><a href="../techniques/T-V001.html">T-V001 Abuse Credentials for VCS Access</a></td><td>Mandatory MFA; IDP / SSO setup; Enforcing fine-grained PATs</td></tr>
+<tr><td><a href="../techniques/T-V010.html">T-V010 Malicious Code Modification in Repository</a></td><td>Branch protection rules (VCS); Require code owner approval; Mandatory code review by multiple reviewers</td></tr>
+</table>
+<p class="small">Source flow: <a href="https://github.com/wiz-sec-public/SITF/blob/main/flows/incidents/codebreach.json">flows/incidents/codebreach.json</a>. Load it in the <a href="../visualizer.html">SITF flow builder</a> to view the diagram.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

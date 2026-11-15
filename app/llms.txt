@@ -1,0 +1,126 @@
+# SDLC Infrastructure Threat Framework (SITF)
+
+> SITF is an open threat framework for attacks on software development lifecycle (SDLC) infrastructure: developer endpoints and IDEs, version control (VCS), CI/CD pipelines, artifact and container registries, and production cloud. Each SITF technique is mapped to the risks that enable it and to protective and detective controls.
+
+SITF technique IDs look like T-C003 (prefix by component: T-E Endpoint/IDE, T-V VCS, T-C CI/CD, T-R Registry, T-P Production/Cloud). Refer to them as "SITF technique T-C003". Stages: Initial Access, Discovery and Lateral Movement, Post-Compromise.
+
+## Data
+- [techniques.json](https://wiz-sec-public.github.io/SITF/techniques.json): machine-readable source of truth (techniques, risks, controls, framework mappings to OWASP SPVS and MITRE ATT&CK)
+- [llms-full.txt](https://wiz-sec-public.github.io/SITF/llms-full.txt): every technique with risks and controls as plain text
+- [Repository](https://github.com/wiz-sec-public/SITF): source, attack flows, Claude Code skills
+
+## Endpoint/IDE techniques
+- [SITF T-E001: Malicious Execution on Endpoint](https://wiz-sec-public.github.io/SITF/techniques/T-E001.html): Attacker executes malicious code on developer workstation
+- [SITF T-E002: Endpoint Phishing](https://wiz-sec-public.github.io/SITF/techniques/T-E002.html): Attacker phishes developer to steal credentials or install malware
+- [SITF T-E003: Harvest Local Secrets / Credentials from Endpoint](https://wiz-sec-public.github.io/SITF/techniques/T-E003.html): Attacker extracts credentials stored on developer machine
+- [SITF T-E004: Harvest Local Data from Endpoint](https://wiz-sec-public.github.io/SITF/techniques/T-E004.html): Attacker exfiltrates source code, documents, or other sensitive data from endpoint
+- [SITF T-E005: Cryptomining on Endpoints](https://wiz-sec-public.github.io/SITF/techniques/T-E005.html): Attacker uses endpoint resources for cryptocurrency mining
+- [SITF T-E006: Register Local Machine as CI Runner](https://wiz-sec-public.github.io/SITF/techniques/T-E006.html): Attacker registers compromised endpoint as self-hosted CI/CD runner
+- [SITF T-E007: Abuse Local VCS Access from Endpoint](https://wiz-sec-public.github.io/SITF/techniques/T-E007.html): Attacker uses local git credentials to access VCS
+- [SITF T-E008: Abuse Local CI/CD Access from Endpoint](https://wiz-sec-public.github.io/SITF/techniques/T-E008.html): Attacker uses local CI/CD credentials to access CI/CD system
+- [SITF T-E009: Abuse Local AI Tools](https://wiz-sec-public.github.io/SITF/techniques/T-E009.html): Attacker uses AI coding assistants to exfiltrate code or inject malicious suggestions
+- [SITF T-E010: Endpoint Infrastructure Destruction](https://wiz-sec-public.github.io/SITF/techniques/T-E010.html): Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption
+- [SITF T-E011: Unicode Stealth Code Injection](https://wiz-sec-public.github.io/SITF/techniques/T-E011.html): Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn't render in code editors but executes normally
+- [SITF T-E012: SOCKS Proxy Deployment on Endpoint](https://wiz-sec-public.github.io/SITF/techniques/T-E012.html): Attacker deploys SOCKS proxy server on compromised endpoint to route malicious traffic through victim's network and IP address
+- [SITF T-E013: Hidden VNC (HVNC) Deployment](https://wiz-sec-public.github.io/SITF/techniques/T-E013.html): Attacker deploys hidden Virtual Network Computing that provides invisible remote desktop access without user awareness
+- [SITF T-E014: WebRTC P2P Control Channel Establishment](https://wiz-sec-public.github.io/SITF/techniques/T-E014.html): Attacker establishes WebRTC peer-to-peer connections for direct control that bypasses traditional firewalls via NAT traversal
+- [SITF T-E015: Extension Auto-Update Exploitation](https://wiz-sec-public.github.io/SITF/techniques/T-E015.html): Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction
+- [SITF T-E016: Blockchain-Based C2 Infrastructure](https://wiz-sec-public.github.io/SITF/techniques/T-E016.html): Attacker uses blockchain transactions (e.g., Solana, Bitcoin) as immutable command and control infrastructure that cannot be taken down or censored
+- [SITF T-E017: Legitimate Service Abuse for C2](https://wiz-sec-public.github.io/SITF/techniques/T-E017.html): Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection
+- [SITF T-E018: BitTorrent DHT for C2](https://wiz-sec-public.github.io/SITF/techniques/T-E018.html): Attacker uses BitTorrent Distributed Hash Table network for decentralized command distribution that cannot be shut down
+- [SITF T-E019: OAuth Token Abuse for Cross-Organizational Access](https://wiz-sec-public.github.io/SITF/techniques/T-E019.html): Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access
+
+## VCS techniques
+- [SITF T-V001: Abuse Credentials for VCS Access](https://wiz-sec-public.github.io/SITF/techniques/T-V001.html): Attacker uses stolen credentials to access VCS
+- [SITF T-V002: Imposter Commits](https://wiz-sec-public.github.io/SITF/techniques/T-V002.html): Attacker commits code impersonating another developer
+- [SITF T-V003: Secret Exfiltration from Repo](https://wiz-sec-public.github.io/SITF/techniques/T-V003.html): Attacker extracts secrets from repository content or history
+- [SITF T-V004: Secret Exfiltration from Personal Repo](https://wiz-sec-public.github.io/SITF/techniques/T-V004.html): Attacker finds secrets in personal repos of org members
+- [SITF T-V005: VCS Vulnerability Exploitation](https://wiz-sec-public.github.io/SITF/techniques/T-V005.html): Attacker exploits vulnerability in VCS platform
+- [SITF T-V006: Turn Private Repos Public](https://wiz-sec-public.github.io/SITF/techniques/T-V006.html): Attacker changes repository visibility to public
+- [SITF T-V007: Clone Sensitive Repositories](https://wiz-sec-public.github.io/SITF/techniques/T-V007.html): Attacker clones private repositories to steal IP and source code
+- [SITF T-V008: Malicious Repo Hosting](https://wiz-sec-public.github.io/SITF/techniques/T-V008.html): Attacker uses compromised VCS to host malicious repositories
+- [SITF T-V009: Mass Deletion of Repositories](https://wiz-sec-public.github.io/SITF/techniques/T-V009.html): Attacker deletes multiple repositories to cause data loss and operational disruption
+- [SITF T-V010: Malicious Code Modification in Repository](https://wiz-sec-public.github.io/SITF/techniques/T-V010.html): Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase
+- [SITF T-V011: Git Tag/Reference Manipulation](https://wiz-sec-public.github.io/SITF/techniques/T-V011.html): Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code
+- [SITF T-V012: Cross-Fork Object Reference Abuse](https://wiz-sec-public.github.io/SITF/techniques/T-V012.html): Attacker pushes malicious commits to a repository fork, exploiting git's shared object model to make those commits referenceable by SHA from the upstream repository without merging
+- [SITF T-V013: VCS Evidence Destruction](https://wiz-sec-public.github.io/SITF/techniques/T-V013.html): Attacker deletes workflow run records and rewrites protected branch history to remove evidence of malicious activity
+
+## CI/CD techniques
+- [SITF T-C001: Abuse Credentials for CI/CD Access](https://wiz-sec-public.github.io/SITF/techniques/T-C001.html): Attacker uses stolen credentials to access CI/CD system
+- [SITF T-C002: Malicious Execution in Workflow Context](https://wiz-sec-public.github.io/SITF/techniques/T-C002.html): Attacker executes malicious code within CI/CD workflow
+- [SITF T-C003: PWN Request / Poisoned Pipeline Execution](https://wiz-sec-public.github.io/SITF/techniques/T-C003.html): Attacker submits malicious PR that triggers workflow with elevated privileges
+- [SITF T-C004: Workflow Script Injection](https://wiz-sec-public.github.io/SITF/techniques/T-C004.html): Attacker injects malicious code into workflow through user-controlled input
+- [SITF T-C005: Secret Exfiltration from Workflow](https://wiz-sec-public.github.io/SITF/techniques/T-C005.html): Attacker extracts secrets from CI/CD workflow execution
+- [SITF T-C006: Secret Enumeration in Workflows Using GitHub Search](https://wiz-sec-public.github.io/SITF/techniques/T-C006.html): Attacker searches public workflows for exposed secrets
+- [SITF T-C007: Action Cache Poisoning](https://wiz-sec-public.github.io/SITF/techniques/T-C007.html): Attacker poisons shared action cache to inject malicious code
+- [SITF T-C008: Malicious Workflow Performing Code Modification](https://wiz-sec-public.github.io/SITF/techniques/T-C008.html): Attacker uses workflow to modify code or approve PRs
+- [SITF T-C009: CI/CD Vulnerability Exploitation](https://wiz-sec-public.github.io/SITF/techniques/T-C009.html): Attacker exploits vulnerability in CI/CD platform
+- [SITF T-C010: Runner Executing Malicious Package](https://wiz-sec-public.github.io/SITF/techniques/T-C010.html): Malicious package executes on CI/CD runner
+- [SITF T-C011: Stealing Registry Tokens](https://wiz-sec-public.github.io/SITF/techniques/T-C011.html): Attacker extracts registry publishing tokens from workflow
+- [SITF T-C012: PR from Malicious Workflow](https://wiz-sec-public.github.io/SITF/techniques/T-C012.html): Workflow creates malicious pull request
+- [SITF T-C013: Persistence on Self-Hosted Runners](https://wiz-sec-public.github.io/SITF/techniques/T-C013.html): Attacker establishes persistence on self-hosted runner
+- [SITF T-C014: Cryptomining on Runners](https://wiz-sec-public.github.io/SITF/techniques/T-C014.html): Attacker uses runner resources for cryptocurrency mining
+- [SITF T-C015: Harvest Secrets from Workflows Using ${{toJson(secrets)}}](https://wiz-sec-public.github.io/SITF/techniques/T-C015.html): Attacker uses toJson() to dump all secrets from workflow
+- [SITF T-C016: Pivot from Self-Hosted VM Runner into Local Network / Cloud](https://wiz-sec-public.github.io/SITF/techniques/T-C016.html): Attacker uses runner network access to pivot into production
+- [SITF T-C017: Pivot from Self-Hosted Container Runner into K8s Cluster](https://wiz-sec-public.github.io/SITF/techniques/T-C017.html): Attacker escapes container runner to access Kubernetes cluster
+- [SITF T-C018: Data Exfiltration from CI/CD](https://wiz-sec-public.github.io/SITF/techniques/T-C018.html): Attacker exfiltrates build artifacts, logs, secrets, and sensitive data from CI/CD system over network
+- [SITF T-C019: CI/CD Infrastructure Destruction](https://wiz-sec-public.github.io/SITF/techniques/T-C019.html): Attacker destroys CI/CD pipelines, workflows, runners, or build artifacts to disrupt development and deployment operations
+- [SITF T-C020: CI/CD Misconfiguration Exploitation](https://wiz-sec-public.github.io/SITF/techniques/T-C020.html): Attacker exploits misconfiguration in CI/CD platform
+- [SITF T-C021: AI Agent Prompt Injection in Workflow](https://wiz-sec-public.github.io/SITF/techniques/T-C021.html): Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data
+
+## Registry techniques
+- [SITF T-R001: Abuse Credentials for Registry Access](https://wiz-sec-public.github.io/SITF/techniques/T-R001.html): Attacker uses stolen credentials to access registry
+- [SITF T-R002: Misconfigured / Anonymous Access](https://wiz-sec-public.github.io/SITF/techniques/T-R002.html): Attacker exploits misconfigured registry permissions
+- [SITF T-R003: Registry Vulnerability Exploitation](https://wiz-sec-public.github.io/SITF/techniques/T-R003.html): Attacker exploits vulnerability in registry platform
+- [SITF T-R004: Publishing Malicious Package](https://wiz-sec-public.github.io/SITF/techniques/T-R004.html): Attacker publishes malicious package to registry
+- [SITF T-R005: Publishing Malicious Container/VM Image](https://wiz-sec-public.github.io/SITF/techniques/T-R005.html): Attacker publishes malicious container or VM image
+- [SITF T-R006: Publishing Malicious IDE/Browser Extension](https://wiz-sec-public.github.io/SITF/techniques/T-R006.html): Attacker publishes malicious extension to extension marketplace
+- [SITF T-R007: Harvest Data from Private Artifacts](https://wiz-sec-public.github.io/SITF/techniques/T-R007.html): Attacker extracts sensitive data from private artifacts
+- [SITF T-R008: Malicious Images Hosting](https://wiz-sec-public.github.io/SITF/techniques/T-R008.html): Attacker uses compromised registry to host malicious images
+- [SITF T-R009: Registry Infrastructure Destruction](https://wiz-sec-public.github.io/SITF/techniques/T-R009.html): Attacker deletes packages, images, or corrupts registry infrastructure to disrupt software distribution and deployment
+- [SITF T-R010: Typosquatting](https://wiz-sec-public.github.io/SITF/techniques/T-R010.html): Attacker publishes malicious packages with names similar to legitimate ones to trick developers into installing them by mistake
+- [SITF T-R011: Namespace/Dependency Confusion](https://wiz-sec-public.github.io/SITF/techniques/T-R011.html): Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package
+- [SITF T-R012: Package Lifecycle Script Abuse](https://wiz-sec-public.github.io/SITF/techniques/T-R012.html): Attacker leverages package manager lifecycle hooks (postinstall, preinstall) or language-specific initialization mechanisms (.pth files) to execute malicious code during package installation
+- [SITF T-R013: Version String Impersonation](https://wiz-sec-public.github.io/SITF/techniques/T-R013.html): Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses
+
+## Production/Cloud techniques
+- [SITF T-P001: Abuse Production Credentials from CI/CD](https://wiz-sec-public.github.io/SITF/techniques/T-P001.html): Attacker extracts production credentials from CI/CD and uses them to access production
+- [SITF T-P002: Malicious Deployment via Compromised Pipeline](https://wiz-sec-public.github.io/SITF/techniques/T-P002.html): Attacker modifies CI/CD pipeline to deploy malicious code to production
+- [SITF T-P003: Pivot from Self-Hosted Runner to Production Network](https://wiz-sec-public.github.io/SITF/techniques/T-P003.html): Attacker uses self-hosted runner network access to pivot into production
+- [SITF T-P004: Container Image Poisoning to Production](https://wiz-sec-public.github.io/SITF/techniques/T-P004.html): Attacker publishes malicious container image that gets deployed to production
+- [SITF T-P005: Infrastructure-as-Code Manipulation](https://wiz-sec-public.github.io/SITF/techniques/T-P005.html): Attacker modifies IaC to create backdoors in production infrastructure
+- [SITF T-P006: Kubernetes Service Account Token Theft](https://wiz-sec-public.github.io/SITF/techniques/T-P006.html): Attacker extracts Kubernetes service account tokens from CI/CD
+- [SITF T-P007: Cloud Metadata Service Exploitation](https://wiz-sec-public.github.io/SITF/techniques/T-P007.html): Attacker accesses cloud metadata service to steal additional credentials
+- [SITF T-P008: Kubernetes Pod Escape](https://wiz-sec-public.github.io/SITF/techniques/T-P008.html): Attacker escapes from container to underlying node
+- [SITF T-P009: Cloud Service Lateral Movement](https://wiz-sec-public.github.io/SITF/techniques/T-P009.html): Attacker uses compromised cloud credentials to access other cloud services
+- [SITF T-P010: Network Lateral Movement Within Production](https://wiz-sec-public.github.io/SITF/techniques/T-P010.html): Attacker moves between production systems via network
+- [SITF T-P011: Steal Secrets from Production Environment](https://wiz-sec-public.github.io/SITF/techniques/T-P011.html): Attacker accesses production secrets store and exfiltrates customer secrets, tokens, and credentials
+- [SITF T-P012: Production Infrastructure Reconnaissance](https://wiz-sec-public.github.io/SITF/techniques/T-P012.html): Attacker enumerates production infrastructure, services, and resources to identify targets and plan attacks
+- [SITF T-P013: Data Exfiltration from Production](https://wiz-sec-public.github.io/SITF/techniques/T-P013.html): Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network
+- [SITF T-P014: Production Infrastructure Destruction](https://wiz-sec-public.github.io/SITF/techniques/T-P014.html): Attacker destroys production infrastructure, databases, storage, or configurations to cause severe operational disruption and data loss
+- [SITF T-P015: Malicious Service Provisioning for Persistence](https://wiz-sec-public.github.io/SITF/techniques/T-P015.html): Attacker provisions new malicious services or backdoors existing services in orchestration platform (e.g., ArgoCD, Kubernetes) to establish persistence
+- [SITF T-P016: Supply Chain Backdoor (Sensor/Agent Poisoning)](https://wiz-sec-public.github.io/SITF/techniques/T-P016.html): Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers
+
+## Incidents mapped to SITF
+- [Aqua Trivy VS Code Extension](https://wiz-sec-public.github.io/SITF/incidents/aqua-trivy-vscode.html): incident, techniques T-C003, T-C005, T-C011, T-E001, T-E003, T-E007, T-E009, T-R001, T-R006, T-V009
+- [AsyncAPI Generator (2026)](https://wiz-sec-public.github.io/SITF/incidents/asyncapi-generator-2026.html): incident, techniques T-C003, T-C005, T-C018, T-E001, T-E003, T-E016, T-E018, T-R004, T-V001, T-V010
+- [CircleCI](https://wiz-sec-public.github.io/SITF/incidents/circleci-flow.html): incident, techniques T-C001, T-C018, T-E001, T-E002, T-E003, T-P001, T-P011, T-P012
+- [Clinejection](https://wiz-sec-public.github.io/SITF/incidents/clinejection.html): incident, techniques T-C002, T-C007, T-C011, T-C021, T-E001, T-E015, T-R001, T-R004, T-R006
+- [CodeBreach](https://wiz-sec-public.github.io/SITF/incidents/codebreach.html): incident, techniques T-C005, T-C020, T-E001, T-R004, T-V001, T-V010
+- [LiteLLM (October 2026)](https://wiz-sec-public.github.io/SITF/incidents/litellm-oct-2026.html): incident, techniques T-C001, T-C002, T-C005, T-C010, T-E001, T-E003, T-E017, T-P007, T-P009, T-P011, T-R004, T-R005, T-R012, T-V001, T-V003, T-V008, T-V010, T-V013
+- [Miasma (Red Hat)](https://wiz-sec-public.github.io/SITF/incidents/miasma-redhat.html): incident, techniques T-C002, T-C011, T-E001, T-E003, T-R004, T-R012, T-V001, T-V010
+- [s1ngularity](https://wiz-sec-public.github.io/SITF/incidents/s1ngularity.html): incident, techniques T-C003, T-C004, T-C011, T-E001, T-E003, T-E004, T-E009, T-E010, T-R004, T-V001, T-V003, T-V006
+- [Shai-Hulud 2.0](https://wiz-sec-public.github.io/SITF/incidents/shai-hulud-2-flow.html): incident, techniques T-C003, T-C005, T-E001, T-E003, T-E006, T-E010, T-R004, T-V004
+- [SolarWinds](https://wiz-sec-public.github.io/SITF/incidents/solarwinds.html): incident, techniques T-C001, T-C002, T-C013, T-E002, T-E003, T-P004, T-P009, T-P010, T-P011, T-P012, T-R005
+- [TeamPCP Campaign](https://wiz-sec-public.github.io/SITF/incidents/teampcp-campaign.html): incident, techniques T-C002, T-C003, T-C005, T-C011, T-P004, T-P014, T-R001, T-R004, T-R005, T-V001, T-V002, T-V009, T-V010
+- [tj-actions/changed-files](https://wiz-sec-public.github.io/SITF/incidents/tj-actions.html): incident, techniques T-C002, T-C003, T-C005, T-C018, T-V001, T-V010
+- [Trivy Act II](https://wiz-sec-public.github.io/SITF/incidents/trivy-act-ii.html): incident, techniques T-C002, T-C003, T-C005, T-C011, T-R004, T-R005, T-V001, T-V002, T-V008, T-V010
+- [Trust Wallet](https://wiz-sec-public.github.io/SITF/incidents/trustwallet.html): incident, techniques T-E001, T-E003, T-R001, T-R004
+- [Ultralytics](https://wiz-sec-public.github.io/SITF/incidents/ultralytics.html): incident, techniques T-C003, T-C004, T-C011, T-E001, T-E005, T-R001, T-R004
+- [GitLab Pipeline Hijack](https://wiz-sec-public.github.io/SITF/incidents/gitlab-pipeline-hijack.html): red team engagement, techniques T-C005, T-C009, T-R007, T-V007
+- [Synacktiv CI/CD Red Team Engagement](https://wiz-sec-public.github.io/SITF/incidents/synacktiv-cicd-red-team-engagement.html): red team engagement, techniques T-C001, T-C005, T-P001
+
+## Optional
+- [Interactive technique library](https://wiz-sec-public.github.io/SITF/techniques-library.html)
+- [Attack flow builder](https://wiz-sec-public.github.io/SITF/visualizer.html)
+- [Implementation guide](https://github.com/wiz-sec-public/SITF/blob/main/IMPLEMENTATION_GUIDE.md)

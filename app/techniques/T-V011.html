@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-V011: Git Tag/Reference Manipulation | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-V011 (Git Tag/Reference Manipulation): Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code. Post-Compromise technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-V011.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-V011: Git Tag/Reference Manipulation | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-V011 (Git Tag/Reference Manipulation): Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code. Post-Compromise technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-V011.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-V011.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-V011.html",
+ "termCode": "T-V011",
+ "name": "SITF T-V011: Git Tag/Reference Manipulation",
+ "alternateName": "Git Tag/Reference Manipulation",
+ "description": "Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › VCS › T-V011</p>
+<h1>SITF technique T-V011: Git Tag/Reference Manipulation</h1>
+<p><span class="tag">Component: VCS</span><span class="tag">Stage: Post-Compromise</span><span class="tag">ID: T-V011</span></p>
+<p class="lead">Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code.</p>
+<p>SITF technique T-V011 (Git Tag/Reference Manipulation) is a <strong>Post-Compromise</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>VCS</strong> component (Version Control Systems (GitHub, GitLab, Azure DevOps)).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Tags not protected from force-push</li>
+<li>No tag signing enforcement</li>
+<li>Consumers reference actions/packages by mutable tags</li>
+<li>No alerting on tag reference changes</li>
+<li>Service accounts with tag push permissions</li>
+<li>No approval workflow for tag operations</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Tag protection rules</strong> — Prevent force-push and deletion of release tags<br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening</span></li>
+<li><strong>Tag signing enforcement</strong> — Require GPG/SSH signing for tag creation<br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening; V3.4 Integrity of Artifacts</span></li>
+<li><strong>Restrict tag push permissions</strong> — Limit tag creation/modification to specific roles or service accounts with MFA<br><span class="small">OWASP SPVS: V1.1 Identity and Access Management; V5.1 Access Audit</span></li>
+<li><strong>Pin actions/dependencies by SHA</strong> — Reference GitHub Actions and dependencies by immutable commit SHA instead of tags<br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit; V3.1 Security of Pipeline Environment</span></li>
+<li><strong>Tag operation approval workflow</strong> — Require approval for tag creation or modification on release branches<br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening; V4.3 Secure Deployment Practices</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Tag mutation monitoring</strong> — Alert on tag force-push, deletion, or reference changes<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Audit log monitoring for tag operations</strong> — Monitor VCS audit logs for bulk tag modifications<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Tag-to-commit drift detection</strong> — Detect when tag references change to point to different commits<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-V011">Open T-V011 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-V011 in the SITF flow builder</a></li>
+<li>Previous VCS technique: <a href="T-V010.html">T-V010 Malicious Code Modification in Repository</a></li>
+<li>Next VCS technique: <a href="T-V012.html">T-V012 Cross-Fork Object Reference Abuse</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-V011 (Git Tag/Reference Manipulation)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-V011.html">https://wiz-sec-public.github.io/SITF/techniques/T-V011.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

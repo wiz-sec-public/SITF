@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-E010: Endpoint Infrastructure Destruction | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-E010 (Endpoint Infrastructure Destruction): Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption. Post-Compromise technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-E010.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-E010: Endpoint Infrastructure Destruction | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-E010 (Endpoint Infrastructure Destruction): Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption. Post-Compromise technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-E010.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-E010.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-E010.html",
+ "termCode": "T-E010",
+ "name": "SITF T-E010: Endpoint Infrastructure Destruction",
+ "alternateName": "Endpoint Infrastructure Destruction",
+ "description": "Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Endpoint/IDE › T-E010</p>
+<h1>SITF technique T-E010: Endpoint Infrastructure Destruction</h1>
+<p><span class="tag">Component: Endpoint/IDE</span><span class="tag">Stage: Post-Compromise</span><span class="tag">ID: T-E010</span></p>
+<p class="lead">Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption.</p>
+<p>SITF technique T-E010 (Endpoint Infrastructure Destruction) is a <strong>Post-Compromise</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Endpoint/IDE</strong> component (Developer workstations and development environments).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>No backup and recovery</li>
+<li>Overprivileged local user accounts</li>
+<li>No EDR</li>
+<li>Lack of system integrity monitoring</li>
+<li>Insufficient access controls on critical system files</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Regular endpoint backups</strong><br><span class="small">OWASP SPVS: V5.3 Secure Maintenance Practices</span></li>
+<li><strong>Minimal local user privileges</strong><br><span class="small">OWASP SPVS: V1.2 Hardening User Machines; V5.1 Access Audit</span></li>
+<li><strong>Offline backup storage</strong><br><span class="small">OWASP SPVS: V5.3 Secure Maintenance Practices</span></li>
+<li><strong>File system access controls</strong><br><span class="small">OWASP SPVS: V1.2 Hardening User Machines</span></li>
+<li><strong>Endpoint recovery procedures</strong><br><span class="small">OWASP SPVS: V5.3 Secure Maintenance Practices; V5.5 Incident Response &amp; Recovery</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>EDR on endpoint</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>System integrity monitoring</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/s1ngularity.html">s1ngularity</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/shai-hulud-2-flow.html">Shai-Hulud 2.0</a> <span class="small">(incident)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-E010">Open T-E010 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-E010 in the SITF flow builder</a></li>
+<li>Previous Endpoint/IDE technique: <a href="T-E009.html">T-E009 Abuse Local AI Tools</a></li>
+<li>Next Endpoint/IDE technique: <a href="T-E011.html">T-E011 Unicode Stealth Code Injection</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-E010 (Endpoint Infrastructure Destruction)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-E010.html">https://wiz-sec-public.github.io/SITF/techniques/T-E010.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

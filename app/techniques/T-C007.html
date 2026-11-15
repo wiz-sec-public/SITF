@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-C007: Action Cache Poisoning | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-C007 (Action Cache Poisoning): Attacker poisons shared action cache to inject malicious code. Post-Compromise technique targeting CI/CD in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-C007.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-C007: Action Cache Poisoning | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-C007 (Action Cache Poisoning): Attacker poisons shared action cache to inject malicious code. Post-Compromise technique targeting CI/CD in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-C007.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-C007.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-C007.html",
+ "termCode": "T-C007",
+ "name": "SITF T-C007: Action Cache Poisoning",
+ "alternateName": "Action Cache Poisoning",
+ "description": "Attacker poisons shared action cache to inject malicious code",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › CI/CD › T-C007</p>
+<h1>SITF technique T-C007: Action Cache Poisoning</h1>
+<p><span class="tag">Component: CI/CD</span><span class="tag">Stage: Post-Compromise</span><span class="tag">ID: T-C007</span></p>
+<p class="lead">Attacker poisons shared action cache to inject malicious code.</p>
+<p>SITF technique T-C007 (Action Cache Poisoning) is a <strong>Post-Compromise</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>CI/CD</strong> component (Continuous Integration/Deployment systems).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Shared actions cache</li>
+<li>No cache isolation</li>
+<li>No cache verification</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Don&#x27;t use actions cache</strong><br><span class="small">OWASP SPVS: V3.3 Continuous Security Checks</span></li>
+<li><strong>Workflow ordering</strong><br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment</span></li>
+<li><strong>Cache artifact signing / verification</strong><br><span class="small">OWASP SPVS: V3.3 Continuous Security Checks; V3.4 Integrity of Artifacts</span></li>
+<li><strong>Cache isolation per repository</strong><br><span class="small">OWASP SPVS: V3.3 Continuous Security Checks</span></li>
+</ul>
+<h2>Detective controls</h2>
+<p class='small'>None mapped yet.</p>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/clinejection.html">Clinejection</a> <span class="small">(incident)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-C007">Open T-C007 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-C007 in the SITF flow builder</a></li>
+<li>Previous CI/CD technique: <a href="T-C006.html">T-C006 Secret Enumeration in Workflows Using GitHub Search</a></li>
+<li>Next CI/CD technique: <a href="T-C008.html">T-C008 Malicious Workflow Performing Code Modification</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-C007 (Action Cache Poisoning)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-C007.html">https://wiz-sec-public.github.io/SITF/techniques/T-C007.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF Technique Library | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="All 82 techniques of the SDLC Infrastructure Threat Framework (SITF): attacks on developer endpoints, VCS, CI/CD pipelines, registries and production cloud, with risks and controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF Technique Library | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="All 82 techniques of the SDLC Infrastructure Threat Framework (SITF): attacks on developer endpoints, VCS, CI/CD pipelines, registries and production cloud, with risks and controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/index.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<h1>SITF technique library</h1>
+<p class="lead">SITF is an open threat framework for attacks on software development lifecycle (SDLC) infrastructure: developer endpoints and IDEs, version control (VCS), CI/CD pipelines, artifact and container registries, and production cloud. Each SITF technique is mapped to the risks that enable it and to protective and detective controls.</p>
+<p>The library contains <strong>82 techniques</strong> across 5 SDLC components and 3 attack stages (Initial Access, Discovery and Lateral Movement, Post-Compromise). Technique IDs use the prefix of their component: T-E (Endpoint/IDE), T-V (VCS), T-C (CI/CD), T-R (Registry), T-P (Production/Cloud).</p>
+<p class="small">Also available as <a href="../techniques.json">techniques.json</a>, <a href="../llms-full.txt">llms-full.txt</a>, and an <a href="../techniques-library.html">interactive explorer</a>.</p>
+<h2 id="endpoint">Endpoint/IDE techniques</h2>
+<p class="small">Developer workstations and development environments</p>
+<table><tr><th>ID</th><th>Technique</th><th>Stage</th></tr>
+<tr><td><a href="T-E001.html">T-E001</a></td><td><a href="T-E001.html">Malicious Execution on Endpoint</a><br><span class="small">Attacker executes malicious code on developer workstation</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-E002.html">T-E002</a></td><td><a href="T-E002.html">Endpoint Phishing</a><br><span class="small">Attacker phishes developer to steal credentials or install malware</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-E003.html">T-E003</a></td><td><a href="T-E003.html">Harvest Local Secrets / Credentials from Endpoint</a><br><span class="small">Attacker extracts credentials stored on developer machine</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-E004.html">T-E004</a></td><td><a href="T-E004.html">Harvest Local Data from Endpoint</a><br><span class="small">Attacker exfiltrates source code, documents, or other sensitive data from endpoint</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-E005.html">T-E005</a></td><td><a href="T-E005.html">Cryptomining on Endpoints</a><br><span class="small">Attacker uses endpoint resources for cryptocurrency mining</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-E006.html">T-E006</a></td><td><a href="T-E006.html">Register Local Machine as CI Runner</a><br><span class="small">Attacker registers compromised endpoint as self-hosted CI/CD runner</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-E007.html">T-E007</a></td><td><a href="T-E007.html">Abuse Local VCS Access from Endpoint</a><br><span class="small">Attacker uses local git credentials to access VCS</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-E008.html">T-E008</a></td><td><a href="T-E008.html">Abuse Local CI/CD Access from Endpoint</a><br><span class="small">Attacker uses local CI/CD credentials to access CI/CD system</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-E009.html">T-E009</a></td><td><a href="T-E009.html">Abuse Local AI Tools</a><br><span class="small">Attacker uses AI coding assistants to exfiltrate code or inject malicious suggestions</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-E010.html">T-E010</a></td><td><a href="T-E010.html">Endpoint Infrastructure Destruction</a><br><span class="small">Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-E011.html">T-E011</a></td><td><a href="T-E011.html">Unicode Stealth Code Injection</a><br><span class="small">Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn&#x27;t render in code editors but executes normally</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-E012.html">T-E012</a></td><td><a href="T-E012.html">SOCKS Proxy Deployment on Endpoint</a><br><span class="small">Attacker deploys SOCKS proxy server on compromised endpoint to route malicious traffic through victim&#x27;s network and IP address</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-E013.html">T-E013</a></td><td><a href="T-E013.html">Hidden VNC (HVNC) Deployment</a><br><span class="small">Attacker deploys hidden Virtual Network Computing that provides invisible remote desktop access without user awareness</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-E014.html">T-E014</a></td><td><a href="T-E014.html">WebRTC P2P Control Channel Establishment</a><br><span class="small">Attacker establishes WebRTC peer-to-peer connections for direct control that bypasses traditional firewalls via NAT traversal</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-E015.html">T-E015</a></td><td><a href="T-E015.html">Extension Auto-Update Exploitation</a><br><span class="small">Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-E016.html">T-E016</a></td><td><a href="T-E016.html">Blockchain-Based C2 Infrastructure</a><br><span class="small">Attacker uses blockchain transactions (e.g., Solana, Bitcoin) as immutable command and control infrastructure that cannot be taken down or censored</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-E017.html">T-E017</a></td><td><a href="T-E017.html">Legitimate Service Abuse for C2</a><br><span class="small">Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-E018.html">T-E018</a></td><td><a href="T-E018.html">BitTorrent DHT for C2</a><br><span class="small">Attacker uses BitTorrent Distributed Hash Table network for decentralized command distribution that cannot be shut down</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-E019.html">T-E019</a></td><td><a href="T-E019.html">OAuth Token Abuse for Cross-Organizational Access</a><br><span class="small">Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access</span></td><td>Initial Access</td></tr>
+</table>
+<h2 id="vcs">VCS techniques</h2>
+<p class="small">Version Control Systems (GitHub, GitLab, Azure DevOps)</p>
+<table><tr><th>ID</th><th>Technique</th><th>Stage</th></tr>
+<tr><td><a href="T-V001.html">T-V001</a></td><td><a href="T-V001.html">Abuse Credentials for VCS Access</a><br><span class="small">Attacker uses stolen credentials to access VCS</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-V002.html">T-V002</a></td><td><a href="T-V002.html">Imposter Commits</a><br><span class="small">Attacker commits code impersonating another developer</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-V003.html">T-V003</a></td><td><a href="T-V003.html">Secret Exfiltration from Repo</a><br><span class="small">Attacker extracts secrets from repository content or history</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-V004.html">T-V004</a></td><td><a href="T-V004.html">Secret Exfiltration from Personal Repo</a><br><span class="small">Attacker finds secrets in personal repos of org members</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-V005.html">T-V005</a></td><td><a href="T-V005.html">VCS Vulnerability Exploitation</a><br><span class="small">Attacker exploits vulnerability in VCS platform</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-V006.html">T-V006</a></td><td><a href="T-V006.html">Turn Private Repos Public</a><br><span class="small">Attacker changes repository visibility to public</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-V007.html">T-V007</a></td><td><a href="T-V007.html">Clone Sensitive Repositories</a><br><span class="small">Attacker clones private repositories to steal IP and source code</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-V008.html">T-V008</a></td><td><a href="T-V008.html">Malicious Repo Hosting</a><br><span class="small">Attacker uses compromised VCS to host malicious repositories</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-V009.html">T-V009</a></td><td><a href="T-V009.html">Mass Deletion of Repositories</a><br><span class="small">Attacker deletes multiple repositories to cause data loss and operational disruption</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-V010.html">T-V010</a></td><td><a href="T-V010.html">Malicious Code Modification in Repository</a><br><span class="small">Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-V011.html">T-V011</a></td><td><a href="T-V011.html">Git Tag/Reference Manipulation</a><br><span class="small">Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-V012.html">T-V012</a></td><td><a href="T-V012.html">Cross-Fork Object Reference Abuse</a><br><span class="small">Attacker pushes malicious commits to a repository fork, exploiting git&#x27;s shared object model to make those commits referenceable by SHA from the upstream repository without merging</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-V013.html">T-V013</a></td><td><a href="T-V013.html">VCS Evidence Destruction</a><br><span class="small">Attacker deletes workflow run records and rewrites protected branch history to remove evidence of malicious activity</span></td><td>Post-Compromise</td></tr>
+</table>
+<h2 id="cicd">CI/CD techniques</h2>
+<p class="small">Continuous Integration/Deployment systems</p>
+<table><tr><th>ID</th><th>Technique</th><th>Stage</th></tr>
+<tr><td><a href="T-C001.html">T-C001</a></td><td><a href="T-C001.html">Abuse Credentials for CI/CD Access</a><br><span class="small">Attacker uses stolen credentials to access CI/CD system</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-C002.html">T-C002</a></td><td><a href="T-C002.html">Malicious Execution in Workflow Context</a><br><span class="small">Attacker executes malicious code within CI/CD workflow</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-C003.html">T-C003</a></td><td><a href="T-C003.html">PWN Request / Poisoned Pipeline Execution</a><br><span class="small">Attacker submits malicious PR that triggers workflow with elevated privileges</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-C004.html">T-C004</a></td><td><a href="T-C004.html">Workflow Script Injection</a><br><span class="small">Attacker injects malicious code into workflow through user-controlled input</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-C005.html">T-C005</a></td><td><a href="T-C005.html">Secret Exfiltration from Workflow</a><br><span class="small">Attacker extracts secrets from CI/CD workflow execution</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-C006.html">T-C006</a></td><td><a href="T-C006.html">Secret Enumeration in Workflows Using GitHub Search</a><br><span class="small">Attacker searches public workflows for exposed secrets</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-C007.html">T-C007</a></td><td><a href="T-C007.html">Action Cache Poisoning</a><br><span class="small">Attacker poisons shared action cache to inject malicious code</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-C008.html">T-C008</a></td><td><a href="T-C008.html">Malicious Workflow Performing Code Modification</a><br><span class="small">Attacker uses workflow to modify code or approve PRs</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-C009.html">T-C009</a></td><td><a href="T-C009.html">CI/CD Vulnerability Exploitation</a><br><span class="small">Attacker exploits vulnerability in CI/CD platform</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-C010.html">T-C010</a></td><td><a href="T-C010.html">Runner Executing Malicious Package</a><br><span class="small">Malicious package executes on CI/CD runner</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-C011.html">T-C011</a></td><td><a href="T-C011.html">Stealing Registry Tokens</a><br><span class="small">Attacker extracts registry publishing tokens from workflow</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-C012.html">T-C012</a></td><td><a href="T-C012.html">PR from Malicious Workflow</a><br><span class="small">Workflow creates malicious pull request</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-C013.html">T-C013</a></td><td><a href="T-C013.html">Persistence on Self-Hosted Runners</a><br><span class="small">Attacker establishes persistence on self-hosted runner</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-C014.html">T-C014</a></td><td><a href="T-C014.html">Cryptomining on Runners</a><br><span class="small">Attacker uses runner resources for cryptocurrency mining</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-C015.html">T-C015</a></td><td><a href="T-C015.html">Harvest Secrets from Workflows Using ${{toJson(secrets)}}</a><br><span class="small">Attacker uses toJson() to dump all secrets from workflow</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-C016.html">T-C016</a></td><td><a href="T-C016.html">Pivot from Self-Hosted VM Runner into Local Network / Cloud</a><br><span class="small">Attacker uses runner network access to pivot into production</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-C017.html">T-C017</a></td><td><a href="T-C017.html">Pivot from Self-Hosted Container Runner into K8s Cluster</a><br><span class="small">Attacker escapes container runner to access Kubernetes cluster</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-C018.html">T-C018</a></td><td><a href="T-C018.html">Data Exfiltration from CI/CD</a><br><span class="small">Attacker exfiltrates build artifacts, logs, secrets, and sensitive data from CI/CD system over network</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-C019.html">T-C019</a></td><td><a href="T-C019.html">CI/CD Infrastructure Destruction</a><br><span class="small">Attacker destroys CI/CD pipelines, workflows, runners, or build artifacts to disrupt development and deployment operations</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-C020.html">T-C020</a></td><td><a href="T-C020.html">CI/CD Misconfiguration Exploitation</a><br><span class="small">Attacker exploits misconfiguration in CI/CD platform</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-C021.html">T-C021</a></td><td><a href="T-C021.html">AI Agent Prompt Injection in Workflow</a><br><span class="small">Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data</span></td><td>Initial Access</td></tr>
+</table>
+<h2 id="registry">Registry techniques</h2>
+<p class="small">Container and artifact registries (NPM, Docker, PyPI)</p>
+<table><tr><th>ID</th><th>Technique</th><th>Stage</th></tr>
+<tr><td><a href="T-R001.html">T-R001</a></td><td><a href="T-R001.html">Abuse Credentials for Registry Access</a><br><span class="small">Attacker uses stolen credentials to access registry</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-R002.html">T-R002</a></td><td><a href="T-R002.html">Misconfigured / Anonymous Access</a><br><span class="small">Attacker exploits misconfigured registry permissions</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-R003.html">T-R003</a></td><td><a href="T-R003.html">Registry Vulnerability Exploitation</a><br><span class="small">Attacker exploits vulnerability in registry platform</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-R004.html">T-R004</a></td><td><a href="T-R004.html">Publishing Malicious Package</a><br><span class="small">Attacker publishes malicious package to registry</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-R005.html">T-R005</a></td><td><a href="T-R005.html">Publishing Malicious Container/VM Image</a><br><span class="small">Attacker publishes malicious container or VM image</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-R006.html">T-R006</a></td><td><a href="T-R006.html">Publishing Malicious IDE/Browser Extension</a><br><span class="small">Attacker publishes malicious extension to extension marketplace</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-R007.html">T-R007</a></td><td><a href="T-R007.html">Harvest Data from Private Artifacts</a><br><span class="small">Attacker extracts sensitive data from private artifacts</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-R008.html">T-R008</a></td><td><a href="T-R008.html">Malicious Images Hosting</a><br><span class="small">Attacker uses compromised registry to host malicious images</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-R009.html">T-R009</a></td><td><a href="T-R009.html">Registry Infrastructure Destruction</a><br><span class="small">Attacker deletes packages, images, or corrupts registry infrastructure to disrupt software distribution and deployment</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-R010.html">T-R010</a></td><td><a href="T-R010.html">Typosquatting</a><br><span class="small">Attacker publishes malicious packages with names similar to legitimate ones to trick developers into installing them by mistake</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-R011.html">T-R011</a></td><td><a href="T-R011.html">Namespace/Dependency Confusion</a><br><span class="small">Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-R012.html">T-R012</a></td><td><a href="T-R012.html">Package Lifecycle Script Abuse</a><br><span class="small">Attacker leverages package manager lifecycle hooks (postinstall, preinstall) or language-specific initialization mechanisms (.pth files) to execute malicious code during package installation</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-R013.html">T-R013</a></td><td><a href="T-R013.html">Version String Impersonation</a><br><span class="small">Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses</span></td><td>Discovery and Lateral Movement</td></tr>
+</table>
+<h2 id="production">Production/Cloud techniques</h2>
+<p class="small">Production infrastructure of the producer organization</p>
+<table><tr><th>ID</th><th>Technique</th><th>Stage</th></tr>
+<tr><td><a href="T-P001.html">T-P001</a></td><td><a href="T-P001.html">Abuse Production Credentials from CI/CD</a><br><span class="small">Attacker extracts production credentials from CI/CD and uses them to access production</span></td><td>Initial Access</td></tr>
+<tr><td><a href="T-P002.html">T-P002</a></td><td><a href="T-P002.html">Malicious Deployment via Compromised Pipeline</a><br><span class="small">Attacker modifies CI/CD pipeline to deploy malicious code to production</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P003.html">T-P003</a></td><td><a href="T-P003.html">Pivot from Self-Hosted Runner to Production Network</a><br><span class="small">Attacker uses self-hosted runner network access to pivot into production</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P004.html">T-P004</a></td><td><a href="T-P004.html">Container Image Poisoning to Production</a><br><span class="small">Attacker publishes malicious container image that gets deployed to production</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P005.html">T-P005</a></td><td><a href="T-P005.html">Infrastructure-as-Code Manipulation</a><br><span class="small">Attacker modifies IaC to create backdoors in production infrastructure</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P006.html">T-P006</a></td><td><a href="T-P006.html">Kubernetes Service Account Token Theft</a><br><span class="small">Attacker extracts Kubernetes service account tokens from CI/CD</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P007.html">T-P007</a></td><td><a href="T-P007.html">Cloud Metadata Service Exploitation</a><br><span class="small">Attacker accesses cloud metadata service to steal additional credentials</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P008.html">T-P008</a></td><td><a href="T-P008.html">Kubernetes Pod Escape</a><br><span class="small">Attacker escapes from container to underlying node</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P009.html">T-P009</a></td><td><a href="T-P009.html">Cloud Service Lateral Movement</a><br><span class="small">Attacker uses compromised cloud credentials to access other cloud services</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P010.html">T-P010</a></td><td><a href="T-P010.html">Network Lateral Movement Within Production</a><br><span class="small">Attacker moves between production systems via network</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P011.html">T-P011</a></td><td><a href="T-P011.html">Steal Secrets from Production Environment</a><br><span class="small">Attacker accesses production secrets store and exfiltrates customer secrets, tokens, and credentials</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-P012.html">T-P012</a></td><td><a href="T-P012.html">Production Infrastructure Reconnaissance</a><br><span class="small">Attacker enumerates production infrastructure, services, and resources to identify targets and plan attacks</span></td><td>Discovery and Lateral Movement</td></tr>
+<tr><td><a href="T-P013.html">T-P013</a></td><td><a href="T-P013.html">Data Exfiltration from Production</a><br><span class="small">Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-P014.html">T-P014</a></td><td><a href="T-P014.html">Production Infrastructure Destruction</a><br><span class="small">Attacker destroys production infrastructure, databases, storage, or configurations to cause severe operational disruption and data loss</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-P015.html">T-P015</a></td><td><a href="T-P015.html">Malicious Service Provisioning for Persistence</a><br><span class="small">Attacker provisions new malicious services or backdoors existing services in orchestration platform (e.g., ArgoCD, Kubernetes) to establish persistence</span></td><td>Post-Compromise</td></tr>
+<tr><td><a href="T-P016.html">T-P016</a></td><td><a href="T-P016.html">Supply Chain Backdoor (Sensor/Agent Poisoning)</a><br><span class="small">Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers</span></td><td>Discovery and Lateral Movement</td></tr>
+</table>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

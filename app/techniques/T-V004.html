@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-V004: Secret Exfiltration from Personal Repo | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-V004 (Secret Exfiltration from Personal Repo): Attacker finds secrets in personal repos of org members. Discovery and Lateral Movement technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-V004.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-V004: Secret Exfiltration from Personal Repo | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-V004 (Secret Exfiltration from Personal Repo): Attacker finds secrets in personal repos of org members. Discovery and Lateral Movement technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-V004.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-V004.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-V004.html",
+ "termCode": "T-V004",
+ "name": "SITF T-V004: Secret Exfiltration from Personal Repo",
+ "alternateName": "Secret Exfiltration from Personal Repo",
+ "description": "Attacker finds secrets in personal repos of org members",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › VCS › T-V004</p>
+<h1>SITF technique T-V004: Secret Exfiltration from Personal Repo</h1>
+<p><span class="tag">Component: VCS</span><span class="tag">Stage: Discovery and Lateral Movement</span><span class="tag">ID: T-V004</span></p>
+<p class="lead">Attacker finds secrets in personal repos of org members.</p>
+<p>SITF technique T-V004 (Secret Exfiltration from Personal Repo) is a <strong>Discovery and Lateral Movement</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>VCS</strong> component (Version Control Systems (GitHub, GitLab, Azure DevOps)).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Misconfigured repo - visibility</li>
+<li>Using personal repos for work</li>
+<li>Org members with public repos containing work content</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Policy against using personal repos for work</strong><br><span class="small">OWASP SPVS: V1.3 Security Requirements and Risk Assessment</span></li>
+<li><strong>Security awareness training</strong><br><span class="small">OWASP SPVS: V1.3 Security Requirements and Risk Assessment</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Secret scanning on personal repos</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Detection infra on audit logs</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/shai-hulud-2-flow.html">Shai-Hulud 2.0</a> <span class="small">(incident)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-V004">Open T-V004 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-V004 in the SITF flow builder</a></li>
+<li>Previous VCS technique: <a href="T-V003.html">T-V003 Secret Exfiltration from Repo</a></li>
+<li>Next VCS technique: <a href="T-V005.html">T-V005 VCS Vulnerability Exploitation</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-V004 (Secret Exfiltration from Personal Repo)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-V004.html">https://wiz-sec-public.github.io/SITF/techniques/T-V004.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>
