@@ -1,6 +1,6 @@
 ---
 name: red-team-flow
-description: Generate SITF-compliant attack flow JSON from red team or pentest reports. Accepts report files, URLs, or pasted findings. Use when documenting offensive security engagements.
+description: Map a red team, pentest, or purple team engagement against SDLC infrastructure (CI/CD pipelines, GitHub Actions, GitLab runners, VCS, registries, developer endpoints, build systems) to SITF (SDLC Infrastructure Threat Framework) techniques and generate an attack flow JSON with defensive recommendations. Use when documenting or reporting offensive security findings in software delivery infrastructure. Accepts report files, URLs, or pasted findings.
 argument-hint: <engagement-name> [--file path | --url url | paste report text]
 tools: Read, Grep, Glob, WebFetch, Write, Bash
 ---
@@ -22,6 +22,15 @@ Generate SITF-compliant attack flow JSON files from red team or penetration test
   - Omit to paste report text directly in conversation
 
 Arguments: $ARGUMENTS
+
+## SITF Data Location
+
+This skill runs either inside the SITF repository or, when installed as the `sitf` Claude Code plugin, inside any other project. Resolve the **SITF root** once before starting:
+
+1. If the current project root contains both `techniques.json` and `build-techniques.py`, you are in the SITF repository: the SITF root is the project root.
+2. Otherwise the SITF root is the installed plugin directory: `${CLAUDE_PLUGIN_ROOT}`. (If that placeholder appears literally, unresolved, the plugin is not installed; fetch the library from https://wiz-sec-public.github.io/SITF/techniques.json instead and read example flows from https://github.com/wiz-sec-public/SITF/tree/main/flows.)
+
+Every reference below to `techniques.json`, `flows/...`, or `app/...` means that path under the SITF root. Never write into the plugin directory.
 
 ## Supported Input Formats
 
@@ -237,7 +246,7 @@ Run this checklist before outputting:
 
 ### Phase 7: Output
 
-1. Write the JSON file to `flows/red-team/<engagement-name>.json`
+1. Write the JSON file to `flows/red-team/<engagement-name>.json` when running in the SITF repository. In any other project, write it to `sitf-flows/<engagement-name>.json` under the current project root and tell the user to open it with **Import** in the SITF flow builder (https://wiz-sec-public.github.io/SITF/visualizer.html)
 2. Validate JSON: `python3 -c "import json; json.load(open('file'))"`
 3. Provide output summary:
 

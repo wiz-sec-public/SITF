@@ -1,6 +1,6 @@
 ---
 name: attack-flow
-description: Generate SITF-compliant attack flow JSON files from attack descriptions or incident reports. Use when analyzing supply chain attacks, breaches, or security incidents.
+description: Map a software supply chain, CI/CD, or SDLC security incident to SITF (SDLC Infrastructure Threat Framework) techniques and generate an attack flow JSON for the SITF flow builder, with the risks and controls that would have stopped it. Use when analyzing or reconstructing an attack on developer endpoints or IDEs, GitHub/GitLab repositories, GitHub Actions or other CI/CD pipelines, package or container registries (npm, PyPI, Docker), or build and release infrastructure, such as compromised packages, poisoned pipelines, or stolen CI secrets.
 argument-hint: <attack-name> [websearch|url]
 tools: Read, Grep, Glob, WebSearch, WebFetch, Write, Bash
 ---
@@ -19,6 +19,15 @@ Generate SITF-compliant attack flow JSON files from attack descriptions or incid
 - `source`: URL, local file path (report, write-up), "websearch" for auto-research, or omit to use conversation context. A name plus a document ("X, and use this report to augment") means: research X **and** fold in the document
 
 Arguments: $ARGUMENTS
+
+## SITF Data Location
+
+This skill runs either inside the SITF repository or, when installed as the `sitf` Claude Code plugin, inside any other project. Resolve the **SITF root** once before starting:
+
+1. If the current project root contains both `techniques.json` and `build-techniques.py`, you are in the SITF repository: the SITF root is the project root.
+2. Otherwise the SITF root is the installed plugin directory: `${CLAUDE_PLUGIN_ROOT}`. (If that placeholder appears literally, unresolved, the plugin is not installed; fetch the library from https://wiz-sec-public.github.io/SITF/techniques.json instead and read example flows from https://github.com/wiz-sec-public/SITF/tree/main/flows.)
+
+Every reference below to `techniques.json`, `flows/...`, or `app/...` means that path under the SITF root. Never write into the plugin directory.
 
 ## Instructions
 
@@ -350,7 +359,7 @@ Run this checklist before outputting:
 
 ### Phase 7: Output
 
-1. Write the JSON file to `flows/incidents/<attack-name>.json`
+1. Write the JSON file to `flows/incidents/<attack-name>.json` when running in the SITF repository. In any other project, write it to `sitf-flows/<attack-name>.json` under the current project root and tell the user to open it with **Import** in the SITF flow builder (https://wiz-sec-public.github.io/SITF/visualizer.html)
 2. Validate the JSON with Python: `python3 -c "import json; json.load(open('file'))"`
 3. Provide output summary:
 

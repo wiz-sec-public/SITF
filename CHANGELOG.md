@@ -48,6 +48,7 @@ _None_
 | [LiteLLM October 2026](flows/incidents/litellm-oct-2026.json) | Incident | Leaked admin key leads to an org owner's GitHub token, CI secret theft and a hijacked release of `litellm` 1.107.0 |
 
 ### Other Changes
+- SITF skills are now installable as a Claude Code plugin from this repository (`/plugin marketplace add wiz-sec-public/SITF`, then `/plugin install sitf@sitf`). The skills locate the bundled technique library when run outside the repository, and their descriptions now name CI/CD, GitHub Actions, registries and the other SDLC components they cover
 - LiteLLM flow rewritten to follow BerriAI's root-cause analysis (2026-10-23). The entry point is now a leaked, never-revoked admin key rather than an internet-exposed gateway, and the flow adds CI secret exfiltration (T-C005), the lookalike fork (T-V008) and evidence destruction (T-V013)
 
 ---
