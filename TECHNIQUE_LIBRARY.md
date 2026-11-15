@@ -217,14 +217,19 @@ Controls are split into two categories:
 - No acceptable use policy
 - AI tools with excessive permissions
 - Sensitive code sent to AI services
+- AI tools signed in with personal accounts
 
 **Protective Controls:** 🛡️
 - Acceptable use policy against unapproved AI tools
 - Approved AI tools with data protection
 - Code review for AI-generated code
+- Organization-managed (SSO) accounts enforced for AI tools
 
 **Detective Controls:** 🔍
 - Network monitoring for AI service connections
+- AI CLI execution with permission-bypass flags or non-interactive parent
+- AI agent tool-call audit logging via centrally managed hooks
+- Alerting on suspicious AI agent tool-call sequences
 
 ---
 

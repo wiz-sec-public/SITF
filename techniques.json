@@ -570,7 +570,8 @@
         "Using untrusted AI tools",
         "No acceptable use policy",
         "AI tools with excessive permissions",
-        "Sensitive code sent to AI services"
+        "Sensitive code sent to AI services",
+        "AI tools signed in with personal accounts"
       ],
       "controls": {
         "protective": [
@@ -598,11 +599,47 @@
                 "V2.3"
               ]
             }
+          },
+          {
+            "name": "Organization-managed (SSO) accounts enforced for AI tools",
+            "description": "Require AI tools on managed endpoints to sign in with organization accounts, so code is only sent under an enterprise agreement with data protection and audit visibility",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
           }
         ],
         "detective": [
           {
             "name": "Network monitoring for AI service connections",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "AI CLI execution with permission-bypass flags or non-interactive parent",
+            "description": "EDR alerting when AI coding CLIs are launched with permission-bypass flags (e.g. --dangerously-skip-permissions, --yolo) or spawned by package managers, install scripts, or other non-interactive processes",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "AI agent tool-call audit logging via centrally managed hooks",
+            "description": "Log AI agent tool calls (file reads, shell commands, network requests) at the hook or tool boundary and forward them to the SIEM; enforce hook configuration through managed policy so users and processes cannot disable it",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Alerting on suspicious AI agent tool-call sequences",
+            "description": "Detect agent activity patterns such as a credential or secret file read followed by an outbound request",
             "frameworks": {
               "spvs": [
                 "V5.4"
