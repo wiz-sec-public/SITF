@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TeamPCP Campaign attack analysis with SITF | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="The TeamPCP Campaign attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C002 Malicious Execution in Workflow Context, T-C003 PWN Request / Poisoned Pipeline Execution, T-C005 Secret Exfiltration from Workflow, T-C011 Stealing Registry Tokens, T-P004 Container Image Poisoning to Production, T-P014 Production Infrastructure Destruction.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/incidents/teampcp-campaign.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TeamPCP Campaign attack analysis with SITF | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="The TeamPCP Campaign attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C002 Malicious Execution in Workflow Context, T-C003 PWN Request / Poisoned Pipeline Execution, T-C005 Secret Exfiltration from Workflow, T-C011 Stealing Registry Tokens, T-P004 Container Image Poisoning to Production, T-P014 Production Infrastructure Destruction.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/incidents/teampcp-campaign.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Incidents</a> › TeamPCP Campaign</p>
+<h1>TeamPCP Campaign: attack mapped to SITF techniques</h1>
+<p><span class="tag">Incident</span><span class="tag">13 SITF techniques</span></p>
+<p class='lead'>This page maps the TeamPCP Campaign attack to the SDLC Infrastructure Threat Framework (SITF), step by step, from initial access to impact.</p>
+<p><strong>Organizations involved:</strong> Aqua Security; Checkmarx; BerryAI (LiteLLM); Downstream Victims</p>
+<h2>Entry points</h2><ul><li>Malicious Fork PR</li><li>Supply chain victim</li><li>Supply chain victim</li></ul>
+<h2>Attack path</h2><ol class='steps'>
+<li><a href="../techniques/T-C003.html">SITF T-C003: PWN Request / Poisoned Pipeline Execution</a> — Feb 27: Memory dump via /proc/&lt;pid&gt;/mem · in GitHub Actions @ aquasecurity org - Initial</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — aqua-bot PAT stolen (campaign pivot point) · in GitHub Actions @ aquasecurity org - Initial</li>
+<li><a href="../techniques/T-V001.html">SITF T-V001: Abuse Credentials for VCS Access</a> — Mar 19: aqua-bot PAT used · in GitHub @ aquasecurity org</li>
+<li><a href="../techniques/T-V002.html">SITF T-V002: Imposter Commits</a> — Forged as rauchg &amp; DmitriyLewen · in GitHub @ aquasecurity org</li>
+<li><a href="../techniques/T-V010.html">SITF T-V010: Malicious Code Modification in Repository</a> — 75/76 trivy-action tags force-pushed · in GitHub @ aquasecurity org</li>
+<li><a href="../techniques/T-C002.html">SITF T-C002: Malicious Execution in Workflow Context</a> — Imposter checkout → scan.aquasecurtiy.org · in GitHub Actions @ aquasecurity - Release</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — GPG, Docker Hub, ECR, cx-plugins creds · in GitHub Actions @ aquasecurity - Release</li>
+<li><a href="../techniques/T-C011.html">SITF T-C011: Stealing Registry Tokens</a> — PyPI, npm, Docker tokens harvested · in GitHub Actions @ aquasecurity - Release</li>
+<li><a href="../techniques/T-R005.html">SITF T-R005: Publishing Malicious Container/VM Image</a> — trivy:0.69.4 poisoned images · in Docker Hub / GHCR / ECR</li>
+<li><a href="../techniques/T-P004.html">SITF T-P004: Container Image Poisoning to Production</a> — Mar 22: trivy:0.69.5/0.69.6 deployed · in Victim K8s Clusters</li>
+<li><a href="../techniques/T-R004.html">SITF T-R004: Publishing Malicious Package</a> — trivy v0.69.4 binaries · in Docker Hub / GHCR / ECR</li>
+<li><a href="../techniques/T-P014.html">SITF T-P014: Production Infrastructure Destruction</a> — kamikaze.sh: Iran-targeted wiper (rm -rf /) · in Victim K8s Clusters</li>
+<li><a href="../techniques/T-V009.html">SITF T-V009: Mass Deletion of Repositories</a> — Mar 22: 44 internal repos defaced (Argon-DevOps-Mgt) · in GitHub (Aqua Internal)</li>
+<li><a href="../techniques/T-R004.html">SITF T-R004: Publishing Malicious Package</a> — Mar 20: 28+ npm packages via ICP canister C2 · in npm (CanisterWorm)</li>
+<li><a href="../techniques/T-C002.html">SITF T-C002: Malicious Execution in Workflow Context</a> — in CircleCI @ BerriAI</li>
+<li><a href="../techniques/T-C002.html">SITF T-C002: Malicious Execution in Workflow Context</a> — in GitHub Actions @ Checkmarx org</li>
+<li><a href="../techniques/T-V001.html">SITF T-V001: Abuse Credentials for VCS Access</a> — Founder creds compromised · in BerriAI</li>
+<li><a href="../techniques/T-R001.html">SITF T-R001: Abuse Credentials for Registry Access</a> — Mar 24: LiteLLM maintainer account · in PyPI</li>
+<li><a href="../techniques/T-R004.html">SITF T-R004: Publishing Malicious Package</a> — litellm 1.82.7/1.82.8 with .pth backdoor · in PyPI</li>
+<li><a href="../techniques/T-V010.html">SITF T-V010: Malicious Code Modification in Repository</a> — 35 kics-action + ast-action tags hijacked · in GitHub (Checkmarx)</li>
+<li><a href="../techniques/T-R001.html">SITF T-R001: Abuse Credentials for Registry Access</a> — in Actions registry</li>
+<li><a href="../techniques/T-R004.html">SITF T-R004: Publishing Malicious Package</a> — actions · in Actions registry</li>
+</ol>
+<h2>Outcomes</h2><ul><li>Secondary Supply Chain Attack</li><li>95M+ Monthly Downloads Affected</li><li>Checkmarx Users Compromised</li><li>npm Ecosystem Infected</li><li>K8s Clusters Wiped (Iran)</li></ul>
+<h2>Techniques and controls</h2>
+<table><tr><th>Technique</th><th>Key protective controls</th></tr>
+<tr><td><a href="../techniques/T-C002.html">T-C002 Malicious Execution in Workflow Context</a></td><td>Pinning 3rd-party actions; Action whitelisting; Automated maintainer reputation and hygiene checks</td></tr>
+<tr><td><a href="../techniques/T-C003.html">T-C003 PWN Request / Poisoned Pipeline Execution</a></td><td>Branch protection rules (VCS); Private repo (VCS); Require explicit approval/ disallow workflows from forks (VCS)</td></tr>
+<tr><td><a href="../techniques/T-C005.html">T-C005 Secret Exfiltration from Workflow</a></td><td>OIDC setup in workflows; Minimal workflow permissions; Log sanitization</td></tr>
+<tr><td><a href="../techniques/T-C011.html">T-C011 Stealing Registry Tokens</a></td><td>OIDC setup in workflows; Trusted publishing (registry)</td></tr>
+<tr><td><a href="../techniques/T-P004.html">T-P004 Container Image Poisoning to Production</a></td><td>Image signing and verification; Provenance attestation; Deployment approval gates</td></tr>
+<tr><td><a href="../techniques/T-P014.html">T-P014 Production Infrastructure Destruction</a></td><td>Minimal IAM permissions; Regular backups with offsite/offline storage; Deletion protection on critical resources</td></tr>
+<tr><td><a href="../techniques/T-R001.html">T-R001 Abuse Credentials for Registry Access</a></td><td>Mandatory MFA; IDP / SSO setup; CSPM/CNAPP</td></tr>
+<tr><td><a href="../techniques/T-R004.html">T-R004 Publishing Malicious Package</a></td><td>Trusted publishing; Provenance attestation; MFA for registry account</td></tr>
+<tr><td><a href="../techniques/T-R005.html">T-R005 Publishing Malicious Container/VM Image</a></td><td>Trusted publishing; Provenance attestation; Image signing and verification</td></tr>
+<tr><td><a href="../techniques/T-V001.html">T-V001 Abuse Credentials for VCS Access</a></td><td>Mandatory MFA; IDP / SSO setup; Enforcing fine-grained PATs</td></tr>
+<tr><td><a href="../techniques/T-V002.html">T-V002 Imposter Commits</a></td><td>Commit signing; Requiring code owner approval; Branch protection rules</td></tr>
+<tr><td><a href="../techniques/T-V009.html">T-V009 Mass Deletion of Repositories</a></td><td>Minimal VCS user permissions; Regular repository backups; Repository deletion approval workflow</td></tr>
+<tr><td><a href="../techniques/T-V010.html">T-V010 Malicious Code Modification in Repository</a></td><td>Branch protection rules (VCS); Require code owner approval; Mandatory code review by multiple reviewers</td></tr>
+</table>
+<p class="small">Source flow: <a href="https://github.com/wiz-sec-public/SITF/blob/main/flows/incidents/teampcp-campaign.json">flows/incidents/teampcp-campaign.json</a>. Load it in the <a href="../visualizer.html">SITF flow builder</a> to view the diagram.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

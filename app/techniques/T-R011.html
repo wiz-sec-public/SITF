@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-R011: Namespace/Dependency Confusion | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-R011 (Namespace/Dependency Confusion): Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package. Initial Access technique targeting Registry in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-R011.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-R011: Namespace/Dependency Confusion | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-R011 (Namespace/Dependency Confusion): Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package. Initial Access technique targeting Registry in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-R011.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-R011.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-R011.html",
+ "termCode": "T-R011",
+ "name": "SITF T-R011: Namespace/Dependency Confusion",
+ "alternateName": "Namespace/Dependency Confusion",
+ "description": "Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Registry › T-R011</p>
+<h1>SITF technique T-R011: Namespace/Dependency Confusion</h1>
+<p><span class="tag">Component: Registry</span><span class="tag">Stage: Initial Access</span><span class="tag">ID: T-R011</span></p>
+<p class="lead">Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package.</p>
+<p>SITF technique T-R011 (Namespace/Dependency Confusion) is a <strong>Initial Access</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Registry</strong> component (Container and artifact registries (NPM, Docker, PyPI)).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Lack of internal repository enforcement</li>
+<li>Package managers prioritize public repositories</li>
+<li>No namespace isolation between internal and public packages</li>
+<li>Automatic dependency resolution without verification</li>
+<li>Higher version numbers in public repositories</li>
+<li>Direct downloads from public registries</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Local registry proxy with filtering</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit</span></li>
+<li><strong>Internal repository enforcement and prioritization</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit</span></li>
+<li><strong>Namespace isolation and scoping</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit</span></li>
+<li><strong>Package version pinning</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit</span></li>
+<li><strong>Automated maintainer reputation and hygiene checks</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit</span></li>
+<li><strong>Private package registry configuration</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit</span></li>
+<li><strong>Dependency resolution policies</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit</span></li>
+<li><strong>Package source verification</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit</span></li>
+</ul>
+<h2>Detective controls</h2>
+<p class='small'>None mapped yet.</p>
+<h2>Framework mappings</h2><ul>
+<li>MITRE ATT&amp;CK: <a href="https://attack.mitre.org/techniques/T1195/001/">T1195.001</a></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-R011">Open T-R011 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-R011 in the SITF flow builder</a></li>
+<li>Previous Registry technique: <a href="T-R010.html">T-R010 Typosquatting</a></li>
+<li>Next Registry technique: <a href="T-R012.html">T-R012 Package Lifecycle Script Abuse</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-R011 (Namespace/Dependency Confusion)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-R011.html">https://wiz-sec-public.github.io/SITF/techniques/T-R011.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

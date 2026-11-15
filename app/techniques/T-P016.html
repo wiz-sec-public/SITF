@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-P016: Supply Chain Backdoor (Sensor/Agent Poisoning) | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-P016 (Supply Chain Backdoor (Sensor/Agent Poisoning)): Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers. Discovery and Lateral Movement technique targeting Production/Cloud in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-P016.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-P016: Supply Chain Backdoor (Sensor/Agent Poisoning) | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-P016 (Supply Chain Backdoor (Sensor/Agent Poisoning)): Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers. Discovery and Lateral Movement technique targeting Production/Cloud in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-P016.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-P016.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-P016.html",
+ "termCode": "T-P016",
+ "name": "SITF T-P016: Supply Chain Backdoor (Sensor/Agent Poisoning)",
+ "alternateName": "Supply Chain Backdoor (Sensor/Agent Poisoning)",
+ "description": "Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Production/Cloud › T-P016</p>
+<h1>SITF technique T-P016: Supply Chain Backdoor (Sensor/Agent Poisoning)</h1>
+<p><span class="tag">Component: Production/Cloud</span><span class="tag">Stage: Discovery and Lateral Movement</span><span class="tag">ID: T-P016</span></p>
+<p class="lead">Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers.</p>
+<p>SITF technique T-P016 (Supply Chain Backdoor (Sensor/Agent Poisoning)) is a <strong>Discovery and Lateral Movement</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Production/Cloud</strong> component (Production infrastructure of the producer organization).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>No binary signing verification for distributed software</li>
+<li>Customer updates automatically deployed without verification</li>
+<li>No provenance attestation for sensor binaries</li>
+<li>No multi-party approval for releases</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Code signing and verification for all distributed binaries</strong><br><span class="small">OWASP SPVS: V3.4 Integrity of Artifacts</span></li>
+<li><strong>Provenance attestation (SLSA Level 3+)</strong><br><span class="small">OWASP SPVS: V3.4 Integrity of Artifacts</span></li>
+<li><strong>Customer-controlled update policies with verification</strong><br><span class="small">OWASP SPVS: V4.1 Final Security Assessments</span></li>
+<li><strong>Separation of duties for release signing</strong><br><span class="small">OWASP SPVS: V3.4 Integrity of Artifacts</span></li>
+<li><strong>Immutable build logs and attestations</strong><br><span class="small">OWASP SPVS: V3.4 Integrity of Artifacts</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Multi-party approval for sensor/agent releases</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Regular security audits of build infrastructure</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-P016">Open T-P016 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-P016 in the SITF flow builder</a></li>
+<li>Previous Production/Cloud technique: <a href="T-P015.html">T-P015 Malicious Service Provisioning for Persistence</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-P016 (Supply Chain Backdoor (Sensor/Agent Poisoning))</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-P016.html">https://wiz-sec-public.github.io/SITF/techniques/T-P016.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

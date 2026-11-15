@@ -1,0 +1,25 @@
+:root { --fg:#1f2937; --muted:#6b7280; --accent:#7c3aed; --border:#e5e7eb; --bg:#ffffff; --soft:#f9fafb; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg:#e5e7eb; --muted:#9ca3af; --accent:#c084fc; --border:#374151; --bg:#0f1220; --soft:#171a2b; }
+}
+* { box-sizing: border-box; }
+body { margin:0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+       color:var(--fg); background:var(--bg); line-height:1.6; }
+main, header.site, footer.site { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+header.site { padding-top: 18px; font-size: .95rem; }
+header.site a { margin-right: 14px; }
+footer.site { margin-top: 48px; padding-bottom: 32px; border-top: 1px solid var(--border);
+              color: var(--muted); font-size: .9rem; }
+a { color: var(--accent); }
+h1 { font-size: 1.9rem; line-height: 1.25; margin: 24px 0 8px; }
+h2 { font-size: 1.3rem; margin-top: 32px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+.lead { font-size: 1.08rem; }
+.meta { color: var(--muted); font-size: .95rem; }
+.tag { display:inline-block; padding: 1px 8px; border:1px solid var(--border); border-radius: 999px;
+       font-size: .85rem; margin-right: 6px; background: var(--soft); }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+code { background: var(--soft); padding: 1px 5px; border-radius: 4px; }
+ol.steps li { margin-bottom: 6px; }
+.small { font-size: .9rem; color: var(--muted); }

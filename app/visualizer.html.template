@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SITF Attack Flow Visualizer</title>
+    <meta name="description" content="SITF attack flow builder: map software supply chain and CI/CD attacks step by step using SDLC Infrastructure Threat Framework techniques.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="sitf-icon-round.png">

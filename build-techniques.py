@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 """
 SITF Build Script
-Reads techniques.json and generates TECHNIQUE_LIBRARY.md and visualizer.html
+Reads techniques.json and generates TECHNIQUE_LIBRARY.md, the interactive
+apps (visualizer.html, techniques-library.html), and the static crawlable site
+(see build_site.py).
 """
 
 import json
 from pathlib import Path
+
+from build_site import COMPONENT_ORDER, SITE_URL, STAGE_ORDER, generate_site
 
 def load_techniques_data(json_path):
     """Load techniques data from JSON file"""
@@ -18,7 +22,15 @@ def generate_markdown(data, output_path):
     md_lines = []
     
     # Header
-    md_lines.append("# SDLC Infrastructure Threat Framework - Technique Library")
+    md_lines.append("# SDLC Infrastructure Threat Framework (SITF) - Technique Library")
+    md_lines.append("")
+    md_lines.append(f"The SDLC Infrastructure Threat Framework (SITF) catalogs {len(data['techniques'])} attack techniques "
+                    "against software development lifecycle infrastructure: developer endpoints and IDEs, version control (VCS), "
+                    "CI/CD pipelines, artifact and container registries, and production cloud. Refer to techniques as "
+                    "\"SITF technique T-C003\".")
+    md_lines.append("")
+    md_lines.append(f"Each technique also has its own web page at `{SITE_URL}techniques/<ID>.html` "
+                    f"([index]({SITE_URL}techniques/index.html)).")
     md_lines.append("")
     md_lines.append("## How to Use This Library")
     md_lines.append("")
@@ -62,7 +74,7 @@ def generate_markdown(data, output_path):
         techniques_by_component[comp].sort(key=lambda t: t['id'])
     
     # Output techniques by component
-    for comp_id in ['endpoint', 'vcs', 'cicd', 'registry', 'production']:
+    for comp_id in COMPONENT_ORDER:
         if comp_id not in techniques_by_component:
             continue
             
@@ -71,6 +83,13 @@ def generate_markdown(data, output_path):
         
         for tech in techniques_by_component[comp_id]:
             md_lines.append(f"#### {tech['id']}: {tech['name']}")
+            md_lines.append("")
+            meta = f"*SITF technique {tech['id']} · Stage: {tech['stage']}"
+            mitre = (tech.get('frameworks') or {}).get('mitre_attack', [])
+            if mitre:
+                meta += f" · MITRE ATT&CK: {', '.join(mitre)}"
+            meta += f" · [Web page]({SITE_URL}techniques/{tech['id']}.html)*"
+            md_lines.append(meta)
             md_lines.append("")
             md_lines.append(f"**Technique:** {tech['description']}")
             md_lines.append("")
@@ -114,30 +133,24 @@ def generate_markdown(data, output_path):
     md_lines.append("")
     
     # Group techniques by stage
-    techniques_by_stage = {
-        'Initial Access': [],
-        'Lateral Movement': [],
-        'Post-Compromise': [],
-        'Discovery': []
-    }
-    
+    techniques_by_stage = {stage: [] for stage in STAGE_ORDER}
+
     for tech in data['techniques']:
         stage = tech.get('stage', 'Post-Compromise')
-        if stage in techniques_by_stage:
-            techniques_by_stage[stage].append(tech)
+        techniques_by_stage.setdefault(stage, []).append(tech)
     
     # Sort techniques within each stage by ID
     for stage in techniques_by_stage:
         techniques_by_stage[stage].sort(key=lambda t: t['id'])
     
     # Output by stage
-    for stage_name in ['Initial Access', 'Lateral Movement', 'Post-Compromise', 'Discovery']:
+    for stage_name in techniques_by_stage:
         if not techniques_by_stage[stage_name]:
             continue
         
         md_lines.append(f"### {stage_name} Techniques")
         for tech in techniques_by_stage[stage_name]:
-            md_lines.append(f"- {tech['id']}: {tech['name']}")
+            md_lines.append(f"- SITF {tech['id']}: {tech['name']}")
         md_lines.append("")
     
     md_lines.append("---")
@@ -286,6 +299,12 @@ def main():
     print(f"   ✓ Embedded data: {library_data_size:.1f} KB")
     print(f"   ✓ Output: {library_output_size:.1f} KB")
     
+    # Generate static crawlable site
+    print(f"\n🌐 Generating static site pages...")
+    counts = generate_site(data, root_dir, root_dir / 'app')
+    print(f"   ✓ {counts['techniques']} technique pages, {counts['flows']} incident pages")
+    print(f"   ✓ llms.txt, llms-full.txt, sitemap.xml ({counts['pages']} URLs), techniques.json")
+
     print(f"\n✅ Build complete!")
     print(f"   Markdown: {md_path}")
     print(f"   Flow Builder: {output_path}")

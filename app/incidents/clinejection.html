@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinejection attack analysis with SITF | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="The Clinejection attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C002 Malicious Execution in Workflow Context, T-C007 Action Cache Poisoning, T-C011 Stealing Registry Tokens, T-C021 AI Agent Prompt Injection in Workflow, T-E001 Malicious Execution on Endpoint, T-E015 Extension Auto-Update Exploitation.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/incidents/clinejection.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clinejection attack analysis with SITF | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="The Clinejection attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C002 Malicious Execution in Workflow Context, T-C007 Action Cache Poisoning, T-C011 Stealing Registry Tokens, T-C021 AI Agent Prompt Injection in Workflow, T-E001 Malicious Execution on Endpoint, T-E015 Extension Auto-Update Exploitation.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/incidents/clinejection.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Incidents</a> › Clinejection</p>
+<h1>Clinejection: attack mapped to SITF techniques</h1>
+<p><span class="tag">Incident</span><span class="tag">9 SITF techniques</span></p>
+<p class='lead'>This page maps the Clinejection attack to the SDLC Infrastructure Threat Framework (SITF), step by step, from initial access to impact.</p>
+<h2>Entry points</h2><ul><li>Malicious GitHub Issue</li><li>Consumer entry</li></ul>
+<h2>Attack path</h2><ol class='steps'>
+<li><a href="../techniques/T-C021.html">SITF T-C021: AI Agent Prompt Injection in Workflow</a> — Claude tricked via issue title prompt injection · in Cline GitHub Actions</li>
+<li><a href="../techniques/T-C002.html">SITF T-C002: Malicious Execution in Workflow Context</a> — Claude executes npm install from attacker commit · in Cline GitHub Actions</li>
+<li><a href="../techniques/T-C007.html">SITF T-C007: Action Cache Poisoning</a> — Cacheract tool poisons node_modules cache · in Cline GitHub Actions</li>
+<li><a href="../techniques/T-C011.html">SITF T-C011: Stealing Registry Tokens</a> — VSCE_PAT, OVSX_PAT, NPM_RELEASE_TOKEN exfiltrated · in Cline GitHub Actions</li>
+<li><a href="../techniques/T-R001.html">SITF T-R001: Abuse Credentials for Registry Access</a> — Stolen tokens authenticate to registries · in VS Code Marketplace, OpenVSX, npm</li>
+<li><a href="../techniques/T-R006.html">SITF T-R006: Publishing Malicious IDE/Browser Extension</a> — Malicious Cline extension to VS Code Marketplace · in VS Code Marketplace, OpenVSX, npm</li>
+<li><a href="../techniques/T-R004.html">SITF T-R004: Publishing Malicious Package</a> — Cline CLI 2.3.0 with OpenClaw payload · in VS Code Marketplace, OpenVSX, npm</li>
+<li><a href="../techniques/T-E015.html">SITF T-E015: Extension Auto-Update Exploitation</a> — VS Code auto-updates to malicious Cline · in Developer Workstations</li>
+<li><a href="../techniques/T-E001.html">SITF T-E001: Malicious Execution on Endpoint</a> — npm postinstall installs OpenClaw · in Developer Workstations</li>
+</ol>
+<h2>Outcomes</h2><ul><li>Secondary Supply Chain Attack</li></ul>
+<h2>Techniques and controls</h2>
+<table><tr><th>Technique</th><th>Key protective controls</th></tr>
+<tr><td><a href="../techniques/T-C002.html">T-C002 Malicious Execution in Workflow Context</a></td><td>Pinning 3rd-party actions; Action whitelisting; Automated maintainer reputation and hygiene checks</td></tr>
+<tr><td><a href="../techniques/T-C007.html">T-C007 Action Cache Poisoning</a></td><td>Don&#x27;t use actions cache; Workflow ordering; Cache artifact signing / verification</td></tr>
+<tr><td><a href="../techniques/T-C011.html">T-C011 Stealing Registry Tokens</a></td><td>OIDC setup in workflows; Trusted publishing (registry)</td></tr>
+<tr><td><a href="../techniques/T-C021.html">T-C021 AI Agent Prompt Injection in Workflow</a></td><td>Restrict AI agent tool permissions; Input sanitization before AI context injection; Require write access to trigger AI-powered workflows</td></tr>
+<tr><td><a href="../techniques/T-E001.html">T-E001 Malicious Execution on Endpoint</a></td><td>Local registry proxy with filtering; IDE sandboxing; Mandating signed extensions</td></tr>
+<tr><td><a href="../techniques/T-E015.html">T-E015 Extension Auto-Update Exploitation</a></td><td>Extension update approval workflow; Extension version pinning; Update signature verification</td></tr>
+<tr><td><a href="../techniques/T-R001.html">T-R001 Abuse Credentials for Registry Access</a></td><td>Mandatory MFA; IDP / SSO setup; CSPM/CNAPP</td></tr>
+<tr><td><a href="../techniques/T-R004.html">T-R004 Publishing Malicious Package</a></td><td>Trusted publishing; Provenance attestation; MFA for registry account</td></tr>
+<tr><td><a href="../techniques/T-R006.html">T-R006 Publishing Malicious IDE/Browser Extension</a></td><td>Extension signing requirements; Extension review process; MFA for publisher account</td></tr>
+</table>
+<p class="small">Source flow: <a href="https://github.com/wiz-sec-public/SITF/blob/main/flows/incidents/clinejection.json">flows/incidents/clinejection.json</a>. Load it in the <a href="../visualizer.html">SITF flow builder</a> to view the diagram.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

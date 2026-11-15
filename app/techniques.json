@@ -1,0 +1,5717 @@
+{
+  "components": [
+    {
+      "id": "endpoint",
+      "name": "Endpoint/IDE",
+      "description": "Developer workstations and development environments"
+    },
+    {
+      "id": "vcs",
+      "name": "VCS",
+      "description": "Version Control Systems (GitHub, GitLab, Azure DevOps)"
+    },
+    {
+      "id": "cicd",
+      "name": "CI/CD",
+      "description": "Continuous Integration/Deployment systems"
+    },
+    {
+      "id": "registry",
+      "name": "Registry",
+      "description": "Container and artifact registries (NPM, Docker, PyPI)"
+    },
+    {
+      "id": "production",
+      "name": "Production/Cloud",
+      "description": "Production infrastructure of the producer organization"
+    }
+  ],
+  "entryPoints": [
+    "Phishing",
+    "Compromised Dependency",
+    "Vulnerability Exploit",
+    "Stolen Credentials",
+    "Social Engineering",
+    "Custom"
+  ],
+  "exitPoints": [
+    "Future Breach",
+    "Persistence Established",
+    "Secondary Supply Chain Attack",
+    "Detection & Containment",
+    "Custom"
+  ],
+  "frameworkDefinitions": {
+    "spvs": {
+      "name": "OWASP SPVS",
+      "version": "1.0",
+      "url": "https://owasp.org/www-project-spvs/",
+      "categories": {
+        "V1.1": { "stage": "Plan", "name": "Identity and Access Management" },
+        "V1.2": { "stage": "Plan", "name": "Hardening User Machines" },
+        "V1.3": { "stage": "Plan", "name": "Security Requirements and Risk Assessment" },
+        "V1.4": { "stage": "Plan", "name": "Developer Tool Operation" },
+        "V1.5": { "stage": "Plan", "name": "Source Code Management Hardening" },
+        "V2.1": { "stage": "Develop", "name": "Secure Coding Practices" },
+        "V2.2": { "stage": "Develop", "name": "Software Quality" },
+        "V2.3": { "stage": "Develop", "name": "Code Review and Analysis" },
+        "V2.4": { "stage": "Develop", "name": "Perform Security Checks" },
+        "V2.5": { "stage": "Develop", "name": "Credential Hygiene" },
+        "V2.6": { "stage": "Develop", "name": "3rd Party Library Audit" },
+        "V2.7": { "stage": "Develop", "name": "Unit Testing" },
+        "V3.1": { "stage": "Integrate", "name": "Security of Pipeline Environment" },
+        "V3.2": { "stage": "Integrate", "name": "Credential Hygiene" },
+        "V3.3": { "stage": "Integrate", "name": "Continuous Security Checks" },
+        "V3.4": { "stage": "Integrate", "name": "Integrity of Artifacts" },
+        "V4.1": { "stage": "Release", "name": "Final Security Assessments" },
+        "V4.2": { "stage": "Release", "name": "Compliance Checks" },
+        "V4.3": { "stage": "Release", "name": "Secure Deployment Practices" },
+        "V4.4": { "stage": "Release", "name": "Transition Security" },
+        "V5.1": { "stage": "Operate", "name": "Access Audit" },
+        "V5.2": { "stage": "Operate", "name": "Security Standard Enforcement" },
+        "V5.3": { "stage": "Operate", "name": "Secure Maintenance Practices" },
+        "V5.4": { "stage": "Operate", "name": "Detection & Monitoring" },
+        "V5.5": { "stage": "Operate", "name": "Incident Response & Recovery" }
+      }
+    },
+    "mitre_attack": {
+      "name": "MITRE ATT&CK Enterprise",
+      "version": "15.0",
+      "url": "https://attack.mitre.org/"
+    },
+    "aws_catalog": {
+      "name": "AWS Threat Technique Catalog",
+      "version": "1.0",
+      "url": "https://aws-samples.github.io/threat-technique-catalog-for-aws/"
+    }
+  },
+  "techniques": [
+    {
+      "id": "T-E001",
+      "name": "Malicious Execution on Endpoint",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker executes malicious code on developer workstation",
+      "frameworks": {
+        "mitre_attack": ["T1204.002"]
+      },
+      "risks": [
+        "Using untrusted IDE extensions",
+        "Using untrusted software packages on endpoints",
+        "No EDR",
+        "Lack of application sandboxing",
+        "Package installation scripts enabled",
+        "Direct downloads from public registries"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Local registry proxy with filtering",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "IDE sandboxing",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          },
+          {
+            "name": "Mandating signed extensions",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          },
+          {
+            "name": "Package version pinning",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Automated maintainer reputation and hygiene checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          },
+          {
+            "name": "Disable package installation scripts (--ignore-scripts)",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E002",
+      "name": "Endpoint Phishing",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker phishes developer to steal credentials or install malware",
+      "risks": [
+        "Lack of 2FA / phishing protection",
+        "No security awareness training",
+        "Credentials stored in plaintext",
+        "No email security controls"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Mandatory MFA",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Phishing-resistant authentication",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Security awareness training",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
+          },
+          {
+            "name": "Email security (SPF, DMARC, DKIM)",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E003",
+      "name": "Harvest Local Secrets / Credentials from Endpoint",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts credentials stored on developer machine",
+      "frameworks": {
+        "mitre_attack": ["T1552.001"]
+      },
+      "risks": [
+        "Credentials stored in plaintext",
+        "Production credentials on developer machines",
+        "No local DLP",
+        "SSH keys without passwords",
+        "Cloud credentials in environment variables"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Credential manager enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "No production credentials on endpoints",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "Encrypted credential storage",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V2.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Local DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E004",
+      "name": "Harvest Local Data from Endpoint",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker exfiltrates source code, documents, or other sensitive data from endpoint",
+      "risks": [
+        "No local DLP",
+        "No EDR",
+        "Sensitive data stored locally",
+        "No encryption at rest"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Data classification and handling policies",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
+          },
+          {
+            "name": "Encryption at rest",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Local DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Network monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E005",
+      "name": "Cryptomining on Endpoints",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses endpoint resources for cryptocurrency mining",
+      "risks": [
+        "No EDR",
+        "Untrusted software packages",
+        "No resource monitoring"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Resource monitoring and alerting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Network monitoring (detect mining pool connections)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E006",
+      "name": "Register Local Machine as CI Runner",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker registers compromised endpoint as self-hosted CI/CD runner",
+      "risks": [
+        "Ability to register arbitrary machines as runners",
+        "No runner registration approval process",
+        "Runner registration tokens not protected"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Runner registration approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Runner registration token protection",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Network segmentation (runners isolated from endpoints)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          }
+        ],
+        "detective": []
+      }
+    },
+    {
+      "id": "T-E007",
+      "name": "Abuse Local VCS Access from Endpoint",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses local git credentials to access VCS",
+      "risks": [
+        "VCS credentials stored on endpoint",
+        "No credential rotation",
+        "Overprivileged VCS access"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Credential manager enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "Fine-grained PATs with expiration",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Mandatory MFA for VCS",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Audit log monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E008",
+      "name": "Abuse Local CI/CD Access from Endpoint",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses local CI/CD credentials to access CI/CD system",
+      "risks": [
+        "CI/CD credentials stored on endpoint",
+        "No credential rotation",
+        "Overprivileged CI/CD access"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Credential manager enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "OIDC instead of long-lived tokens",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Mandatory MFA for CI/CD",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Audit log monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E009",
+      "name": "Abuse Local AI Tools",
+      "component": "endpoint",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses AI coding assistants to exfiltrate code or inject malicious suggestions",
+      "risks": [
+        "Using untrusted AI tools",
+        "No acceptable use policy",
+        "AI tools with excessive permissions",
+        "Sensitive code sent to AI services"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Acceptable use policy against unapproved AI tools",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
+          },
+          {
+            "name": "Approved AI tools with data protection",
+            "frameworks": {
+              "spvs": [
+                "V1.4"
+              ]
+            }
+          },
+          {
+            "name": "Code review for AI-generated code",
+            "frameworks": {
+              "spvs": [
+                "V1.4",
+                "V2.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network monitoring for AI service connections",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E010",
+      "name": "Endpoint Infrastructure Destruction",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption",
+      "risks": [
+        "No backup and recovery",
+        "Overprivileged local user accounts",
+        "No EDR",
+        "Lack of system integrity monitoring",
+        "Insufficient access controls on critical system files"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Regular endpoint backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Minimal local user privileges",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Offline backup storage",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "File system access controls",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          },
+          {
+            "name": "Endpoint recovery procedures",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "System integrity monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E011",
+      "name": "Unicode Stealth Code Injection",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn't render in code editors but executes normally",
+      "risks": [
+        "Using untrusted IDE extensions",
+        "No code review detection of invisible characters",
+        "Static analysis tools miss unprintable characters",
+        "Diff tools don't highlight invisible code",
+        "Developer trust in visual code inspection"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "IDE plugins to visualize invisible characters",
+            "frameworks": {
+              "spvs": [
+                "V1.4"
+              ]
+            }
+          },
+          {
+            "name": "Static analysis with Unicode normalization",
+            "frameworks": {
+              "spvs": [
+                "V2.1",
+                "V2.4"
+              ]
+            }
+          },
+          {
+            "name": "Extension code signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V2.1",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Mandatory code review with specialized tools",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Unicode character detection in code review tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Automated detection of unprintable characters in commits",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E012",
+      "name": "SOCKS Proxy Deployment on Endpoint",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker deploys SOCKS proxy server on compromised endpoint to route malicious traffic through victim's network and IP address",
+      "risks": [
+        "No EDR",
+        "No network egress monitoring",
+        "Unrestricted outbound connections",
+        "Endpoint inside corporate network",
+        "No process monitoring"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          },
+          {
+            "name": "Network segmentation (endpoints from production)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "Outbound connection restrictions",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Network egress monitoring and filtering",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Anomalous network behavior detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E013",
+      "name": "Hidden VNC (HVNC) Deployment",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker deploys hidden Virtual Network Computing that provides invisible remote desktop access without user awareness",
+      "risks": [
+        "No EDR",
+        "No process monitoring",
+        "Lack of application sandboxing",
+        "Privileged user accounts"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal local user privileges",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V5.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Process monitoring and whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Session activity monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Behavioral analysis for hidden processes",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Virtual desktop detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E014",
+      "name": "WebRTC P2P Control Channel Establishment",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker establishes WebRTC peer-to-peer connections for direct control that bypasses traditional firewalls via NAT traversal",
+      "risks": [
+        "WebRTC enabled in browsers/applications",
+        "No network monitoring of WebRTC traffic",
+        "NAT traversal bypasses firewall rules",
+        "No EDR",
+        "P2P connections not logged"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Network behavior analysis",
+            "frameworks": {
+              "spvs": [
+                "V5.2",
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "WebRTC restrictions in corporate browsers",
+            "frameworks": {
+              "spvs": [
+                "V1.4"
+              ]
+            }
+          },
+          {
+            "name": "STUN/TURN server whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "WebRTC traffic monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Deep packet inspection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E015",
+      "name": "Extension Auto-Update Exploitation",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction",
+      "risks": [
+        "Auto-updates enabled for extensions",
+        "No update verification",
+        "Compromised extension publisher accounts",
+        "No extension version pinning",
+        "Silent updates without user notification"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Extension update approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          },
+          {
+            "name": "Extension version pinning",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          },
+          {
+            "name": "Update signature verification",
+            "frameworks": {
+              "spvs": [
+                "V1.2",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Delayed update deployment (canary testing)",
+            "frameworks": {
+              "spvs": [
+                "V4.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Extension update monitoring and alerting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Extension marketplace security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E016",
+      "name": "Blockchain-Based C2 Infrastructure",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses blockchain transactions (e.g., Solana, Bitcoin) as immutable command and control infrastructure that cannot be taken down or censored",
+      "risks": [
+        "Immutable C2 instructions on blockchain",
+        "No EDR",
+        "Cryptocurrency node connections not restricted"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Network behavior analysis",
+            "frameworks": {
+              "spvs": [
+                "V5.2",
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Cryptocurrency-related traffic restrictions",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
+          },
+          {
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Blockchain RPC connection monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Anomalous blockchain query detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E017",
+      "name": "Legitimate Service Abuse for C2",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection",
+      "risks": [
+        "Legitimate services not monitored for C2 abuse",
+        "No content inspection of legitimate service traffic",
+        "Services whitelisted in security controls",
+        "No EDR",
+        "Encoded payloads in legitimate service data"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Deep content inspection of legitimate service traffic",
+            "frameworks": {
+              "spvs": [
+                "V5.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Behavioral analysis for unusual service usage patterns",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Network traffic anomaly detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Application-level monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Data exfiltration detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E018",
+      "name": "BitTorrent DHT for C2",
+      "component": "endpoint",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses BitTorrent Distributed Hash Table network for decentralized command distribution that cannot be shut down",
+      "risks": [
+        "BitTorrent/P2P traffic not monitored",
+        "DHT network connections appear as normal P2P traffic",
+        "No EDR",
+        "Decentralized C2 cannot be taken down",
+        "P2P protocols not restricted"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "P2P protocol blocking",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
+          },
+          {
+            "name": "Network behavior analysis",
+            "frameworks": {
+              "spvs": [
+                "V5.2",
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Application whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V1.2"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "EDR on endpoint",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "BitTorrent traffic monitoring and blocking",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "DHT network connection detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-E019",
+      "name": "OAuth Token Abuse for Cross-Organizational Access",
+      "component": "endpoint",
+      "stage": "Initial Access",
+      "description": "Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access",
+      "risks": [
+        "OAuth tokens stored in browser or credential stores",
+        "Third-party apps granted excessive OAuth scopes ('Allow All')",
+        "OAuth tokens not bound to device or IP",
+        "No monitoring of OAuth token usage across organizations",
+        "Long-lived OAuth refresh tokens without rotation",
+        "Third-party vendors with OAuth access to enterprise identity systems",
+        "No revocation of tokens when third-party is compromised"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "OAuth scope minimization",
+            "description": "Restrict third-party OAuth apps to minimal required scopes",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "OAuth token binding",
+            "description": "Bind OAuth tokens to specific devices, IPs, or client certificates",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "OAuth app approval workflow",
+            "description": "Require admin approval for third-party OAuth integrations",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Short-lived OAuth tokens with frequent rotation",
+            "description": "Reduce token lifetime and enforce regular re-authentication",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "Third-party vendor security assessment",
+            "description": "Assess OAuth-connected vendors for security posture before integration",
+            "frameworks": {
+              "spvs": [
+                "V1.3",
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Conditional access policies for OAuth apps",
+            "description": "Require MFA re-verification for sensitive OAuth operations",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "OAuth token usage anomaly detection",
+            "description": "Detect OAuth tokens used from unexpected locations, devices, or user agents",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Cross-organization OAuth activity monitoring",
+            "description": "Monitor and alert on OAuth access patterns across organizational boundaries",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Third-party OAuth app audit logging",
+            "description": "Log all actions performed by third-party OAuth applications",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "OAuth scope elevation alerting",
+            "description": "Alert when OAuth apps request or use elevated scopes",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V001",
+      "name": "Abuse Credentials for VCS Access",
+      "component": "vcs",
+      "stage": "Initial Access",
+      "description": "Attacker uses stolen credentials to access VCS",
+      "frameworks": {
+        "mitre_attack": ["T1078"]
+      },
+      "risks": [
+        "Lack of 2FA / phishing protection",
+        "Credentials in org public repos",
+        "Credentials in public repos of org members",
+        "Credentials in workflow logs",
+        "Previous breaches",
+        "Fine-grained PATs not enforced",
+        "PATs without expiration",
+        "Broad-scope CLI OAuth tokens without expiry",
+        "Privileged accounts used for daily work"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Mandatory MFA",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "IDP / SSO setup",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Enforcing fine-grained PATs",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Enforcing PAT expiration",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Dedicated admin accounts for org owners",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "IP allow list for token access",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning on all orgs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Secret scanning on personal repos",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Token usage anomaly detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V002",
+      "name": "Imposter Commits",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker commits code impersonating another developer",
+      "risks": [
+        "No commit signing required",
+        "Email verification not enforced",
+        "No code review process"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Commit signing",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Requiring code owner approval",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
+          },
+          {
+            "name": "Branch protection rules",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Email verification enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          }
+        ],
+        "detective": []
+      }
+    },
+    {
+      "id": "T-V003",
+      "name": "Secret Exfiltration from Repo",
+      "component": "vcs",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts secrets from repository content or history",
+      "risks": [
+        "Misconfigured repo - visibility (public when should be private)",
+        "Misconfigured VCS access - external contributors",
+        "Using untrusted webhooks",
+        "Dangling webhooks",
+        "Secrets committed to repo",
+        "Leaked secrets deleted but not revoked",
+        "Secret scanning limited to the primary org"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Private repo visibility",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Webhook security review",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Branch protection rules",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Revoke leaked secrets, not just delete them",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning on all orgs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Secret scanning on personal repos",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V004",
+      "name": "Secret Exfiltration from Personal Repo",
+      "component": "vcs",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker finds secrets in personal repos of org members",
+      "risks": [
+        "Misconfigured repo - visibility",
+        "Using personal repos for work",
+        "Org members with public repos containing work content"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Policy against using personal repos for work",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
+          },
+          {
+            "name": "Security awareness training",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning on personal repos",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V005",
+      "name": "VCS Vulnerability Exploitation",
+      "component": "vcs",
+      "stage": "Initial Access",
+      "description": "Attacker exploits vulnerability in VCS platform",
+      "risks": [
+        "Non-patched VCS instance",
+        "Known CVEs not addressed",
+        "Self-hosted VCS without security updates"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed VCS instances",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Patching schedule",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Security update monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V006",
+      "name": "Turn Private Repos Public",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker changes repository visibility to public",
+      "risks": [
+        "Overprivileged VCS access",
+        "No approval for visibility changes",
+        "No audit log monitoring"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal VCS permissions",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Approval workflow for visibility changes",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V007",
+      "name": "Clone Sensitive Repositories",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker clones private repositories to steal IP and source code",
+      "risks": [
+        "Overprivileged VCS access",
+        "No audit log monitoring",
+        "No DLP on network"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal VCS permissions",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Repository access reviews",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Network DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V008",
+      "name": "Malicious Repo Hosting",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses compromised VCS to host malicious repositories",
+      "risks": [
+        "Overprivileged VCS access",
+        "No repository review process",
+        "Unlimited repository creation"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Repository creation approval",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Resource quotas",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.2"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Repository security scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V009",
+      "name": "Mass Deletion of Repositories",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker deletes multiple repositories to cause data loss and operational disruption",
+      "risks": [
+        "Overprivileged VCS access",
+        "No backup and recovery",
+        "No audit log monitoring",
+        "Insufficient access controls on critical repositories",
+        "No repository deletion approval process",
+        "Lack of deletion protection"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal VCS user permissions",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Regular repository backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Repository deletion approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Repository recovery procedures",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
+          },
+          {
+            "name": "Deletion protection on critical repositories",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Immutable audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V010",
+      "name": "Malicious Code Modification in Repository",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase",
+      "frameworks": {
+        "mitre_attack": ["T1195.002"]
+      },
+      "risks": [
+        "Overprivileged VCS access",
+        "No code review requirements",
+        "Direct push to protected branches allowed",
+        "Lack of commit signing",
+        "No automated code security scanning",
+        "Insufficient branch protection rules",
+        "No detection of suspicious code patterns",
+        "Admins can bypass branch protection"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Require code owner approval",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
+          },
+          {
+            "name": "Mandatory code review by multiple reviewers",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
+          },
+          {
+            "name": "Commit signing enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Minimal VCS permissions (principle of least privilege)",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Pre-commit hooks for security checks",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.4"
+              ]
+            }
+          },
+          {
+            "name": "Branch rulesets with no bypass actors",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Automated code security scanning (SAST)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Detection infra on audit logs (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Code change anomaly detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Branch protection override alerting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V011",
+      "name": "Git Tag/Reference Manipulation",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code",
+      "risks": [
+        "Tags not protected from force-push",
+        "No tag signing enforcement",
+        "Consumers reference actions/packages by mutable tags",
+        "No alerting on tag reference changes",
+        "Service accounts with tag push permissions",
+        "No approval workflow for tag operations"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Tag protection rules",
+            "description": "Prevent force-push and deletion of release tags",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Tag signing enforcement",
+            "description": "Require GPG/SSH signing for tag creation",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Restrict tag push permissions",
+            "description": "Limit tag creation/modification to specific roles or service accounts with MFA",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Pin actions/dependencies by SHA",
+            "description": "Reference GitHub Actions and dependencies by immutable commit SHA instead of tags",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Tag operation approval workflow",
+            "description": "Require approval for tag creation or modification on release branches",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V4.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Tag mutation monitoring",
+            "description": "Alert on tag force-push, deletion, or reference changes",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Audit log monitoring for tag operations",
+            "description": "Monitor VCS audit logs for bulk tag modifications",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Tag-to-commit drift detection",
+            "description": "Detect when tag references change to point to different commits",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V012",
+      "name": "Cross-Fork Object Reference Abuse",
+      "component": "vcs",
+      "stage": "Initial Access",
+      "description": "Attacker pushes malicious commits to a repository fork, exploiting git's shared object model to make those commits referenceable by SHA from the upstream repository without merging",
+      "risks": [
+        "No branch membership verification for SHAs",
+        "SHAs not validated against protected branches",
+        "Unrestricted forking on sensitive repos",
+        "No origin validation for fetched commits",
+        "No monitoring of non-branch commit references"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "SHA branch membership validation",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V3.3"
+              ]
+            }
+          },
+          {
+            "name": "Disable forking on sensitive repos",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Signed commit enforcement",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Action pinning with hash verification",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Workflow SHA provenance checks",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Fork push activity monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-V013",
+      "name": "VCS Evidence Destruction",
+      "component": "vcs",
+      "stage": "Post-Compromise",
+      "description": "Attacker deletes workflow run records and rewrites protected branch history to remove evidence of malicious activity",
+      "frameworks": {
+        "mitre_attack": ["T1070"]
+      },
+      "risks": [
+        "Any user with write access can delete workflow runs and logs",
+        "Admins can bypass force-push protection",
+        "Audit and workflow logs retained only in the VCS platform",
+        "No alerting on run deletion or history rewrites"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Audit log streaming outside the VCS platform",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Workflow log export to external storage",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Force-push and deletion blocked with no bypass actors",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Workflow run deletion alerting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Protected branch history rewrite alerting",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C001",
+      "name": "Abuse Credentials for CI/CD Access",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker uses stolen credentials to access CI/CD system",
+      "risks": [
+        "Lack of 2FA / phishing protection",
+        "Default credentials / bad out-of-the-box config",
+        "Credentials in org public repos",
+        "Previous breaches",
+        "Release approval satisfiable by any developer account"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Mandatory MFA",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "IDP / SSO setup",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Enforcing fine-grained PATs (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Enforcing PAT expiration (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Dedicated release approver accounts",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V4.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C002",
+      "name": "Malicious Execution in Workflow Context",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker executes malicious code within CI/CD workflow",
+      "risks": [
+        "Using untrusted GitHub actions",
+        "Using untrusted GitHub Apps",
+        "Using untrusted reusable workflows",
+        "Using untrusted SW packages on runners",
+        "Using untrusted container / VM image for runners",
+        "Lack of GitHub action pinning",
+        "Build source controllable through workflow inputs"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Pinning 3rd-party actions",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Action whitelisting",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Automated maintainer reputation and hygiene checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Requiring code owner approval (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
+          },
+          {
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Runner SBOM",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Build source validation against protected branches",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V3.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Image scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C003",
+      "name": "PWN Request / Poisoned Pipeline Execution",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker submits malicious PR that triggers workflow with elevated privileges",
+      "frameworks": {
+        "mitre_attack": ["T1195.002"]
+      },
+      "risks": [
+        "Misconfigured repo - visibility",
+        "Misconfigured VCS access - external contributors",
+        "Allowing PRs from forks",
+        "Usage of pull_request_target/workflow_run",
+        "Default workflow permissions set to WRITE",
+        "Default workflow permissions set to approve PR",
+        "Workflows with access to secrets"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Private repo (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Require explicit approval/ disallow workflows from forks (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Default workflow permissions not set to approve PRs",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C004",
+      "name": "Workflow Script Injection",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker injects malicious code into workflow through user-controlled input",
+      "risks": [
+        "Misconfigured repo - visibility",
+        "Misconfigured workflow - script injection",
+        "Default workflow permissions set to WRITE",
+        "Default workflow permissions set to approve PR",
+        "Workflow with excessive permissions",
+        "Workflow with access to secrets"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Private repo (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Code review for workflows",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C005",
+      "name": "Secret Exfiltration from Workflow",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts secrets from CI/CD workflow execution",
+      "frameworks": {
+        "mitre_attack": ["T1552.001"]
+      },
+      "risks": [
+        "Workflow with access to secrets",
+        "No runtime monitoring",
+        "Secrets in workflow logs",
+        "Overprivileged secrets",
+        "Secrets available to workflows on any branch",
+        "Personal tokens or signing keys stored as CI secrets"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC setup in workflows",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Log sanitization",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "Environment-scoped secrets with branch policies",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Network-level runner egress allow-list",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V4.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Exfiltration workflow detection on new branches",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C006",
+      "name": "Secret Enumeration in Workflows Using GitHub Search",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker searches public workflows for exposed secrets",
+      "risks": [
+        "Workflow with access to secrets",
+        "Public repositories",
+        "Secrets in workflow files"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC setup in workflows",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Private repositories",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Code review for workflows",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C007",
+      "name": "Action Cache Poisoning",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker poisons shared action cache to inject malicious code",
+      "risks": [
+        "Shared actions cache",
+        "No cache isolation",
+        "No cache verification"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Don't use actions cache",
+            "frameworks": {
+              "spvs": [
+                "V3.3"
+              ]
+            }
+          },
+          {
+            "name": "Workflow ordering",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Cache artifact signing / verification",
+            "frameworks": {
+              "spvs": [
+                "V3.3",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Cache isolation per repository",
+            "frameworks": {
+              "spvs": [
+                "V3.3"
+              ]
+            }
+          }
+        ],
+        "detective": []
+      }
+    },
+    {
+      "id": "T-C008",
+      "name": "Malicious Workflow Performing Code Modification",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses workflow to modify code or approve PRs",
+      "risks": [
+        "Default workflow permissions set to WRITE",
+        "Default workflow permissions set to approve PR",
+        "Workflow with excessive permissions"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Default workflow permissions not set to approve PRs",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Code review requirements",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C009",
+      "name": "CI/CD Vulnerability Exploitation",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker exploits vulnerability in CI/CD platform",
+      "risks": [
+        "Non-patched CI/CD instance",
+        "Known CVEs not addressed",
+        "Self-hosted CI/CD without security updates"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed CI/CD instances",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Patching schedule",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Security update monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C010",
+      "name": "Runner Executing Malicious Package",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Malicious package executes on CI/CD runner",
+      "risks": [
+        "Using untrusted SW packages on runners",
+        "No package verification",
+        "No runtime monitoring",
+        "Package installation scripts enabled",
+        "Direct downloads from public registries"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Local registry proxy with filtering",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Runner SBOM",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Package version pinning",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Package signature verification",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Disable package installation scripts (--ignore-scripts)",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C011",
+      "name": "Stealing Registry Tokens",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts registry publishing tokens from workflow",
+      "risks": [
+        "Workflow with access to secrets",
+        "Overprivileged registry tokens",
+        "Long-lived credentials"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC setup in workflows",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Trusted publishing (registry)",
+            "frameworks": {
+              "spvs": [
+                "V3.2"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C012",
+      "name": "PR from Malicious Workflow",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Workflow creates malicious pull request",
+      "risks": [
+        "Default workflow permissions set to WRITE",
+        "Default workflow permissions set to approve PR",
+        "No PR review requirements"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          },
+          {
+            "name": "Require code owner approval (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5",
+                "V2.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C013",
+      "name": "Persistence on Self-Hosted Runners",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker establishes persistence on self-hosted runner",
+      "risks": [
+        "Misconfigured self-hosted runner",
+        "Non-ephemeral self-hosted runner",
+        "Overshared self-hosted runner",
+        "No runtime monitoring"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Ephemeral runners",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Runner isolation",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C014",
+      "name": "Cryptomining on Runners",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses runner resources for cryptocurrency mining",
+      "risks": [
+        "No runtime monitoring",
+        "No resource limits",
+        "Self-hosted runners"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Resource monitoring and limits",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Network monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C015",
+      "name": "Harvest Secrets from Workflows Using ${{toJson(secrets)}}",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses toJson() to dump all secrets from workflow",
+      "risks": [
+        "Workflow with access to secrets",
+        "No CICD scanning",
+        "No runtime monitoring"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC setup in workflows",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "CICD scanning tools",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C016",
+      "name": "Pivot from Self-Hosted VM Runner into Local Network / Cloud",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses runner network access to pivot into production",
+      "risks": [
+        "Overprivileged runner pod identity",
+        "Misconfigured runner cluster",
+        "Self-hosted runner in production network",
+        "No network segmentation"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal runner pod privileges",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Network segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "K8s sensor on runner cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "KSPM on runner cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C017",
+      "name": "Pivot from Self-Hosted Container Runner into K8s Cluster",
+      "component": "cicd",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker escapes container runner to access Kubernetes cluster",
+      "risks": [
+        "Overprivileged runner pod identity",
+        "Misconfigured runner cluster",
+        "No pod security policies",
+        "Privileged containers allowed"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal runner pod privileges",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Pod security policies",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "K8s sensor on runner cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "KSPM on runner cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C018",
+      "name": "Data Exfiltration from CI/CD",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker exfiltrates build artifacts, logs, secrets, and sensitive data from CI/CD system over network",
+      "risks": [
+        "No network egress monitoring",
+        "Unrestricted outbound network access from runners",
+        "Build artifacts contain sensitive data",
+        "Logs contain secrets or sensitive information",
+        "No DLP on CI/CD network"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Log sanitization",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "Artifact encryption",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Network segmentation (CI/CD from internet)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Egress traffic monitoring and filtering",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Runtime agent on runner",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Large data transfer detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Detection infra on audit logs (CI/CD)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C019",
+      "name": "CI/CD Infrastructure Destruction",
+      "component": "cicd",
+      "stage": "Post-Compromise",
+      "description": "Attacker destroys CI/CD pipelines, workflows, runners, or build artifacts to disrupt development and deployment operations",
+      "risks": [
+        "Overprivileged workflow permissions",
+        "No backup and recovery",
+        "Lack of workflow protection",
+        "No audit log monitoring",
+        "Insufficient access controls on critical workflows",
+        "No approval process for infrastructure changes"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Regular CI/CD configuration backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Workflow protection rules",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Infrastructure change approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "CI/CD recovery procedures",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
+          },
+          {
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (CI/CD)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Immutable audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-C020",
+      "name": "CI/CD Misconfiguration Exploitation",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker exploits misconfiguration in CI/CD platform",
+      "risks": [
+        "Misconfigured CI/CD instances"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": []
+      }
+    },
+    {
+      "id": "T-C021",
+      "name": "AI Agent Prompt Injection in Workflow",
+      "component": "cicd",
+      "stage": "Initial Access",
+      "description": "Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data",
+      "risks": [
+        "AI agents with Bash/shell execution capabilities in workflows",
+        "AI agents with Write/Edit file permissions",
+        "User-controlled input passed to AI prompts without sanitization",
+        "Overly permissive AI tool configurations (allowedTools includes Bash)",
+        "AI workflows triggered by any GitHub user (no write-access requirement)",
+        "No input validation or content filtering for AI context",
+        "AI agents with access to workflow secrets",
+        "No human approval gates for AI-suggested actions"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Restrict AI agent tool permissions",
+            "description": "Remove Bash, Write, and Edit from allowedTools when processing untrusted input",
+            "frameworks": {
+              "spvs": ["V3.1"]
+            }
+          },
+          {
+            "name": "Input sanitization before AI context injection",
+            "description": "Filter or escape user-controlled input before including in AI prompts",
+            "frameworks": {
+              "spvs": ["V2.1"]
+            }
+          },
+          {
+            "name": "Require write access to trigger AI-powered workflows",
+            "description": "Do not use 'allowed_non_write_users: *' for AI workflows with code execution",
+            "frameworks": {
+              "spvs": ["V3.1"]
+            }
+          },
+          {
+            "name": "Sandboxed AI execution environment",
+            "description": "Run AI agents in isolated environment without secret access",
+            "frameworks": {
+              "spvs": ["V3.1"]
+            }
+          },
+          {
+            "name": "Human approval gates for AI-suggested actions",
+            "description": "Require human review before AI agent executes code changes or commands",
+            "frameworks": {
+              "spvs": ["V3.1"]
+            }
+          },
+          {
+            "name": "Separate AI workflows from release/publish workflows",
+            "description": "Isolate AI triage workflows from workflows with publishing credentials",
+            "frameworks": {
+              "spvs": ["V3.1", "V3.2"]
+            }
+          },
+          {
+            "name": "Rate limiting for AI workflow triggers",
+            "description": "Prevent abuse by limiting frequency of AI workflow invocations per user",
+            "frameworks": {
+              "spvs": ["V5.2"]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "AI prompt injection detection",
+            "description": "Monitor AI inputs for prompt injection patterns and adversarial instructions",
+            "frameworks": {
+              "spvs": ["V5.4"]
+            }
+          },
+          {
+            "name": "Audit logging of AI agent actions",
+            "description": "Log all commands executed by AI agents for forensic analysis",
+            "frameworks": {
+              "spvs": ["V5.4"]
+            }
+          },
+          {
+            "name": "Anomaly detection for AI workflow behavior",
+            "description": "Alert on unusual AI agent actions like npm install from external commits",
+            "frameworks": {
+              "spvs": ["V5.4"]
+            }
+          },
+          {
+            "name": "Runtime agent on runner",
+            "description": "Monitor AI workflow execution for malicious behavior patterns",
+            "frameworks": {
+              "spvs": ["V5.4"]
+            },
+            "detectionRules": [
+              {
+                "source": "sigma",
+                "ruleId": "proc_creation_lnx_susp_npm_install",
+                "ruleName": "Suspicious NPM Install from External Source",
+                "description": "Detects npm install commands referencing external GitHub commits"
+              }
+            ]
+          }
+        ]
+      },
+      "frameworkMappings": {
+        "mitre_attack": [
+          {
+            "techniqueId": "T1059.004",
+            "techniqueName": "Command and Scripting Interpreter: Unix Shell",
+            "tactic": "Execution"
+          },
+          {
+            "techniqueId": "T1195.002",
+            "techniqueName": "Supply Chain Compromise: Compromise Software Supply Chain",
+            "tactic": "Initial Access"
+          }
+        ],
+        "owasp_spvs": ["V2.1", "V3.1", "V3.2", "V5.2", "V5.4"]
+      }
+    },
+    {
+      "id": "T-R001",
+      "name": "Abuse Credentials for Registry Access",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker uses stolen credentials to access registry",
+      "risks": [
+        "Lack of 2FA / phishing protection",
+        "Default credentials / bad out-of-the-box config",
+        "Credentials in public images",
+        "Credentials in workflow logs",
+        "Previous breaches"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Mandatory MFA",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "IDP / SSO setup",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-R002",
+      "name": "Misconfigured / Anonymous Access",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker exploits misconfigured registry permissions",
+      "risks": [
+        "Misconfigured registry access",
+        "Anonymous access enabled",
+        "Overly permissive access controls"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "IDP / SSO setup",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Access control reviews",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Principle of least privilege",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": []
+      }
+    },
+    {
+      "id": "T-R003",
+      "name": "Registry Vulnerability Exploitation",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker exploits vulnerability in registry platform",
+      "risks": [
+        "Non-patched artifact/container registry",
+        "Known CVEs not addressed",
+        "Self-hosted registry without security updates"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Using managed registry instances",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Patching schedule",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Security update monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-R004",
+      "name": "Publishing Malicious Package",
+      "component": "registry",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker publishes malicious package to registry",
+      "frameworks": {
+        "mitre_attack": ["T1195.001"]
+      },
+      "risks": [
+        "Overprivileged NPM token",
+        "Lack of provenance",
+        "Lack of trusted publishing",
+        "No package signing",
+        "Trusted publisher not bound to a protected environment",
+        "Provenance not verified before publishing"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Trusted publishing",
+            "frameworks": {
+              "spvs": [
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Provenance attestation",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "MFA for registry account",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Package signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "OIDC for publishing",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Pre-publish provenance verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          }
+        ],
+        "detective": []
+      }
+    },
+    {
+      "id": "T-R005",
+      "name": "Publishing Malicious Container/VM Image",
+      "component": "registry",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker publishes malicious container or VM image",
+      "risks": [
+        "Overprivileged registry credentials",
+        "No image signing",
+        "No provenance attestation",
+        "No image scanning",
+        "Provenance not verified before publishing"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Trusted publishing",
+            "frameworks": {
+              "spvs": [
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Provenance attestation",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Image signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "OIDC for publishing",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Pre-publish provenance verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Image vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-R006",
+      "name": "Publishing Malicious IDE/Browser Extension",
+      "component": "registry",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker publishes malicious extension to extension marketplace",
+      "risks": [
+        "Overprivileged publishing credentials",
+        "No extension review process",
+        "No signing requirements"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Extension signing requirements",
+            "frameworks": {
+              "spvs": [
+                "V4.1"
+              ]
+            }
+          },
+          {
+            "name": "Extension review process",
+            "frameworks": {
+              "spvs": [
+                "V4.1"
+              ]
+            }
+          },
+          {
+            "name": "MFA for publisher account",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Trusted publishing",
+            "frameworks": {
+              "spvs": [
+                "V3.2"
+              ]
+            }
+          }
+        ],
+        "detective": []
+      }
+    },
+    {
+      "id": "T-R007",
+      "name": "Harvest Data from Private Artifacts",
+      "component": "registry",
+      "stage": "Post-Compromise",
+      "description": "Attacker extracts sensitive data from private artifacts",
+      "risks": [
+        "Overprivileged registry access",
+        "Secrets in artifacts",
+        "No audit log monitoring"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal registry permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Artifact encryption",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-R008",
+      "name": "Malicious Images Hosting",
+      "component": "registry",
+      "stage": "Post-Compromise",
+      "description": "Attacker uses compromised registry to host malicious images",
+      "risks": [
+        "Overprivileged registry access",
+        "No image scanning",
+        "No resource quotas"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Resource quotas",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.2"
+              ]
+            }
+          },
+          {
+            "name": "Access control reviews",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Image vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-R009",
+      "name": "Registry Infrastructure Destruction",
+      "component": "registry",
+      "stage": "Post-Compromise",
+      "description": "Attacker deletes packages, images, or corrupts registry infrastructure to disrupt software distribution and deployment",
+      "risks": [
+        "Overprivileged registry access",
+        "No backup and recovery",
+        "Lack of deletion protection",
+        "No audit log monitoring",
+        "Insufficient access controls on critical artifacts",
+        "No artifact deletion approval process"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal user permissions (registry)",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Regular artifact backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Artifact deletion protection",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Artifact deletion approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Immutable artifact storage",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Registry recovery procedures",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
+          },
+          {
+            "name": "Artifact retention policies",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (registry)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-R010",
+      "name": "Typosquatting",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker publishes malicious packages with names similar to legitimate ones to trick developers into installing them by mistake",
+      "frameworks": {
+        "mitre_attack": ["T1195.001"]
+      },
+      "risks": [
+        "No package name verification",
+        "Lack of typosquatting detection",
+        "Developer mistakes during package installation",
+        "No package naming policies",
+        "Lack of security awareness training",
+        "Direct downloads from public registries"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Local registry proxy with filtering",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Package name similarity checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Automated maintainer reputation and hygiene checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Security awareness training on package verification",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
+          },
+          {
+            "name": "Package installation verification workflows",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Dependency review and approval process",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Package popularity and reputation scoring",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Typosquatting detection and prevention",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-R011",
+      "name": "Namespace/Dependency Confusion",
+      "component": "registry",
+      "stage": "Initial Access",
+      "description": "Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package",
+      "frameworks": {
+        "mitre_attack": ["T1195.001"]
+      },
+      "risks": [
+        "Lack of internal repository enforcement",
+        "Package managers prioritize public repositories",
+        "No namespace isolation between internal and public packages",
+        "Automatic dependency resolution without verification",
+        "Higher version numbers in public repositories",
+        "Direct downloads from public registries"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Local registry proxy with filtering",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Internal repository enforcement and prioritization",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Namespace isolation and scoping",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Package version pinning",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Automated maintainer reputation and hygiene checks",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Private package registry configuration",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Dependency resolution policies",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Package source verification",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          }
+        ],
+        "detective": []
+      }
+    },
+    {
+      "id": "T-R012",
+      "name": "Package Lifecycle Script Abuse",
+      "component": "registry",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker leverages package manager lifecycle hooks (postinstall, preinstall) or language-specific initialization mechanisms (.pth files) to execute malicious code during package installation",
+      "risks": [
+        "Lifecycle scripts enabled by default in package managers",
+        "No review or approval of install-time scripts",
+        "Scripts execute with user privileges automatically",
+        "Python .pth files execute on any interpreter startup",
+        "No network restrictions during package installation",
+        "Self-cleaning payloads evade post-install detection"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Disable lifecycle scripts during installation",
+            "description": "Use --ignore-scripts flag for npm/yarn installations",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Network isolation during package installation",
+            "description": "Block outbound network access during install phase to prevent payload download",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "Lockfile integrity verification",
+            "description": "Use npm ci instead of npm install to enforce lockfile integrity",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Package version pinning with hash verification",
+            "description": "Pin exact versions with integrity hashes to prevent substitution",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Python .pth file restrictions",
+            "description": "Audit and restrict .pth file creation in site-packages directories",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Lifecycle script content analysis",
+            "description": "SCA tools that flag packages with suspicious install scripts",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Network monitoring during package installation",
+            "description": "Detect unexpected outbound connections during npm/pip install",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Process monitoring during installation",
+            "description": "EDR/runtime agent monitoring for child processes spawned by package managers",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "File integrity monitoring for .pth files",
+            "description": "Alert on .pth file creation or modification in Python environments",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-R013",
+      "name": "Version String Impersonation",
+      "component": "registry",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses",
+      "risks": [
+        "Registry permits version republishing",
+        "No immutable version policy",
+        "Lockfile integrity checks not enforced",
+        "No alerting on content changes for existing versions",
+        "Version strings trusted without content verification"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Immutable version policy",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Lockfile integrity enforcement",
+            "frameworks": {
+              "spvs": [
+                "V2.6",
+                "V3.3"
+              ]
+            }
+          },
+          {
+            "name": "Registry mirror with snapshots",
+            "frameworks": {
+              "spvs": [
+                "V2.6"
+              ]
+            }
+          },
+          {
+            "name": "Provenance attestation requirement",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Package content hash monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Unpublish event monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Install integrity failure alerting",
+            "frameworks": {
+              "spvs": [
+                "V3.3",
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P001",
+      "name": "Abuse Production Credentials from CI/CD",
+      "component": "production",
+      "stage": "Initial Access",
+      "description": "Attacker extracts production credentials from CI/CD and uses them to access production",
+      "frameworks": {
+        "mitre_attack": ["T1078.004"]
+      },
+      "risks": [
+        "Production credentials in CI/CD workflows",
+        "Long-lived production credentials",
+        "Overprivileged cloud service accounts",
+        "No credential rotation"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC for deployment (no long-lived credentials)",
+            "frameworks": {
+              "spvs": [
+                "V1.1",
+                "V3.2"
+              ]
+            }
+          },
+          {
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Credential rotation",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "Network segmentation from SDLC",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P002",
+      "name": "Malicious Deployment via Compromised Pipeline",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker modifies CI/CD pipeline to deploy malicious code to production",
+      "risks": [
+        "No deployment approval gates",
+        "Overprivileged deployment credentials",
+        "No code signing verification",
+        "Insufficient workflow permissions review"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Deployment approval gates",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
+          },
+          {
+            "name": "Code signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Minimal workflow permissions",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Branch protection rules (VCS)",
+            "frameworks": {
+              "spvs": [
+                "V1.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Deployment monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P003",
+      "name": "Pivot from Self-Hosted Runner to Production Network",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses self-hosted runner network access to pivot into production",
+      "risks": [
+        "Self-hosted runner in production network",
+        "Weak network segmentation",
+        "Overprivileged runner identity",
+        "No network monitoring"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Network segmentation from SDLC",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "Using managed runners only",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Runner isolation",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Minimal runner privileges",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P004",
+      "name": "Container Image Poisoning to Production",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker publishes malicious container image that gets deployed to production",
+      "risks": [
+        "Lack of image signing/verification",
+        "No provenance attestation",
+        "Automatic deployment without review",
+        "No image scanning"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Image signing and verification",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Provenance attestation",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Deployment approval gates",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Image vulnerability scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Runtime security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P005",
+      "name": "Infrastructure-as-Code Manipulation",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker modifies IaC to create backdoors in production infrastructure",
+      "frameworks": {
+        "mitre_attack": ["T1098"]
+      },
+      "risks": [
+        "Insufficient IaC review process",
+        "Lack of drift detection",
+        "Overprivileged deployment credentials"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Code review for IaC changes",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
+          },
+          {
+            "name": "Deployment approval gates",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
+          },
+          {
+            "name": "Minimal deployment permissions",
+            "frameworks": {
+              "spvs": [
+                "V4.3",
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Drift detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P006",
+      "name": "Kubernetes Service Account Token Theft",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker extracts Kubernetes service account tokens from CI/CD",
+      "frameworks": {
+        "mitre_attack": ["T1552.007"]
+      },
+      "risks": [
+        "Overprivileged service accounts",
+        "Long-lived tokens",
+        "Lack of token rotation",
+        "Tokens in CI/CD secrets"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "OIDC for K8s access",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Minimal service account permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Token rotation",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Secret scanning",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Runtime security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P007",
+      "name": "Cloud Metadata Service Exploitation",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker accesses cloud metadata service to steal additional credentials",
+      "frameworks": {
+        "mitre_attack": ["T1552.005"],
+        "aws_catalog": ["T1552.005"]
+      },
+      "risks": [
+        "Metadata service not restricted",
+        "Overprivileged IAM roles",
+        "No network segmentation",
+        "Compromised workload with metadata access"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Metadata service restrictions",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
+          },
+          {
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Network segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "IMDSv2 enforcement (AWS)",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Runtime security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P008",
+      "name": "Kubernetes Pod Escape",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker escapes from container to underlying node",
+      "frameworks": {
+        "mitre_attack": ["T1611"]
+      },
+      "risks": [
+        "Privileged containers allowed",
+        "No pod security policies",
+        "Overprivileged pod identity",
+        "Host filesystem mounted"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Pod security policies",
+            "frameworks": {
+              "spvs": [
+                "V3.1"
+              ]
+            }
+          },
+          {
+            "name": "Minimal pod privileges",
+            "frameworks": {
+              "spvs": [
+                "V3.1",
+                "V5.1"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "K8s sensor on cluster",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "KSPM",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Runtime security monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P009",
+      "name": "Cloud Service Lateral Movement",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker uses compromised cloud credentials to access other cloud services",
+      "frameworks": {
+        "mitre_attack": ["T1199"],
+        "aws_catalog": ["T1199.A002"]
+      },
+      "risks": [
+        "Overprivileged IAM roles",
+        "No network segmentation",
+        "Lack of service-to-service authentication",
+        "No audit log monitoring"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Network segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "Service mesh / zero trust",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P010",
+      "name": "Network Lateral Movement Within Production",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker moves between production systems via network",
+      "risks": [
+        "Weak network segmentation",
+        "Overly permissive security groups",
+        "No network monitoring",
+        "Unpatched systems"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Network segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "Micro-segmentation",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "Security group hardening",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "Vulnerability management",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P011",
+      "name": "Steal Secrets from Production Environment",
+      "component": "production",
+      "stage": "Post-Compromise",
+      "description": "Attacker accesses production secrets store and exfiltrates customer secrets, tokens, and credentials",
+      "frameworks": {
+        "mitre_attack": ["T1552"],
+        "aws_catalog": ["T1552"]
+      },
+      "risks": [
+        "Encryption keys accessible in process memory",
+        "Lack of hardware security module (HSM) for key storage",
+        "No secrets rotation policies",
+        "Centralized storage of all customer secrets",
+        "No data loss prevention (DLP) on production systems",
+        "Lack of egress traffic monitoring",
+        "Services configured with personal or admin credentials",
+        "Admin APIs return stored secrets"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Store encryption keys in HSM (Hardware Security Module)",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
+          },
+          {
+            "name": "Envelope encryption with key hierarchy",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
+          },
+          {
+            "name": "Customer-managed encryption keys (CMEK)",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
+          },
+          {
+            "name": "Automatic secrets rotation (30-90 days)",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "Secrets segmentation (per-customer isolation)",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
+          },
+          {
+            "name": "Memory protection and anti-dumping controls",
+            "frameworks": {
+              "spvs": [
+                "V5.5"
+              ]
+            }
+          },
+          {
+            "name": "Service identities instead of personal credentials",
+            "frameworks": {
+              "spvs": [
+                "V1.1"
+              ]
+            }
+          },
+          {
+            "name": "Write-only secret storage (redact on read)",
+            "frameworks": {
+              "spvs": [
+                "V2.5"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "DLP on production systems",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Egress traffic monitoring and filtering",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Large data transfer detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P012",
+      "name": "Production Infrastructure Reconnaissance",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker enumerates production infrastructure, services, and resources to identify targets and plan attacks",
+      "risks": [
+        "Overprivileged IAM roles allowing enumeration",
+        "No detection of reconnaissance activities",
+        "Publicly exposed cloud metadata",
+        "Insufficient network segmentation allowing scanning",
+        "Verbose error messages revealing infrastructure details",
+        "Lack of honeypots or deception technology",
+        "No rate limiting on API calls"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "API rate limiting and throttling",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
+          },
+          {
+            "name": "Network segmentation (production internal)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "Metadata service restrictions",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
+          },
+          {
+            "name": "Generic error messages (no infrastructure details)",
+            "frameworks": {
+              "spvs": [
+                "V5.2"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Honeypots and deception technology",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Anomaly detection for enumeration patterns",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P013",
+      "name": "Data Exfiltration from Production",
+      "component": "production",
+      "stage": "Post-Compromise",
+      "description": "Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network",
+      "frameworks": {
+        "mitre_attack": ["T1567"],
+        "aws_catalog": ["T1530"]
+      },
+      "risks": [
+        "No network egress monitoring",
+        "Unrestricted outbound network access",
+        "No DLP on production systems",
+        "Backup data accessible and unmonitored",
+        "Use of encrypted channels to bypass DLP",
+        "Cloud storage buckets with public access"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Backup encryption and access controls",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "SSL/TLS inspection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Data classification and handling policies",
+            "frameworks": {
+              "spvs": [
+                "V1.3"
+              ]
+            }
+          },
+          {
+            "name": "Network segmentation (production from internet)",
+            "frameworks": {
+              "spvs": [
+                "V4.4"
+              ]
+            }
+          },
+          {
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Network DLP",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Egress traffic monitoring and filtering",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Large data transfer detection",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Database activity monitoring",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P014",
+      "name": "Production Infrastructure Destruction",
+      "component": "production",
+      "stage": "Post-Compromise",
+      "description": "Attacker destroys production infrastructure, databases, storage, or configurations to cause severe operational disruption and data loss",
+      "frameworks": {
+        "mitre_attack": ["T1485"],
+        "aws_catalog": ["T1485.A001"]
+      },
+      "risks": [
+        "Overprivileged IAM roles allowing destructive actions",
+        "No backup and disaster recovery plan",
+        "Lack of deletion protection on critical resources",
+        "No audit log monitoring",
+        "Insufficient access controls on critical infrastructure",
+        "No approval process for destructive operations",
+        "Backup data not isolated from production"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Minimal IAM permissions",
+            "frameworks": {
+              "spvs": [
+                "V5.1"
+              ]
+            }
+          },
+          {
+            "name": "Regular backups with offsite/offline storage",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Deletion protection on critical resources",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Destructive operation approval workflow",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
+          },
+          {
+            "name": "Immutable backups",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "Disaster recovery procedures and testing",
+            "frameworks": {
+              "spvs": [
+                "V5.3",
+                "V5.5"
+              ]
+            }
+          },
+          {
+            "name": "Resource tagging and protection policies",
+            "frameworks": {
+              "spvs": [
+                "V4.2"
+              ]
+            }
+          },
+          {
+            "name": "Backup isolation from production network",
+            "frameworks": {
+              "spvs": [
+                "V5.3"
+              ]
+            }
+          },
+          {
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P015",
+      "name": "Malicious Service Provisioning for Persistence",
+      "component": "production",
+      "stage": "Post-Compromise",
+      "description": "Attacker provisions new malicious services or backdoors existing services in orchestration platform (e.g., ArgoCD, Kubernetes) to establish persistence",
+      "risks": [
+        "No approval gates for service provisioning",
+        "Developers can create arbitrary services",
+        "Service definitions not audited",
+        "No anomaly detection for new service creation",
+        "Persistent backdoor services remain undetected"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Deployment approval gates for new services",
+            "frameworks": {
+              "spvs": [
+                "V4.3"
+              ]
+            }
+          },
+          {
+            "name": "Code review for all IaC changes",
+            "frameworks": {
+              "spvs": [
+                "V2.3"
+              ]
+            }
+          },
+          {
+            "name": "Baseline approved services list",
+            "frameworks": {
+              "spvs": [
+                "V4.2"
+              ]
+            }
+          },
+          {
+            "name": "CSPM/CNAPP",
+            "frameworks": {
+              "spvs": [
+                "V4.2",
+                "V5.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Detection infra on audit logs (production)",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Anomaly detection for new service creation patterns",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Immutable audit logs",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Regular service inventory audits",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-P016",
+      "name": "Supply Chain Backdoor (Sensor/Agent Poisoning)",
+      "component": "production",
+      "stage": "Discovery and Lateral Movement",
+      "description": "Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers",
+      "risks": [
+        "No binary signing verification for distributed software",
+        "Customer updates automatically deployed without verification",
+        "No provenance attestation for sensor binaries",
+        "No multi-party approval for releases"
+      ],
+      "controls": {
+        "protective": [
+          {
+            "name": "Code signing and verification for all distributed binaries",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Provenance attestation (SLSA Level 3+)",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Customer-controlled update policies with verification",
+            "frameworks": {
+              "spvs": [
+                "V4.1"
+              ]
+            }
+          },
+          {
+            "name": "Separation of duties for release signing",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          },
+          {
+            "name": "Immutable build logs and attestations",
+            "frameworks": {
+              "spvs": [
+                "V3.4"
+              ]
+            }
+          }
+        ],
+        "detective": [
+          {
+            "name": "Multi-party approval for sensor/agent releases",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "Regular security audits of build infrastructure",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

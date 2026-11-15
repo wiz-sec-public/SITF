@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-V012: Cross-Fork Object Reference Abuse | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-V012 (Cross-Fork Object Reference Abuse): Attacker pushes malicious commits to a repository fork, exploiting git&#x27;s shared object model to make those commits referenceable by SHA from the upstream repository without merging. Initial Access technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-V012.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-V012: Cross-Fork Object Reference Abuse | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-V012 (Cross-Fork Object Reference Abuse): Attacker pushes malicious commits to a repository fork, exploiting git&#x27;s shared object model to make those commits referenceable by SHA from the upstream repository without merging. Initial Access technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-V012.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-V012.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-V012.html",
+ "termCode": "T-V012",
+ "name": "SITF T-V012: Cross-Fork Object Reference Abuse",
+ "alternateName": "Cross-Fork Object Reference Abuse",
+ "description": "Attacker pushes malicious commits to a repository fork, exploiting git's shared object model to make those commits referenceable by SHA from the upstream repository without merging",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › VCS › T-V012</p>
+<h1>SITF technique T-V012: Cross-Fork Object Reference Abuse</h1>
+<p><span class="tag">Component: VCS</span><span class="tag">Stage: Initial Access</span><span class="tag">ID: T-V012</span></p>
+<p class="lead">Attacker pushes malicious commits to a repository fork, exploiting git&#x27;s shared object model to make those commits referenceable by SHA from the upstream repository without merging.</p>
+<p>SITF technique T-V012 (Cross-Fork Object Reference Abuse) is a <strong>Initial Access</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>VCS</strong> component (Version Control Systems (GitHub, GitLab, Azure DevOps)).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>No branch membership verification for SHAs</li>
+<li>SHAs not validated against protected branches</li>
+<li>Unrestricted forking on sensitive repos</li>
+<li>No origin validation for fetched commits</li>
+<li>No monitoring of non-branch commit references</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>SHA branch membership validation</strong><br><span class="small">OWASP SPVS: V3.1 Security of Pipeline Environment; V3.3 Continuous Security Checks</span></li>
+<li><strong>Disable forking on sensitive repos</strong><br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening</span></li>
+<li><strong>Signed commit enforcement</strong><br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening; V3.4 Integrity of Artifacts</span></li>
+<li><strong>Action pinning with hash verification</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit; V3.1 Security of Pipeline Environment</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Workflow SHA provenance checks</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Fork push activity monitoring</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-V012">Open T-V012 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-V012 in the SITF flow builder</a></li>
+<li>Previous VCS technique: <a href="T-V011.html">T-V011 Git Tag/Reference Manipulation</a></li>
+<li>Next VCS technique: <a href="T-V013.html">T-V013 VCS Evidence Destruction</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-V012 (Cross-Fork Object Reference Abuse)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-V012.html">https://wiz-sec-public.github.io/SITF/techniques/T-V012.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

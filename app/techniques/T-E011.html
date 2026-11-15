@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-E011: Unicode Stealth Code Injection | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-E011 (Unicode Stealth Code Injection): Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn&#x27;t render in code editors but executes normally. Initial Access technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-E011.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-E011: Unicode Stealth Code Injection | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-E011 (Unicode Stealth Code Injection): Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn&#x27;t render in code editors but executes normally. Initial Access technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-E011.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-E011.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-E011.html",
+ "termCode": "T-E011",
+ "name": "SITF T-E011: Unicode Stealth Code Injection",
+ "alternateName": "Unicode Stealth Code Injection",
+ "description": "Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn't render in code editors but executes normally",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Endpoint/IDE › T-E011</p>
+<h1>SITF technique T-E011: Unicode Stealth Code Injection</h1>
+<p><span class="tag">Component: Endpoint/IDE</span><span class="tag">Stage: Initial Access</span><span class="tag">ID: T-E011</span></p>
+<p class="lead">Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn&#x27;t render in code editors but executes normally.</p>
+<p>SITF technique T-E011 (Unicode Stealth Code Injection) is a <strong>Initial Access</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Endpoint/IDE</strong> component (Developer workstations and development environments).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Using untrusted IDE extensions</li>
+<li>No code review detection of invisible characters</li>
+<li>Static analysis tools miss unprintable characters</li>
+<li>Diff tools don&#x27;t highlight invisible code</li>
+<li>Developer trust in visual code inspection</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>IDE plugins to visualize invisible characters</strong><br><span class="small">OWASP SPVS: V1.4 Developer Tool Operation</span></li>
+<li><strong>Static analysis with Unicode normalization</strong><br><span class="small">OWASP SPVS: V2.1 Secure Coding Practices; V2.4 Perform Security Checks</span></li>
+<li><strong>Extension code signing and verification</strong><br><span class="small">OWASP SPVS: V2.1 Secure Coding Practices; V3.4 Integrity of Artifacts</span></li>
+<li><strong>Mandatory code review with specialized tools</strong><br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening; V2.3 Code Review and Analysis</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Unicode character detection in code review tools</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Automated detection of unprintable characters in commits</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-E011">Open T-E011 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-E011 in the SITF flow builder</a></li>
+<li>Previous Endpoint/IDE technique: <a href="T-E010.html">T-E010 Endpoint Infrastructure Destruction</a></li>
+<li>Next Endpoint/IDE technique: <a href="T-E012.html">T-E012 SOCKS Proxy Deployment on Endpoint</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-E011 (Unicode Stealth Code Injection)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-E011.html">https://wiz-sec-public.github.io/SITF/techniques/T-E011.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

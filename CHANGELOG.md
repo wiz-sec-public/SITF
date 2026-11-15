@@ -49,6 +49,9 @@ _None_
 
 ### Other Changes
 - SITF skills are now installable as a Claude Code plugin from this repository (`/plugin marketplace add wiz-sec-public/SITF`, then `/plugin install sitf@sitf`). The skills locate the bundled technique library when run outside the repository, and their descriptions now name CI/CD, GitHub Actions, registries and the other SDLC components they cover
+- Static, crawlable website pages generated from `techniques.json` and `flows/`: one page per technique (`app/techniques/<ID>.html`) and per incident (`app/incidents/<slug>.html`), plus `llms.txt`, `llms-full.txt`, `sitemap.xml` and `techniques.json` at stable URLs
+- TECHNIQUE_LIBRARY.md: consistent "SITF technique T-xxx" naming, MITRE ATT&CK mappings and web page links per technique; the stage index now includes the 31 Discovery and Lateral Movement techniques it previously omitted
+- CITATION.cff: updated technique count and license (CC BY-NC 4.0)
 - LiteLLM flow rewritten to follow BerriAI's root-cause analysis (2026-10-23). The entry point is now a leaked, never-revoked admin key rather than an internet-exposed gateway, and the flow adds CI secret exfiltration (T-C005), the lookalike fork (T-V008) and evidence destruction (T-V013)
 
 ---
