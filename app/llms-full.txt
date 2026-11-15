@@ -1,0 +1,2081 @@
+# SDLC Infrastructure Threat Framework (SITF) — full technique reference
+
+SITF is an open threat framework for attacks on software development lifecycle (SDLC) infrastructure: developer endpoints and IDEs, version control (VCS), CI/CD pipelines, artifact and container registries, and production cloud. Each SITF technique is mapped to the risks that enable it and to protective and detective controls.
+
+Source: https://wiz-sec-public.github.io/SITF/techniques.json
+
+## Endpoint/IDE
+
+### SITF technique T-E001: Malicious Execution on Endpoint
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E001.html
+Component: Endpoint/IDE. Stage: Initial Access.
+
+Attacker executes malicious code on developer workstation.
+
+Risks:
+- Using untrusted IDE extensions
+- Using untrusted software packages on endpoints
+- No EDR
+- Lack of application sandboxing
+- Package installation scripts enabled
+- Direct downloads from public registries
+
+Protective controls:
+- Local registry proxy with filtering
+- IDE sandboxing
+- Mandating signed extensions
+- Package version pinning
+- Automated maintainer reputation and hygiene checks
+- Application whitelisting
+- Disable package installation scripts (--ignore-scripts)
+
+Detective controls:
+- EDR on endpoint
+
+MITRE ATT&CK: T1204.002
+
+Observed in: Aqua Trivy VS Code Extension, AsyncAPI Generator (2026), CircleCI, Clinejection, CodeBreach, LiteLLM (October 2026), Miasma (Red Hat), s1ngularity, Shai-Hulud 2.0, Trust Wallet, Ultralytics
+
+### SITF technique T-E002: Endpoint Phishing
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E002.html
+Component: Endpoint/IDE. Stage: Initial Access.
+
+Attacker phishes developer to steal credentials or install malware.
+
+Risks:
+- Lack of 2FA / phishing protection
+- No security awareness training
+- Credentials stored in plaintext
+- No email security controls
+
+Protective controls:
+- Mandatory MFA
+- Phishing-resistant authentication
+- Security awareness training
+- Email security (SPF, DMARC, DKIM)
+
+Detective controls:
+- EDR on endpoint
+
+Observed in: CircleCI, SolarWinds
+
+### SITF technique T-E003: Harvest Local Secrets / Credentials from Endpoint
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E003.html
+Component: Endpoint/IDE. Stage: Discovery and Lateral Movement.
+
+Attacker extracts credentials stored on developer machine.
+
+Risks:
+- Credentials stored in plaintext
+- Production credentials on developer machines
+- No local DLP
+- SSH keys without passwords
+- Cloud credentials in environment variables
+
+Protective controls:
+- Credential manager enforcement
+- No production credentials on endpoints
+- Encrypted credential storage
+
+Detective controls:
+- Local DLP
+- EDR on endpoint
+
+MITRE ATT&CK: T1552.001
+
+Observed in: Aqua Trivy VS Code Extension, AsyncAPI Generator (2026), CircleCI, LiteLLM (October 2026), Miasma (Red Hat), s1ngularity, Shai-Hulud 2.0, SolarWinds, Trust Wallet
+
+### SITF technique T-E004: Harvest Local Data from Endpoint
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E004.html
+Component: Endpoint/IDE. Stage: Post-Compromise.
+
+Attacker exfiltrates source code, documents, or other sensitive data from endpoint.
+
+Risks:
+- No local DLP
+- No EDR
+- Sensitive data stored locally
+- No encryption at rest
+
+Protective controls:
+- Data classification and handling policies
+- Encryption at rest
+
+Detective controls:
+- Local DLP
+- EDR on endpoint
+- Network monitoring
+
+Observed in: s1ngularity
+
+### SITF technique T-E005: Cryptomining on Endpoints
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E005.html
+Component: Endpoint/IDE. Stage: Post-Compromise.
+
+Attacker uses endpoint resources for cryptocurrency mining.
+
+Risks:
+- No EDR
+- Untrusted software packages
+- No resource monitoring
+
+Protective controls:
+- Application whitelisting
+
+Detective controls:
+- EDR on endpoint
+- Resource monitoring and alerting
+- Network monitoring (detect mining pool connections)
+
+Observed in: Ultralytics
+
+### SITF technique T-E006: Register Local Machine as CI Runner
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E006.html
+Component: Endpoint/IDE. Stage: Discovery and Lateral Movement.
+
+Attacker registers compromised endpoint as self-hosted CI/CD runner.
+
+Risks:
+- Ability to register arbitrary machines as runners
+- No runner registration approval process
+- Runner registration tokens not protected
+
+Protective controls:
+- Using managed runners only
+- Runner registration approval workflow
+- Runner registration token protection
+- Network segmentation (runners isolated from endpoints)
+
+Detective controls:
+- (none)
+
+Observed in: Shai-Hulud 2.0
+
+### SITF technique T-E007: Abuse Local VCS Access from Endpoint
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E007.html
+Component: Endpoint/IDE. Stage: Discovery and Lateral Movement.
+
+Attacker uses local git credentials to access VCS.
+
+Risks:
+- VCS credentials stored on endpoint
+- No credential rotation
+- Overprivileged VCS access
+
+Protective controls:
+- Credential manager enforcement
+- Fine-grained PATs with expiration
+- Mandatory MFA for VCS
+
+Detective controls:
+- Audit log monitoring
+
+Observed in: Aqua Trivy VS Code Extension
+
+### SITF technique T-E008: Abuse Local CI/CD Access from Endpoint
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E008.html
+Component: Endpoint/IDE. Stage: Discovery and Lateral Movement.
+
+Attacker uses local CI/CD credentials to access CI/CD system.
+
+Risks:
+- CI/CD credentials stored on endpoint
+- No credential rotation
+- Overprivileged CI/CD access
+
+Protective controls:
+- Credential manager enforcement
+- OIDC instead of long-lived tokens
+- Mandatory MFA for CI/CD
+
+Detective controls:
+- Audit log monitoring
+
+### SITF technique T-E009: Abuse Local AI Tools
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E009.html
+Component: Endpoint/IDE. Stage: Discovery and Lateral Movement.
+
+Attacker uses AI coding assistants to exfiltrate code or inject malicious suggestions.
+
+Risks:
+- Using untrusted AI tools
+- No acceptable use policy
+- AI tools with excessive permissions
+- Sensitive code sent to AI services
+
+Protective controls:
+- Acceptable use policy against unapproved AI tools
+- Approved AI tools with data protection
+- Code review for AI-generated code
+
+Detective controls:
+- Network monitoring for AI service connections
+
+Observed in: Aqua Trivy VS Code Extension, s1ngularity
+
+### SITF technique T-E010: Endpoint Infrastructure Destruction
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E010.html
+Component: Endpoint/IDE. Stage: Post-Compromise.
+
+Attacker destroys or corrupts endpoint systems, data, or configurations to cause operational disruption.
+
+Risks:
+- No backup and recovery
+- Overprivileged local user accounts
+- No EDR
+- Lack of system integrity monitoring
+- Insufficient access controls on critical system files
+
+Protective controls:
+- Regular endpoint backups
+- Minimal local user privileges
+- Offline backup storage
+- File system access controls
+- Endpoint recovery procedures
+
+Detective controls:
+- EDR on endpoint
+- System integrity monitoring
+
+Observed in: s1ngularity, Shai-Hulud 2.0
+
+### SITF technique T-E011: Unicode Stealth Code Injection
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E011.html
+Component: Endpoint/IDE. Stage: Initial Access.
+
+Attacker uses invisible Unicode characters (variation selectors, zero-width characters) to hide malicious code that doesn't render in code editors but executes normally.
+
+Risks:
+- Using untrusted IDE extensions
+- No code review detection of invisible characters
+- Static analysis tools miss unprintable characters
+- Diff tools don't highlight invisible code
+- Developer trust in visual code inspection
+
+Protective controls:
+- IDE plugins to visualize invisible characters
+- Static analysis with Unicode normalization
+- Extension code signing and verification
+- Mandatory code review with specialized tools
+
+Detective controls:
+- Unicode character detection in code review tools
+- Automated detection of unprintable characters in commits
+
+### SITF technique T-E012: SOCKS Proxy Deployment on Endpoint
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E012.html
+Component: Endpoint/IDE. Stage: Post-Compromise.
+
+Attacker deploys SOCKS proxy server on compromised endpoint to route malicious traffic through victim's network and IP address.
+
+Risks:
+- No EDR
+- No network egress monitoring
+- Unrestricted outbound connections
+- Endpoint inside corporate network
+- No process monitoring
+
+Protective controls:
+- Application whitelisting
+- Network segmentation (endpoints from production)
+- Outbound connection restrictions
+
+Detective controls:
+- EDR on endpoint
+- Network egress monitoring and filtering
+- Anomalous network behavior detection
+
+### SITF technique T-E013: Hidden VNC (HVNC) Deployment
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E013.html
+Component: Endpoint/IDE. Stage: Post-Compromise.
+
+Attacker deploys hidden Virtual Network Computing that provides invisible remote desktop access without user awareness.
+
+Risks:
+- No EDR
+- No process monitoring
+- Lack of application sandboxing
+- Privileged user accounts
+
+Protective controls:
+- Minimal local user privileges
+
+Detective controls:
+- EDR on endpoint
+- Process monitoring and whitelisting
+- Session activity monitoring
+- Behavioral analysis for hidden processes
+- Virtual desktop detection
+
+### SITF technique T-E014: WebRTC P2P Control Channel Establishment
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E014.html
+Component: Endpoint/IDE. Stage: Post-Compromise.
+
+Attacker establishes WebRTC peer-to-peer connections for direct control that bypasses traditional firewalls via NAT traversal.
+
+Risks:
+- WebRTC enabled in browsers/applications
+- No network monitoring of WebRTC traffic
+- NAT traversal bypasses firewall rules
+- No EDR
+- P2P connections not logged
+
+Protective controls:
+- Network behavior analysis
+- WebRTC restrictions in corporate browsers
+- STUN/TURN server whitelisting
+
+Detective controls:
+- EDR on endpoint
+- WebRTC traffic monitoring
+- Deep packet inspection
+
+### SITF technique T-E015: Extension Auto-Update Exploitation
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E015.html
+Component: Endpoint/IDE. Stage: Initial Access.
+
+Attacker exploits automatic extension update mechanisms to silently deploy malicious updates to all users without interaction.
+
+Risks:
+- Auto-updates enabled for extensions
+- No update verification
+- Compromised extension publisher accounts
+- No extension version pinning
+- Silent updates without user notification
+
+Protective controls:
+- Extension update approval workflow
+- Extension version pinning
+- Update signature verification
+- Delayed update deployment (canary testing)
+
+Detective controls:
+- Extension update monitoring and alerting
+- Extension marketplace security monitoring
+
+Observed in: Clinejection
+
+### SITF technique T-E016: Blockchain-Based C2 Infrastructure
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E016.html
+Component: Endpoint/IDE. Stage: Post-Compromise.
+
+Attacker uses blockchain transactions (e.g., Solana, Bitcoin) as immutable command and control infrastructure that cannot be taken down or censored.
+
+Risks:
+- Immutable C2 instructions on blockchain
+- No EDR
+- Cryptocurrency node connections not restricted
+
+Protective controls:
+- Network behavior analysis
+- Cryptocurrency-related traffic restrictions
+- Application whitelisting
+
+Detective controls:
+- EDR on endpoint
+- Blockchain RPC connection monitoring
+- Anomalous blockchain query detection
+
+Observed in: AsyncAPI Generator (2026)
+
+### SITF technique T-E017: Legitimate Service Abuse for C2
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E017.html
+Component: Endpoint/IDE. Stage: Post-Compromise.
+
+Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection.
+
+Risks:
+- Legitimate services not monitored for C2 abuse
+- No content inspection of legitimate service traffic
+- Services whitelisted in security controls
+- No EDR
+- Encoded payloads in legitimate service data
+
+Protective controls:
+- Deep content inspection of legitimate service traffic
+
+Detective controls:
+- EDR on endpoint
+- Behavioral analysis for unusual service usage patterns
+- Network traffic anomaly detection
+- Application-level monitoring
+- Data exfiltration detection
+
+Observed in: LiteLLM (October 2026)
+
+### SITF technique T-E018: BitTorrent DHT for C2
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E018.html
+Component: Endpoint/IDE. Stage: Post-Compromise.
+
+Attacker uses BitTorrent Distributed Hash Table network for decentralized command distribution that cannot be shut down.
+
+Risks:
+- BitTorrent/P2P traffic not monitored
+- DHT network connections appear as normal P2P traffic
+- No EDR
+- Decentralized C2 cannot be taken down
+- P2P protocols not restricted
+
+Protective controls:
+- P2P protocol blocking
+- Network behavior analysis
+- Application whitelisting
+
+Detective controls:
+- EDR on endpoint
+- BitTorrent traffic monitoring and blocking
+- DHT network connection detection
+
+Observed in: AsyncAPI Generator (2026)
+
+### SITF technique T-E019: OAuth Token Abuse for Cross-Organizational Access
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-E019.html
+Component: Endpoint/IDE. Stage: Initial Access.
+
+Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access.
+
+Risks:
+- OAuth tokens stored in browser or credential stores
+- Third-party apps granted excessive OAuth scopes ('Allow All')
+- OAuth tokens not bound to device or IP
+- No monitoring of OAuth token usage across organizations
+- Long-lived OAuth refresh tokens without rotation
+- Third-party vendors with OAuth access to enterprise identity systems
+- No revocation of tokens when third-party is compromised
+
+Protective controls:
+- OAuth scope minimization
+- OAuth token binding
+- OAuth app approval workflow
+- Short-lived OAuth tokens with frequent rotation
+- Third-party vendor security assessment
+- Conditional access policies for OAuth apps
+
+Detective controls:
+- OAuth token usage anomaly detection
+- Cross-organization OAuth activity monitoring
+- Third-party OAuth app audit logging
+- OAuth scope elevation alerting
+
+## VCS
+
+### SITF technique T-V001: Abuse Credentials for VCS Access
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V001.html
+Component: VCS. Stage: Initial Access.
+
+Attacker uses stolen credentials to access VCS.
+
+Risks:
+- Lack of 2FA / phishing protection
+- Credentials in org public repos
+- Credentials in public repos of org members
+- Credentials in workflow logs
+- Previous breaches
+- Fine-grained PATs not enforced
+- PATs without expiration
+- Broad-scope CLI OAuth tokens without expiry
+- Privileged accounts used for daily work
+
+Protective controls:
+- Mandatory MFA
+- IDP / SSO setup
+- Enforcing fine-grained PATs
+- Enforcing PAT expiration
+- Dedicated admin accounts for org owners
+- IP allow list for token access
+
+Detective controls:
+- Secret scanning on all orgs
+- Secret scanning on personal repos
+- Token usage anomaly detection
+
+MITRE ATT&CK: T1078
+
+Observed in: AsyncAPI Generator (2026), CodeBreach, LiteLLM (October 2026), Miasma (Red Hat), s1ngularity, TeamPCP Campaign, tj-actions/changed-files, Trivy Act II
+
+### SITF technique T-V002: Imposter Commits
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V002.html
+Component: VCS. Stage: Post-Compromise.
+
+Attacker commits code impersonating another developer.
+
+Risks:
+- No commit signing required
+- Email verification not enforced
+- No code review process
+
+Protective controls:
+- Commit signing
+- Requiring code owner approval
+- Branch protection rules
+- Email verification enforcement
+
+Detective controls:
+- (none)
+
+Observed in: TeamPCP Campaign, Trivy Act II
+
+### SITF technique T-V003: Secret Exfiltration from Repo
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V003.html
+Component: VCS. Stage: Discovery and Lateral Movement.
+
+Attacker extracts secrets from repository content or history.
+
+Risks:
+- Misconfigured repo - visibility (public when should be private)
+- Misconfigured VCS access - external contributors
+- Using untrusted webhooks
+- Dangling webhooks
+- Secrets committed to repo
+- Leaked secrets deleted but not revoked
+- Secret scanning limited to the primary org
+
+Protective controls:
+- Private repo visibility
+- Webhook security review
+- Branch protection rules
+- Revoke leaked secrets, not just delete them
+
+Detective controls:
+- Secret scanning on all orgs
+- Secret scanning on personal repos
+- Detection infra on audit logs
+
+Observed in: LiteLLM (October 2026), s1ngularity
+
+### SITF technique T-V004: Secret Exfiltration from Personal Repo
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V004.html
+Component: VCS. Stage: Discovery and Lateral Movement.
+
+Attacker finds secrets in personal repos of org members.
+
+Risks:
+- Misconfigured repo - visibility
+- Using personal repos for work
+- Org members with public repos containing work content
+
+Protective controls:
+- Policy against using personal repos for work
+- Security awareness training
+
+Detective controls:
+- Secret scanning on personal repos
+- Detection infra on audit logs
+
+Observed in: Shai-Hulud 2.0
+
+### SITF technique T-V005: VCS Vulnerability Exploitation
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V005.html
+Component: VCS. Stage: Initial Access.
+
+Attacker exploits vulnerability in VCS platform.
+
+Risks:
+- Non-patched VCS instance
+- Known CVEs not addressed
+- Self-hosted VCS without security updates
+
+Protective controls:
+- Using managed VCS instances
+- Patching schedule
+
+Detective controls:
+- Vulnerability scanning
+- Security update monitoring
+
+### SITF technique T-V006: Turn Private Repos Public
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V006.html
+Component: VCS. Stage: Post-Compromise.
+
+Attacker changes repository visibility to public.
+
+Risks:
+- Overprivileged VCS access
+- No approval for visibility changes
+- No audit log monitoring
+
+Protective controls:
+- Minimal VCS permissions
+- Approval workflow for visibility changes
+- CSPM/CNAPP
+
+Detective controls:
+- Detection infra on audit logs
+
+Observed in: s1ngularity
+
+### SITF technique T-V007: Clone Sensitive Repositories
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V007.html
+Component: VCS. Stage: Post-Compromise.
+
+Attacker clones private repositories to steal IP and source code.
+
+Risks:
+- Overprivileged VCS access
+- No audit log monitoring
+- No DLP on network
+
+Protective controls:
+- Minimal VCS permissions
+- Repository access reviews
+
+Detective controls:
+- Detection infra on audit logs
+- Network DLP
+
+Observed in: GitLab Pipeline Hijack
+
+### SITF technique T-V008: Malicious Repo Hosting
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V008.html
+Component: VCS. Stage: Post-Compromise.
+
+Attacker uses compromised VCS to host malicious repositories.
+
+Risks:
+- Overprivileged VCS access
+- No repository review process
+- Unlimited repository creation
+
+Protective controls:
+- Repository creation approval
+- Resource quotas
+
+Detective controls:
+- Repository security scanning
+- Detection infra on audit logs
+
+Observed in: LiteLLM (October 2026), Trivy Act II
+
+### SITF technique T-V009: Mass Deletion of Repositories
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V009.html
+Component: VCS. Stage: Post-Compromise.
+
+Attacker deletes multiple repositories to cause data loss and operational disruption.
+
+Risks:
+- Overprivileged VCS access
+- No backup and recovery
+- No audit log monitoring
+- Insufficient access controls on critical repositories
+- No repository deletion approval process
+- Lack of deletion protection
+
+Protective controls:
+- Minimal VCS user permissions
+- Regular repository backups
+- Repository deletion approval workflow
+- Repository recovery procedures
+- Deletion protection on critical repositories
+
+Detective controls:
+- Detection infra on audit logs (VCS)
+- Immutable audit logs
+
+Observed in: Aqua Trivy VS Code Extension, TeamPCP Campaign
+
+### SITF technique T-V010: Malicious Code Modification in Repository
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V010.html
+Component: VCS. Stage: Post-Compromise.
+
+Attacker with repository access directly modifies source code to inject backdoors, malicious logic, or vulnerabilities into the codebase.
+
+Risks:
+- Overprivileged VCS access
+- No code review requirements
+- Direct push to protected branches allowed
+- Lack of commit signing
+- No automated code security scanning
+- Insufficient branch protection rules
+- No detection of suspicious code patterns
+- Admins can bypass branch protection
+
+Protective controls:
+- Branch protection rules (VCS)
+- Require code owner approval
+- Mandatory code review by multiple reviewers
+- Commit signing enforcement
+- Minimal VCS permissions (principle of least privilege)
+- Pre-commit hooks for security checks
+- Branch rulesets with no bypass actors
+
+Detective controls:
+- Automated code security scanning (SAST)
+- Detection infra on audit logs (VCS)
+- Code change anomaly detection
+- Branch protection override alerting
+
+MITRE ATT&CK: T1195.002
+
+Observed in: AsyncAPI Generator (2026), CodeBreach, LiteLLM (October 2026), Miasma (Red Hat), TeamPCP Campaign, tj-actions/changed-files, Trivy Act II
+
+### SITF technique T-V011: Git Tag/Reference Manipulation
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V011.html
+Component: VCS. Stage: Post-Compromise.
+
+Attacker force-pushes git tags or manipulates branch references to point to malicious commits, causing consumers to pull backdoored code.
+
+Risks:
+- Tags not protected from force-push
+- No tag signing enforcement
+- Consumers reference actions/packages by mutable tags
+- No alerting on tag reference changes
+- Service accounts with tag push permissions
+- No approval workflow for tag operations
+
+Protective controls:
+- Tag protection rules
+- Tag signing enforcement
+- Restrict tag push permissions
+- Pin actions/dependencies by SHA
+- Tag operation approval workflow
+
+Detective controls:
+- Tag mutation monitoring
+- Audit log monitoring for tag operations
+- Tag-to-commit drift detection
+
+### SITF technique T-V012: Cross-Fork Object Reference Abuse
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V012.html
+Component: VCS. Stage: Initial Access.
+
+Attacker pushes malicious commits to a repository fork, exploiting git's shared object model to make those commits referenceable by SHA from the upstream repository without merging.
+
+Risks:
+- No branch membership verification for SHAs
+- SHAs not validated against protected branches
+- Unrestricted forking on sensitive repos
+- No origin validation for fetched commits
+- No monitoring of non-branch commit references
+
+Protective controls:
+- SHA branch membership validation
+- Disable forking on sensitive repos
+- Signed commit enforcement
+- Action pinning with hash verification
+
+Detective controls:
+- Workflow SHA provenance checks
+- Fork push activity monitoring
+
+### SITF technique T-V013: VCS Evidence Destruction
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-V013.html
+Component: VCS. Stage: Post-Compromise.
+
+Attacker deletes workflow run records and rewrites protected branch history to remove evidence of malicious activity.
+
+Risks:
+- Any user with write access can delete workflow runs and logs
+- Admins can bypass force-push protection
+- Audit and workflow logs retained only in the VCS platform
+- No alerting on run deletion or history rewrites
+
+Protective controls:
+- Audit log streaming outside the VCS platform
+- Workflow log export to external storage
+- Force-push and deletion blocked with no bypass actors
+
+Detective controls:
+- Workflow run deletion alerting
+- Protected branch history rewrite alerting
+
+MITRE ATT&CK: T1070
+
+Observed in: LiteLLM (October 2026)
+
+## CI/CD
+
+### SITF technique T-C001: Abuse Credentials for CI/CD Access
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C001.html
+Component: CI/CD. Stage: Initial Access.
+
+Attacker uses stolen credentials to access CI/CD system.
+
+Risks:
+- Lack of 2FA / phishing protection
+- Default credentials / bad out-of-the-box config
+- Credentials in org public repos
+- Previous breaches
+- Release approval satisfiable by any developer account
+
+Protective controls:
+- Mandatory MFA
+- IDP / SSO setup
+- Enforcing fine-grained PATs (VCS)
+- Enforcing PAT expiration (VCS)
+- Dedicated release approver accounts
+
+Detective controls:
+- Secret scanning
+
+Observed in: CircleCI, LiteLLM (October 2026), SolarWinds, Synacktiv CI/CD Red Team Engagement
+
+### SITF technique T-C002: Malicious Execution in Workflow Context
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C002.html
+Component: CI/CD. Stage: Initial Access.
+
+Attacker executes malicious code within CI/CD workflow.
+
+Risks:
+- Using untrusted GitHub actions
+- Using untrusted GitHub Apps
+- Using untrusted reusable workflows
+- Using untrusted SW packages on runners
+- Using untrusted container / VM image for runners
+- Lack of GitHub action pinning
+- Build source controllable through workflow inputs
+
+Protective controls:
+- Pinning 3rd-party actions
+- Action whitelisting
+- Automated maintainer reputation and hygiene checks
+- Requiring code owner approval (VCS)
+- Branch protection rules (VCS)
+- Runner SBOM
+- Build source validation against protected branches
+
+Detective controls:
+- Image scanning
+
+Observed in: Clinejection, LiteLLM (October 2026), Miasma (Red Hat), SolarWinds, TeamPCP Campaign, tj-actions/changed-files, Trivy Act II
+
+### SITF technique T-C003: PWN Request / Poisoned Pipeline Execution
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C003.html
+Component: CI/CD. Stage: Initial Access.
+
+Attacker submits malicious PR that triggers workflow with elevated privileges.
+
+Risks:
+- Misconfigured repo - visibility
+- Misconfigured VCS access - external contributors
+- Allowing PRs from forks
+- Usage of pull_request_target/workflow_run
+- Default workflow permissions set to WRITE
+- Default workflow permissions set to approve PR
+- Workflows with access to secrets
+
+Protective controls:
+- Branch protection rules (VCS)
+- Private repo (VCS)
+- Require explicit approval/ disallow workflows from forks (VCS)
+- Minimal workflow permissions
+- Default workflow permissions not set to approve PRs
+
+Detective controls:
+- CICD scanning tools
+
+MITRE ATT&CK: T1195.002
+
+Observed in: Aqua Trivy VS Code Extension, AsyncAPI Generator (2026), s1ngularity, Shai-Hulud 2.0, TeamPCP Campaign, tj-actions/changed-files, Trivy Act II, Ultralytics
+
+### SITF technique T-C004: Workflow Script Injection
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C004.html
+Component: CI/CD. Stage: Initial Access.
+
+Attacker injects malicious code into workflow through user-controlled input.
+
+Risks:
+- Misconfigured repo - visibility
+- Misconfigured workflow - script injection
+- Default workflow permissions set to WRITE
+- Default workflow permissions set to approve PR
+- Workflow with excessive permissions
+- Workflow with access to secrets
+
+Protective controls:
+- Branch protection rules (VCS)
+- Private repo (VCS)
+- Minimal workflow permissions
+- Code review for workflows
+
+Detective controls:
+- CICD scanning tools
+
+Observed in: s1ngularity, Ultralytics
+
+### SITF technique T-C005: Secret Exfiltration from Workflow
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C005.html
+Component: CI/CD. Stage: Discovery and Lateral Movement.
+
+Attacker extracts secrets from CI/CD workflow execution.
+
+Risks:
+- Workflow with access to secrets
+- No runtime monitoring
+- Secrets in workflow logs
+- Overprivileged secrets
+- Secrets available to workflows on any branch
+- Personal tokens or signing keys stored as CI secrets
+
+Protective controls:
+- OIDC setup in workflows
+- Minimal workflow permissions
+- Log sanitization
+- Environment-scoped secrets with branch policies
+- Network-level runner egress allow-list
+
+Detective controls:
+- Runtime agent on runner
+- Secret scanning
+- Exfiltration workflow detection on new branches
+
+MITRE ATT&CK: T1552.001
+
+Observed in: Aqua Trivy VS Code Extension, AsyncAPI Generator (2026), CodeBreach, LiteLLM (October 2026), Shai-Hulud 2.0, TeamPCP Campaign, tj-actions/changed-files, Trivy Act II, GitLab Pipeline Hijack, Synacktiv CI/CD Red Team Engagement
+
+### SITF technique T-C006: Secret Enumeration in Workflows Using GitHub Search
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C006.html
+Component: CI/CD. Stage: Discovery and Lateral Movement.
+
+Attacker searches public workflows for exposed secrets.
+
+Risks:
+- Workflow with access to secrets
+- Public repositories
+- Secrets in workflow files
+
+Protective controls:
+- OIDC setup in workflows
+- Private repositories
+- Code review for workflows
+
+Detective controls:
+- Secret scanning
+
+### SITF technique T-C007: Action Cache Poisoning
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C007.html
+Component: CI/CD. Stage: Post-Compromise.
+
+Attacker poisons shared action cache to inject malicious code.
+
+Risks:
+- Shared actions cache
+- No cache isolation
+- No cache verification
+
+Protective controls:
+- Don't use actions cache
+- Workflow ordering
+- Cache artifact signing / verification
+- Cache isolation per repository
+
+Detective controls:
+- (none)
+
+Observed in: Clinejection
+
+### SITF technique T-C008: Malicious Workflow Performing Code Modification
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C008.html
+Component: CI/CD. Stage: Post-Compromise.
+
+Attacker uses workflow to modify code or approve PRs.
+
+Risks:
+- Default workflow permissions set to WRITE
+- Default workflow permissions set to approve PR
+- Workflow with excessive permissions
+
+Protective controls:
+- Minimal workflow permissions
+- Default workflow permissions not set to approve PRs
+- Code review requirements
+
+Detective controls:
+- CICD scanning tools
+
+### SITF technique T-C009: CI/CD Vulnerability Exploitation
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C009.html
+Component: CI/CD. Stage: Initial Access.
+
+Attacker exploits vulnerability in CI/CD platform.
+
+Risks:
+- Non-patched CI/CD instance
+- Known CVEs not addressed
+- Self-hosted CI/CD without security updates
+
+Protective controls:
+- Using managed CI/CD instances
+- Patching schedule
+
+Detective controls:
+- Vulnerability scanning
+- Security update monitoring
+
+Observed in: GitLab Pipeline Hijack
+
+### SITF technique T-C010: Runner Executing Malicious Package
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C010.html
+Component: CI/CD. Stage: Discovery and Lateral Movement.
+
+Malicious package executes on CI/CD runner.
+
+Risks:
+- Using untrusted SW packages on runners
+- No package verification
+- No runtime monitoring
+- Package installation scripts enabled
+- Direct downloads from public registries
+
+Protective controls:
+- Local registry proxy with filtering
+- Runner SBOM
+- Package version pinning
+- Package signature verification
+- Disable package installation scripts (--ignore-scripts)
+
+Detective controls:
+- Runtime agent on runner
+
+Observed in: LiteLLM (October 2026)
+
+### SITF technique T-C011: Stealing Registry Tokens
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C011.html
+Component: CI/CD. Stage: Discovery and Lateral Movement.
+
+Attacker extracts registry publishing tokens from workflow.
+
+Risks:
+- Workflow with access to secrets
+- Overprivileged registry tokens
+- Long-lived credentials
+
+Protective controls:
+- OIDC setup in workflows
+- Trusted publishing (registry)
+
+Detective controls:
+- Runtime agent on runner
+- Secret scanning
+
+Observed in: Aqua Trivy VS Code Extension, Clinejection, Miasma (Red Hat), s1ngularity, TeamPCP Campaign, Trivy Act II, Ultralytics
+
+### SITF technique T-C012: PR from Malicious Workflow
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C012.html
+Component: CI/CD. Stage: Discovery and Lateral Movement.
+
+Workflow creates malicious pull request.
+
+Risks:
+- Default workflow permissions set to WRITE
+- Default workflow permissions set to approve PR
+- No PR review requirements
+
+Protective controls:
+- Minimal workflow permissions
+- Branch protection rules (VCS)
+- Require code owner approval (VCS)
+
+Detective controls:
+- CICD scanning tools
+
+### SITF technique T-C013: Persistence on Self-Hosted Runners
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C013.html
+Component: CI/CD. Stage: Post-Compromise.
+
+Attacker establishes persistence on self-hosted runner.
+
+Risks:
+- Misconfigured self-hosted runner
+- Non-ephemeral self-hosted runner
+- Overshared self-hosted runner
+- No runtime monitoring
+
+Protective controls:
+- Using managed runners only
+- Ephemeral runners
+- Runner isolation
+
+Detective controls:
+- Runtime agent on runner
+
+Observed in: SolarWinds
+
+### SITF technique T-C014: Cryptomining on Runners
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C014.html
+Component: CI/CD. Stage: Post-Compromise.
+
+Attacker uses runner resources for cryptocurrency mining.
+
+Risks:
+- No runtime monitoring
+- No resource limits
+- Self-hosted runners
+
+Protective controls:
+- Using managed runners only
+
+Detective controls:
+- Runtime agent on runner
+- Resource monitoring and limits
+- Network monitoring
+
+### SITF technique T-C015: Harvest Secrets from Workflows Using ${{toJson(secrets)}}
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C015.html
+Component: CI/CD. Stage: Discovery and Lateral Movement.
+
+Attacker uses toJson() to dump all secrets from workflow.
+
+Risks:
+- Workflow with access to secrets
+- No CICD scanning
+- No runtime monitoring
+
+Protective controls:
+- OIDC setup in workflows
+- Minimal workflow permissions
+
+Detective controls:
+- CICD scanning tools
+- Runtime agent on runner
+
+### SITF technique T-C016: Pivot from Self-Hosted VM Runner into Local Network / Cloud
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C016.html
+Component: CI/CD. Stage: Discovery and Lateral Movement.
+
+Attacker uses runner network access to pivot into production.
+
+Risks:
+- Overprivileged runner pod identity
+- Misconfigured runner cluster
+- Self-hosted runner in production network
+- No network segmentation
+
+Protective controls:
+- Minimal runner pod privileges
+- Network segmentation
+- Using managed runners only
+
+Detective controls:
+- K8s sensor on runner cluster
+- KSPM on runner cluster
+
+### SITF technique T-C017: Pivot from Self-Hosted Container Runner into K8s Cluster
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C017.html
+Component: CI/CD. Stage: Discovery and Lateral Movement.
+
+Attacker escapes container runner to access Kubernetes cluster.
+
+Risks:
+- Overprivileged runner pod identity
+- Misconfigured runner cluster
+- No pod security policies
+- Privileged containers allowed
+
+Protective controls:
+- Minimal runner pod privileges
+- Pod security policies
+- Using managed runners only
+
+Detective controls:
+- K8s sensor on runner cluster
+- KSPM on runner cluster
+
+### SITF technique T-C018: Data Exfiltration from CI/CD
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C018.html
+Component: CI/CD. Stage: Post-Compromise.
+
+Attacker exfiltrates build artifacts, logs, secrets, and sensitive data from CI/CD system over network.
+
+Risks:
+- No network egress monitoring
+- Unrestricted outbound network access from runners
+- Build artifacts contain sensitive data
+- Logs contain secrets or sensitive information
+- No DLP on CI/CD network
+
+Protective controls:
+- Log sanitization
+- Artifact encryption
+- Network segmentation (CI/CD from internet)
+
+Detective controls:
+- Network DLP
+- Egress traffic monitoring and filtering
+- Runtime agent on runner
+- Large data transfer detection
+- Detection infra on audit logs (CI/CD)
+
+Observed in: AsyncAPI Generator (2026), CircleCI, tj-actions/changed-files
+
+### SITF technique T-C019: CI/CD Infrastructure Destruction
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C019.html
+Component: CI/CD. Stage: Post-Compromise.
+
+Attacker destroys CI/CD pipelines, workflows, runners, or build artifacts to disrupt development and deployment operations.
+
+Risks:
+- Overprivileged workflow permissions
+- No backup and recovery
+- Lack of workflow protection
+- No audit log monitoring
+- Insufficient access controls on critical workflows
+- No approval process for infrastructure changes
+
+Protective controls:
+- Minimal workflow permissions
+- Regular CI/CD configuration backups
+- Workflow protection rules
+- Infrastructure change approval workflow
+- CI/CD recovery procedures
+- Using managed runners only
+
+Detective controls:
+- Detection infra on audit logs (CI/CD)
+- Immutable audit logs
+
+### SITF technique T-C020: CI/CD Misconfiguration Exploitation
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C020.html
+Component: CI/CD. Stage: Initial Access.
+
+Attacker exploits misconfiguration in CI/CD platform.
+
+Risks:
+- Misconfigured CI/CD instances
+
+Protective controls:
+- CSPM/CNAPP
+
+Detective controls:
+- (none)
+
+Observed in: CodeBreach
+
+### SITF technique T-C021: AI Agent Prompt Injection in Workflow
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-C021.html
+Component: CI/CD. Stage: Initial Access.
+
+Attacker crafts malicious input (issue titles, PR descriptions, comments) that manipulates an AI coding agent running in CI/CD to execute arbitrary commands or exfiltrate data.
+
+Risks:
+- AI agents with Bash/shell execution capabilities in workflows
+- AI agents with Write/Edit file permissions
+- User-controlled input passed to AI prompts without sanitization
+- Overly permissive AI tool configurations (allowedTools includes Bash)
+- AI workflows triggered by any GitHub user (no write-access requirement)
+- No input validation or content filtering for AI context
+- AI agents with access to workflow secrets
+- No human approval gates for AI-suggested actions
+
+Protective controls:
+- Restrict AI agent tool permissions
+- Input sanitization before AI context injection
+- Require write access to trigger AI-powered workflows
+- Sandboxed AI execution environment
+- Human approval gates for AI-suggested actions
+- Separate AI workflows from release/publish workflows
+- Rate limiting for AI workflow triggers
+
+Detective controls:
+- AI prompt injection detection
+- Audit logging of AI agent actions
+- Anomaly detection for AI workflow behavior
+- Runtime agent on runner
+
+Observed in: Clinejection
+
+## Registry
+
+### SITF technique T-R001: Abuse Credentials for Registry Access
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R001.html
+Component: Registry. Stage: Initial Access.
+
+Attacker uses stolen credentials to access registry.
+
+Risks:
+- Lack of 2FA / phishing protection
+- Default credentials / bad out-of-the-box config
+- Credentials in public images
+- Credentials in workflow logs
+- Previous breaches
+
+Protective controls:
+- Mandatory MFA
+- IDP / SSO setup
+- CSPM/CNAPP
+
+Detective controls:
+- Secret scanning
+
+Observed in: Aqua Trivy VS Code Extension, Clinejection, TeamPCP Campaign, Trust Wallet, Ultralytics
+
+### SITF technique T-R002: Misconfigured / Anonymous Access
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R002.html
+Component: Registry. Stage: Initial Access.
+
+Attacker exploits misconfigured registry permissions.
+
+Risks:
+- Misconfigured registry access
+- Anonymous access enabled
+- Overly permissive access controls
+
+Protective controls:
+- IDP / SSO setup
+- Access control reviews
+- Principle of least privilege
+- CSPM/CNAPP
+
+Detective controls:
+- (none)
+
+### SITF technique T-R003: Registry Vulnerability Exploitation
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R003.html
+Component: Registry. Stage: Initial Access.
+
+Attacker exploits vulnerability in registry platform.
+
+Risks:
+- Non-patched artifact/container registry
+- Known CVEs not addressed
+- Self-hosted registry without security updates
+
+Protective controls:
+- Using managed registry instances
+- Patching schedule
+
+Detective controls:
+- Vulnerability scanning
+- Security update monitoring
+
+### SITF technique T-R004: Publishing Malicious Package
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R004.html
+Component: Registry. Stage: Discovery and Lateral Movement.
+
+Attacker publishes malicious package to registry.
+
+Risks:
+- Overprivileged NPM token
+- Lack of provenance
+- Lack of trusted publishing
+- No package signing
+- Trusted publisher not bound to a protected environment
+- Provenance not verified before publishing
+
+Protective controls:
+- Trusted publishing
+- Provenance attestation
+- MFA for registry account
+- Package signing and verification
+- OIDC for publishing
+- Pre-publish provenance verification
+
+Detective controls:
+- (none)
+
+MITRE ATT&CK: T1195.001
+
+Observed in: AsyncAPI Generator (2026), Clinejection, CodeBreach, LiteLLM (October 2026), Miasma (Red Hat), s1ngularity, Shai-Hulud 2.0, TeamPCP Campaign, Trivy Act II, Trust Wallet, Ultralytics
+
+### SITF technique T-R005: Publishing Malicious Container/VM Image
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R005.html
+Component: Registry. Stage: Discovery and Lateral Movement.
+
+Attacker publishes malicious container or VM image.
+
+Risks:
+- Overprivileged registry credentials
+- No image signing
+- No provenance attestation
+- No image scanning
+- Provenance not verified before publishing
+
+Protective controls:
+- Trusted publishing
+- Provenance attestation
+- Image signing and verification
+- OIDC for publishing
+- Pre-publish provenance verification
+
+Detective controls:
+- Image vulnerability scanning
+
+Observed in: LiteLLM (October 2026), SolarWinds, TeamPCP Campaign, Trivy Act II
+
+### SITF technique T-R006: Publishing Malicious IDE/Browser Extension
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R006.html
+Component: Registry. Stage: Discovery and Lateral Movement.
+
+Attacker publishes malicious extension to extension marketplace.
+
+Risks:
+- Overprivileged publishing credentials
+- No extension review process
+- No signing requirements
+
+Protective controls:
+- Extension signing requirements
+- Extension review process
+- MFA for publisher account
+- Trusted publishing
+
+Detective controls:
+- (none)
+
+Observed in: Aqua Trivy VS Code Extension, Clinejection
+
+### SITF technique T-R007: Harvest Data from Private Artifacts
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R007.html
+Component: Registry. Stage: Post-Compromise.
+
+Attacker extracts sensitive data from private artifacts.
+
+Risks:
+- Overprivileged registry access
+- Secrets in artifacts
+- No audit log monitoring
+
+Protective controls:
+- Minimal registry permissions
+- Artifact encryption
+
+Detective controls:
+- Secret scanning
+- Detection infra on audit logs
+
+Observed in: GitLab Pipeline Hijack
+
+### SITF technique T-R008: Malicious Images Hosting
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R008.html
+Component: Registry. Stage: Post-Compromise.
+
+Attacker uses compromised registry to host malicious images.
+
+Risks:
+- Overprivileged registry access
+- No image scanning
+- No resource quotas
+
+Protective controls:
+- Resource quotas
+- Access control reviews
+
+Detective controls:
+- Image vulnerability scanning
+- Detection infra on audit logs
+
+### SITF technique T-R009: Registry Infrastructure Destruction
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R009.html
+Component: Registry. Stage: Post-Compromise.
+
+Attacker deletes packages, images, or corrupts registry infrastructure to disrupt software distribution and deployment.
+
+Risks:
+- Overprivileged registry access
+- No backup and recovery
+- Lack of deletion protection
+- No audit log monitoring
+- Insufficient access controls on critical artifacts
+- No artifact deletion approval process
+
+Protective controls:
+- Minimal user permissions (registry)
+- Regular artifact backups
+- Artifact deletion protection
+- Artifact deletion approval workflow
+- Immutable artifact storage
+- Registry recovery procedures
+- Artifact retention policies
+
+Detective controls:
+- Detection infra on audit logs (registry)
+
+### SITF technique T-R010: Typosquatting
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R010.html
+Component: Registry. Stage: Initial Access.
+
+Attacker publishes malicious packages with names similar to legitimate ones to trick developers into installing them by mistake.
+
+Risks:
+- No package name verification
+- Lack of typosquatting detection
+- Developer mistakes during package installation
+- No package naming policies
+- Lack of security awareness training
+- Direct downloads from public registries
+
+Protective controls:
+- Local registry proxy with filtering
+- Package name similarity checks
+- Automated maintainer reputation and hygiene checks
+- Security awareness training on package verification
+- Package installation verification workflows
+- Dependency review and approval process
+- Package popularity and reputation scoring
+
+Detective controls:
+- Typosquatting detection and prevention
+
+MITRE ATT&CK: T1195.001
+
+### SITF technique T-R011: Namespace/Dependency Confusion
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R011.html
+Component: Registry. Stage: Initial Access.
+
+Attacker publishes malicious packages with same names as private packages but higher version numbers, tricking package managers into fetching the public version instead of the private package.
+
+Risks:
+- Lack of internal repository enforcement
+- Package managers prioritize public repositories
+- No namespace isolation between internal and public packages
+- Automatic dependency resolution without verification
+- Higher version numbers in public repositories
+- Direct downloads from public registries
+
+Protective controls:
+- Local registry proxy with filtering
+- Internal repository enforcement and prioritization
+- Namespace isolation and scoping
+- Package version pinning
+- Automated maintainer reputation and hygiene checks
+- Private package registry configuration
+- Dependency resolution policies
+- Package source verification
+
+Detective controls:
+- (none)
+
+MITRE ATT&CK: T1195.001
+
+### SITF technique T-R012: Package Lifecycle Script Abuse
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R012.html
+Component: Registry. Stage: Discovery and Lateral Movement.
+
+Attacker leverages package manager lifecycle hooks (postinstall, preinstall) or language-specific initialization mechanisms (.pth files) to execute malicious code during package installation.
+
+Risks:
+- Lifecycle scripts enabled by default in package managers
+- No review or approval of install-time scripts
+- Scripts execute with user privileges automatically
+- Python .pth files execute on any interpreter startup
+- No network restrictions during package installation
+- Self-cleaning payloads evade post-install detection
+
+Protective controls:
+- Disable lifecycle scripts during installation
+- Network isolation during package installation
+- Lockfile integrity verification
+- Package version pinning with hash verification
+- Python .pth file restrictions
+
+Detective controls:
+- Lifecycle script content analysis
+- Network monitoring during package installation
+- Process monitoring during installation
+- File integrity monitoring for .pth files
+
+Observed in: LiteLLM (October 2026), Miasma (Red Hat)
+
+### SITF technique T-R013: Version String Impersonation
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-R013.html
+Component: Registry. Stage: Discovery and Lateral Movement.
+
+Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses.
+
+Risks:
+- Registry permits version republishing
+- No immutable version policy
+- Lockfile integrity checks not enforced
+- No alerting on content changes for existing versions
+- Version strings trusted without content verification
+
+Protective controls:
+- Immutable version policy
+- Lockfile integrity enforcement
+- Registry mirror with snapshots
+- Provenance attestation requirement
+
+Detective controls:
+- Package content hash monitoring
+- Unpublish event monitoring
+- Install integrity failure alerting
+
+## Production/Cloud
+
+### SITF technique T-P001: Abuse Production Credentials from CI/CD
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P001.html
+Component: Production/Cloud. Stage: Initial Access.
+
+Attacker extracts production credentials from CI/CD and uses them to access production.
+
+Risks:
+- Production credentials in CI/CD workflows
+- Long-lived production credentials
+- Overprivileged cloud service accounts
+- No credential rotation
+
+Protective controls:
+- OIDC for deployment (no long-lived credentials)
+- Minimal IAM permissions
+- Credential rotation
+- Network segmentation from SDLC
+
+Detective controls:
+- Secret scanning
+
+MITRE ATT&CK: T1078.004
+
+Observed in: CircleCI, Synacktiv CI/CD Red Team Engagement
+
+### SITF technique T-P002: Malicious Deployment via Compromised Pipeline
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P002.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker modifies CI/CD pipeline to deploy malicious code to production.
+
+Risks:
+- No deployment approval gates
+- Overprivileged deployment credentials
+- No code signing verification
+- Insufficient workflow permissions review
+
+Protective controls:
+- Deployment approval gates
+- Code signing and verification
+- Minimal workflow permissions
+- Branch protection rules (VCS)
+
+Detective controls:
+- Deployment monitoring
+
+### SITF technique T-P003: Pivot from Self-Hosted Runner to Production Network
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P003.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker uses self-hosted runner network access to pivot into production.
+
+Risks:
+- Self-hosted runner in production network
+- Weak network segmentation
+- Overprivileged runner identity
+- No network monitoring
+
+Protective controls:
+- Network segmentation from SDLC
+- Using managed runners only
+- Runner isolation
+- Minimal runner privileges
+
+Detective controls:
+- Network monitoring
+
+### SITF technique T-P004: Container Image Poisoning to Production
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P004.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker publishes malicious container image that gets deployed to production.
+
+Risks:
+- Lack of image signing/verification
+- No provenance attestation
+- Automatic deployment without review
+- No image scanning
+
+Protective controls:
+- Image signing and verification
+- Provenance attestation
+- Deployment approval gates
+
+Detective controls:
+- Image vulnerability scanning
+- Runtime security monitoring
+
+Observed in: SolarWinds, TeamPCP Campaign
+
+### SITF technique T-P005: Infrastructure-as-Code Manipulation
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P005.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker modifies IaC to create backdoors in production infrastructure.
+
+Risks:
+- Insufficient IaC review process
+- Lack of drift detection
+- Overprivileged deployment credentials
+
+Protective controls:
+- Code review for IaC changes
+- Deployment approval gates
+- Minimal deployment permissions
+- CSPM/CNAPP
+
+Detective controls:
+- Drift detection
+
+MITRE ATT&CK: T1098
+
+### SITF technique T-P006: Kubernetes Service Account Token Theft
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P006.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker extracts Kubernetes service account tokens from CI/CD.
+
+Risks:
+- Overprivileged service accounts
+- Long-lived tokens
+- Lack of token rotation
+- Tokens in CI/CD secrets
+
+Protective controls:
+- OIDC for K8s access
+- Minimal service account permissions
+- Token rotation
+
+Detective controls:
+- Secret scanning
+- Runtime security monitoring
+
+MITRE ATT&CK: T1552.007
+
+### SITF technique T-P007: Cloud Metadata Service Exploitation
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P007.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker accesses cloud metadata service to steal additional credentials.
+
+Risks:
+- Metadata service not restricted
+- Overprivileged IAM roles
+- No network segmentation
+- Compromised workload with metadata access
+
+Protective controls:
+- Metadata service restrictions
+- Minimal IAM permissions
+- Network segmentation
+- IMDSv2 enforcement (AWS)
+
+Detective controls:
+- Runtime security monitoring
+
+MITRE ATT&CK: T1552.005
+
+Observed in: LiteLLM (October 2026)
+
+### SITF technique T-P008: Kubernetes Pod Escape
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P008.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker escapes from container to underlying node.
+
+Risks:
+- Privileged containers allowed
+- No pod security policies
+- Overprivileged pod identity
+- Host filesystem mounted
+
+Protective controls:
+- Pod security policies
+- Minimal pod privileges
+
+Detective controls:
+- K8s sensor on cluster
+- KSPM
+- Runtime security monitoring
+
+MITRE ATT&CK: T1611
+
+### SITF technique T-P009: Cloud Service Lateral Movement
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P009.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker uses compromised cloud credentials to access other cloud services.
+
+Risks:
+- Overprivileged IAM roles
+- No network segmentation
+- Lack of service-to-service authentication
+- No audit log monitoring
+
+Protective controls:
+- Minimal IAM permissions
+- Network segmentation
+- Service mesh / zero trust
+- CSPM/CNAPP
+
+Detective controls:
+- Detection infra on audit logs
+
+MITRE ATT&CK: T1199
+
+Observed in: LiteLLM (October 2026), SolarWinds
+
+### SITF technique T-P010: Network Lateral Movement Within Production
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P010.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker moves between production systems via network.
+
+Risks:
+- Weak network segmentation
+- Overly permissive security groups
+- No network monitoring
+- Unpatched systems
+
+Protective controls:
+- Network segmentation
+- Micro-segmentation
+- Security group hardening
+- Vulnerability management
+
+Detective controls:
+- Network monitoring
+
+Observed in: SolarWinds
+
+### SITF technique T-P011: Steal Secrets from Production Environment
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P011.html
+Component: Production/Cloud. Stage: Post-Compromise.
+
+Attacker accesses production secrets store and exfiltrates customer secrets, tokens, and credentials.
+
+Risks:
+- Encryption keys accessible in process memory
+- Lack of hardware security module (HSM) for key storage
+- No secrets rotation policies
+- Centralized storage of all customer secrets
+- No data loss prevention (DLP) on production systems
+- Lack of egress traffic monitoring
+- Services configured with personal or admin credentials
+- Admin APIs return stored secrets
+
+Protective controls:
+- Store encryption keys in HSM (Hardware Security Module)
+- Envelope encryption with key hierarchy
+- Customer-managed encryption keys (CMEK)
+- Automatic secrets rotation (30-90 days)
+- Secrets segmentation (per-customer isolation)
+- Memory protection and anti-dumping controls
+- Service identities instead of personal credentials
+- Write-only secret storage (redact on read)
+
+Detective controls:
+- DLP on production systems
+- Egress traffic monitoring and filtering
+- Detection infra on audit logs (production)
+- Large data transfer detection
+
+MITRE ATT&CK: T1552
+
+Observed in: CircleCI, LiteLLM (October 2026), SolarWinds
+
+### SITF technique T-P012: Production Infrastructure Reconnaissance
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P012.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker enumerates production infrastructure, services, and resources to identify targets and plan attacks.
+
+Risks:
+- Overprivileged IAM roles allowing enumeration
+- No detection of reconnaissance activities
+- Publicly exposed cloud metadata
+- Insufficient network segmentation allowing scanning
+- Verbose error messages revealing infrastructure details
+- Lack of honeypots or deception technology
+- No rate limiting on API calls
+
+Protective controls:
+- Minimal IAM permissions
+- API rate limiting and throttling
+- Network segmentation (production internal)
+- Metadata service restrictions
+- Generic error messages (no infrastructure details)
+
+Detective controls:
+- Detection infra on audit logs (production)
+- Honeypots and deception technology
+- Anomaly detection for enumeration patterns
+
+Observed in: CircleCI, SolarWinds
+
+### SITF technique T-P013: Data Exfiltration from Production
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P013.html
+Component: Production/Cloud. Stage: Post-Compromise.
+
+Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network.
+
+Risks:
+- No network egress monitoring
+- Unrestricted outbound network access
+- No DLP on production systems
+- Backup data accessible and unmonitored
+- Use of encrypted channels to bypass DLP
+- Cloud storage buckets with public access
+
+Protective controls:
+- Backup encryption and access controls
+- SSL/TLS inspection
+- Data classification and handling policies
+- Network segmentation (production from internet)
+- CSPM/CNAPP
+
+Detective controls:
+- Network DLP
+- Egress traffic monitoring and filtering
+- Large data transfer detection
+- Database activity monitoring
+- Detection infra on audit logs (production)
+
+MITRE ATT&CK: T1567
+
+### SITF technique T-P014: Production Infrastructure Destruction
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P014.html
+Component: Production/Cloud. Stage: Post-Compromise.
+
+Attacker destroys production infrastructure, databases, storage, or configurations to cause severe operational disruption and data loss.
+
+Risks:
+- Overprivileged IAM roles allowing destructive actions
+- No backup and disaster recovery plan
+- Lack of deletion protection on critical resources
+- No audit log monitoring
+- Insufficient access controls on critical infrastructure
+- No approval process for destructive operations
+- Backup data not isolated from production
+
+Protective controls:
+- Minimal IAM permissions
+- Regular backups with offsite/offline storage
+- Deletion protection on critical resources
+- Destructive operation approval workflow
+- Immutable backups
+- Disaster recovery procedures and testing
+- Resource tagging and protection policies
+- Backup isolation from production network
+- CSPM/CNAPP
+
+Detective controls:
+- Detection infra on audit logs (production)
+
+MITRE ATT&CK: T1485
+
+Observed in: TeamPCP Campaign
+
+### SITF technique T-P015: Malicious Service Provisioning for Persistence
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P015.html
+Component: Production/Cloud. Stage: Post-Compromise.
+
+Attacker provisions new malicious services or backdoors existing services in orchestration platform (e.g., ArgoCD, Kubernetes) to establish persistence.
+
+Risks:
+- No approval gates for service provisioning
+- Developers can create arbitrary services
+- Service definitions not audited
+- No anomaly detection for new service creation
+- Persistent backdoor services remain undetected
+
+Protective controls:
+- Deployment approval gates for new services
+- Code review for all IaC changes
+- Baseline approved services list
+- CSPM/CNAPP
+
+Detective controls:
+- Detection infra on audit logs (production)
+- Anomaly detection for new service creation patterns
+- Immutable audit logs
+- Regular service inventory audits
+
+### SITF technique T-P016: Supply Chain Backdoor (Sensor/Agent Poisoning)
+
+URL: https://wiz-sec-public.github.io/SITF/techniques/T-P016.html
+Component: Production/Cloud. Stage: Discovery and Lateral Movement.
+
+Attacker injects backdoor into security sensors, agents, or client-distributed software, causing downstream supply chain compromise affecting all customers.
+
+Risks:
+- No binary signing verification for distributed software
+- Customer updates automatically deployed without verification
+- No provenance attestation for sensor binaries
+- No multi-party approval for releases
+
+Protective controls:
+- Code signing and verification for all distributed binaries
+- Provenance attestation (SLSA Level 3+)
+- Customer-controlled update policies with verification
+- Separation of duties for release signing
+- Immutable build logs and attestations
+
+Detective controls:
+- Multi-party approval for sensor/agent releases
+- Regular security audits of build infrastructure

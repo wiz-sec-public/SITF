@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-R013: Version String Impersonation | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-R013 (Version String Impersonation): Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses. Discovery and Lateral Movement technique targeting Registry in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-R013.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-R013: Version String Impersonation | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-R013 (Version String Impersonation): Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses. Discovery and Lateral Movement technique targeting Registry in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-R013.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-R013.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-R013.html",
+ "termCode": "T-R013",
+ "name": "SITF T-R013: Version String Impersonation",
+ "alternateName": "Version String Impersonation",
+ "description": "Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Registry › T-R013</p>
+<h1>SITF technique T-R013: Version String Impersonation</h1>
+<p><span class="tag">Component: Registry</span><span class="tag">Stage: Discovery and Lateral Movement</span><span class="tag">ID: T-R013</span></p>
+<p class="lead">Attacker republishes packages using identical version strings as legitimate releases, replacing trusted versions with malicious code to bypass version pinning defenses.</p>
+<p>SITF technique T-R013 (Version String Impersonation) is a <strong>Discovery and Lateral Movement</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Registry</strong> component (Container and artifact registries (NPM, Docker, PyPI)).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Registry permits version republishing</li>
+<li>No immutable version policy</li>
+<li>Lockfile integrity checks not enforced</li>
+<li>No alerting on content changes for existing versions</li>
+<li>Version strings trusted without content verification</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Immutable version policy</strong><br><span class="small">OWASP SPVS: V3.4 Integrity of Artifacts</span></li>
+<li><strong>Lockfile integrity enforcement</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit; V3.3 Continuous Security Checks</span></li>
+<li><strong>Registry mirror with snapshots</strong><br><span class="small">OWASP SPVS: V2.6 3rd Party Library Audit</span></li>
+<li><strong>Provenance attestation requirement</strong><br><span class="small">OWASP SPVS: V3.4 Integrity of Artifacts</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Package content hash monitoring</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Unpublish event monitoring</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Install integrity failure alerting</strong><br><span class="small">OWASP SPVS: V3.3 Continuous Security Checks; V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-R013">Open T-R013 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-R013 in the SITF flow builder</a></li>
+<li>Previous Registry technique: <a href="T-R012.html">T-R012 Package Lifecycle Script Abuse</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-R013 (Version String Impersonation)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-R013.html">https://wiz-sec-public.github.io/SITF/techniques/T-R013.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

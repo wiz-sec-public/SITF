@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-V007: Clone Sensitive Repositories | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-V007 (Clone Sensitive Repositories): Attacker clones private repositories to steal IP and source code. Post-Compromise technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-V007.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-V007: Clone Sensitive Repositories | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-V007 (Clone Sensitive Repositories): Attacker clones private repositories to steal IP and source code. Post-Compromise technique targeting VCS in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-V007.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-V007.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-V007.html",
+ "termCode": "T-V007",
+ "name": "SITF T-V007: Clone Sensitive Repositories",
+ "alternateName": "Clone Sensitive Repositories",
+ "description": "Attacker clones private repositories to steal IP and source code",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › VCS › T-V007</p>
+<h1>SITF technique T-V007: Clone Sensitive Repositories</h1>
+<p><span class="tag">Component: VCS</span><span class="tag">Stage: Post-Compromise</span><span class="tag">ID: T-V007</span></p>
+<p class="lead">Attacker clones private repositories to steal IP and source code.</p>
+<p>SITF technique T-V007 (Clone Sensitive Repositories) is a <strong>Post-Compromise</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>VCS</strong> component (Version Control Systems (GitHub, GitLab, Azure DevOps)).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Overprivileged VCS access</li>
+<li>No audit log monitoring</li>
+<li>No DLP on network</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Minimal VCS permissions</strong><br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening; V5.1 Access Audit</span></li>
+<li><strong>Repository access reviews</strong><br><span class="small">OWASP SPVS: V1.5 Source Code Management Hardening; V5.1 Access Audit</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Detection infra on audit logs</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Network DLP</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/gitlab-pipeline-hijack.html">GitLab Pipeline Hijack</a> <span class="small">(red team engagement)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-V007">Open T-V007 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-V007 in the SITF flow builder</a></li>
+<li>Previous VCS technique: <a href="T-V006.html">T-V006 Turn Private Repos Public</a></li>
+<li>Next VCS technique: <a href="T-V008.html">T-V008 Malicious Repo Hosting</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-V007 (Clone Sensitive Repositories)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-V007.html">https://wiz-sec-public.github.io/SITF/techniques/T-V007.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

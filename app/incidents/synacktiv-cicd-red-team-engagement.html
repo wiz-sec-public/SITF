@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synacktiv CI/CD Red Team Engagement red team analysis with SITF | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="The Synacktiv CI/CD Red Team Engagement engagement mapped to the SDLC Infrastructure Threat Framework (SITF): T-C001 Abuse Credentials for CI/CD Access, T-C005 Secret Exfiltration from Workflow, T-P001 Abuse Production Credentials from CI/CD.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/incidents/synacktiv-cicd-red-team-engagement.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Synacktiv CI/CD Red Team Engagement red team analysis with SITF | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="The Synacktiv CI/CD Red Team Engagement engagement mapped to the SDLC Infrastructure Threat Framework (SITF): T-C001 Abuse Credentials for CI/CD Access, T-C005 Secret Exfiltration from Workflow, T-P001 Abuse Production Credentials from CI/CD.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/incidents/synacktiv-cicd-red-team-engagement.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Incidents</a> › Synacktiv CI/CD Red Team Engagement</p>
+<h1>Synacktiv CI/CD Red Team Engagement: attack mapped to SITF techniques</h1>
+<p><span class="tag">Red team engagement</span><span class="tag">3 SITF techniques</span></p>
+<p class='lead'>This page maps the Synacktiv CI/CD Red Team Engagement engagement to the SDLC Infrastructure Threat Framework (SITF), step by step, from initial access to impact.</p>
+<p><strong>Organizations involved:</strong> Organization</p>
+<h2>Entry points</h2><ul><li>Leaked Azure DevOps PAT</li></ul>
+<h2>Attack path</h2><ol class='steps'>
+<li><a href="../techniques/T-C001.html">SITF T-C001: Abuse Credentials for CI/CD Access</a> — Leaked PAT → Azure DevOps access · in Azure DevOps</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — Variable Groups extraction · in Azure DevOps</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — Secure Files extraction · in Azure DevOps</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — Service Connections + GitHub PAT · in Azure DevOps</li>
+<li><a href="../techniques/T-P001.html">SITF T-P001: Abuse Production Credentials from CI/CD</a> — Azure RM access via Service Principal · in Azure Resource Manager</li>
+<li><a href="../techniques/T-C001.html">SITF T-C001: Abuse Credentials for CI/CD Access</a> — GitHub access via stolen PAT · in GitHub Actions</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — Repository &amp; Environment secrets · in GitHub Actions</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — OIDC token abuse for Azure · in GitHub Actions</li>
+</ol>
+<h2>Outcomes</h2><ul><li>Azure Cloud Compromise</li></ul>
+<h2>Techniques and controls</h2>
+<table><tr><th>Technique</th><th>Key protective controls</th></tr>
+<tr><td><a href="../techniques/T-C001.html">T-C001 Abuse Credentials for CI/CD Access</a></td><td>Mandatory MFA; IDP / SSO setup; Enforcing fine-grained PATs (VCS)</td></tr>
+<tr><td><a href="../techniques/T-C005.html">T-C005 Secret Exfiltration from Workflow</a></td><td>OIDC setup in workflows; Minimal workflow permissions; Log sanitization</td></tr>
+<tr><td><a href="../techniques/T-P001.html">T-P001 Abuse Production Credentials from CI/CD</a></td><td>OIDC for deployment (no long-lived credentials); Minimal IAM permissions; Credential rotation</td></tr>
+</table>
+<p class="small">Source flow: <a href="https://github.com/wiz-sec-public/SITF/blob/main/flows/red-team/synacktiv-cicd-red-team-engagement.json">flows/red-team/synacktiv-cicd-red-team-engagement.json</a>. Load it in the <a href="../visualizer.html">SITF flow builder</a> to view the diagram.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SITF Technique Library - Visual Explorer</title>
+    <meta name="description" content="Interactive explorer for all SITF (SDLC Infrastructure Threat Framework) techniques: attacks on developer endpoints, VCS, CI/CD, registries and production cloud, with risks and controls. Text version: https://wiz-sec-public.github.io/SITF/techniques/index.html">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="sitf-icon-round.png">

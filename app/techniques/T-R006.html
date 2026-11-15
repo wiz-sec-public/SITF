@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-R006: Publishing Malicious IDE/Browser Extension | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-R006 (Publishing Malicious IDE/Browser Extension): Attacker publishes malicious extension to extension marketplace. Discovery and Lateral Movement technique targeting Registry in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-R006.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-R006: Publishing Malicious IDE/Browser Extension | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-R006 (Publishing Malicious IDE/Browser Extension): Attacker publishes malicious extension to extension marketplace. Discovery and Lateral Movement technique targeting Registry in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-R006.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-R006.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-R006.html",
+ "termCode": "T-R006",
+ "name": "SITF T-R006: Publishing Malicious IDE/Browser Extension",
+ "alternateName": "Publishing Malicious IDE/Browser Extension",
+ "description": "Attacker publishes malicious extension to extension marketplace",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Registry › T-R006</p>
+<h1>SITF technique T-R006: Publishing Malicious IDE/Browser Extension</h1>
+<p><span class="tag">Component: Registry</span><span class="tag">Stage: Discovery and Lateral Movement</span><span class="tag">ID: T-R006</span></p>
+<p class="lead">Attacker publishes malicious extension to extension marketplace.</p>
+<p>SITF technique T-R006 (Publishing Malicious IDE/Browser Extension) is a <strong>Discovery and Lateral Movement</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Registry</strong> component (Container and artifact registries (NPM, Docker, PyPI)).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Overprivileged publishing credentials</li>
+<li>No extension review process</li>
+<li>No signing requirements</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Extension signing requirements</strong><br><span class="small">OWASP SPVS: V4.1 Final Security Assessments</span></li>
+<li><strong>Extension review process</strong><br><span class="small">OWASP SPVS: V4.1 Final Security Assessments</span></li>
+<li><strong>MFA for publisher account</strong><br><span class="small">OWASP SPVS: V1.1 Identity and Access Management</span></li>
+<li><strong>Trusted publishing</strong><br><span class="small">OWASP SPVS: V3.2 Credential Hygiene</span></li>
+</ul>
+<h2>Detective controls</h2>
+<p class='small'>None mapped yet.</p>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/aqua-trivy-vscode.html">Aqua Trivy VS Code Extension</a> <span class="small">(incident)</span></li>
+<li><a href="../incidents/clinejection.html">Clinejection</a> <span class="small">(incident)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-R006">Open T-R006 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-R006 in the SITF flow builder</a></li>
+<li>Previous Registry technique: <a href="T-R005.html">T-R005 Publishing Malicious Container/VM Image</a></li>
+<li>Next Registry technique: <a href="T-R007.html">T-R007 Harvest Data from Private Artifacts</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-R006 (Publishing Malicious IDE/Browser Extension)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-R006.html">https://wiz-sec-public.github.io/SITF/techniques/T-R006.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

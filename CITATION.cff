@@ -2,14 +2,14 @@ cff-version: 1.2.0
 message: "If you use this framework in your research or work, please cite it as below."
 type: software
 title: "SDLC Infrastructure Threat Framework (SITF)"
-abstract: "A comprehensive framework for analyzing and defending against supply chain attacks targeting Software Development Lifecycle infrastructure. SITF provides 61 documented attack techniques with pre-mapped risks and controls, an interactive visualizer for attack flow mapping, and real-world case studies."
+abstract: "A comprehensive framework for analyzing and defending against supply chain attacks targeting Software Development Lifecycle infrastructure. SITF provides 82 documented attack techniques with pre-mapped risks and controls, an interactive visualizer for attack flow mapping, and real-world case studies."
 authors:
   - family-names: "Berkovich"
     given-names: "Shay"
     email: "shay.berkovich@wiz.io"
     affiliation: "Wiz"
 repository-code: "https://github.com/wiz-sec-public/SITF"
-url: "https://github.com/wiz-sec-public/SITF"
+url: "https://wiz-sec-public.github.io/SITF/"
 keywords:
   - supply-chain-security
   - sdlc-security
@@ -21,6 +21,6 @@ keywords:
   - threat-modeling
   - incident-response
   - security-framework
-license: CC-BY-NC-ND-4.0
+license: CC-BY-NC-4.0
 version: 1.0.0
 date-released: 2026-01-01

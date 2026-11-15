@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-E004: Harvest Local Data from Endpoint | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-E004 (Harvest Local Data from Endpoint): Attacker exfiltrates source code, documents, or other sensitive data from endpoint. Post-Compromise technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-E004.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-E004: Harvest Local Data from Endpoint | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-E004 (Harvest Local Data from Endpoint): Attacker exfiltrates source code, documents, or other sensitive data from endpoint. Post-Compromise technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-E004.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-E004.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-E004.html",
+ "termCode": "T-E004",
+ "name": "SITF T-E004: Harvest Local Data from Endpoint",
+ "alternateName": "Harvest Local Data from Endpoint",
+ "description": "Attacker exfiltrates source code, documents, or other sensitive data from endpoint",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Endpoint/IDE › T-E004</p>
+<h1>SITF technique T-E004: Harvest Local Data from Endpoint</h1>
+<p><span class="tag">Component: Endpoint/IDE</span><span class="tag">Stage: Post-Compromise</span><span class="tag">ID: T-E004</span></p>
+<p class="lead">Attacker exfiltrates source code, documents, or other sensitive data from endpoint.</p>
+<p>SITF technique T-E004 (Harvest Local Data from Endpoint) is a <strong>Post-Compromise</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Endpoint/IDE</strong> component (Developer workstations and development environments).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>No local DLP</li>
+<li>No EDR</li>
+<li>Sensitive data stored locally</li>
+<li>No encryption at rest</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Data classification and handling policies</strong><br><span class="small">OWASP SPVS: V1.3 Security Requirements and Risk Assessment</span></li>
+<li><strong>Encryption at rest</strong><br><span class="small">OWASP SPVS: V5.5 Incident Response &amp; Recovery</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Local DLP</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>EDR on endpoint</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Network monitoring</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/s1ngularity.html">s1ngularity</a> <span class="small">(incident)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-E004">Open T-E004 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-E004 in the SITF flow builder</a></li>
+<li>Previous Endpoint/IDE technique: <a href="T-E003.html">T-E003 Harvest Local Secrets / Credentials from Endpoint</a></li>
+<li>Next Endpoint/IDE technique: <a href="T-E005.html">T-E005 Cryptomining on Endpoints</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-E004 (Harvest Local Data from Endpoint)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-E004.html">https://wiz-sec-public.github.io/SITF/techniques/T-E004.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

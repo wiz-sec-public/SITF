@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-E017: Legitimate Service Abuse for C2 | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-E017 (Legitimate Service Abuse for C2): Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection. Post-Compromise technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-E017.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-E017: Legitimate Service Abuse for C2 | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-E017 (Legitimate Service Abuse for C2): Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection. Post-Compromise technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-E017.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-E017.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-E017.html",
+ "termCode": "T-E017",
+ "name": "SITF T-E017: Legitimate Service Abuse for C2",
+ "alternateName": "Legitimate Service Abuse for C2",
+ "description": "Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Endpoint/IDE › T-E017</p>
+<h1>SITF technique T-E017: Legitimate Service Abuse for C2</h1>
+<p><span class="tag">Component: Endpoint/IDE</span><span class="tag">Stage: Post-Compromise</span><span class="tag">ID: T-E017</span></p>
+<p class="lead">Attacker uses legitimate cloud services (Google Calendar, Pastebin, social media, cloud storage) as command and control channels to evade detection.</p>
+<p>SITF technique T-E017 (Legitimate Service Abuse for C2) is a <strong>Post-Compromise</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Endpoint/IDE</strong> component (Developer workstations and development environments).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>Legitimate services not monitored for C2 abuse</li>
+<li>No content inspection of legitimate service traffic</li>
+<li>Services whitelisted in security controls</li>
+<li>No EDR</li>
+<li>Encoded payloads in legitimate service data</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Deep content inspection of legitimate service traffic</strong><br><span class="small">OWASP SPVS: V5.2 Security Standard Enforcement; V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>EDR on endpoint</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Behavioral analysis for unusual service usage patterns</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Network traffic anomaly detection</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Application-level monitoring</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Data exfiltration detection</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Observed in</h2><ul>
+<li><a href="../incidents/litellm-oct-2026.html">LiteLLM (October 2026)</a> <span class="small">(incident)</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-E017">Open T-E017 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-E017 in the SITF flow builder</a></li>
+<li>Previous Endpoint/IDE technique: <a href="T-E016.html">T-E016 Blockchain-Based C2 Infrastructure</a></li>
+<li>Next Endpoint/IDE technique: <a href="T-E018.html">T-E018 BitTorrent DHT for C2</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-E017 (Legitimate Service Abuse for C2)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-E017.html">https://wiz-sec-public.github.io/SITF/techniques/T-E017.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-P013: Data Exfiltration from Production | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-P013 (Data Exfiltration from Production): Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network. Post-Compromise technique targeting Production/Cloud in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-P013.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-P013: Data Exfiltration from Production | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-P013 (Data Exfiltration from Production): Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network. Post-Compromise technique targeting Production/Cloud in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-P013.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-P013.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-P013.html",
+ "termCode": "T-P013",
+ "name": "SITF T-P013: Data Exfiltration from Production",
+ "alternateName": "Data Exfiltration from Production",
+ "description": "Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Production/Cloud › T-P013</p>
+<h1>SITF technique T-P013: Data Exfiltration from Production</h1>
+<p><span class="tag">Component: Production/Cloud</span><span class="tag">Stage: Post-Compromise</span><span class="tag">ID: T-P013</span></p>
+<p class="lead">Attacker exfiltrates customer data, application data, databases, and sensitive information from production environment over network.</p>
+<p>SITF technique T-P013 (Data Exfiltration from Production) is a <strong>Post-Compromise</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Production/Cloud</strong> component (Production infrastructure of the producer organization).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>No network egress monitoring</li>
+<li>Unrestricted outbound network access</li>
+<li>No DLP on production systems</li>
+<li>Backup data accessible and unmonitored</li>
+<li>Use of encrypted channels to bypass DLP</li>
+<li>Cloud storage buckets with public access</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>Backup encryption and access controls</strong><br><span class="small">OWASP SPVS: V5.3 Secure Maintenance Practices</span></li>
+<li><strong>SSL/TLS inspection</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Data classification and handling policies</strong><br><span class="small">OWASP SPVS: V1.3 Security Requirements and Risk Assessment</span></li>
+<li><strong>Network segmentation (production from internet)</strong><br><span class="small">OWASP SPVS: V4.4 Transition Security</span></li>
+<li><strong>CSPM/CNAPP</strong><br><span class="small">OWASP SPVS: V4.2 Compliance Checks; V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>Network DLP</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Egress traffic monitoring and filtering</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Large data transfer detection</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Database activity monitoring</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Detection infra on audit logs (production)</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Framework mappings</h2><ul>
+<li>MITRE ATT&amp;CK: <a href="https://attack.mitre.org/techniques/T1567/">T1567</a></li>
+<li>AWS Threat Technique Catalog: <a href="https://aws-samples.github.io/threat-technique-catalog-for-aws/">T1530</a></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-P013">Open T-P013 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-P013 in the SITF flow builder</a></li>
+<li>Previous Production/Cloud technique: <a href="T-P012.html">T-P012 Production Infrastructure Reconnaissance</a></li>
+<li>Next Production/Cloud technique: <a href="T-P014.html">T-P014 Production Infrastructure Destruction</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-P013 (Data Exfiltration from Production)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-P013.html">https://wiz-sec-public.github.io/SITF/techniques/T-P013.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shai-Hulud 2.0 attack analysis with SITF | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="The Shai-Hulud 2.0 attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C003 PWN Request / Poisoned Pipeline Execution, T-C005 Secret Exfiltration from Workflow, T-E001 Malicious Execution on Endpoint, T-E003 Harvest Local Secrets / Credentials from Endpoint, T-E006 Register Local Machine as CI Runner, T-E010 Endpoint Infrastructure Destruction.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/incidents/shai-hulud-2-flow.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shai-Hulud 2.0 attack analysis with SITF | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="The Shai-Hulud 2.0 attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C003 PWN Request / Poisoned Pipeline Execution, T-C005 Secret Exfiltration from Workflow, T-E001 Malicious Execution on Endpoint, T-E003 Harvest Local Secrets / Credentials from Endpoint, T-E006 Register Local Machine as CI Runner, T-E010 Endpoint Infrastructure Destruction.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/incidents/shai-hulud-2-flow.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Incidents</a> › Shai-Hulud 2.0</p>
+<h1>Shai-Hulud 2.0: attack mapped to SITF techniques</h1>
+<p><span class="tag">Incident</span><span class="tag">8 SITF techniques</span></p>
+<p class='lead'>This page maps the Shai-Hulud 2.0 attack to the SDLC Infrastructure Threat Framework (SITF), step by step, from initial access to impact.</p>
+<h2>Entry points</h2><ul><li>Producer entry point (PostHog, AsyncAPI)</li><li>Consumer entry point</li></ul>
+<h2>Attack path</h2><ol class='steps'>
+<li><a href="../techniques/T-C003.html">SITF T-C003: PWN Request / Poisoned Pipeline Execution</a> — in Patiernt Zero&#x27;s GitHub Actions</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — in Patiernt Zero&#x27;s GitHub Actions</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — in Secondary CI/CD component</li>
+<li><a href="../techniques/T-R004.html">SITF T-R004: Publishing Malicious Package</a> — in NPM registry</li>
+<li><a href="../techniques/T-E001.html">SITF T-E001: Malicious Execution on Endpoint</a> — in Dev endpoint or CI/CD runner</li>
+<li><a href="../techniques/T-E003.html">SITF T-E003: Harvest Local Secrets / Credentials from Endpoint</a> — in Dev endpoint or CI/CD runner</li>
+<li><a href="../techniques/T-V004.html">SITF T-V004: Secret Exfiltration from Personal Repo</a> — in GitHub</li>
+<li><a href="../techniques/T-E010.html">SITF T-E010: Endpoint Infrastructure Destruction</a> — in Dev endpoint or CI/CD runner</li>
+<li><a href="../techniques/T-E006.html">SITF T-E006: Register Local Machine as CI Runner</a> — in Dev endpoint or CI/CD runner</li>
+</ol>
+<h2>Outcomes</h2><ul><li>Future Breach</li><li>Ongoing Access</li></ul>
+<h2>Techniques and controls</h2>
+<table><tr><th>Technique</th><th>Key protective controls</th></tr>
+<tr><td><a href="../techniques/T-C003.html">T-C003 PWN Request / Poisoned Pipeline Execution</a></td><td>Branch protection rules (VCS); Private repo (VCS); Require explicit approval/ disallow workflows from forks (VCS)</td></tr>
+<tr><td><a href="../techniques/T-C005.html">T-C005 Secret Exfiltration from Workflow</a></td><td>OIDC setup in workflows; Minimal workflow permissions; Log sanitization</td></tr>
+<tr><td><a href="../techniques/T-E001.html">T-E001 Malicious Execution on Endpoint</a></td><td>Local registry proxy with filtering; IDE sandboxing; Mandating signed extensions</td></tr>
+<tr><td><a href="../techniques/T-E003.html">T-E003 Harvest Local Secrets / Credentials from Endpoint</a></td><td>Credential manager enforcement; No production credentials on endpoints; Encrypted credential storage</td></tr>
+<tr><td><a href="../techniques/T-E006.html">T-E006 Register Local Machine as CI Runner</a></td><td>Using managed runners only; Runner registration approval workflow; Runner registration token protection</td></tr>
+<tr><td><a href="../techniques/T-E010.html">T-E010 Endpoint Infrastructure Destruction</a></td><td>Regular endpoint backups; Minimal local user privileges; Offline backup storage</td></tr>
+<tr><td><a href="../techniques/T-R004.html">T-R004 Publishing Malicious Package</a></td><td>Trusted publishing; Provenance attestation; MFA for registry account</td></tr>
+<tr><td><a href="../techniques/T-V004.html">T-V004 Secret Exfiltration from Personal Repo</a></td><td>Policy against using personal repos for work; Security awareness training</td></tr>
+</table>
+<p class="small">Source flow: <a href="https://github.com/wiz-sec-public/SITF/blob/main/flows/incidents/shai-hulud-2-flow.json">flows/incidents/shai-hulud-2-flow.json</a>. Load it in the <a href="../visualizer.html">SITF flow builder</a> to view the diagram.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LiteLLM (October 2026) attack analysis with SITF | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="The LiteLLM (October 2026) attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C001 Abuse Credentials for CI/CD Access, T-C002 Malicious Execution in Workflow Context, T-C005 Secret Exfiltration from Workflow, T-C010 Runner Executing Malicious Package, T-E001 Malicious Execution on Endpoint, T-E003 Harvest Local Secrets / Credentials from Endpoint.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/incidents/litellm-oct-2026.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LiteLLM (October 2026) attack analysis with SITF | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="The LiteLLM (October 2026) attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C001 Abuse Credentials for CI/CD Access, T-C002 Malicious Execution in Workflow Context, T-C005 Secret Exfiltration from Workflow, T-C010 Runner Executing Malicious Package, T-E001 Malicious Execution on Endpoint, T-E003 Harvest Local Secrets / Credentials from Endpoint.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/incidents/litellm-oct-2026.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Incidents</a> › LiteLLM (October 2026)</p>
+<h1>LiteLLM (October 2026): attack mapped to SITF techniques</h1>
+<p><span class="tag">Incident</span><span class="tag">18 SITF techniques</span></p>
+<p class='lead'>This page maps the LiteLLM (October 2026) attack to the SDLC Infrastructure Threat Framework (SITF), step by step, from initial access to impact.</p>
+<p><strong>Organizations involved:</strong> BerriAI (LiteLLM producer); Downstream Consumers</p>
+<h2>Entry points</h2><ul><li>Stolen Credentials: Agent Platform admin key leaked 05-27, never revoked</li></ul>
+<h2>Attack path</h2><ol class='steps'>
+<li><a href="../techniques/T-V003.html">SITF T-V003: Secret Exfiltration from Repo</a> — opencode.json with admin key in public history (05-27 18:53) · in LiteLLM-Labs/lite-harness (public, sibling org)</li>
+<li><a href="../techniques/T-P011.html">SITF T-P011: Steal Secrets from Production Environment</a> — Agent Platform API returns an org owner&#x27;s gh OAuth token (10-10 21:27) · in Internal LiteLLM Agent Platform</li>
+<li><a href="../techniques/T-V001.html">SITF T-V001: Abuse Credentials for VCS Access</a> — Owner, then maintainer #2/#3 gh tokens used (10-10 to 10-21) · in GitHub BerriAI org (litellm, project-releaser)</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — ci-tmp-* push workflows post secrets to webhook.site (10-10, 10-12) · in GitHub Actions: litellm repos + private release workflows</li>
+<li><a href="../techniques/T-V010.html">SITF T-V010: Malicious Code Modification in Repository</a> — 9cf97e9 adds source_owner input; owner token overrides branch protection (10:08) · in GitHub BerriAI org (litellm, project-releaser)</li>
+<li><a href="../techniques/T-C001.html">SITF T-C001: Abuse Credentials for CI/CD Access</a> — Owner token dispatches staging (10:46); maintainer #2 approves prod (11:11) · in GitHub Actions: litellm repos + private release workflows</li>
+<li><a href="../techniques/T-C002.html">SITF T-C002: Malicious Execution in Workflow Context</a> — Legitimate pipeline builds and signs from the lookalike fork · in GitHub Actions: litellm repos + private release workflows</li>
+<li><a href="../techniques/T-R004.html">SITF T-R004: Publishing Malicious Package</a> — litellm==1.107.0 (7 wheels + sdist) via Trusted Publishing, 11:39 · in PyPI, GHCR, Docker Hub</li>
+<li><a href="../techniques/T-R005.html">SITF T-R005: Publishing Malicious Container/VM Image</a> — Signed images v1.107.0, latest, main-latest, main-stable (11:46) · in PyPI, GHCR, Docker Hub</li>
+<li><a href="../techniques/T-V008.html">SITF T-V008: Malicious Repo Hosting</a> — Attacker preparation: lookalike fork Berri-AI/litellm (10-21 08:56-10:46) · in GitHub BerriAI org (litellm, project-releaser)</li>
+<li><a href="../techniques/T-R012.html">SITF T-R012: Package Lifecycle Script Abuse</a> — cook.pth + sitecustomize.py run on every Python interpreter start · in PyPI, GHCR, Docker Hub</li>
+<li><a href="../techniques/T-V013.html">SITF T-V013: VCS Evidence Destruction</a> — Run records deleted (10-10, 10-21); main reverted and force-pushed (12:09-12:24) · in GitHub BerriAI org (litellm, project-releaser)</li>
+<li><a href="../techniques/T-E001.html">SITF T-E001: Malicious Execution on Endpoint</a> — pip install litellm: cook.pth runs on every Python start · in Developer workstations</li>
+<li><a href="../techniques/T-P011.html">SITF T-P011: Steal Secrets from Production Environment</a> — Proxy DB dump: LiteLLM_CredentialsTable, LiteLLM_ProxyModelTable · in Consumer K8s nodes, LiteLLM proxies, AWS</li>
+<li><a href="../techniques/T-C010.html">SITF T-C010: Runner Executing Malicious Package</a> — Runners installing litellm 1.107.0 / pulling :latest execute payload · in Consumer CI runners</li>
+<li><a href="../techniques/T-E003.html">SITF T-E003: Harvest Local Secrets / Credentials from Endpoint</a> — Developer, cloud and AI-tool credentials harvested · in Developer workstations</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — Runner env, cloud, AI-tool credentials exfiltrated to litellm.dev · in Consumer CI runners</li>
+<li><a href="../techniques/T-P007.html">SITF T-P007: Cloud Metadata Service Exploitation</a> — AWS instance-role credentials from K8s nodes · in Consumer K8s nodes, LiteLLM proxies, AWS</li>
+<li><a href="../techniques/T-E017.html">SITF T-E017: Legitimate Service Abuse for C2</a> — Hourly loader reads C2 domain from GitHub dead drop · in Developer workstations</li>
+<li><a href="../techniques/T-P009.html">SITF T-P009: Cloud Service Lateral Movement</a> — sts:GetCallerIdentity then Bedrock model listing (16:20-17:01Z) · in Consumer K8s nodes, LiteLLM proxies, AWS</li>
+</ol>
+<h2>Outcomes</h2><ul><li>Secondary Supply Chain Attack: Stolen CI/registry secrets from every litellm installer</li><li>Future Breach: LLMjacking via stolen cloud credentials; hourly RCE loader</li></ul>
+<h2>Techniques and controls</h2>
+<table><tr><th>Technique</th><th>Key protective controls</th></tr>
+<tr><td><a href="../techniques/T-C001.html">T-C001 Abuse Credentials for CI/CD Access</a></td><td>Mandatory MFA; IDP / SSO setup; Enforcing fine-grained PATs (VCS)</td></tr>
+<tr><td><a href="../techniques/T-C002.html">T-C002 Malicious Execution in Workflow Context</a></td><td>Pinning 3rd-party actions; Action whitelisting; Automated maintainer reputation and hygiene checks</td></tr>
+<tr><td><a href="../techniques/T-C005.html">T-C005 Secret Exfiltration from Workflow</a></td><td>OIDC setup in workflows; Minimal workflow permissions; Log sanitization</td></tr>
+<tr><td><a href="../techniques/T-C010.html">T-C010 Runner Executing Malicious Package</a></td><td>Local registry proxy with filtering; Runner SBOM; Package version pinning</td></tr>
+<tr><td><a href="../techniques/T-E001.html">T-E001 Malicious Execution on Endpoint</a></td><td>Local registry proxy with filtering; IDE sandboxing; Mandating signed extensions</td></tr>
+<tr><td><a href="../techniques/T-E003.html">T-E003 Harvest Local Secrets / Credentials from Endpoint</a></td><td>Credential manager enforcement; No production credentials on endpoints; Encrypted credential storage</td></tr>
+<tr><td><a href="../techniques/T-E017.html">T-E017 Legitimate Service Abuse for C2</a></td><td>Deep content inspection of legitimate service traffic</td></tr>
+<tr><td><a href="../techniques/T-P007.html">T-P007 Cloud Metadata Service Exploitation</a></td><td>Metadata service restrictions; Minimal IAM permissions; Network segmentation</td></tr>
+<tr><td><a href="../techniques/T-P009.html">T-P009 Cloud Service Lateral Movement</a></td><td>Minimal IAM permissions; Network segmentation; Service mesh / zero trust</td></tr>
+<tr><td><a href="../techniques/T-P011.html">T-P011 Steal Secrets from Production Environment</a></td><td>Store encryption keys in HSM (Hardware Security Module); Envelope encryption with key hierarchy; Customer-managed encryption keys (CMEK)</td></tr>
+<tr><td><a href="../techniques/T-R004.html">T-R004 Publishing Malicious Package</a></td><td>Trusted publishing; Provenance attestation; MFA for registry account</td></tr>
+<tr><td><a href="../techniques/T-R005.html">T-R005 Publishing Malicious Container/VM Image</a></td><td>Trusted publishing; Provenance attestation; Image signing and verification</td></tr>
+<tr><td><a href="../techniques/T-R012.html">T-R012 Package Lifecycle Script Abuse</a></td><td>Disable lifecycle scripts during installation; Network isolation during package installation; Lockfile integrity verification</td></tr>
+<tr><td><a href="../techniques/T-V001.html">T-V001 Abuse Credentials for VCS Access</a></td><td>Mandatory MFA; IDP / SSO setup; Enforcing fine-grained PATs</td></tr>
+<tr><td><a href="../techniques/T-V003.html">T-V003 Secret Exfiltration from Repo</a></td><td>Private repo visibility; Webhook security review; Branch protection rules</td></tr>
+<tr><td><a href="../techniques/T-V008.html">T-V008 Malicious Repo Hosting</a></td><td>Repository creation approval; Resource quotas</td></tr>
+<tr><td><a href="../techniques/T-V010.html">T-V010 Malicious Code Modification in Repository</a></td><td>Branch protection rules (VCS); Require code owner approval; Mandatory code review by multiple reviewers</td></tr>
+<tr><td><a href="../techniques/T-V013.html">T-V013 VCS Evidence Destruction</a></td><td>Audit log streaming outside the VCS platform; Workflow log export to external storage; Force-push and deletion blocked with no bypass actors</td></tr>
+</table>
+<p class="small">Source flow: <a href="https://github.com/wiz-sec-public/SITF/blob/main/flows/incidents/litellm-oct-2026.json">flows/incidents/litellm-oct-2026.json</a>. Load it in the <a href="../visualizer.html">SITF flow builder</a> to view the diagram.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

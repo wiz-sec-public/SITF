@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CircleCI attack analysis with SITF | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="The CircleCI attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C001 Abuse Credentials for CI/CD Access, T-C018 Data Exfiltration from CI/CD, T-E001 Malicious Execution on Endpoint, T-E002 Endpoint Phishing, T-E003 Harvest Local Secrets / Credentials from Endpoint, T-P001 Abuse Production Credentials from CI/CD.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/incidents/circleci-flow.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CircleCI attack analysis with SITF | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="The CircleCI attack mapped to the SDLC Infrastructure Threat Framework (SITF): T-C001 Abuse Credentials for CI/CD Access, T-C018 Data Exfiltration from CI/CD, T-E001 Malicious Execution on Endpoint, T-E002 Endpoint Phishing, T-E003 Harvest Local Secrets / Credentials from Endpoint, T-P001 Abuse Production Credentials from CI/CD.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/incidents/circleci-flow.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Incidents</a> › CircleCI</p>
+<h1>CircleCI: attack mapped to SITF techniques</h1>
+<p><span class="tag">Incident</span><span class="tag">8 SITF techniques</span></p>
+<p class='lead'>This page maps the CircleCI attack to the SDLC Infrastructure Threat Framework (SITF), step by step, from initial access to impact.</p>
+<h2>Entry points</h2><ul><li>CircleCI Entry Point</li><li>Consumer entry point</li></ul>
+<h2>Attack path</h2><ol class='steps'>
+<li><a href="../techniques/T-E002.html">SITF T-E002: Endpoint Phishing</a> — in CircleCI employee</li>
+<li><a href="../techniques/T-E001.html">SITF T-E001: Malicious Execution on Endpoint</a> — Malware · in CircleCI employee</li>
+<li><a href="../techniques/T-E003.html">SITF T-E003: Harvest Local Secrets / Credentials from Endpoint</a> — Stealing SSO session cookies · in CircleCI employee</li>
+<li><a href="../techniques/T-P001.html">SITF T-P001: Abuse Production Credentials from CI/CD</a> — in CircleCI</li>
+<li><a href="../techniques/T-P012.html">SITF T-P012: Production Infrastructure Reconnaissance</a> — in CircleCI</li>
+<li><a href="../techniques/T-P011.html">SITF T-P011: Steal Secrets from Production Environment</a> — Generating access tokens to customer envs · in CircleCI</li>
+<li><a href="../techniques/T-C001.html">SITF T-C001: Abuse Credentials for CI/CD Access</a> — in Customer envs</li>
+<li><a href="../techniques/T-C018.html">SITF T-C018: Data Exfiltration from CI/CD</a> — in Customer envs</li>
+</ol>
+<h2>Outcomes</h2><ul><li>Future Breach</li></ul>
+<h2>Techniques and controls</h2>
+<table><tr><th>Technique</th><th>Key protective controls</th></tr>
+<tr><td><a href="../techniques/T-C001.html">T-C001 Abuse Credentials for CI/CD Access</a></td><td>Mandatory MFA; IDP / SSO setup; Enforcing fine-grained PATs (VCS)</td></tr>
+<tr><td><a href="../techniques/T-C018.html">T-C018 Data Exfiltration from CI/CD</a></td><td>Log sanitization; Artifact encryption; Network segmentation (CI/CD from internet)</td></tr>
+<tr><td><a href="../techniques/T-E001.html">T-E001 Malicious Execution on Endpoint</a></td><td>Local registry proxy with filtering; IDE sandboxing; Mandating signed extensions</td></tr>
+<tr><td><a href="../techniques/T-E002.html">T-E002 Endpoint Phishing</a></td><td>Mandatory MFA; Phishing-resistant authentication; Security awareness training</td></tr>
+<tr><td><a href="../techniques/T-E003.html">T-E003 Harvest Local Secrets / Credentials from Endpoint</a></td><td>Credential manager enforcement; No production credentials on endpoints; Encrypted credential storage</td></tr>
+<tr><td><a href="../techniques/T-P001.html">T-P001 Abuse Production Credentials from CI/CD</a></td><td>OIDC for deployment (no long-lived credentials); Minimal IAM permissions; Credential rotation</td></tr>
+<tr><td><a href="../techniques/T-P011.html">T-P011 Steal Secrets from Production Environment</a></td><td>Store encryption keys in HSM (Hardware Security Module); Envelope encryption with key hierarchy; Customer-managed encryption keys (CMEK)</td></tr>
+<tr><td><a href="../techniques/T-P012.html">T-P012 Production Infrastructure Reconnaissance</a></td><td>Minimal IAM permissions; API rate limiting and throttling; Network segmentation (production internal)</td></tr>
+</table>
+<p class="small">Source flow: <a href="https://github.com/wiz-sec-public/SITF/blob/main/flows/incidents/circleci-flow.json">flows/incidents/circleci-flow.json</a>. Load it in the <a href="../visualizer.html">SITF flow builder</a> to view the diagram.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

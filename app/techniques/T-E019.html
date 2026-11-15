@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SITF T-E019: OAuth Token Abuse for Cross-Organizational Access | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="SITF technique T-E019 (OAuth Token Abuse for Cross-Organizational Access): Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access. Initial Access technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/techniques/T-E019.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SITF T-E019: OAuth Token Abuse for Cross-Organizational Access | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="SITF technique T-E019 (OAuth Token Abuse for Cross-Organizational Access): Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access. Initial Access technique targeting Endpoint/IDE in the SDLC Infrastructure Threat Framework (SITF), with enabling risks and protective and detective controls.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/techniques/T-E019.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "DefinedTerm",
+ "@id": "https://wiz-sec-public.github.io/SITF/techniques/T-E019.html",
+ "url": "https://wiz-sec-public.github.io/SITF/techniques/T-E019.html",
+ "termCode": "T-E019",
+ "name": "SITF T-E019: OAuth Token Abuse for Cross-Organizational Access",
+ "alternateName": "OAuth Token Abuse for Cross-Organizational Access",
+ "description": "Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access",
+ "inDefinedTermSet": {
+  "@type": "DefinedTermSet",
+  "@id": "https://wiz-sec-public.github.io/SITF/techniques/",
+  "name": "SDLC Infrastructure Threat Framework (SITF) technique library",
+  "url": "https://wiz-sec-public.github.io/SITF/techniques/index.html"
+ }
+}</script>
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Techniques</a> › Endpoint/IDE › T-E019</p>
+<h1>SITF technique T-E019: OAuth Token Abuse for Cross-Organizational Access</h1>
+<p><span class="tag">Component: Endpoint/IDE</span><span class="tag">Stage: Initial Access</span><span class="tag">ID: T-E019</span></p>
+<p class="lead">Attacker uses stolen OAuth tokens to impersonate users across organizational boundaries, bypassing SSO/MFA controls via persistent token access.</p>
+<p>SITF technique T-E019 (OAuth Token Abuse for Cross-Organizational Access) is a <strong>Initial Access</strong> technique in the SDLC Infrastructure Threat Framework (SITF). It targets the <strong>Endpoint/IDE</strong> component (Developer workstations and development environments).</p>
+<h2>Risks that enable this technique</h2><ul>
+<li>OAuth tokens stored in browser or credential stores</li>
+<li>Third-party apps granted excessive OAuth scopes (&#x27;Allow All&#x27;)</li>
+<li>OAuth tokens not bound to device or IP</li>
+<li>No monitoring of OAuth token usage across organizations</li>
+<li>Long-lived OAuth refresh tokens without rotation</li>
+<li>Third-party vendors with OAuth access to enterprise identity systems</li>
+<li>No revocation of tokens when third-party is compromised</li>
+</ul>
+<h2>Protective controls</h2>
+<ul>
+<li><strong>OAuth scope minimization</strong> — Restrict third-party OAuth apps to minimal required scopes<br><span class="small">OWASP SPVS: V1.1 Identity and Access Management; V5.1 Access Audit</span></li>
+<li><strong>OAuth token binding</strong> — Bind OAuth tokens to specific devices, IPs, or client certificates<br><span class="small">OWASP SPVS: V1.1 Identity and Access Management</span></li>
+<li><strong>OAuth app approval workflow</strong> — Require admin approval for third-party OAuth integrations<br><span class="small">OWASP SPVS: V1.1 Identity and Access Management; V5.1 Access Audit</span></li>
+<li><strong>Short-lived OAuth tokens with frequent rotation</strong> — Reduce token lifetime and enforce regular re-authentication<br><span class="small">OWASP SPVS: V1.1 Identity and Access Management; V2.5 Credential Hygiene</span></li>
+<li><strong>Third-party vendor security assessment</strong> — Assess OAuth-connected vendors for security posture before integration<br><span class="small">OWASP SPVS: V1.3 Security Requirements and Risk Assessment; V2.6 3rd Party Library Audit</span></li>
+<li><strong>Conditional access policies for OAuth apps</strong> — Require MFA re-verification for sensitive OAuth operations<br><span class="small">OWASP SPVS: V1.1 Identity and Access Management</span></li>
+</ul>
+<h2>Detective controls</h2>
+<ul>
+<li><strong>OAuth token usage anomaly detection</strong> — Detect OAuth tokens used from unexpected locations, devices, or user agents<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Cross-organization OAuth activity monitoring</strong> — Monitor and alert on OAuth access patterns across organizational boundaries<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Third-party OAuth app audit logging</strong> — Log all actions performed by third-party OAuth applications<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>OAuth scope elevation alerting</strong> — Alert when OAuth apps request or use elevated scopes<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+</ul>
+<h2>Explore</h2><ul>
+<li><a href="../techniques-library.html#T-E019">Open T-E019 in the interactive technique library</a></li>
+<li><a href="../visualizer.html">Map an attack using T-E019 in the SITF flow builder</a></li>
+<li>Previous Endpoint/IDE technique: <a href="T-E018.html">T-E018 BitTorrent DHT for C2</a></li>
+</ul>
+<h2>How to reference</h2>
+<p>Cite as <em>SITF technique T-E019 (OAuth Token Abuse for Cross-Organizational Access)</em>, SDLC Infrastructure Threat Framework (SITF), <a href="https://wiz-sec-public.github.io/SITF/techniques/T-E019.html">https://wiz-sec-public.github.io/SITF/techniques/T-E019.html</a>.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>

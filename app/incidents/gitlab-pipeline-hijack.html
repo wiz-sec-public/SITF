@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitLab Pipeline Hijack red team analysis with SITF | SDLC Infrastructure Threat Framework</title>
+<meta name="description" content="The GitLab Pipeline Hijack engagement mapped to the SDLC Infrastructure Threat Framework (SITF): T-C005 Secret Exfiltration from Workflow, T-C009 CI/CD Vulnerability Exploitation, T-R007 Harvest Data from Private Artifacts, T-V007 Clone Sensitive Repositories.">
+<link rel="canonical" href="https://wiz-sec-public.github.io/SITF/incidents/gitlab-pipeline-hijack.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitLab Pipeline Hijack red team analysis with SITF | SDLC Infrastructure Threat Framework">
+<meta property="og:description" content="The GitLab Pipeline Hijack engagement mapped to the SDLC Infrastructure Threat Framework (SITF): T-C005 Secret Exfiltration from Workflow, T-C009 CI/CD Vulnerability Exploitation, T-R007 Harvest Data from Private Artifacts, T-V007 Clone Sensitive Repositories.">
+<meta property="og:url" content="https://wiz-sec-public.github.io/SITF/incidents/gitlab-pipeline-hijack.html">
+<meta property="og:site_name" content="SDLC Infrastructure Threat Framework (SITF)">
+<link rel="icon" type="image/png" href="../sitf-icon-round.png">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site">
+<a href="../index.html"><strong>SITF</strong></a>
+<a href="../techniques/index.html">Techniques</a>
+<a href="../incidents/index.html">Incidents</a>
+<a href="../techniques-library.html">Interactive library</a>
+<a href="../visualizer.html">Flow builder</a>
+<a href="https://github.com/wiz-sec-public/SITF">GitHub</a>
+</header>
+<main>
+<p class="meta"><a href="index.html">Incidents</a> › GitLab Pipeline Hijack</p>
+<h1>GitLab Pipeline Hijack: attack mapped to SITF techniques</h1>
+<p><span class="tag">Red team engagement</span><span class="tag">4 SITF techniques</span></p>
+<p class='lead'>This page maps the GitLab Pipeline Hijack engagement to the SDLC Infrastructure Threat Framework (SITF), step by step, from initial access to impact.</p>
+<h2>Entry points</h2><ul><li>External Attacker (Two Accounts)</li></ul>
+<h2>Attack path</h2><ol class='steps'>
+<li><a href="../techniques/T-C009.html">SITF T-C009: CI/CD Vulnerability Exploitation</a> — Pipeline identity hijacking via mirror · in GitLab CI/CD Pipelines</li>
+<li><a href="../techniques/T-C005.html">SITF T-C005: Secret Exfiltration from Workflow</a> — CI_JOB_TOKEN theft · in GitLab CI/CD Pipelines</li>
+<li><a href="../techniques/T-V007.html">SITF T-V007: Clone Sensitive Repositories</a> — Cloned victim&#x27;s private repos · in GitLab Enterprise</li>
+<li><a href="../techniques/T-R007.html">SITF T-R007: Harvest Data from Private Artifacts</a> — Pulled victim&#x27;s private images · in GitLab Container Registry</li>
+</ol>
+<h2>Outcomes</h2><ul><li>Data Exfiltration</li><li>Supply Chain Risk</li></ul>
+<h2>Techniques and controls</h2>
+<table><tr><th>Technique</th><th>Key protective controls</th></tr>
+<tr><td><a href="../techniques/T-C005.html">T-C005 Secret Exfiltration from Workflow</a></td><td>OIDC setup in workflows; Minimal workflow permissions; Log sanitization</td></tr>
+<tr><td><a href="../techniques/T-C009.html">T-C009 CI/CD Vulnerability Exploitation</a></td><td>Using managed CI/CD instances; Patching schedule</td></tr>
+<tr><td><a href="../techniques/T-R007.html">T-R007 Harvest Data from Private Artifacts</a></td><td>Minimal registry permissions; Artifact encryption</td></tr>
+<tr><td><a href="../techniques/T-V007.html">T-V007 Clone Sensitive Repositories</a></td><td>Minimal VCS permissions; Repository access reviews</td></tr>
+</table>
+<p class="small">Source flow: <a href="https://github.com/wiz-sec-public/SITF/blob/main/flows/red-team/gitlab-pipeline-hijack.json">flows/red-team/gitlab-pipeline-hijack.json</a>. Load it in the <a href="../visualizer.html">SITF flow builder</a> to view the diagram.</p>
+</main>
+<footer class="site">
+<p>SDLC Infrastructure Threat Framework (SITF) by <a href="https://www.wiz.io">Wiz</a>. Source and data:
+<a href="https://github.com/wiz-sec-public/SITF">github.com/wiz-sec-public/SITF</a>
+(<a href="../techniques.json">techniques.json</a>).
+Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p>
+</footer>
+</body>
+</html>
