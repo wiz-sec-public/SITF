@@ -1,0 +1,17 @@
+{
+  "name": "sitf",
+  "owner": {
+    "name": "Wiz",
+    "url": "https://github.com/wiz-sec-public"
+  },
+  "description": "SITF (SDLC Infrastructure Threat Framework) skills for analyzing software supply chain and CI/CD attacks.",
+  "plugins": [
+    {
+      "name": "sitf",
+      "source": "./",
+      "description": "Map supply chain, CI/CD, and SDLC incidents and red team engagements to SITF techniques; generate attack flows; propose new techniques.",
+      "category": "security",
+      "tags": ["security", "supply-chain", "ci-cd", "threat-modeling", "incident-response"]
+    }
+  ]
+}

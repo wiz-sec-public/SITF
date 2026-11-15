@@ -48,6 +48,7 @@ _None_
 | [LiteLLM October 2026](flows/incidents/litellm-oct-2026.json) | Incident | Leaked admin key leads to an org owner's GitHub token, CI secret theft and a hijacked release of `litellm` 1.107.0 |
 
 ### Other Changes
+- SITF skills are now installable as a Claude Code plugin from this repository (`/plugin marketplace add wiz-sec-public/SITF`, then `/plugin install sitf@sitf`). The skills locate the bundled technique library when run outside the repository, and their descriptions now name CI/CD, GitHub Actions, registries and the other SDLC components they cover
 - Static, crawlable website pages generated from `techniques.json` and `flows/`: one page per technique (`app/techniques/<ID>.html`) and per incident (`app/incidents/<slug>.html`), plus `llms.txt`, `llms-full.txt`, `sitemap.xml` and `techniques.json` at stable URLs
 - TECHNIQUE_LIBRARY.md: consistent "SITF technique T-xxx" naming, MITRE ATT&CK mappings and web page links per technique; the stage index now includes the 31 Discovery and Lateral Movement techniques it previously omitted
 - CITATION.cff: updated technique count and license (CC BY-NC 4.0)

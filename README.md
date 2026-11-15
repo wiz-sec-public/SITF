@@ -16,6 +16,13 @@ A comprehensive framework for analyzing and defending against attacks targeting 
 
 ### 🤖 Use with Claude AI
 
+**Install as a Claude Code plugin** (works in any project):
+
+```
+/plugin marketplace add wiz-sec-public/SITF
+/plugin install sitf@sitf
+```
+
 **Automated Attack Flow Generation** - Use Claude skills to automatically generate SITF-compliant attack flows and technique proposals:
 
 | Skill | Purpose |
@@ -69,7 +76,7 @@ SITF includes Claude AI skills for automated attack flow generation. See **[SKIL
 
 | Skill | Input | Output |
 |-------|-------|--------|
-| `/attack-flow` | Incident name, URL, or web search | `sample-flows/<name>.json` |
+| `/attack-flow` | Incident name, URL, or web search | `flows/incidents/<name>.json` |
 | `/red-team-flow` | Engagement report (file/URL/text) | `flows/red-team/<name>.json` |
 | `/technique-proposal` | Gap description | `technique-proposals/<id>.md` |
 

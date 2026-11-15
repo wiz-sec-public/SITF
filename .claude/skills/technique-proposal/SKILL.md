@@ -1,7 +1,7 @@
 ---
 name: technique-proposal
-description: Generate a PR-ready technique proposal when an attack step doesn't map to existing SITF techniques. Use after /attack-flow identifies technique gaps.
-argument-hint: "<description>" [component]
+description: Propose a new SITF (SDLC Infrastructure Threat Framework) technique, with enabling risks, protective and detective controls, and OWASP SPVS and MITRE ATT&CK mappings, as a PR-ready techniques.json entry. Use when an attack step against CI/CD, VCS, registry, developer endpoint, or production cloud infrastructure does not map to an existing SITF technique, typically after /attack-flow or /red-team-flow reports technique gaps.
+argument-hint: "\"<description>\" [component]"
 tools: Read, Grep, Glob
 ---
 
@@ -19,6 +19,15 @@ Generate a PR-ready technique proposal when an attack step doesn't map to existi
 - `component`: Target component (endpoint, vcs, cicd, registry, production) - optional, will be inferred if omitted
 
 Arguments: $ARGUMENTS
+
+## SITF Data Location
+
+This skill runs either inside the SITF repository or, when installed as the `sitf` Claude Code plugin, inside any other project. Resolve the **SITF root** once before starting:
+
+1. If the current project root contains both `techniques.json` and `build-techniques.py`, you are in the SITF repository: the SITF root is the project root.
+2. Otherwise the SITF root is the installed plugin directory: `${CLAUDE_PLUGIN_ROOT}`. (If that placeholder appears literally, unresolved, the plugin is not installed; fetch the library from https://wiz-sec-public.github.io/SITF/techniques.json instead and read example flows from https://github.com/wiz-sec-public/SITF/tree/main/flows.)
+
+Every reference below to `techniques.json`, `flows/...`, or `app/...` means that path under the SITF root. Never write into the plugin directory.
 
 ## Instructions
 
@@ -273,7 +282,8 @@ Run this checklist before outputting:
 ### Phase 6: Output Location
 
 1. Display the full proposal in the conversation
-2. Optionally create a file at `technique-proposals/<technique-id>.md` if requested
+2. Optionally create a file at `technique-proposals/<technique-id>.md` (under the current project root) if requested
+3. When not running in the SITF repository, tell the user that new techniques are contributed by opening a PR against https://github.com/wiz-sec-public/SITF that adds the entry to `techniques.json`
 
 ## Example
 
@@ -406,7 +416,7 @@ supply chain attack (August 2025).
 **References:**
 - https://www.wiz.io/blog/s1ngularity-supply-chain-attack
 
-**Related:** sample-flows/s1ngularity.json
+**Related:** flows/incidents/s1ngularity.json
 ```
 
 ## Control Classification Guidelines

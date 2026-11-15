@@ -2,6 +2,21 @@
 
 SITF includes Claude AI skills that automate attack flow generation, red team report processing, and technique proposal creation. These skills integrate with Claude Code to streamline security analysis workflows.
 
+## Installation
+
+### As a Claude Code plugin (any project)
+
+```
+/plugin marketplace add wiz-sec-public/SITF
+/plugin install sitf@sitf
+```
+
+The plugin bundles the SITF technique library, so the skills work in any project. Skills are namespaced under the plugin (`/sitf:attack-flow`, `/sitf:red-team-flow`, `/sitf:technique-proposal`), and Claude also invokes them automatically when you ask it to analyze a supply chain or CI/CD incident. Outside this repository, generated flows are written to `sitf-flows/<name>.json`; open them with **Import** in the [flow builder](https://wiz-sec-public.github.io/SITF/visualizer.html).
+
+### In this repository
+
+Clone the repository and run Claude Code from its root. The skills in `.claude/skills/` load automatically as `/attack-flow`, `/red-team-flow`, and `/technique-proposal`, and write flows into `flows/`.
+
 ## Available Skills
 
 | Skill | Purpose | Input |
@@ -32,12 +47,12 @@ Automatically generates SITF-compliant attack flow JSON files from attack descri
 1. Researches the attack (via web search or provided URL)
 2. Maps attack steps to SITF techniques from `techniques.json`
 3. Calculates proper layout for visualization
-4. Generates JSON file in `sample-flows/` directory
+4. Generates JSON file in `flows/incidents/` (or `sitf-flows/` outside this repository)
 5. Identifies technique gaps and recommends `/technique-proposal`
 
 ### Output
 
-- JSON file: `sample-flows/<attack-name>.json`
+- JSON file: `flows/incidents/<attack-name>.json`
 - Attack chain summary with technique mappings
 - Control gap analysis
 - Technique gap identification (if any)
@@ -141,7 +156,7 @@ See [.claude/skills/technique-proposal/SKILL.md](.claude/skills/technique-propos
 
 ```
 /attack-flow codecov websearch
-# → Generates sample-flows/codecov.json
+# → Generates flows/incidents/codecov.json
 # → If gaps found: "Run /technique-proposal for..."
 ```
 
