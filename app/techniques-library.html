@@ -1265,7 +1265,7 @@
           },
           {
             "name": "AI CLI execution with permission-bypass flags or non-interactive parent",
-            "description": "EDR alerting when AI coding CLIs are launched with permission-bypass flags (e.g. --dangerously-skip-permissions, --yolo) or spawned by package managers, install scripts, or other non-interactive processes",
+            "description": "EDR alerting when AI coding CLIs are launched with permission-bypass flags (e.g. --dangerously-skip-permissions, --yolo, --trust-all-tools) or spawned by package managers, install scripts, or other non-interactive processes",
             "frameworks": {
               "spvs": [
                 "V5.4"
@@ -1274,7 +1274,7 @@
           },
           {
             "name": "AI agent tool-call audit logging via centrally managed hooks",
-            "description": "Log AI agent tool calls (file reads, shell commands, network requests) at the hook or tool boundary and forward them to the SIEM; enforce hook configuration through managed policy so users and processes cannot disable it",
+            "description": "Log AI agent tool calls (file reads, shell commands, network requests) at the hook or tool boundary and forward them to the SIEM; enforce hook configuration through managed policy so user and project settings cannot override it. An administrator on the endpoint can still remove hooks, so pair with network monitoring, which does not depend on the endpoint",
             "frameworks": {
               "spvs": [
                 "V5.4"
@@ -1284,6 +1284,15 @@
           {
             "name": "Alerting on suspicious AI agent tool-call sequences",
             "description": "Detect agent activity patterns such as a credential or secret file read followed by an outbound request",
+            "frameworks": {
+              "spvs": [
+                "V5.4"
+              ]
+            }
+          },
+          {
+            "name": "AI tool signed in with an account outside the organization",
+            "description": "Alert when an AI tool on a managed endpoint reports a signed-in account outside the organization's domain. The account is reported by the client, so this backs up SSO enforcement rather than replacing it",
             "frameworks": {
               "spvs": [
                 "V5.4"

@@ -230,6 +230,7 @@ Controls are split into two categories:
 - AI CLI execution with permission-bypass flags or non-interactive parent
 - AI agent tool-call audit logging via centrally managed hooks
 - Alerting on suspicious AI agent tool-call sequences
+- AI tool signed in with an account outside the organization
 
 ---
 

@@ -37,7 +37,7 @@ Agent activity detection for local AI tools ([#35](https://github.com/wiz-sec-pu
 
 | ID | Added Risks | Added Controls |
 |----|-------------|----------------|
-| T-E009 | AI tools signed in with personal accounts | Organization-managed (SSO) accounts enforced for AI tools (protective). AI CLI execution with permission-bypass flags or non-interactive parent; AI agent tool-call audit logging via centrally managed hooks; alerting on suspicious AI agent tool-call sequences (detective) |
+| T-E009 | AI tools signed in with personal accounts | Organization-managed (SSO) accounts enforced for AI tools (protective). AI CLI execution with permission-bypass flags or non-interactive parent; AI agent tool-call audit logging via centrally managed hooks; alerting on suspicious AI agent tool-call sequences; AI tool signed in with an account outside the organization (detective) |
 
 Renamed controls:
 - "Secret scanning on org" → "Secret scanning on all orgs" (T-V001, T-V003), to cover sibling and legacy orgs the producer controls
