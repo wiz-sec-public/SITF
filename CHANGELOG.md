@@ -33,6 +33,12 @@ New risks and controls from the LiteLLM 1.107.0 compromise (October 2026):
 | T-R005 | Provenance not verified before publishing | Pre-publish provenance verification (protective) |
 | T-P011 | Services configured with personal or admin credentials; admin APIs return stored secrets | Service identities instead of personal credentials; write-only secret storage (redact on read) (protective) |
 
+Agent activity detection for local AI tools ([#35](https://github.com/wiz-sec-public/SITF/issues/35)):
+
+| ID | Added Risks | Added Controls |
+|----|-------------|----------------|
+| T-E009 | AI tools signed in with personal accounts | Organization-managed (SSO) accounts enforced for AI tools (protective). AI CLI execution with permission-bypass flags or non-interactive parent; AI agent tool-call audit logging via centrally managed hooks; alerting on suspicious AI agent tool-call sequences; AI tool signed in with an account outside the organization (detective) |
+
 Renamed controls:
 - "Secret scanning on org" → "Secret scanning on all orgs" (T-V001, T-V003), to cover sibling and legacy orgs the producer controls
 

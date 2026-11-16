@@ -50,16 +50,22 @@
 <li>No acceptable use policy</li>
 <li>AI tools with excessive permissions</li>
 <li>Sensitive code sent to AI services</li>
+<li>AI tools signed in with personal accounts</li>
 </ul>
 <h2>Protective controls</h2>
 <ul>
 <li><strong>Acceptable use policy against unapproved AI tools</strong><br><span class="small">OWASP SPVS: V1.3 Security Requirements and Risk Assessment</span></li>
 <li><strong>Approved AI tools with data protection</strong><br><span class="small">OWASP SPVS: V1.4 Developer Tool Operation</span></li>
 <li><strong>Code review for AI-generated code</strong><br><span class="small">OWASP SPVS: V1.4 Developer Tool Operation; V2.3 Code Review and Analysis</span></li>
+<li><strong>Organization-managed (SSO) accounts enforced for AI tools</strong> — Require AI tools on managed endpoints to sign in with organization accounts, so code is only sent under an enterprise agreement with data protection and audit visibility<br><span class="small">OWASP SPVS: V1.1 Identity and Access Management</span></li>
 </ul>
 <h2>Detective controls</h2>
 <ul>
 <li><strong>Network monitoring for AI service connections</strong><br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>AI CLI execution with permission-bypass flags or non-interactive parent</strong> — EDR alerting when AI coding CLIs are launched with permission-bypass flags (e.g. --dangerously-skip-permissions, --yolo, --trust-all-tools) or spawned by package managers, install scripts, or other non-interactive processes<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>AI agent tool-call audit logging via centrally managed hooks</strong> — Log AI agent tool calls (file reads, shell commands, network requests) at the hook or tool boundary and forward them to the SIEM; enforce hook configuration through managed policy so user and project settings cannot override it. An administrator on the endpoint can still remove hooks, so pair with network monitoring, which does not depend on the endpoint<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>Alerting on suspicious AI agent tool-call sequences</strong> — Detect agent activity patterns such as a credential or secret file read followed by an outbound request<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
+<li><strong>AI tool signed in with an account outside the organization</strong> — Alert when an AI tool on a managed endpoint reports a signed-in account outside the organization&#x27;s domain. The account is reported by the client, so this backs up SSO enforcement rather than replacing it<br><span class="small">OWASP SPVS: V5.4 Detection &amp; Monitoring</span></li>
 </ul>
 <h2>Observed in</h2><ul>
 <li><a href="../incidents/aqua-trivy-vscode.html">Aqua Trivy VS Code Extension</a> <span class="small">(incident)</span></li>
